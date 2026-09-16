@@ -1,0 +1,23 @@
+{
+  "task_id": "simple_locomotion_pick_between_tables",
+  "env_id": "simple/G1WholebodyLocomotionPickBetweenTablesTeleop-v0",
+  "instruction": "Acquire the cracker box from its original source table, retain it while moving to the other table, and place and release it inside the destination basket/container while staying upright.",
+  "scene_contract": "Original native two-table SIMPLE scene and asset/hand geometry. Identify source target and destination from current RGB. Preserve both table positions and all objects; no relocation or hidden coordinates.",
+  "completion": [
+    "Native completion records target-container contact without hand contact and its original accumulated criterion. That trigger alone does not prove retained pickup, carrying or correct placement.",
+    "Independent audit additionally requires unsupported retained acquisition off the source table, continuous controlled carriage during actual robot relocation, supported placement inside the destination container and release. Native and full-task outcomes remain separate.",
+    "Stop physical execution when rollout_finished and complete skill_update. This is a registered learning attempt under SIX-TASK-FIVE-STABLE-V1; it cannot contribute to fixed-candidate stability or frozen evaluation."
+  ],
+  "phase_guidance": [
+    "Inspect fresh stereo and named robot state; identify the box, first and second tables, reachable hand clearance and a path without relocating any scene object. If destination is outside view, inspect through bounded robot motion and updated images.",
+    "Use experience_select to review the compatible public acquisition/hold sources, successful box-placement release and MobileCheezit1 loss during changed whole-body posture. Native MobileCheezit is a different task; its failed loaded transition is a counterexample, not an achieved carrying skill. No source coordinates or trajectories are defaults.",
+    "Achieve a stable reachable stance at the first table, review full-hand meshes and achieved wrist attitude, establish opposing enclosure, then close and test a small lift plus separate hold. Reopen and correct the geometry after loss.",
+    "Before loaded movement, verify retained box-hand co-motion, clear the first table and note the current pelvis height/tilt, wrist tracking and actual support drift. Empty-hand approach examples are hypotheses only when carrying.",
+    "Use bounded coordinated four-point references to test one small loaded movement at a time. Keep the grasp attitude and payload visually monitored; reobserve after each chunk. Reject lost support or worsening instability; stabilize rather than repeating the same saturated reach.",
+    "At the destination table establish a stable stance and clear path for lowering inside the visible basket/container. Open only after support is visually established, then withdraw and inspect if physics remains active. Reserve time for placement and verification; do not invent post-native-terminal dwell."
+  ],
+  "known_interface_limits": "Model_38000 UMI-4/checkpoint PD, native Dex3 mesh geometry, 50Hz tracker and200Hz MuJoCo. Bounded continuous chunks; current observation defines limits.240s physical budget, full Astra turns awaited, paused physics not RTC.",
+  "failure_guidance": "Separate observation uncertainty, tracking, contact acquisition and task progress. Preserve public evidence, excluded hypotheses and a changed next test. finish_attempt only records a stall; it does not terminate the episode. Follow its returned current observation and next_call to test the changed safe hypothesis in this same episode. Continue until native success/failure, runtime safety/system termination or the physical budget. Do not use reasoning delay, three completed actions or temporary lack of progress as a stop condition. Do not consume remaining budget with idle holds.",
+  "prohibited_shortcuts": "No object poses/contact truth, hidden reward query, task/evaluator source access, human/external demonstrations, replay as task credit or mid-episode reset.",
+  "guidance_status": "Task semantics and current interface limits, not an action demonstration. All motion inferred by actor from permitted observations."
+}

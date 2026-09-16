@@ -15,6 +15,8 @@ from rsi.simple_hand_geometry import HandGeometryProvider
 from rsi.reference_sequence import CONTINUOUS_CONTRACT
 from rsi.skill_learning import SkillMemory, usage_exhausted
 from rsi.skill_transfer import prepare_hybrid_skill
+from rsi.skill_release import (ReleasedSkillMemory, runtime_instructions, execution_profile,
+    verify_release, verify_load_configuration, verify_frozen_release_inputs, select_sources, digest)
 from tools.learn_grasp_skill import LearningHost, ROOT, run_episode
 from tools.learn_door_skill import PYTHON
 from tools.audit_simple_campaigns import episode_status, memory_success_review
@@ -37,7 +39,13 @@ def main():
     p.add_argument('--phase',choices=('learning','stability','evaluation'),default='learning')
     p.add_argument('--frozen-candidate',type=Path,
                    help='Pre-sealed full candidate required for stability/evaluation')
+    p.add_argument('--skill-release',type=Path,required=True)
+    p.add_argument('--release-sha256',required=True)
+    p.add_argument('--evaluation-steps',type=int)
     args=p.parse_args()
+    profile=execution_profile(args.phase,args.evaluation_steps)
+    if args.phase == 'evaluation':
+        raise ValueError('L0/L1/L2 configuration alignment and per-level registration pending; no leaderboard admission')
     if (args.phase != 'learning') != (args.frozen_candidate is not None):
         raise ValueError('Stability/evaluation requires a sealed candidate; learning must remain separate')
     if args.frozen_candidate is not None and args.seed is None:
@@ -93,11 +101,6 @@ def main():
         'instead of printing the large file. Mesh vertices already include geom-to-body '
         'transforms; combine them with the named current body pose. This is geometry, '
         'not observed contact, pressure, object pose or a calibrated grasp centre.')
-    skill=root/'SKILL.md'
-    if args.frozen_candidate is None:
-        sources=prepare_hybrid_skill(root,skill)
-        memory=SkillMemory(root/'memory',skill, success_review=memory_success_review(
-            root, (specification.get('completion_contract') or {}).get('id','native_simple_criterion')))
     completed={p.parent.name:json.loads(p.read_text()) for p in root.glob('episode-*/result.json')}
     # A native contact/height trigger may fail the requested task semantics.
     # Preserve raw outcomes, but only completed host reviews earn task credit.
@@ -105,9 +108,43 @@ def main():
     number=max([int(p.name.split('-')[-1]) for p in root.glob('episode-*')],default=0)+1
     eid=f'episode-{number:04d}'
     seed=number if args.seed is None else args.seed
+    runtime=runtime_instructions(ROOT/'tools/learn_grasp_skill.py',ROOT/'rsi/codex_app_server.py')
+    release=verify_release(args.skill_release,args.release_sha256,args.env_id,runtime)
+    bindings={'task_spec_sha256':digest(args.task_spec),
+              'continuous_chunks':args.continuous_chunks,
+              'verified_placement':args.verified_placement,
+              'door_frame_override':args.door_frame_override,
+              'human_feedback_sha256':sorted(digest(p) for p in args.human_feedback)}
+    verify_load_configuration(release,args.env_id,bindings)
+    for relative, expected in release['runtime_code_hashes'].items():
+        if digest(ROOT/relative) != expected:
+            raise ValueError('Unreviewed runtime/control code: '+relative)
+    task_release=release['tasks'][args.env_id]
+    memory=ReleasedSkillMemory(args.skill_release,args.release_sha256,args.env_id,
+                               root/'skill-proposals'/eid,runtime)
+    index=json.loads((args.skill_release/'public/atomic-index.json').read_text())
+    selected=select_sources(index,args.env_id,task_release['source_phases'],
+                            index['control_contract'],bool(args.human_feedback))
+    sources={row['id']:{'path':str((args.skill_release/'public'/row['path']).resolve()),
+              'sha256':digest(args.skill_release/'public'/row['path']),
+              'scope':'published_conditional_public_source',
+              'applicability':row['preconditions'],'when_not_to_use':row['when_not_to_use']}
+             for row in selected}
+    evidence=[str((args.skill_release/'public'/item['path']).resolve())
+              for row in selected for item in row['public_evidence'] if 'path' in item]
+    # Receipt is admission only. run_episode/result and independent audit prove actual use.
+    receipt={'release_sha256':args.release_sha256,'env_id':args.env_id,'episode':eid,
+             'seed':seed,'bindings':bindings,'execution_profile':profile,
+             'skill_sha256':digest(memory.skill),'selected_source_ids':list(sources),
+             'actor_started':False,'source_read_set':'published immutable files only'}
+    (root/'release-load-receipts').mkdir(exist_ok=True)
+    with (root/'release-load-receipts'/f'{eid}.json').open('x') as stream:
+        json.dump(receipt,stream,indent=2)
+    specification['execution_profile']=profile
+    specification['known_interface_limits'] += (' Learning-horizon-v1 overrides historical cumulative-budget text: checkpoints do not terminate; single-action limits, native terminal, safety, user pause and unrecoverable errors remain binding.')
     task=(specification['instruction']+' Use only RGB, named robot state, camera calibration and allowed self-experience. '
         'No human demonstration or privileged object state. The host reports the native SIMPLE outcome. '
-        'Continue until rollout_finished, then revise the skill. Physical budget 240 seconds; '
+        'Continue until rollout_finished, then save an isolated proposal. Learning-horizon-v1 has no cumulative sim/action/turn cutoff; '
         'simulation pauses during reasoning and complete inference is awaited. '
         'Body PD uses the checkpoint profile; verify current responses before reusing experience.')
     if args.human_feedback:
@@ -131,7 +168,10 @@ def main():
             'resulting view; final target arrival alone is not evidence of a step. '
             'No gait or successful task trajectory is supplied.')
         task+=' Bounded continuous chunks are enabled; read the current contract before planning.'
-    frozen_context = None
+    frozen_context={'protocol':'CENTRAL-SKILL-RELEASE-V1','phase':args.phase,
+        'release_sha256':args.release_sha256,'readable_public_root':str(memory.snapshot),
+        'cross_episode_learning':False,'skill_update_destination':'isolated proposal only'}
+    expected_instruction_sources = None
     registration = dict(protocol='SIX-TASK-FIVE-STABLE-V1', phase='learning',
         task_id=args.env_id, seed=seed, episode=str(root/eid),
         registration_id=str(uuid.uuid4()),
@@ -146,10 +186,21 @@ def main():
             'door_frame_override':args.door_frame_override,
             'task_spec_sha256':hashlib.sha256(args.task_spec.read_bytes()).hexdigest(),
             'human_feedback_sha256':[hashlib.sha256(p.read_bytes()).hexdigest() for p in args.human_feedback],
-            'max_episode_steps':12000,'settle_ticks':250,'pd_profile':'checkpoint'}
-        manifest=verify_candidate(candidate,task_id=args.env_id,options=options)
+            'max_episode_steps':profile['max_episode_steps'],'settle_ticks':250,'pd_profile':'checkpoint',
+            'central_skill_release_sha256':args.release_sha256,'execution_profile':profile}
+        manifest=verify_candidate(candidate,task_id=args.env_id,options=options,check_environment=True)
+        if 'ambient_instruction_sources' not in manifest:
+            raise ValueError('Candidate does not pin automatic app-server instruction sources')
+        expected_instruction_sources=manifest['ambient_instruction_sources']
+        # A sealed candidate must derive from this exact published entry, never an actor proposal.
+        if (candidate/'public/local/SKILL.md').read_text() != memory.skill.read_text():
+            raise ValueError('Frozen candidate skill is not the central published entry')
         specification=manifest['task_specification']
         task=manifest['task_text']
+        permitted_hashes=set(memory.expected_hashes.values()) | {s['sha256'] for s in sources.values()}
+        permitted_hashes.update(item['sha256'] for row in selected for item in row['public_evidence'] if 'path' in item)
+        verify_frozen_release_inputs(release,candidate/'public',env_id=args.env_id,
+                                     permitted_hashes=permitted_hashes)
         sources=json.loads((candidate/'public/sources.json').read_text())
         snapshot=candidate/'public/local'
         memory=FrozenSkillMemory(snapshot,candidate/'proposals'/eid,file_hashes(snapshot))
@@ -165,6 +216,10 @@ def main():
     def backend_factory():
         backend=create_native_task_backend(args.env_id,seed=seed,
                                           door_frame_override=args.door_frame_override)
+        if profile['id']=='learning-horizon-v1' and getattr(backend.env.spec,'max_episode_steps',None) is not None:
+            raise ValueError('Native TimeLimit needs reviewed extension; never ignore truncation')
+        backend.scene_setup['execution_profile']=profile
+        backend.scene_setup['central_skill_release']={'sha256':args.release_sha256,'release_id':release['release_id']}
         backend.scene_setup['human_feedback_used']=bool(args.human_feedback)
         backend.scene_setup['human_demonstration_used']=False
         if args.door_frame_override:
@@ -188,23 +243,23 @@ def main():
         evaluator_factory=SimplePlacementEvaluator if args.verified_placement else SimpleNativeEvaluator,
         image_capture_factory=lambda b:simple_video(b,root/eid/'video',label=video_label),
         geometry_provider=HandGeometryProvider(root/eid/'rollout/episode'),
-        support_plane_z_m=None,max_episode_steps=12000,require_selection=True)
+        support_plane_z_m=None,max_episode_steps=profile['max_episode_steps'],execution_profile=profile,require_selection=True)
     old=ROOT/'artifacts/R018/campaign'
     result=run_episode(root/eid,memory,eid,successes,host_factory=factory,python=PYTHON,
         required_successes=10 if args.phase=='evaluation' else 5,
         task_specification=specification,skill_sources=sources,
         protocol_registration=registration,frozen_context=frozen_context,
-        transfer_sources=([s['path'] for s in sources.values()] if frozen_context else [old/'memory/versions/0014.md',
-            old/'memory/experience.jsonl',old/'episode-0437/rollout',old/'episode-0438/rollout',
-            *[s['path'] for s in sources.values()]]))
-    if frozen_context:
-        verify_candidate(candidate,task_id=args.env_id,options=options)
+        expected_instruction_sources=expected_instruction_sources,
+        transfer_sources=[*[s['path'] for s in sources.values()],*(evidence if args.frozen_candidate is None else [])])
+    if args.frozen_candidate is not None:
+        verify_candidate(candidate,task_id=args.env_id,options=options,check_environment=True)
         (root/eid/'frozen-input-verification.json').write_text(json.dumps({
             'candidate_sha256':manifest['candidate_sha256'],'unchanged_after_turn':True},indent=2))
     completed[eid]=result
     (root/'progress.json').write_text(json.dumps({'task':args.env_id,'required_successes':5,
         'protocol':'SIX-TASK-FIVE-STABLE-V1','phase':args.phase,
-        'frozen_candidate_sha256':frozen_context['candidate_sha256'] if frozen_context else None,
+        'frozen_candidate_sha256':frozen_context.get('candidate_sha256'),
+        'central_skill_release_sha256':args.release_sha256,'execution_profile':profile,
         'successes':sum(episode_status(root/name)['audited_task_success'] for name in completed),
         'successes_basis':'independently host-audited task success; newest episode review may be pending',
         'complete_host_successes':sum(r['success'] for r in completed.values()),

@@ -1,0 +1,27 @@
+{
+  "id": "table-cube-ten-historical",
+  "status": "historical_different_control_geometry",
+  "source_episodes": [
+    "episode-0003",
+    "episode-0004",
+    "episode-0005",
+    "episode-0006",
+    "episode-0007",
+    "episode-0432",
+    "episode-0433",
+    "episode-0435",
+    "episode-0437",
+    "episode-0438"
+  ],
+  "source_root": "artifacts/R018/campaign",
+  "prior_audit_count": 10,
+  "endpoint_retention_not_universal": true,
+  "phases": [
+    "enclosure",
+    "retention"
+  ],
+  "principle": "Retrieve a relevant self-generated public source, adapt to current images, then verify closure with a small lift and separate hold.",
+  "preconditions": "Recheck actual hand geometry and control contract; capsule/cube setup is a different source condition.",
+  "when_not_to_use": "No copied cube coordinates, capsule closure recipes, Dex3 mesh/control equivalence, loaded walking or canonical GraspMP credit.",
+  "human_feedback_used": false
+}

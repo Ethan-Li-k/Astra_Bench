@@ -1,0 +1,26 @@
+{
+  "task_id": "simple_handover_canonical",
+  "env_id": "simple/G1WholebodyHandoverTeleop-v0",
+  "instruction": "Pick up the upright cracker box with the right hand, transfer it to the left hand, then place it on/in the basket container and release while remaining standing. Use current visual shape to distinguish the target and destination from distractors.",
+  "scene_contract": "Canonical native SIMPLE HandoverTeleop original table, box, container and distractors. Objects may render white. No known world/pixel positions transfer. The goal includes transfer and final placement.",
+  "completion": [
+    "Native criterion accumulates target-container contact; it alone does not prove handover or release. The independent task audit additionally checks original-target acquisition, unsupported retained right-hand lift, receiver acquisition, load transfer with giver clear, then released supported destination placement.",
+    "For handover evidence, separately observe retention with the receiver after giver release. During placement keep the original target supported until controlled release. A bump, toss, two-hand overlap or incidental container touch is not full completion.",
+    "Preserve original native termination and reward; stop at rollout_finished and save unverified stages. This is a learning attempt; fixed-candidate stability and evaluation are separately registered under SIX-TASK-FIVE-STABLE-V1."
+  ],
+  "phase_guidance": [
+    "Select relevant public sources for acquisition and stationary placement and the mobile loss counterexample. Explicitly reject copied coordinates, closure, native score equivalence or unverified loaded gait.",
+    "Inspect current calibrated stereo, named robot state and full hand geometry; locate the box and container and choose a stable reachable approach.",
+    "Establish right-hand visible opposing enclosure while open, then close and verify a short lift and a separate retention hold.",
+    "Present the box within a collision-free two-hand workspace. Form left-hand enclosure while retaining right support. Close receiver gradually, then release giver only after adequate visible support.",
+    "Move the giver clear and independently inspect left-hand retention and co-motion before approaching the destination.",
+    "After giver-clear receiver retention, reobserve whole-object bottom and basket rim after every attained attitude change. Obtain clearance over the rim before lateral entry, then position the original object low inside the visible destination for gentle controlled release and supported settling. Avoid incidental held rim contact: the native contact-only criterion can end the episode before a later release action. Do not toss, use a blind drop, assume hand closure proves support, or continue after rollout_finished.",
+    "If visibility/reach/tracking blocks a phase, diagnose using current measured errors, pelvis/support motion and RGB; record a changed safe hypothesis in the same episode. Do not substitute contact with container for the transfer phase."
+  ],
+  "known_interface_limits": "Four-point model_38000 UMI-4, checkpoint PD, native Dex3 geometry and bounded continuous chunks. Gripper commands are not force/aperture. Physical budget240s; paused physics during full Astra/xhigh inference, not RTC.",
+  "failure_guidance": "Separate observation uncertainty, tracking, contact acquisition and task progress. Preserve public evidence, excluded hypotheses and a changed next test. finish_attempt only records a stall; it does not terminate the episode. Follow its returned current observation and next_call to test the changed safe hypothesis in this same episode. Continue until native success/failure, runtime safety/system termination or the physical budget. Do not use reasoning delay, three completed actions or temporary lack of progress as a stop condition. Do not consume remaining budget with idle holds.",
+  "prohibited_shortcuts": "No object poses/contact truth, hidden reward query, task/evaluator source access, human/external demonstrations, replay as task credit or mid-episode reset.",
+  "guidance_status": "Detailed task input and qualitative guidance; the actor chooses motion using current allowed observations.",
+  "robot_proprioception_contract": "New robot_root measurements describe the named pelvis body origin: world height in metres, body-to-world unit wxyz orientation, and tilt in degrees between local +Z and world +Z. This is robot body feedback, not object state or centre of mass. robot_root_summary reports only sampled changes/extrema within the just-executed action; missing/null data are unknown, not zero or evidence of stability. Compare actual body and wrist trends before further reach; target arrival alone does not establish stable support.",
+  "planning_counterexample": "Episode1 public action047 and final RGB showed a held container approach ending before release. The learned receiver transfer is a candidate; complete final placement remains unverified. Use current visual clearance and attained attitude, not episode1 coordinates."
+}

@@ -38,13 +38,25 @@ def task_snapshot(public, task):
     return path
 
 
-def runtime_instructions(caller, adapter):
+def runtime_instructions(caller, adapter, *, frozen=True):
     def literal(path, name):
         tree = ast.parse(Path(path).read_text())
         return next(ast.literal_eval(n.value) for n in ast.walk(tree)
                     if isinstance(n, ast.Assign) and any(
                         isinstance(t, ast.Name) and t.id == name for t in n.targets))
-    return literal(caller, 'immutable') + literal(adapter, 'NETWORK_CONTINUATION')
+    immutable = literal(caller, 'immutable')
+    if frozen:
+        # Evaluate only the caller's text-only rendering branch, not run_episode.
+        tree = ast.parse(Path(caller).read_text())
+        branch = next((n for n in ast.walk(tree) if isinstance(n, ast.If)
+                       and ast.unparse(n.test) == 'frozen_context is not None'
+                       and any(isinstance(x, ast.Name) and x.id == 'immutable'
+                               for x in ast.walk(n))), None)
+        if branch is not None:
+            scope = {'immutable':immutable, 'frozen_context':{}}
+            exec(compile(ast.Module(body=[branch], type_ignores=[]), str(caller), 'exec'), scope)
+            immutable = scope['immutable']
+    return immutable + literal(adapter, 'NETWORK_CONTINUATION')
 
 
 def execution_profile(phase, evaluation_steps=None):
@@ -73,11 +85,11 @@ def select_sources(index, env_id, phases, control, feedback_allowed, limit=3):
         success = row['status'] == 'audited_source'
         if not success and row['status'] != 'counterexample':
             continue
-        rank = 0 if success and row['env_id'] == env_id else 1 if success else 2
+        rank = (0 if row['env_id'] == env_id else 1) if success else (2 if row['env_id'] == env_id else 3)
         selected.append((rank, row['id'], row))
     ordered = sorted(selected)
     positives = [row for rank, _, row in ordered if rank < 2]
-    counterexamples = [row for rank, _, row in ordered if rank == 2]
+    counterexamples = [row for rank, _, row in ordered if rank >= 2]
     reserve = int(bool(counterexamples) and limit > 1)
     return positives[:limit-reserve] + counterexamples[:limit-min(len(positives), limit-reserve)]
 
@@ -146,6 +158,20 @@ def verify_load_configuration(manifest, env_id, bindings):
         raise ValueError('Native task/control admission still pending')
     if bindings != task['bindings']:
         raise ValueError('Task/control/feedback configuration differs from released input')
+
+
+def verify_frozen_release_inputs(manifest, candidate_public, *, env_id, permitted_hashes):
+    """Sealing cannot turn unreviewed proposals into an approved public corpus."""
+    allowed = set(permitted_hashes)
+    feedback = set(manifest['tasks'][env_id]['bindings'].get('human_feedback_sha256', []))
+    if not allowed <= set(manifest['public_hashes'].values()) | feedback:
+        raise ValueError('Requested read set contains unpublished inputs')
+    allowed.update(feedback)
+    for relative, actual in file_hashes(candidate_public).items():
+        if relative == 'sources.json':
+            continue  # generated path map; underlying copied files are checked
+        if actual not in allowed:
+            raise ValueError('Frozen input was not included in central publication: '+relative)
 
 
 class ReleasedSkillMemory(FrozenSkillMemory):

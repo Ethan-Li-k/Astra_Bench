@@ -1,0 +1,3 @@
+## Selected task: Grasp
+
+Task: simple/G1WholebodyTabletopGraspMP-v0. The entry is confirmed; native asset, hand and control compatibility require publisher validation before use. Reuse table-cube-public only for conditional visible enclosure, closure, small-lift and separate-hold checks. Capsule geometry, poses and closure values do not transfer to native mesh fingers. Establish whole-hand clearance, verify opposing enclosure, then test retained object-hand co-motion before the declared lift goal. After loss, reopen safely, reobserve and change geometry. Stop at rollout_finished and record missing retention/hold evidence. Historical table successes are not new MP scores. Do not invoke MP demonstrations, substitute another task or bypass control compatibility.

@@ -1,0 +1,1253 @@
+{
+  "schema": 1,
+  "at": "2026-09-16T14:10:01.848287+00:00",
+  "base_commit": "958052d1278bc105743d62180fb06be59286e082",
+  "source_boundary": "Completed UI live-progress release and central v4. Later active engineering is outside capture.",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "source": "AGENTS.md",
+      "sha256": "22eaf4392566cb8d2b80d4799fc9a87152284b3003d55ddeebe37899e5b05717",
+      "bytes": 7806,
+      "mode": 436
+    },
+    {
+      "path": "README.md",
+      "source": "reviewed publication documentation",
+      "sha256": "44555f4db130a0e7305c011a7e2a5faf229acc6fc186e0c3f524b97cc99b5440",
+      "bytes": 10204,
+      "mode": 420
+    },
+    {
+      "path": "docs/CENTRAL_SKILL_CAPTURE.md",
+      "source": "reviewed publication documentation",
+      "sha256": "a4205a2840668114669a321bae21a6c184e5f9aae5c6c4030c40b9d5ab2b25e0",
+      "bytes": 1163,
+      "mode": 420
+    },
+    {
+      "path": "docs/CENTRAL_SKILL_RELEASE_20260916.json",
+      "source": "artifacts/architecture-review-20260916/central-skill-publication/result.json",
+      "sha256": "16f39be4f2081a79a4c295dfde4fae175d2d00df03ba5e736cd1d8b2170066f1",
+      "bytes": 3298,
+      "mode": 436
+    },
+    {
+      "path": "docs/LOCAL_WEB_REPORTS.md",
+      "source": "reviewed publication documentation",
+      "sha256": "03438fcf56ec603d1f8ad91f0d9aa601805899b27e52557c56dbe2a86137e4ff",
+      "bytes": 1928,
+      "mode": 420
+    },
+    {
+      "path": "docs/SIMPLE_REPORT_RELEASE_20260916.json",
+      "source": "human-feedback/dashboard-upgrade/live-progress-fix/result.json",
+      "sha256": "9865cd07199ae4bd157294c810a371c02adbfce88967202bb3669bc0f349971c",
+      "bytes": 7327,
+      "mode": 436
+    },
+    {
+      "path": "human-feedback/dashboard-upgrade/live-progress-fix/test_alignment_portable.py",
+      "source": "human-feedback/dashboard-upgrade/live-progress-fix/test_alignment_portable.py",
+      "sha256": "abe611601b0219b4d86580fae278234478f2b3ebf5ba11d1e463560e8ae31ebc",
+      "bytes": 7615,
+      "mode": 436
+    },
+    {
+      "path": "human-feedback/dashboard-upgrade/live-progress-fix/test_live_progress.py",
+      "source": "human-feedback/dashboard-upgrade/live-progress-fix/test_live_progress.py",
+      "sha256": "37f723389ebbd3f96a1cd576c113caf46087ba9fdb57f363571531e1ab570ad6",
+      "bytes": 9835,
+      "mode": 436
+    },
+    {
+      "path": "human-feedback/tools/dashboard.py",
+      "source": "human-feedback/tools/dashboard.py",
+      "sha256": "4372c7bd77b0cb5fb4321eb89e929635f967513777655fc926e55ba3f6676a31",
+      "bytes": 86232,
+      "mode": 436
+    },
+    {
+      "path": "human-feedback/tools/simple_six.py",
+      "source": "human-feedback/tools/simple_six.py",
+      "sha256": "0870a33df363d7947db038e9b6376d1d4e9c49110dc9e53bad9eaf0b74aa264f",
+      "bytes": 12450,
+      "mode": 436
+    },
+    {
+      "path": "human-feedback/ui/simple-six.css",
+      "source": "human-feedback/ui/simple-six.css",
+      "sha256": "d394c456c5a726cd811a13ace931d5bdd85f4c301e431a10a7aef9f16f3f84e8",
+      "bytes": 2604,
+      "mode": 436
+    },
+    {
+      "path": "human-feedback/ui/simple-six.html",
+      "source": "human-feedback/ui/simple-six.html",
+      "sha256": "080d2d9b906c4259e6f215f66714835b0ec879261de9e9c7ad8024ff7225ea63",
+      "bytes": 5847,
+      "mode": 436
+    },
+    {
+      "path": "human-feedback/ui/simple-six.js",
+      "source": "human-feedback/ui/simple-six.js",
+      "sha256": "13553586b940499a50600ece060fca2e92b8750fd24c9f47ebe7aa6736137509",
+      "bytes": 9426,
+      "mode": 436
+    },
+    {
+      "path": "ref/SIMPLE_OFFICIAL_BASELINE_20260916.json",
+      "source": "ref/SIMPLE_OFFICIAL_BASELINE_20260916.json",
+      "sha256": "9ba66cdc4a1342729aaf6ef2fca75e385cb5d8fc7874b49bcbdbb14b5fd7b92f",
+      "bytes": 3877,
+      "mode": 436
+    },
+    {
+      "path": "ref/USER_UPDATE_20260916_BENCHMARK_ALIGNMENT.md",
+      "source": "ref/USER_UPDATE_20260916_BENCHMARK_ALIGNMENT.md",
+      "sha256": "33e845170e49dde8dd486aa792b8718db7b587752a2aee5b628f278ea9fa1586",
+      "bytes": 7769,
+      "mode": 436
+    },
+    {
+      "path": "ref/USER_UPDATE_20260916_CENTRAL_SKILL_OWNER.md",
+      "source": "ref/USER_UPDATE_20260916_CENTRAL_SKILL_OWNER.md",
+      "sha256": "63e6924b817ecea2788ff8c3123f847f46b22ded335d32bfeb33d61c57b52349",
+      "bytes": 1855,
+      "mode": 436
+    },
+    {
+      "path": "ref/USER_UPDATE_20260916_ISAAC_CONTINUATION_API_AMO.md",
+      "source": "ref/USER_UPDATE_20260916_ISAAC_CONTINUATION_API_AMO.md",
+      "sha256": "7fec8ac2d585b6972e6c1e2702af2a7160d527e58fd454cfb824273df7cb7b2f",
+      "bytes": 7200,
+      "mode": 436
+    },
+    {
+      "path": "ref/USER_UPDATE_20260916_SIX_TASK_FOCUS.md",
+      "source": "ref/USER_UPDATE_20260916_SIX_TASK_FOCUS.md",
+      "sha256": "5bffb8266ff9ec3037ea7c8dc40e31af6752665682cceac06f6002fe3d7f8eb9",
+      "bytes": 20434,
+      "mode": 436
+    },
+    {
+      "path": "ref/tasks/simple-handover.json",
+      "source": "ref/tasks/simple-handover.json",
+      "sha256": "6514347bf0bfaeb4a59a58508a9f0101a128edf4ff0aba956534301fa7f3cf5a",
+      "bytes": 5078,
+      "mode": 436
+    },
+    {
+      "path": "ref/tasks/simple-mobile-between-tables.json",
+      "source": "ref/tasks/simple-mobile-between-tables.json",
+      "sha256": "fe32c0248ff7ea216c00e2265f9cf526e068ce5ad44603b9bbc1b98c8b234884",
+      "bytes": 4204,
+      "mode": 436
+    },
+    {
+      "path": "ref/tasks/simple-xmove-bend-pick.json",
+      "source": "ref/tasks/simple-xmove-bend-pick.json",
+      "sha256": "259c3e5fb937e5ab0ecf814c508102aa30efdd5ef08c49819cc8af9262a1a770",
+      "bytes": 3992,
+      "mode": 436
+    },
+    {
+      "path": "ref/tasks/simple-xmove-pick.json",
+      "source": "ref/tasks/simple-xmove-pick.json",
+      "sha256": "32e465dbb02ff039eeba11f3cef0c86baf0b0c42b3728468cb78b1d6d922d639",
+      "bytes": 4908,
+      "mode": 436
+    },
+    {
+      "path": "rsi/camera_calibration.py",
+      "source": "rsi/camera_calibration.py",
+      "sha256": "0dddca69cecec9626157af7e9784683f91144bd0b40b627db848b3758b04cdf9",
+      "bytes": 1343,
+      "mode": 436
+    },
+    {
+      "path": "rsi/codex_app_server.py",
+      "source": "rsi/codex_app_server.py",
+      "sha256": "75cc5214088255a7d45e70ca9d5fd7447ab6a32f09b78e631cbba171be6363a1",
+      "bytes": 13200,
+      "mode": 436
+    },
+    {
+      "path": "rsi/evaluator.py",
+      "source": "rsi/evaluator.py",
+      "sha256": "a5b85cc7e8817e359bbe398a2ee66fe9ecb3bd1cb70886b775e09dca16f5db6b",
+      "bytes": 5924,
+      "mode": 436
+    },
+    {
+      "path": "rsi/four_point.py",
+      "source": "rsi/four_point.py",
+      "sha256": "bab956cf2ed756d135e2979e45c70dc436f9488912b78b314b6d34b2dfee8665",
+      "bytes": 4998,
+      "mode": 436
+    },
+    {
+      "path": "rsi/frozen_skill.py",
+      "source": "rsi/frozen_skill.py",
+      "sha256": "ad22191bd0efe594a08e461c37db87bb7d67a1233da5ae611ecc9f39399479c9",
+      "bytes": 20037,
+      "mode": 436
+    },
+    {
+      "path": "rsi/live.py",
+      "source": "rsi/live.py",
+      "sha256": "50f481f6b5d9dce4905164404d1867c561738ed97765399a92dfc9a5551bf434",
+      "bytes": 30157,
+      "mode": 436
+    },
+    {
+      "path": "rsi/policy_harness.py",
+      "source": "rsi/policy_harness.py",
+      "sha256": "e1365e49d94028e510c7f047a0f8656d25b091448c4c5607baab4cbdc0e25418",
+      "bytes": 32076,
+      "mode": 436
+    },
+    {
+      "path": "rsi/scalebfm.py",
+      "source": "rsi/scalebfm.py",
+      "sha256": "37852fc073d066ed9bd0c55e32a6d8224c36e1c2360c488f45e511c4ddfbe73b",
+      "bytes": 3747,
+      "mode": 436
+    },
+    {
+      "path": "rsi/simple_environment.py",
+      "source": "rsi/simple_environment.py",
+      "sha256": "f1b289df5e01bd21a055dbaffa944ebe24a8331173f5b997d5de2a3e073eb1a2",
+      "bytes": 6320,
+      "mode": 436
+    },
+    {
+      "path": "rsi/simple_hand_geometry.py",
+      "source": "rsi/simple_hand_geometry.py",
+      "sha256": "3c5dbb7f66d966a43dff681b4bc75bbf9c2038a251016fa9897ac89c9f19935e",
+      "bytes": 6452,
+      "mode": 436
+    },
+    {
+      "path": "rsi/simple_live.py",
+      "source": "rsi/simple_live.py",
+      "sha256": "0390e34ef41980c4831d4800ac4ecf60604ef59325229c1ef0efa3c6e315bf22",
+      "bytes": 3097,
+      "mode": 436
+    },
+    {
+      "path": "rsi/skill_learning.py",
+      "source": "rsi/skill_learning.py",
+      "sha256": "63cf7890f2f44bdf1c77a2b8bce1574936e9f3fedfed0de74ee8ef5d6e88f969",
+      "bytes": 8047,
+      "mode": 436
+    },
+    {
+      "path": "rsi/skill_release.py",
+      "source": "rsi/skill_release.py",
+      "sha256": "e30716e764eeb78586355b1f3ebb206b021fc618c21199722ba7c243fd6ffd8b",
+      "bytes": 9874,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/CURRENT.json",
+      "source": "skills/releases/CURRENT.json",
+      "sha256": "828ecd96554fee733a879da5f680e48d4090105cbc558d83f0e01a7392d3df41",
+      "bytes": 130,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atomic-index.json",
+      "source": "skills/releases/central-20260916-v4/public/atomic-index.json",
+      "sha256": "ec83010a62f7f541677fe1a34e3b9ed0c78b48442d7c5b32660bbc9bb32a6fde",
+      "bytes": 86620,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atoms/apple-episode-0008.json",
+      "source": "skills/releases/central-20260916-v4/public/atoms/apple-episode-0008.json",
+      "sha256": "b6a99f8fe2c9ee6fd5fbc60d1b234dbd3e76612ecc2b87ec49ede47ea425a60c",
+      "bytes": 3605,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atoms/bendpick-episode-0006.json",
+      "source": "skills/releases/central-20260916-v4/public/atoms/bendpick-episode-0006.json",
+      "sha256": "1f587d45f271b979a46495e94a24583ee93776a8e0f6fc295a46378ca93a3be2",
+      "bytes": 3347,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atoms/bendpicksim-episode-0001-counterexample.json",
+      "source": "skills/releases/central-20260916-v4/public/atoms/bendpicksim-episode-0001-counterexample.json",
+      "sha256": "f08eeedbb31ab6d789f6a90391f5b6453b6eab24fc16551d9402e822b8f98d11",
+      "bytes": 1410,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atoms/boxplace-episode-0003-counterexample.json",
+      "source": "skills/releases/central-20260916-v4/public/atoms/boxplace-episode-0003-counterexample.json",
+      "sha256": "9ee5605c3e349488e91f0f5722900ddcd6d4301243c1d76cf34d6ffffd557084",
+      "bytes": 1390,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atoms/boxplace-episode-0004.json",
+      "source": "skills/releases/central-20260916-v4/public/atoms/boxplace-episode-0004.json",
+      "sha256": "565f13e653e5e1087d83baa0305cd0fe2b433595f1925e658a3a58402a687e6b",
+      "bytes": 3491,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atoms/chair-episode-0001.json",
+      "source": "skills/releases/central-20260916-v4/public/atoms/chair-episode-0001.json",
+      "sha256": "42be092385e6c9df45e3882a12e2538d84ad3a2b8521f483208c4acdab17318f",
+      "bytes": 3475,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atoms/closedoor-episode-0001.json",
+      "source": "skills/releases/central-20260916-v4/public/atoms/closedoor-episode-0001.json",
+      "sha256": "136593c151cd24b2bd83c31162b55a6f456a130f70bf1ca0e0934d55b23e5123",
+      "bytes": 3594,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atoms/door-episode-0010.json",
+      "source": "skills/releases/central-20260916-v4/public/atoms/door-episode-0010.json",
+      "sha256": "4fb62161451f64490e382938b787dd51a98c43f4c9d2ecdc9afdab93a59afcbe",
+      "bytes": 3539,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atoms/door-episode-0011.json",
+      "source": "skills/releases/central-20260916-v4/public/atoms/door-episode-0011.json",
+      "sha256": "f35cbaa492782baf9ee2ff8219447539abeec1532f16a0d37acf96e9b07506a6",
+      "bytes": 3539,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atoms/door-episode-0012.json",
+      "source": "skills/releases/central-20260916-v4/public/atoms/door-episode-0012.json",
+      "sha256": "3faa2de9bf714398d0caba5f7e2aee88642585afd4c539efd8ec0c281fe22182",
+      "bytes": 3539,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atoms/door-episode-0013.json",
+      "source": "skills/releases/central-20260916-v4/public/atoms/door-episode-0013.json",
+      "sha256": "ea19c0ee3d95af486e21838b9536034ce9d895a224b8ca00677c84590cfdd909",
+      "bytes": 3539,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atoms/door-episode-0014.json",
+      "source": "skills/releases/central-20260916-v4/public/atoms/door-episode-0014.json",
+      "sha256": "1b7ad608a8ff6cc22840c99a7c362c07f1347847768de08dbc72145ecb518842",
+      "bytes": 3522,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atoms/door-episode-0016.json",
+      "source": "skills/releases/central-20260916-v4/public/atoms/door-episode-0016.json",
+      "sha256": "60d86b5a556d96c8c4a8934c3d99611ce0e3090c5ad357e9393d931859f1ffea",
+      "bytes": 3492,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atoms/door-episode-0017.json",
+      "source": "skills/releases/central-20260916-v4/public/atoms/door-episode-0017.json",
+      "sha256": "5f70ba6d7db4c511afa9a5a7111b7da3f089e67eff3efcaf600e385ed874ce83",
+      "bytes": 3539,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atoms/door-episode-0018.json",
+      "source": "skills/releases/central-20260916-v4/public/atoms/door-episode-0018.json",
+      "sha256": "f17f08aaefed70ed0544858da9451ac004c42334e40da9bf43def3ff742a1b3c",
+      "bytes": 3539,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atoms/door-episode-0019.json",
+      "source": "skills/releases/central-20260916-v4/public/atoms/door-episode-0019.json",
+      "sha256": "c8ce8fc03f1393b5d3c2be5bc594326aa079954da915188a1ef6637d58696401",
+      "bytes": 3539,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atoms/door-episode-0020.json",
+      "source": "skills/releases/central-20260916-v4/public/atoms/door-episode-0020.json",
+      "sha256": "67be940c26bec423431250a01ab8e92a734203d07e3540305d30b13682172e2e",
+      "bytes": 3539,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atoms/faucet-episode-0008.json",
+      "source": "skills/releases/central-20260916-v4/public/atoms/faucet-episode-0008.json",
+      "sha256": "a045832edc2e9cc096cff20c06017e9a2e20c531c4f732a4405316be40d844ef",
+      "bytes": 3344,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atoms/mobilecheezit-episode-0001-counterexample.json",
+      "source": "skills/releases/central-20260916-v4/public/atoms/mobilecheezit-episode-0001-counterexample.json",
+      "sha256": "dc8a7a285e3d55a45753afa7c1f213fecb5807fdfb7dc57d534a62c26825093d",
+      "bytes": 1544,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atoms/oven-episode-0001.json",
+      "source": "skills/releases/central-20260916-v4/public/atoms/oven-episode-0001.json",
+      "sha256": "6523caeec6c3877e5c9b98fc024f35be23681cd525ad684765916549ecd1318d",
+      "bytes": 3331,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atoms/trashcan-episode-0001.json",
+      "source": "skills/releases/central-20260916-v4/public/atoms/trashcan-episode-0001.json",
+      "sha256": "d16e657f946dbb3d009e4b3b9b1e80a25a0082ef09a57687560b62fd31bcd8dd",
+      "bytes": 3346,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atoms/xmovebendpick-episode-0001-counterexample.json",
+      "source": "skills/releases/central-20260916-v4/public/atoms/xmovebendpick-episode-0001-counterexample.json",
+      "sha256": "28d1f7adcedba54bebce8d58e1a1110599d6865924a1775292b8eda6d4cffbc4",
+      "bytes": 1436,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atoms/xmovebendpick-episode-0003.json",
+      "source": "skills/releases/central-20260916-v4/public/atoms/xmovebendpick-episode-0003.json",
+      "sha256": "fbea9e0de4b92e1122ba11f2d72f0a02e0094e5d183dd8fc8c2fc4427affc986",
+      "bytes": 3677,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atoms/xmovepick-episode-0003.json",
+      "source": "skills/releases/central-20260916-v4/public/atoms/xmovepick-episode-0003.json",
+      "sha256": "bb64a936da0140f65ce139116b3cebec9269749c4a21fa3dff59413a5691aa51",
+      "bytes": 3536,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/atoms/xmovepicksim-episode-0001.json",
+      "source": "skills/releases/central-20260916-v4/public/atoms/xmovepicksim-episode-0001.json",
+      "sha256": "b4ddc9986385c2a44169fdecd29726e4d9241d24e3eeed92144b146d4403fba1",
+      "bytes": 3606,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/core/SKILL.md",
+      "source": "skills/releases/central-20260916-v4/public/core/SKILL.md",
+      "sha256": "17329c8ecebe8c939e425df91fb3728ccb2d770cc978b182020339d39c089c8b",
+      "bytes": 2861,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/deltas/bendpick.md",
+      "source": "skills/releases/central-20260916-v4/public/deltas/bendpick.md",
+      "sha256": "31c11e67e8a7cacd15aee588207a2ff071644e470302905bd3fcf4bc9a4ef610",
+      "bytes": 898,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/deltas/grasp.md",
+      "source": "skills/releases/central-20260916-v4/public/deltas/grasp.md",
+      "sha256": "55bc835b2075f3879d16e0b9e268294184fe2c738075cfc2d67f3dcc93d14c32",
+      "bytes": 770,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/deltas/handover.md",
+      "source": "skills/releases/central-20260916-v4/public/deltas/handover.md",
+      "sha256": "58653a6268cf6c92fa9af5c11ce6931a15cab0130c22238a76444d04ca015aa9",
+      "bytes": 902,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/deltas/mobile.md",
+      "source": "skills/releases/central-20260916-v4/public/deltas/mobile.md",
+      "sha256": "926ad25bb1a02ae13747bfb990723c10ead90d83aabc831efbd9f1c33ffa5ba7",
+      "bytes": 936,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/deltas/xmovebendpick.md",
+      "source": "skills/releases/central-20260916-v4/public/deltas/xmovebendpick.md",
+      "sha256": "e0e7dd48b4915e2e76301d74687a8f4ffd7bc01dbf5190edd07076c8982e1ba5",
+      "bytes": 850,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/deltas/xmovepick.md",
+      "source": "skills/releases/central-20260916-v4/public/deltas/xmovepick.md",
+      "sha256": "9db446c3d306f6170e12124b73cf71e2a10ffde01fdbd9022e0c625b214fd276",
+      "bytes": 867,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/apple-episode-0008/0116/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/apple-episode-0008/0116/head_stereo_left.png",
+      "sha256": "0698275d9e7fb45c475dfbb1a5b85738d20084399816d90726ac724d980408de",
+      "bytes": 89091,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/apple-episode-0008/0116/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/apple-episode-0008/0116/head_stereo_right.png",
+      "sha256": "8a794f066accf536586efb947c0aaab03a04aeade56dd731188956a6745fbef1",
+      "bytes": 86954,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/apple-episode-0008/0117/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/apple-episode-0008/0117/head_stereo_left.png",
+      "sha256": "1ee44324f8f6cabc751fa00dd8f82ecd76fffe799477508791c539f5714a6149",
+      "bytes": 89993,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/apple-episode-0008/0117/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/apple-episode-0008/0117/head_stereo_right.png",
+      "sha256": "f2c0c3434dbf5c4a6db161ae9a0d25f8e677f3bea73285a65993f440f175b4c3",
+      "bytes": 86976,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/bendpick-episode-0006/0062/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/bendpick-episode-0006/0062/head_stereo_left.png",
+      "sha256": "62e34c1027e438abe35b2487ac6f7197548e79cd6714bfd6acafee798b03c7cd",
+      "bytes": 187873,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/bendpick-episode-0006/0062/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/bendpick-episode-0006/0062/head_stereo_right.png",
+      "sha256": "f13463d85fa5cf9eb71b35669aaff907c1dc8831d1ca1b424ae9acd5f42fa8f7",
+      "bytes": 188414,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/bendpick-episode-0006/0063/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/bendpick-episode-0006/0063/head_stereo_left.png",
+      "sha256": "933845484df2e90d5480514eabf29bdc3268f7b7f7e70d9f7ce8630a608b2854",
+      "bytes": 186425,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/bendpick-episode-0006/0063/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/bendpick-episode-0006/0063/head_stereo_right.png",
+      "sha256": "2752ac2543c4960a2b26715a09cf4d307ca80da725d55220d5b4426172da71cf",
+      "bytes": 188373,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/boxplace-episode-0004/0050/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/boxplace-episode-0004/0050/head_stereo_left.png",
+      "sha256": "7751936a8a6732de7eff18b68b1721ed2ba61921b16aa2c76e38196f1aa663b7",
+      "bytes": 189882,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/boxplace-episode-0004/0050/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/boxplace-episode-0004/0050/head_stereo_right.png",
+      "sha256": "fb7dddac8cd48d2121324428d99d740087c108825f30b73fbca69812800cb12c",
+      "bytes": 189508,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/boxplace-episode-0004/0051/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/boxplace-episode-0004/0051/head_stereo_left.png",
+      "sha256": "37898e2a138e3e0a5236ee255ef97d11828cbfa25ddc4329688841534dbc5d21",
+      "bytes": 193419,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/boxplace-episode-0004/0051/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/boxplace-episode-0004/0051/head_stereo_right.png",
+      "sha256": "0b0c8c5f00d8157593e43b0317d49022d5c0ffe6d7abc1c4a08c2cd199dd22bc",
+      "bytes": 191444,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/chair-episode-0001/0037/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/chair-episode-0001/0037/head_stereo_left.png",
+      "sha256": "24c0b44a5bd7d050196a662af60ff7c735d1e96ff142dcdd0459acb0b0447139",
+      "bytes": 169878,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/chair-episode-0001/0037/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/chair-episode-0001/0037/head_stereo_right.png",
+      "sha256": "0ab6c824dc61b3222ba7009cf6d3dac32511713fbd0d4ce4032c27f4e0969390",
+      "bytes": 168809,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/chair-episode-0001/0038/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/chair-episode-0001/0038/head_stereo_left.png",
+      "sha256": "ca5eb670ef97fad94195234854348097bce510a28cd216caa9beafd5937d8647",
+      "bytes": 178189,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/chair-episode-0001/0038/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/chair-episode-0001/0038/head_stereo_right.png",
+      "sha256": "2f04794d03e7b415f2a7e25595e4e56681723c2f5f9e2ad97385bbcdb1af82e6",
+      "bytes": 177796,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/closedoor-episode-0001/0040/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/closedoor-episode-0001/0040/head_stereo_left.png",
+      "sha256": "be0f4380b59b8cc8f455bf9c6454313a103a15ad8eb85f0250ebfe29af4c16af",
+      "bytes": 123303,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/closedoor-episode-0001/0040/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/closedoor-episode-0001/0040/head_stereo_right.png",
+      "sha256": "b94630a1f9a5daac7f23de5ea89b6a7913942a3e805eca47117afe5e9cd07cf9",
+      "bytes": 123887,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/closedoor-episode-0001/0041/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/closedoor-episode-0001/0041/head_stereo_left.png",
+      "sha256": "faba6cd3f2b10b9e5b1b0840a991525b5b41e949336bb24e817686c8bb5ea8fc",
+      "bytes": 131121,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/closedoor-episode-0001/0041/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/closedoor-episode-0001/0041/head_stereo_right.png",
+      "sha256": "a13e943cbf890059032cea64e3e9d522a5b20e1567c3ac422eb31894d67aa496",
+      "bytes": 129430,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0010/0017/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0010/0017/head_stereo_left.png",
+      "sha256": "5614c18dd31869603f118e7cbb24c830d3d0f79e4ef9d15c9facbaf3637c0d40",
+      "bytes": 135947,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0010/0017/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0010/0017/head_stereo_right.png",
+      "sha256": "3fa2b9ac4ee8b248132d5d0ed14b7b2586c29bbb2b7e7d40039954147c65b543",
+      "bytes": 133498,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0010/0018/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0010/0018/head_stereo_left.png",
+      "sha256": "ba4a44ad48feaa26341e9591ba2bceee787a0809e80ac9ab31b691b1f957ac68",
+      "bytes": 140268,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0010/0018/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0010/0018/head_stereo_right.png",
+      "sha256": "8191e31b7262c82a0ab0eaa236f7d12ecef6592f8b631365e5f705908b2eacff",
+      "bytes": 137795,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0011/0027/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0011/0027/head_stereo_left.png",
+      "sha256": "242f16dfdb48c895b854baf94524975f4bfe726da2d956945209459196e7a775",
+      "bytes": 131868,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0011/0027/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0011/0027/head_stereo_right.png",
+      "sha256": "c80f5e2e6c3a43309ec290306181473242f1f9971b1f5d5a8fdfbd655f4f15de",
+      "bytes": 133105,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0011/0028/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0011/0028/head_stereo_left.png",
+      "sha256": "71fe44ce95edccb80cd9af2f78708d33a0e3fdffad4d376a85ae42e6561fb23a",
+      "bytes": 138405,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0011/0028/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0011/0028/head_stereo_right.png",
+      "sha256": "92a020b8430beccda9519466e8b053322284b8120460a9df5d1c5b7dfe2718c3",
+      "bytes": 139427,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0012/0030/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0012/0030/head_stereo_left.png",
+      "sha256": "51a9737e7e4f65168cf87d6aa820147d4c0cd323b441e5c8d876b54eb79a7b2d",
+      "bytes": 117721,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0012/0030/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0012/0030/head_stereo_right.png",
+      "sha256": "7d979eb79f0e9e317a0d340c84c500dcb7efd963cfc57488d627e24fbfb639bf",
+      "bytes": 117381,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0012/0031/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0012/0031/head_stereo_left.png",
+      "sha256": "2f7bd607f723119af828a20804cbe18b1144321038b0ff50e01bb274bc28f8ce",
+      "bytes": 122089,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0012/0031/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0012/0031/head_stereo_right.png",
+      "sha256": "e714a3175c7de639d11e455d485c917a8d2d4cd1b29d973d314b46e240b37fe2",
+      "bytes": 122760,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0013/0033/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0013/0033/head_stereo_left.png",
+      "sha256": "a1be13259cddf2d8b29e113db9b679450b6ab3624dd6a5ae3a43cb9657d02028",
+      "bytes": 133199,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0013/0033/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0013/0033/head_stereo_right.png",
+      "sha256": "af2a635f973c53d6447e29e318efc6456488d07d2172439fa95219b56fbaf0d5",
+      "bytes": 133934,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0013/0034/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0013/0034/head_stereo_left.png",
+      "sha256": "ac42ee5a3e547bb06307888fc0878cec8f2c596636821d538168e5e8ad0d0564",
+      "bytes": 137983,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0013/0034/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0013/0034/head_stereo_right.png",
+      "sha256": "9c1dfd033137a3e4dab10ceb4f55a436692fe91411c4e5d2270c5ee776116b74",
+      "bytes": 139598,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0014/0022/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0014/0022/head_stereo_left.png",
+      "sha256": "4a32bdf402bcc348d3f420aaf021410e07204bae9bbebb4f311387526c792af7",
+      "bytes": 109397,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0014/0022/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0014/0022/head_stereo_right.png",
+      "sha256": "1cc24c266fa98e5462399de40bc38422179eac054b1104a4da26c1d3b789f784",
+      "bytes": 108040,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0014/0023/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0014/0023/head_stereo_left.png",
+      "sha256": "450f772268b9341bd57c4a9f71e4246cf2baf3995fa111c844c6a09b18af4847",
+      "bytes": 109548,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0014/0023/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0014/0023/head_stereo_right.png",
+      "sha256": "86d8bd4d813a6c8124c70781726ac904ac815ca9890fec7affb2d2e5ae17242e",
+      "bytes": 108915,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0016/0024/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0016/0024/head_stereo_left.png",
+      "sha256": "145a1e9dcad84f2a8edcb822e84da74c2a8404a10aaa2f1699fac09ec319e033",
+      "bytes": 138267,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0016/0024/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0016/0024/head_stereo_right.png",
+      "sha256": "4cec769d8a8675e1023b35840f1490787b61936837502438fdee5a4f5d37e959",
+      "bytes": 134927,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0016/0025/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0016/0025/head_stereo_left.png",
+      "sha256": "7a25f1e578576a2ba46b1cb168efdaa30c00fa2cdafee6690d4af3348972e28b",
+      "bytes": 141173,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0016/0025/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0016/0025/head_stereo_right.png",
+      "sha256": "f30f40e379d6d5c485b3cde9f3491c7fd52005781a2776230252202e63c1e65b",
+      "bytes": 136476,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0017/0033/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0017/0033/head_stereo_left.png",
+      "sha256": "cfc575f0df1fb8e38170032656cd0ba65e720d945feece9942757ac11aefaf87",
+      "bytes": 132066,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0017/0033/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0017/0033/head_stereo_right.png",
+      "sha256": "3cd4e3133fc7986c2344d74ad5273a7e9e7e1fa18c8e8a6db709f3fdea051bb2",
+      "bytes": 126793,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0017/0034/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0017/0034/head_stereo_left.png",
+      "sha256": "5eba02fb9ad8aeae96820b883455c3bcdd9965136896e2bb789d854e8e643d3e",
+      "bytes": 132213,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0017/0034/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0017/0034/head_stereo_right.png",
+      "sha256": "f1beab166a043c24397c8e6d250f59ba8b4603a92022d2bfd27669fad9da7654",
+      "bytes": 130176,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0018/0027/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0018/0027/head_stereo_left.png",
+      "sha256": "10d2d285e79f0e6b79ae13eaa518de791f755832808f0368d18b723993d406e7",
+      "bytes": 144586,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0018/0027/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0018/0027/head_stereo_right.png",
+      "sha256": "53615f694c81e3d61f142e285c396b845f6fdbb79b2814f630d962dd8d143bfc",
+      "bytes": 145482,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0018/0028/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0018/0028/head_stereo_left.png",
+      "sha256": "ac37ed7f477ed896935f1a40ddb25a07deea3fe373323f612c7b1427c8265bcc",
+      "bytes": 148424,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0018/0028/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0018/0028/head_stereo_right.png",
+      "sha256": "77988e2e6344eaab783d752409b4ef6c9795e18f32d7afe5a1189abbbd4ad8d6",
+      "bytes": 149626,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0019/0017/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0019/0017/head_stereo_left.png",
+      "sha256": "a15036abfaef50fb0b03e780e56a3e420021143d74d09aadfda2c1a202ff66cc",
+      "bytes": 103768,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0019/0017/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0019/0017/head_stereo_right.png",
+      "sha256": "47da1e95359858d1205ba8f0f4c33c5be5d6211f7978857ad73423d9354035cb",
+      "bytes": 108726,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0019/0018/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0019/0018/head_stereo_left.png",
+      "sha256": "0e1d4f524b437b79ef56c3629afd6159dc5390366596b48a89c5b9ad027cc2ee",
+      "bytes": 101661,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0019/0018/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0019/0018/head_stereo_right.png",
+      "sha256": "561193be127dd67ea43be905413fe7dcb3b9f1fc9b8116780344c95c7d8f3d44",
+      "bytes": 107703,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0020/0038/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0020/0038/head_stereo_left.png",
+      "sha256": "ed588946741c5072e12ef37f3f1a5d7fb512a1522c09a80ff0840228913ad5d7",
+      "bytes": 126489,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0020/0038/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0020/0038/head_stereo_right.png",
+      "sha256": "515ce2a035dbe83cd8d3cf15a5d45f3d6615c784ab82db06715f6d1b12aacb89",
+      "bytes": 129159,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0020/0039/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0020/0039/head_stereo_left.png",
+      "sha256": "9b3a81d1cf134920b37ce2215218cdc647125512edff2f6e6b7f5f960ab5d862",
+      "bytes": 135671,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/door-episode-0020/0039/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/door-episode-0020/0039/head_stereo_right.png",
+      "sha256": "b09f3b6d0bb831b17381add0cc604a1d6a930700f74a7e6c73d752520b3c69c5",
+      "bytes": 138876,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/faucet-episode-0008/0010/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/faucet-episode-0008/0010/head_stereo_left.png",
+      "sha256": "c69d68b612ed6af4913dab98fc887ea19534b9c28bad3f0f508b9284e24414cc",
+      "bytes": 151715,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/faucet-episode-0008/0010/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/faucet-episode-0008/0010/head_stereo_right.png",
+      "sha256": "dd6d0ed9d8ca5176f25253499cff056d77f2652ecfeea9431897313661743e15",
+      "bytes": 151373,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/faucet-episode-0008/0011/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/faucet-episode-0008/0011/head_stereo_left.png",
+      "sha256": "c907e8fc92a623a059fa15651c6b247d101eb204e8f5a33ac5e481f24b518a67",
+      "bytes": 151144,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/faucet-episode-0008/0011/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/faucet-episode-0008/0011/head_stereo_right.png",
+      "sha256": "47d60e73b51f82e94705ff3a2b95ba425650674e561641b56e3388574887b8cd",
+      "bytes": 150852,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/oven-episode-0001/0013/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/oven-episode-0001/0013/head_stereo_left.png",
+      "sha256": "2bfa210b019aa3e8ff0f2cbb2876f112e8f735a18fdaf16ade589bbb0aef8075",
+      "bytes": 163465,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/oven-episode-0001/0013/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/oven-episode-0001/0013/head_stereo_right.png",
+      "sha256": "8a088c2662743d52d54190af8e8eba8e4582e2e215655d34c4b4a36e787db4eb",
+      "bytes": 164214,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/oven-episode-0001/0014/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/oven-episode-0001/0014/head_stereo_left.png",
+      "sha256": "8f214cd76d2abc6e8fc332df30fef233cd88362c3ef1d83fa551b598dcc5c031",
+      "bytes": 144923,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/oven-episode-0001/0014/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/oven-episode-0001/0014/head_stereo_right.png",
+      "sha256": "df0fd405c8ae0868a1535102655f16fc61b1e08f157700e246b3c3f0912d0d73",
+      "bytes": 144809,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/trashcan-episode-0001/0004/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/trashcan-episode-0001/0004/head_stereo_left.png",
+      "sha256": "47b47109d09809d28c0ea3dcb2d75abc9ecc6ec1d51b5e225b068a92f5aa9c19",
+      "bytes": 167712,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/trashcan-episode-0001/0004/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/trashcan-episode-0001/0004/head_stereo_right.png",
+      "sha256": "91797b0bcf83a4ba0376ca2f9ae456ae20be4c6e6d4315f4fb44785dbd109b6c",
+      "bytes": 165750,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/trashcan-episode-0001/0005/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/trashcan-episode-0001/0005/head_stereo_left.png",
+      "sha256": "d36eb3bc576812d0d0bcc2d68965dec3deb63c51ce709909704c1c8eb6a6eacf",
+      "bytes": 171445,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/trashcan-episode-0001/0005/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/trashcan-episode-0001/0005/head_stereo_right.png",
+      "sha256": "af3b60e65f0f155f64226ffea14c9bb7d4c9f732556f900320cf2ca4465b1fdc",
+      "bytes": 171465,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/xmovebendpick-episode-0003/0066/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/xmovebendpick-episode-0003/0066/head_stereo_left.png",
+      "sha256": "4874631149008f705e0c3f685cc48055ed535d9aad3a142e69d54537f9ac9880",
+      "bytes": 169007,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/xmovebendpick-episode-0003/0066/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/xmovebendpick-episode-0003/0066/head_stereo_right.png",
+      "sha256": "e5be784be0ca7acd4233752dd77b0e52236a7321bf627f9584061d9e358eee8e",
+      "bytes": 170692,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/xmovebendpick-episode-0003/0067/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/xmovebendpick-episode-0003/0067/head_stereo_left.png",
+      "sha256": "ef0c91474cc5fc0ea574f73ccb3beec3e758a25227c649645666d4a6fc5a55b0",
+      "bytes": 163098,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/xmovebendpick-episode-0003/0067/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/xmovebendpick-episode-0003/0067/head_stereo_right.png",
+      "sha256": "f2dc93e1cc07baabd7a81ced19fb3f36c058cf8e181b27c942fde17fd64ed731",
+      "bytes": 164595,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/xmovepick-episode-0003/0030/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/xmovepick-episode-0003/0030/head_stereo_left.png",
+      "sha256": "6c0428d301d43c0b4db35a48587725539254fecd3e2616efc645a5fdc5e0e906",
+      "bytes": 177369,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/xmovepick-episode-0003/0030/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/xmovepick-episode-0003/0030/head_stereo_right.png",
+      "sha256": "fd51e108a9f9969819ae5feccd78591b73281f8c1d988f482e2ee6720c847792",
+      "bytes": 177023,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/xmovepick-episode-0003/0031/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/xmovepick-episode-0003/0031/head_stereo_left.png",
+      "sha256": "2694ef69b8d948f7ea805e39e0dbbf4efeaef87d045e4559d2bceb12a2d43c6c",
+      "bytes": 181144,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/xmovepick-episode-0003/0031/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/xmovepick-episode-0003/0031/head_stereo_right.png",
+      "sha256": "1f8ba826601ef88a53f7a2c6c6db326461aa764d55609e84a73306be8462afb7",
+      "bytes": 180536,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/xmovepicksim-episode-0001/0037/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/xmovepicksim-episode-0001/0037/head_stereo_left.png",
+      "sha256": "3781fd90f06a55ef5d1a17be70fce9b506e265882a42f7790d500a8733dc6f27",
+      "bytes": 119773,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/xmovepicksim-episode-0001/0037/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/xmovepicksim-episode-0001/0037/head_stereo_right.png",
+      "sha256": "69314ff52e2bc405272367aec45787b94b8449bb18fc8977ce9165c417793e75",
+      "bytes": 114842,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/xmovepicksim-episode-0001/0038/head_stereo_left.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/xmovepicksim-episode-0001/0038/head_stereo_left.png",
+      "sha256": "d9211f1f2a53be44a2bb0d0a358ac538d29330fc2afe234b3806e6033bd5ad1d",
+      "bytes": 119527,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/evidence/xmovepicksim-episode-0001/0038/head_stereo_right.png",
+      "source": "skills/releases/central-20260916-v4/public/evidence/xmovepicksim-episode-0001/0038/head_stereo_right.png",
+      "sha256": "9e0f3a29fcc37fb00755cd19c6362967bc8820e581add756c26da9c048b735f0",
+      "bytes": 113818,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/table-cube-foundation.json",
+      "source": "skills/releases/central-20260916-v4/public/table-cube-foundation.json",
+      "sha256": "31983ec394e0a4d81c822d2f425d02689166a7dc417176f55b91fe22a2bb3298",
+      "bytes": 946,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/tasks/bendpick/SKILL.md",
+      "source": "skills/releases/central-20260916-v4/public/tasks/bendpick/SKILL.md",
+      "sha256": "37675b0fc24bbbd31fb9dfd0f7c205a59125989b934cf585b703b9691d59c00e",
+      "bytes": 3762,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/tasks/bendpick/memory/versions/0000.md",
+      "source": "skills/releases/central-20260916-v4/public/tasks/bendpick/memory/versions/0000.md",
+      "sha256": "37675b0fc24bbbd31fb9dfd0f7c205a59125989b934cf585b703b9691d59c00e",
+      "bytes": 3762,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/tasks/bendpick/retrieval-labels.json",
+      "source": "skills/releases/central-20260916-v4/public/tasks/bendpick/retrieval-labels.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/tasks/grasp/SKILL.md",
+      "source": "skills/releases/central-20260916-v4/public/tasks/grasp/SKILL.md",
+      "sha256": "8e3d1e17e4e3e99c89ae05d40c77d19e901ec38b263480068d6dc1047b39bf4a",
+      "bytes": 3634,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/tasks/grasp/memory/versions/0000.md",
+      "source": "skills/releases/central-20260916-v4/public/tasks/grasp/memory/versions/0000.md",
+      "sha256": "8e3d1e17e4e3e99c89ae05d40c77d19e901ec38b263480068d6dc1047b39bf4a",
+      "bytes": 3634,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/tasks/grasp/retrieval-labels.json",
+      "source": "skills/releases/central-20260916-v4/public/tasks/grasp/retrieval-labels.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/tasks/handover/SKILL.md",
+      "source": "skills/releases/central-20260916-v4/public/tasks/handover/SKILL.md",
+      "sha256": "191cfd21669cc1b1048893609f3c3a8ff7bfe54e5a0a164e033140ad29ce56b1",
+      "bytes": 3743,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/tasks/handover/memory/versions/0000.md",
+      "source": "skills/releases/central-20260916-v4/public/tasks/handover/memory/versions/0000.md",
+      "sha256": "191cfd21669cc1b1048893609f3c3a8ff7bfe54e5a0a164e033140ad29ce56b1",
+      "bytes": 3743,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/tasks/handover/retrieval-labels.json",
+      "source": "skills/releases/central-20260916-v4/public/tasks/handover/retrieval-labels.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/tasks/mobile/SKILL.md",
+      "source": "skills/releases/central-20260916-v4/public/tasks/mobile/SKILL.md",
+      "sha256": "958c26619b0216785c9d0afe0102474048eb78abfed77f877d8289cfa8a2dc6d",
+      "bytes": 3800,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/tasks/mobile/memory/versions/0000.md",
+      "source": "skills/releases/central-20260916-v4/public/tasks/mobile/memory/versions/0000.md",
+      "sha256": "958c26619b0216785c9d0afe0102474048eb78abfed77f877d8289cfa8a2dc6d",
+      "bytes": 3800,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/tasks/mobile/retrieval-labels.json",
+      "source": "skills/releases/central-20260916-v4/public/tasks/mobile/retrieval-labels.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/tasks/xmovebendpick/SKILL.md",
+      "source": "skills/releases/central-20260916-v4/public/tasks/xmovebendpick/SKILL.md",
+      "sha256": "d783fca34c417fe0d919d7178724cc805b20c3c3768339013f1b8b2d8c1c4d6f",
+      "bytes": 4083,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/tasks/xmovebendpick/memory/versions/0000.md",
+      "source": "skills/releases/central-20260916-v4/public/tasks/xmovebendpick/memory/versions/0000.md",
+      "sha256": "d783fca34c417fe0d919d7178724cc805b20c3c3768339013f1b8b2d8c1c4d6f",
+      "bytes": 4083,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/tasks/xmovebendpick/retrieval-labels.json",
+      "source": "skills/releases/central-20260916-v4/public/tasks/xmovebendpick/retrieval-labels.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/tasks/xmovepick/SKILL.md",
+      "source": "skills/releases/central-20260916-v4/public/tasks/xmovepick/SKILL.md",
+      "sha256": "3499ec320e48c83c66bcee8545fa93cfe1cd07148da6c7b49b9702aba3f67005",
+      "bytes": 3990,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/tasks/xmovepick/memory/versions/0000.md",
+      "source": "skills/releases/central-20260916-v4/public/tasks/xmovepick/memory/versions/0000.md",
+      "sha256": "3499ec320e48c83c66bcee8545fa93cfe1cd07148da6c7b49b9702aba3f67005",
+      "bytes": 3990,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/public/tasks/xmovepick/retrieval-labels.json",
+      "source": "skills/releases/central-20260916-v4/public/tasks/xmovepick/retrieval-labels.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "bytes": 3,
+      "mode": 436
+    },
+    {
+      "path": "skills/releases/central-20260916-v4/release.json",
+      "source": "skills/releases/central-20260916-v4/release.json",
+      "sha256": "8bcedb699ddb702c08b751a9d8e134af6c8c938c2560b8fcc018cfefda475073",
+      "bytes": 25755,
+      "mode": 436
+    },
+    {
+      "path": "tests/test_frozen_skill.py",
+      "source": "tests/test_frozen_skill.py",
+      "sha256": "08ee57c3930d86516fa8d4ad56535041b0fff8c43615c8c3ceac2a2455a6d46c",
+      "bytes": 4710,
+      "mode": 436
+    },
+    {
+      "path": "tests/test_skill_release.py",
+      "source": "tests/test_skill_release.py",
+      "sha256": "dd88c0306a7de6cd0637429ed9f89acec5d506cf4132d5ed96edf20b7718696e",
+      "bytes": 7708,
+      "mode": 436
+    },
+    {
+      "path": "tools/learn_grasp_skill.py",
+      "source": "tools/learn_grasp_skill.py",
+      "sha256": "fcd6447cbea1c7617e869d894653e3b7b30f80aef343e467bc5c75dd2538a868",
+      "bytes": 30114,
+      "mode": 436
+    },
+    {
+      "path": "tools/learn_simple_task.py",
+      "source": "tools/learn_simple_task.py",
+      "sha256": "88c341025925215401e14eb67d572e05824f6411d086cd7cd71f62f1b533d207",
+      "bytes": 19748,
+      "mode": 436
+    }
+  ],
+  "files_count": 177,
+  "bytes": 12663835,
+  "unresolved_sensitive_items": 0,
+  "png_policy_reference_frames": 84,
+  "first_physical_load_confirmed": false,
+  "new_global_directive_implementation": "delegated, not asserted by snapshot"
+}

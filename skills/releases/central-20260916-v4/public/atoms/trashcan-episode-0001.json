@@ -1,0 +1,66 @@
+{
+  "id": "trashcan-episode-0001",
+  "status": "audited_source",
+  "env_id": "simple/G1WholebodyOpenTrashCanTeleop-v0",
+  "source_episode": "artifacts/R019/trashcan-campaign/episode-0001",
+  "source_access": "Original paths are provenance only; read only frozen files explicitly listed in workspace.",
+  "skill_version": 1,
+  "source_skill": "/home/galbot/lizekai/RSI/artifacts/R019/trashcan-campaign/memory/versions/0001.md",
+  "source_skill_sha256": "168b991d365e020bca694c358f2f12bed2194673660c55c35ad30eb14eb1e4b4",
+  "phases": [
+    "support",
+    "articulated_contact"
+  ],
+  "preconditions": "Lid edge already within stationary reach; current visual lid/rim geometry and native Dex3 clearance confirmed.",
+  "action_categories": [
+    "support",
+    "articulated_contact"
+  ],
+  "principle": "Test a short upward open-finger interaction, follow visible lid-versus-rim separation using achieved hand posture even when commanded orientation undertracks.",
+  "exit_evidence": "Five public actions and stereo5 show lifted lid and native terminal; endpoints of supports remained steady.",
+  "action_range": [
+    1,
+    5
+  ],
+  "range_scope": "whole successful episode, not a claim that every action is an effective atomic skill",
+  "public_observation_range": [
+    "0004",
+    "0005"
+  ],
+  "public_evidence": [
+    {
+      "path": "evidence/trashcan-episode-0001/0004/head_stereo_left.png",
+      "sha256": "47b47109d09809d28c0ea3dcb2d75abc9ecc6ec1d51b5e225b068a92f5aa9c19",
+      "original_public_path": "/home/galbot/lizekai/RSI/artifacts/R019/trashcan-campaign/episode-0001/rollout/episode/observations/0004/head_stereo_left.png"
+    },
+    {
+      "path": "evidence/trashcan-episode-0001/0004/head_stereo_right.png",
+      "sha256": "91797b0bcf83a4ba0376ca2f9ae456ae20be4c6e6d4315f4fb44785dbd109b6c",
+      "original_public_path": "/home/galbot/lizekai/RSI/artifacts/R019/trashcan-campaign/episode-0001/rollout/episode/observations/0004/head_stereo_right.png"
+    },
+    {
+      "path": "evidence/trashcan-episode-0001/0005/head_stereo_left.png",
+      "sha256": "d36eb3bc576812d0d0bcc2d68965dec3deb63c51ce709909704c1c8eb6a6eacf",
+      "original_public_path": "/home/galbot/lizekai/RSI/artifacts/R019/trashcan-campaign/episode-0001/rollout/episode/observations/0005/head_stereo_left.png"
+    },
+    {
+      "path": "evidence/trashcan-episode-0001/0005/head_stereo_right.png",
+      "sha256": "af3b60e65f0f155f64226ffea14c9bb7d4c9f732556f900320cf2ca4465b1fdc",
+      "original_public_path": "/home/galbot/lizekai/RSI/artifacts/R019/trashcan-campaign/episode-0001/rollout/episode/observations/0005/head_stereo_right.png"
+    }
+  ],
+  "control_contract": {
+    "controller": "model_38000 UMI-4",
+    "pd_profile": "checkpoint",
+    "hand": "native Dex3 mesh",
+    "coordinates": "named world metres; unit wxyz",
+    "timing": "50Hz tracker/200Hz MuJoCo; physics paused for reasoning"
+  },
+  "human_feedback_used": false,
+  "human_demonstration_used": false,
+  "feedback_source": null,
+  "when_not_to_use": "Not retained handle grasp, post-release hold, approach gait or arbitrary lid opening direction; no numeric pose transfer.",
+  "unverified": "No new cross-task outcome, loaded locomotion or true handover established by this index.",
+  "completion_contract": "native_simple_criterion",
+  "path": "atoms/trashcan-episode-0001.json"
+}

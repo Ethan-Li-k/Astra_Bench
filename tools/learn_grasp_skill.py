@@ -55,13 +55,23 @@ class LearningHost(LocoManipToolHost):
                  backend_factory=create_settled_backend, evaluator_factory=GraspLiftEvaluator,
                  image_capture_factory=None, support_plane_z_m=.630,
                  geometry_provider=finger_geometry, max_episode_steps=6000,
-                 require_selection=False):
+                 require_selection=False, execution_profile=None):
         super().__init__(output/'rollout', backend_factory,
             evaluator_factory=evaluator_factory,
             image_capture_factory=image_capture_factory or (lambda b: EpisodeVideo(b, output/'video',
                 label='Astra/xhigh | self-learning Direct | no human demonstration')))
         self.task, self.support_plane_z_m = task, support_plane_z_m
         self.geometry_provider = geometry_provider
+        profile = execution_profile or {'id':'legacy-finite-v1', 'phase':'legacy',
+            'max_episode_steps':max_episode_steps, 'checkpoint_steps':12000}
+        if profile.get('id') == 'learning-horizon-v1':
+            if profile.get('phase') not in ('learning','stability') or max_episode_steps is not None:
+                raise ValueError('Learning horizon requires a non-terminating cumulative budget')
+        elif type(max_episode_steps) is not int or max_episode_steps <= 0:
+            raise ValueError('Finite execution requires a positive step budget')
+        if profile.get('max_episode_steps') != max_episode_steps:
+            raise ValueError('Execution profile and budget disagree')
+        self.execution_profile = dict(profile)
         self.max_episode_steps = max_episode_steps
         self.episode_start_sim_s = 5.  # overwritten by the actual loco_start observation
         self.output, self.memory, self.episode_id = output, memory, episode_id
@@ -218,12 +228,15 @@ class LearningHost(LocoManipToolHost):
             steps = round((float(self.backend.data.time)-self.episode_start_sim_s)/.02)
             if native in ('success', 'failure'):
                 self.stop_reason = 'native_'+native
-            elif steps >= self.max_episode_steps:
+            elif self.max_episode_steps is not None and steps >= self.max_episode_steps:
                 self.stop_reason = 'episode_step_budget'
             self.finished = self.stop_reason is not None
             packet.update(native_outcome=native, rollout_finished=self.finished,
                 stop_reason=self.stop_reason, step_id=steps, max_episode_steps=self.max_episode_steps,
-                remaining_steps=max(0, self.max_episode_steps-steps), successes_so_far=self.successes,
+                remaining_steps=(None if self.max_episode_steps is None else max(0, self.max_episode_steps-steps)),
+                execution_profile=self.execution_profile,
+                progress_checkpoint=steps//self.execution_profile['checkpoint_steps'],
+                successes_so_far=self.successes,
                 next_call=self.next_call())
             if 'observation' in packet:
                 if self.geometry_provider is not None:
@@ -247,7 +260,7 @@ class LearningHost(LocoManipToolHost):
 def run_episode(output, memory, episode_id, successes, *, host_factory=LearningHost,
                 python=PYTHON, required_successes=10, transfer_sources=(),
                 task_specification=None, skill_sources=None, protocol_registration=None,
-                frozen_context=None, preflight_only=False):
+                frozen_context=None, preflight_only=False, expected_instruction_sources=None):
     prompt = memory.skill.read_text()
     immutable = ('\nRuntime: use gpt-6-astra/xhigh. All physical actions must use the registered '
         'services. Never inspect or modify hidden evaluator state, simulator objects, runtime '
@@ -273,7 +286,9 @@ def run_episode(output, memory, episode_id, successes, *, host_factory=LearningH
         'a stall and changed hypothesis but does NOT terminate physical execution. '
         'Use its returned current observation to test a changed safe approach in this '
         'episode. Native success/failure, runtime safety/system faults and the physical '
-        'budget remain terminal. Never interpret reasoning delay as a stop condition.\n')
+        'finite evaluation budget remain terminal. Learning-horizon checkpoints do not end '
+        'execution. Never interpret reasoning delay as a stop condition. Terminal skill_update '
+        'saves a proposal; only central publication changes loaded skills.\n')
     if frozen_context is not None:
         start = immutable.index('The self-experience archive')
         end = immutable.index('Read workspace.json.')
@@ -353,7 +368,7 @@ def run_episode(output, memory, episode_id, successes, *, host_factory=LearningH
 
     adapter = CodexPolicyAdapter(transport, host, agent,
         developer_instructions=prompt+immutable, normal_tools=True,
-        terminal_callback=record_terminal)
+        terminal_callback=record_terminal,expected_instruction_sources=expected_instruction_sources)
     started = time.monotonic(); error = None
     try:
         adapter.connect()
@@ -375,6 +390,7 @@ def run_episode(output, memory, episode_id, successes, *, host_factory=LearningH
         error = ('BackendExecutionError: '+host.execution_error['error'])
     result = {'success': native == 'success' and error is None, 'native_outcome': native,
         'episode_id': episode_id, 'skill_updated': host.skill_updated,
+        'execution_profile':getattr(host,'execution_profile',None),
         'error': error, 'stop_reason': host.stop_reason, 'model': 'gpt-6-astra', 'effort': 'xhigh',
         'backend_stop_reason':getattr(host.backend,'reason',None),
         'account_route': 'authorized_account_2', 'codex_launcher': str(CODEX_LAUNCHER),

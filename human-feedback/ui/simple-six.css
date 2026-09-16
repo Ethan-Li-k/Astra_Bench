@@ -9,3 +9,12 @@ body[data-view=simple-six] header a{font-size:12px}
 #six-help{font-size:13px;margin:12px 0 8px;padding:10px 14px}#six-help a{margin-left:10px;white-space:nowrap}#six-help button{display:block}
 @media(max-width:1000px){#six-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){#six-cards{grid-template-columns:1fr}.six-card{padding:12px 14px}}
+#official-reference{background:white;border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin:10px 0}
+#official-reference>p{font-size:12px}#baseline-scroll{overflow-x:auto;margin:12px 0;max-width:100%}
+#official-table{border-collapse:collapse;width:100%;min-width:1030px;font-size:12px;line-height:1.6}
+#official-table caption{text-align:left;font-weight:650;padding:8px 0}#official-table th,#official-table td{border:1px solid var(--border);padding:7px 8px;text-align:left}
+#official-table thead{background:#edf3fb}#official-table tbody th{white-space:nowrap}#official-table td{white-space:nowrap;font-variant-numeric:tabular-nums}
+#official-table .our-benchmark{background:#fff5dd}#official-table .our-benchmark td{white-space:normal;min-width:145px}#official-table .our-benchmark span{display:block;margin:4px 0;font-size:11px}
+.benchmark-levels{border-left:2px solid #d6e1ef;padding-left:7px;margin:5px 0}.benchmark-levels .fine{font-size:11px;line-height:1.45}
+.six-card{padding:9px 14px}.six-card p{margin:3px 0}.six-card .six-phase{margin:2px 0 5px}.six-blocker{min-height:0;line-height:1.45}.six-card details{margin-top:5px}
+.six-current{font-size:14px;font-weight:700;color:#21476c}.six-frame{display:block;padding:0;margin:5px 0;border:0;background:none;color:var(--blue);font-size:12px;text-decoration:underline}

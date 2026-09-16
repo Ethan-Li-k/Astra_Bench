@@ -1,0 +1,102 @@
+{
+  "at": "2026-09-16T14:04:01.061514+00:00",
+  "status": "published_runtime_integrated_awaiting_first_physical_load",
+  "release": {
+    "release_id": "central-20260916-v4",
+    "manifest_sha256": "8bcedb699ddb702c08b751a9d8e134af6c8c938c2560b8fcc018cfefda475073"
+  },
+  "release_path": "/home/galbot/lizekai/RSI/skills/releases/central-20260916-v4",
+  "account": 2,
+  "provider": "openai",
+  "model": "gpt-6-astra",
+  "effort": "xhigh",
+  "launcher": "/home/galbot/lizekai/RSI/codex-account-2/run.sh",
+  "authorization": "ownership-ack.json root assignment; SIMPLE direct ACK absent",
+  "changed_live_files": [
+    {
+      "path": "tools/learn_simple_task.py",
+      "sha256": "88c341025925215401e14eb67d572e05824f6411d086cd7cd71f62f1b533d207"
+    },
+    {
+      "path": "tools/learn_grasp_skill.py",
+      "sha256": "fcd6447cbea1c7617e869d894653e3b7b30f80aef343e467bc5c75dd2538a868"
+    },
+    {
+      "path": "rsi/skill_release.py",
+      "sha256": "e30716e764eeb78586355b1f3ebb206b021fc618c21199722ba7c243fd6ffd8b"
+    },
+    {
+      "path": "tests/test_skill_release.py",
+      "sha256": "dd88c0306a7de6cd0637429ed9f89acec5d506cf4132d5ed96edf20b7718696e"
+    }
+  ],
+  "published_public_files": 136,
+  "historical_versions_retained": [
+    "central-20260916-v1",
+    "central-20260916-v2",
+    "central-20260916-v3"
+  ],
+  "tests": {
+    "contract_suite": 69,
+    "failures": 0,
+    "errors": 0,
+    "actual_live_fake_caller_rechecks": 3,
+    "actual_preflight_entries": 6,
+    "skill_format_checks": 7,
+    "model_or_physics_started": false
+  },
+  "lengths": {
+    "simple/G1WholebodyXMovePickTeleop-v0": {
+      "words": 794,
+      "characters": 6048,
+      "non_whitespace": 5239
+    },
+    "simple/G1WholebodyBendPickMP-v0": {
+      "words": 753,
+      "characters": 5792,
+      "non_whitespace": 5030
+    },
+    "simple/G1WholebodyHandoverTeleop-v0": {
+      "words": 776,
+      "characters": 5773,
+      "non_whitespace": 4987
+    },
+    "simple/G1WholebodyLocomotionPickBetweenTablesTeleop-v0": {
+      "words": 752,
+      "characters": 5830,
+      "non_whitespace": 5069
+    },
+    "simple/G1WholebodyTabletopGraspMP-v0": {
+      "words": 745,
+      "characters": 5664,
+      "non_whitespace": 4910
+    },
+    "simple/G1WholebodyXMoveBendPickTeleop-v0": {
+      "words": 752,
+      "characters": 6127,
+      "non_whitespace": 5355
+    }
+  },
+  "coverage": {
+    "audited": 21,
+    "indexed": 21,
+    "counterexamples": 4,
+    "separate_table_history": 10,
+    "snapshot_utc": "2026-09-16T13:50:14.565021+00:00"
+  },
+  "source_drift": [],
+  "first_physical_load_confirmed": false,
+  "physical_benefit_claim": false,
+  "delivery": "queued",
+  "limitations": [
+    "Native BendPickMP/TabletopGraspMP admission pending SIMPLE control/asset integration",
+    "L0/L1/L2 actual configuration/rendering/budget alignment pending; evaluation gate remains closed",
+    "Published history is not five fixed-candidate successes or frozen evaluation",
+    "No new reboot/unknown-RPC/context-exhaustion auto-resume; current safety and authorized-budget boundaries retained"
+  ],
+  "delivery_receipt": "delivery-receipt.json",
+  "delivery_acknowledged": false,
+  "actual_actor_load_confirmed": false,
+  "finished_utc": "2026-09-16T14:04:50.506326+00:00",
+  "bounded_engineering_turn_complete": true
+}

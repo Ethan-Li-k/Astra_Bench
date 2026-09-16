@@ -1,0 +1,36 @@
+{
+  "id": "boxplace-episode-0003-counterexample",
+  "status": "counterexample",
+  "env_id": "simple/G1WholebodyBendPickAndPlaceTeleop-v0",
+  "source_episode": "artifacts/R019/boxplace-campaign/episode-0003",
+  "phases": [
+    "enclosure",
+    "placement"
+  ],
+  "preconditions": "Same stage/mechanism and comparable native hand/controller; check current observations.",
+  "action_categories": [
+    "enclosure",
+    "placement"
+  ],
+  "principle": "Earlier native-contact triggers were not complete pickup-transport-release. Require visible enclosure and retained lift before placement; never prioritize rejected native labels.",
+  "exit_evidence": "No verified retained task completion; unresolved stages remain unresolved.",
+  "action_range": [
+    1,
+    52
+  ],
+  "control_contract": {
+    "controller": "model_38000 UMI-4",
+    "pd_profile": "checkpoint",
+    "hand": "native Dex3 mesh",
+    "coordinates": "named world metres; unit wxyz",
+    "timing": "50Hz tracker/200Hz MuJoCo; physics paused for reasoning"
+  },
+  "human_feedback_used": false,
+  "when_not_to_use": "Not a success recipe, MP score or proof of a common cause across unrelated attempts.",
+  "public_evidence": [
+    {
+      "original_public_path": "/home/galbot/lizekai/RSI/artifacts/R019/boxplace-campaign/episode-0003/rollout/history.jsonl"
+    }
+  ],
+  "path": "atoms/boxplace-episode-0003-counterexample.json"
+}

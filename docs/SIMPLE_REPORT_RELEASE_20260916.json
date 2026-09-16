@@ -1,0 +1,204 @@
+{
+  "ready": true,
+  "readyflag": "UI_LIVE_PROGRESS_READY",
+  "at": "2026-09-16T14:05:52.414121+00:00",
+  "url": "http://127.0.0.1:8765/simple-six",
+  "original_url": "http://127.0.0.1:8765/",
+  "pid": 2058031,
+  "deployed_at": "2026-09-16T14:02:39.796625+00:00",
+  "service_running": true,
+  "startup": "bash human-feedback/tools/run_server.sh (existing tmux rsi-human-feedback-h001; do not start a duplicate)",
+  "changed_files": [
+    {
+      "path": "human-feedback/tools/dashboard.py",
+      "sha256": "4372c7bd77b0cb5fb4321eb89e929635f967513777655fc926e55ba3f6676a31"
+    },
+    {
+      "path": "human-feedback/ui/simple-six.js",
+      "sha256": "13553586b940499a50600ece060fca2e92b8750fd24c9f47ebe7aa6736137509"
+    },
+    {
+      "path": "human-feedback/ui/simple-six.css",
+      "sha256": "d394c456c5a726cd811a13ace931d5bdd85f4c301e431a10a7aef9f16f3f84e8"
+    }
+  ],
+  "changes": [
+    "Actual physical episodes inside allowlisted campaigns override delayed aggregate membership; empty reset/invalid receipt/symlink/wrong native identities excluded.",
+    "Exact owner-ACK campaign mapping supports a first attempt before the audit inventory refreshes, including MobileBetweenTables.",
+    "Cards and detail show current episode/action/evidence time and latest public preview; sealed video stays independent.",
+    "Handover transfer success versus final unreleased placement remains explicit; scoring, 180-level plan, assisted/history/frozen separation retained.",
+    "Central publication/integration separated from first physical load; old 240-second batches not represented as new candidate admission."
+  ],
+  "checks": {
+    "targeted_before": "tests-before.log (5 assertion failures, 2 missing-field errors reproduce missing behavior)",
+    "targeted_after": {
+      "passed": 8,
+      "evidence": "tests-final.log"
+    },
+    "related_existing": {
+      "passed": 11,
+      "evidence": "compatibility-tests.log"
+    },
+    "portable_alignment": {
+      "passed": 8,
+      "evidence": "portable-alignment-tests.log",
+      "note": "publication-safe duplicate of prior eight, not additional unique requirements"
+    },
+    "browser": {
+      "passed": 24,
+      "evidence": "browser-results.json"
+    },
+    "final_deploy_browser": {
+      "passed": 3,
+      "evidence": "browser-final.json"
+    },
+    "natural_live_update": {
+      "task": "Handover",
+      "episode": "episode-0002",
+      "before_actions": 30,
+      "after_actions": 31,
+      "before_action_at": 1789567143.7058523,
+      "after_action_at": 1789567205.2718554,
+      "normal_polling": true,
+      "model_or_robot_triggered": false,
+      "evidence": "live-action-refresh.json"
+    },
+    "unchanged_contracts": "preservation.json"
+  },
+  "latest_browser_snapshot": [
+    {
+      "task": "XMovePick",
+      "episode": "episode-0005",
+      "actions": 35,
+      "last_action_at": 1789566808.131836,
+      "state": "review",
+      "scoring_dispositions": {
+        "valid": 4,
+        "inflight": 0,
+        "pending": 1,
+        "infrastructure": 0,
+        "paused": 0,
+        "replay": 0,
+        "duplicate": 0
+      }
+    },
+    {
+      "task": "BendPick",
+      "episode": null,
+      "actions": null,
+      "last_action_at": null,
+      "state": "unknown",
+      "scoring_dispositions": {
+        "valid": 0,
+        "inflight": 0,
+        "pending": 0,
+        "infrastructure": 0,
+        "paused": 0,
+        "replay": 0,
+        "duplicate": 0
+      }
+    },
+    {
+      "task": "Handover",
+      "episode": "episode-0002",
+      "actions": 37,
+      "last_action_at": 1789567366.1618633,
+      "state": "active-unknown",
+      "scoring_dispositions": {
+        "valid": 1,
+        "inflight": 1,
+        "pending": 0,
+        "infrastructure": 0,
+        "paused": 0,
+        "replay": 0,
+        "duplicate": 0
+      }
+    },
+    {
+      "task": "Mobile P&P",
+      "episode": "episode-0001",
+      "actions": 34,
+      "last_action_at": 1789567367.4548633,
+      "state": "active-unknown",
+      "scoring_dispositions": {
+        "valid": 0,
+        "inflight": 1,
+        "pending": 0,
+        "infrastructure": 0,
+        "paused": 0,
+        "replay": 0,
+        "duplicate": 0
+      }
+    },
+    {
+      "task": "Grasp",
+      "episode": null,
+      "actions": null,
+      "last_action_at": null,
+      "state": "unknown",
+      "scoring_dispositions": {
+        "valid": 0,
+        "inflight": 0,
+        "pending": 0,
+        "infrastructure": 0,
+        "paused": 0,
+        "replay": 0,
+        "duplicate": 0
+      }
+    },
+    {
+      "task": "XMoveBendPick",
+      "episode": "episode-0004",
+      "actions": 41,
+      "last_action_at": 1789567395.2798645,
+      "state": "active-unknown",
+      "scoring_dispositions": {
+        "valid": 3,
+        "inflight": 1,
+        "pending": 0,
+        "infrastructure": 0,
+        "paused": 0,
+        "replay": 0,
+        "duplicate": 0
+      }
+    }
+  ],
+  "question_eligibility": "No new eligible required question; original optional feedback form remains usable; no production answer submitted.",
+  "screenshots": [
+    {
+      "path": "human-feedback/dashboard-upgrade/live-progress-fix/live-six-overview.png",
+      "sha256": "89c9fcb57a4da18b9da3a57b7bc1a86edb149346687a6bb5781802e3dd71e91c",
+      "visually_read": true
+    },
+    {
+      "path": "human-feedback/dashboard-upgrade/live-progress-fix/live-evidence.png",
+      "sha256": "61febb1ac92fe892d813ee73a7096d22d2d0debb585e94661ee170dc638bb164",
+      "visually_read": true
+    }
+  ],
+  "source_limitations": [
+    "No current episode public phase marker newer than its physical receipt: show unsealed/phase not reported and liveness not independently verified; never infer a stall from age.",
+    "BendPickMP and TabletopGraspMP have no matching formal physical episodes; no variant substitution.",
+    "Official L0/L1/L2 epoch alignment and registered five-stable candidates remain absent; no learning backfill.",
+    "Central source release/integration is confirmed by fixed public receipts; first physical load is still explicitly pending. Future positive load contracts need actual episode/hash evidence before UI confirmation.",
+    "XMovePick episode0005 sealed during this engineering turn; audit/config completeness is tracked separately from its available sealed video."
+  ],
+  "source_references": [
+    "artifacts/R019/campaign_audit.json",
+    "artifacts/R019/six-task-focus/supervisor-ack.json",
+    "allowlisted R019 episode execution receipts / scene native identity / sealed result and reviews / public observation PNG",
+    "artifacts/architecture-review-20260916/central-skill-publication/publication-receipt.json",
+    "artifacts/architecture-review-20260916/central-skill-publication/runtime-integration-receipt.json",
+    "artifacts/architecture-review-20260916/central-skill-publication/first-load-status.json",
+    "ref/SIMPLE_OFFICIAL_BASELINE_20260916.json",
+    "ref/USER_UPDATE_20260916_BENCHMARK_ALIGNMENT.md",
+    "ref/USER_UPDATE_20260916_SIX_TASK_FOCUS.md"
+  ],
+  "publication_increment": "publication_increment.json",
+  "publication_increment_sha256": "5afb3416975d89057201afdb6fe2e8be7cc8024b40d25e82d03f8b142abfd249",
+  "production_answers": 0,
+  "queue_messages": 0,
+  "model_api_physical_calls": 0,
+  "user_browser_tabs_touched": false,
+  "github_network_or_push": false
+}

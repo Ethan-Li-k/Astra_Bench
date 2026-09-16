@@ -1,5 +1,6 @@
 """Codex app-server policy boundary; importing it never starts a model turn."""
 import base64
+import hashlib
 import json
 import time
 from pathlib import Path
@@ -58,7 +59,7 @@ class CodexPolicyAdapter:
 
     def __init__(self, transport, host, workspace, *, developer_instructions,
                  model='gpt-6-astra', effort='xhigh', model_provider='openai', timeout=900,
-                 normal_tools=False, terminal_callback=None):
+                 normal_tools=False, terminal_callback=None, expected_instruction_sources=None):
         if model != 'gpt-6-astra' or effort != 'xhigh':
             raise ValueError('Global constraint: always gpt-6-astra/xhigh')
         if not isinstance(developer_instructions, str) or not developer_instructions.strip():
@@ -75,6 +76,7 @@ class CodexPolicyAdapter:
         self.model_provider = model_provider
         self.timeout = timeout
         self.normal_tools = normal_tools
+        self.expected_instruction_sources = expected_instruction_sources
         self.thread_id = self.turn_id = None
         self.call_index = 0
         self.turns_started = 0
@@ -118,6 +120,13 @@ class CodexPolicyAdapter:
                 or response.get('approvalsReviewer') != 'auto_review'
                 or response.get('runtimeWorkspaceRoots') != [str(self.workspace)]):
             raise RuntimeError('Codex app-server returned a different permission contract')
+        if self.expected_instruction_sources is not None:
+            actual = response.get('instructionSources')
+            expected = self.expected_instruction_sources
+            if (not isinstance(actual, list) or sorted(actual) != sorted(expected)
+                    or any(hashlib.sha256(Path(p).read_bytes()).hexdigest() != digest
+                           for p, digest in expected.items())):
+                raise RuntimeError('Frozen ambient instruction sources differ from candidate')
         self.thread_id = response['thread']['id']
         return response
 

@@ -8,6 +8,9 @@ import re
 
 PROTOCOL='SIX-TASK-FIVE-STABLE-V1'
 CONFIG_KEYS=('skill','entry','runtime','memory','retrieval','feedback','task_asset','control','camera','model')
+LEVELS=('L0','L1','L2')
+BASELINE_METHODS=('Psi0','GR00T N1.6','pi0.5','InternVLA','H-RDT','DreamZero','EgoVLA','DP','ACT')
+BASELINE_URL='https://psi-lab.ai/SIMPLE/index.html#results'
 
 def timestamp(value):
     try:return dt.datetime.fromisoformat(value.replace('Z','+00:00')).timestamp()
@@ -18,6 +21,35 @@ def rate(rows,key):
     known=[r for r in rows if type(r.get(key)) is bool]
     n=sum(r[key] for r in known);d=len(known)
     return {'numerator':n,'denominator':d,'percent':100*n/d if d else None}
+
+def official_baseline(doc,task_order):
+    """Project the root's fixed official-table snapshot, not local README scores."""
+    invalid={'available':False,'reason':'官网基线快照缺失或格式待核验','rows':[]}
+    rows=doc.get('baseline_rows')
+    if (doc.get('source_url')!=BASELINE_URL or doc.get('task_order')!=task_order
+        or doc.get('level_order')!=list(LEVELS) or doc.get('trials_per_task_per_level')!=10
+        or timestamp(doc.get('read_at')) is None or not isinstance(rows,dict)
+        or set(rows)!=set(BASELINE_METHODS)):return invalid
+    for values in rows.values():
+        if not isinstance(values,list) or len(values)!=6:return invalid
+        if any(not isinstance(v,list) or len(v)!=3 or any(type(n) is not int or not 0<=n<=10 for n in v) for v in values):return invalid
+    return {'available':True,'task_order':list(task_order),'level_order':list(LEVELS),'trials_per_task_per_level':10,
+            'source_url':BASELINE_URL,'read_at':doc['read_at'],
+            'rows':[{'method':name,'values':[list(v) for v in rows[name]]} for name in BASELINE_METHODS]}
+
+def official_plan():
+    """Fail closed: there is no verified official epoch contract in current sources.
+    Learning, legacy ten-reset manifests, integer dr_level and post-rendered video
+    cannot establish a level. Accept a future epoch only after its real public
+    registration/config/split/renderer contract is independently checked.
+    """
+    return {'registered':False,'planned':30,'alignment_epoch':None,
+        'native':rate([],'native'),'semantic':rate([],'semantic'),
+        'levels':{level:{'planned':10,'state':'alignment-pending','native':rate([],'native'),
+                         'semantic':rate([],'semantic')} for level in LEVELS},
+        'note':'正式 L0/L1/L2 各计划 10 回合，每项 30；尚无已核验对齐 epoch，不从学习或旧十回合合同回填。',
+        'blocker':'待核对原任务环境配置、预注册 split / 等级映射，以及同步 Isaac 渲染图像确为实际策略输入的证据。',
+        'protocol_limit':'物理后端仍可使用 MuJoCo；事后 Isaac 录像不等于策略输入。DR set_level 与 load_state_dict 的整数编号/行为不同，不能直接映射官方等级。'}
 
 def scorecard(matches,native,effective,candidate=None):
     """Learning totals describe changing skills; fixed-candidate counts require manifests.
@@ -117,5 +149,6 @@ def scorecard(matches,native,effective,candidate=None):
     current=[r for r in records if r['period']=='current' and r['disposition']=='valid' and r['stage']=='learning']
     for r in records:r.pop('evaluation')
     return {'protocol':PROTOCOL,'groups':summaries,'records':records,'dispositions':counts,
-            'current':{'native':rate(current,'native'),'semantic':rate(current,'semantic')},'stability':stability,'frozen':frozen,
+            'current':{'native':rate(current,'native'),'semantic':rate(current,'semantic')},'stability':stability,
+            'legacy_frozen':frozen if frozen['registered'] else None,'frozen':official_plan(),
             'definition':'成功 / 同条件、独立 reset、真实执行、完整封口并审计的完成尝试；预算耗尽与安全停止计未成功。学习累计描述允许技能版本变化，不代表固定策略可靠性。'}

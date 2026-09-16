@@ -12,7 +12,7 @@ import threading
 import time
 from api_progress import APIProgress, signature, number
 from ikea_progress import IKEAProgress
-from simple_six import scorecard
+from simple_six import scorecard, official_baseline
 
 RSI = Path(__file__).resolve().parents[2]
 CAMPAIGNS = {'door': ('推门', 'door-campaign', 10), 'apple': ('苹果', 'apple-campaign', 1),
@@ -149,6 +149,25 @@ class Dashboard:
             goal=number(row.get('required_successes'))
             extra[key]=(TASK_NAMES.get(task,task),folder,goal if goal is not None and goal>0 else None)
             rows[key]=row
+        # The verified owner's bounded mapping can introduce a first physical attempt
+        # before the campaign aggregate has been rebuilt. Never follow arbitrary paths.
+        owner,oref=self.read(self.root/'artifacts/R019/six-task-focus/supervisor-ack.json')
+        families=owner.get('campaign_families')
+        if (owner.get('ack')=='SIX-TASK-FOCUS-20260916 ACK' and owner.get('mapping')==SIX_TASKS
+            and owner.get('owner_thread')=='01a0a867-d7aa-71f2-8547-e264d6d09ede' and isinstance(families,dict)):
+            for folder,name in families.items():
+                if not isinstance(folder,str) or not CAMPAIGN_NAME.fullmatch(folder) or not isinstance(name,str) or name not in SIX_TASKS:continue
+                key=folder.removesuffix('-campaign');native=SIX_TASKS[name]
+                if key in CAMPAIGNS or key in rows:continue
+                expected=self.root/'artifacts/R019'/folder
+                for episode in self.files(expected,'episode-*'):
+                    if not EP.fullmatch(episode.name):continue
+                    scene,_=self.read(episode/'video/scene_setup.json')
+                    if scene.get('env_id',scene.get('native_env_id'))!=native or not self.physical_evidence(episode):continue
+                    extra[key]=(name,folder,None)
+                    rows[key]={'campaign':str(expected.relative_to(self.root)),'task':native,'episodes':[],
+                               'discovery_source':oref}
+                    break
         # Stable IDs derive from the validated basename; the original six IDs and order never move.
         self.simple_catalog.update(sorted(extra.items()))
         return rows,ref
@@ -157,11 +176,16 @@ class Dashboard:
         """Only public result/action receipts, never a preflight, reset, or manifest counter alone."""
         result,_=self.read(episode/'result.json')
         if (number(result.get('actions')) or 0)>0:return True
-        for p in self.files(episode/'rollout/episode','execution_[0-9][0-9][0-9][0-9].json'):
+        return self.latest_physical_action(episode)[1] is not None
+
+    def latest_physical_action(self,episode):
+        """Completed public physical receipts; empty/pending records are not actions."""
+        for p in reversed(self.files(episode/'rollout/episode','execution_[0-9][0-9][0-9][0-9].json')):
             data,_=self.read(p)
             receipts=data.get('receipts',[])
-            if int(p.stem.split('_')[-1])>0 and isinstance(receipts,list) and any(isinstance(x,dict) and isinstance(x.get('command_id'),str) and (number(x.get('duration_s')) or 0)>0 for x in receipts):return True
-        return False
+            if int(p.stem.split('_')[-1])>0 and isinstance(receipts,list) and any(isinstance(x,dict) and isinstance(x.get('command_id'),str) and (number(x.get('duration_s')) or 0)>0 for x in receipts):
+                return int(p.stem.split('_')[-1]),self.read(p)[1]
+        return None,None
 
     def preview(self,folder,key):
         for obs in reversed(self.files(folder/'rollout/episode/observations','[0-9][0-9][0-9][0-9]')):
@@ -282,6 +306,7 @@ class Dashboard:
                 if not attempted:continue
             refs=[x for x in [pref] if x]; latest=episodes[-1] if episodes else None
             if campaign_doc and cref:refs.append(cref)
+            if campaign_doc.get('discovery_source'):refs.append(campaign_doc['discovery_source'])
             campaign_episode=next((x for x in campaign_doc.get('episodes',[]) if isinstance(x,dict) and latest and x.get('episode_id')==latest.name),{})
             prose=progress_public.get(campaign,{})
             if not latest or prose.get('episode_id')!=latest.name:prose={}
@@ -334,10 +359,9 @@ class Dashboard:
             audited_count=number(campaign_doc.get('audited_task_successes'))
             if audited_count is not None and (count is None or (cref and cref['at']>=(pref['at'] if pref else 0))):count=audited_count
             if count is None and audits:count=len(audits)
-            last_action=None;action=None
-            for p in reversed(self.files(latest/'rollout/episode','execution_*.json') if latest else []):
-                d,eref=self.read(p)
-                if eref and d: last_action=eref['at'];action=int(p.stem.split('_')[-1]);refs.append(eref);break
+            action,eref=self.latest_physical_action(latest) if latest else (None,None)
+            last_action=eref['at'] if eref else None
+            if eref:refs.append(eref)
             if action is None:action=number(current[1].get('actions')) if current else number(campaign_episode.get('actions'))
             if last_action is None:last_action=prose.get('last_action_at')
             problems={'door':'推门目标尚未达到；保持完整回合，并审查独立重置与终态保持。','apple':'尚未验证稳定抓持、搬运与放置；已有 H001 第四条侧抓反馈。','faucet':'尚未验证受控开启；接触与支撑稳定性仍需核对。','boxpick':'拾箱已有审计成功；不等于搬运或放置成功。','boxplace':'尚未完成包夹、抬起、搬运与释放；旧原生成功曾被任务审查否决。'}
@@ -378,6 +402,15 @@ class Dashboard:
         """Exact benchmark view over existing campaigns; original records/media IDs stay intact."""
         mapping,mref=self.read(self.root/'artifacts/architecture-review-20260916/six-task-focus/benchmark-mapping-evidence.json')
         if not mref or mapping.get('mapping')!=SIX_TASKS:return row
+        baseline,baseline_ref=self.read(self.root/'ref/SIMPLE_OFFICIAL_BASELINE_20260916.json')
+        row['official_baseline']=official_baseline(baseline,list(SIX_TASKS))
+        if baseline_ref:row['sources'].append(baseline_ref)
+        row['benchmark_plan']={'tasks':6,'levels':['L0','L1','L2'],'per_level':10,'per_task':30,'total':180,
+            'alignment_state':'pending','learning_runtime_state':'未核验：持续学习指令不等于运行时已修改'}
+        runtime,rrefs=self.central_learning_publication()
+        row['benchmark_plan']['learning_runtime']=runtime
+        row['benchmark_plan']['learning_runtime_state']=runtime['note']
+        row['sources'].extend(rrefs)
         historical=row['subtasks']; old_by_id={x['id']:x for x in historical}; targets=[]
         scope=supervisor.get('six_task_focus') if isinstance(supervisor.get('six_task_focus'),dict) else supervisor
         acknowledged=scope.get('ack')=='SIX-TASK-FOCUS-20260916 ACK' and scope.get('benchmark_mapping')==SIX_TASKS
@@ -399,10 +432,13 @@ class Dashboard:
                 campaign_status,cref=self.read(folder/'progress.json')
                 if cref:refs.append(cref)
                 if isinstance(campaign_status.get('candidate_manifest'),dict):candidate=campaign_status['candidate_manifest']
-                for ep in campaign.get('episodes',[]) if isinstance(campaign.get('episodes'),list) else []:
-                    if not isinstance(ep,dict) or not isinstance(ep.get('episode_id'),str) or not EP.fullmatch(ep['episode_id']):continue
-                    episode=folder/ep['episode_id']
-                    if ep.get('physical_attempt') is not True or not self.physical_evidence(episode):continue
+                entries=campaign.get('episodes')
+                ledger={e.get('episode_id'):e for e in entries if isinstance(e,dict) and isinstance(e.get('episode_id'),str)} if isinstance(entries,list) else {}
+                # Aggregate membership is metadata, not a freshness gate. Restrict
+                # discovery to direct episodes of this already validated campaign.
+                for episode in self.files(folder,'episode-*'):
+                    if not EP.fullmatch(episode.name) or not self.physical_evidence(episode):continue
+                    ep=ledger.get(episode.name,{})
                     result,rref=self.read(episode/'result.json');review,vref=self.read(episode/'success_review.json')
                     if not vref:review,vref=self.read(episode/'failure_review.json')
                     scene,eref=self.read(episode/'video/scene_setup.json');public,pref=self.read(episode/'public-progress.json')
@@ -421,12 +457,13 @@ class Dashboard:
                     feedback=[v for d in (result,review) for v in (d['human_feedback_sources'] if isinstance(d.get('human_feedback_sources'),list) else []) if isinstance(v,dict)]
                     h001=any(v.get('path') in ('human-feedback/H001-user-feedback-004.json',str(self.root/'human-feedback/H001-user-feedback-004.json')) for v in feedback)
                     evidence_refs=[v for v in (rref,vref,eref,pref,bref,qref) if v];refs.extend(evidence_refs)
-                    last_action=None;action=number(result.get('actions',ep.get('actions')))
-                    for p in reversed(self.files(episode/'rollout/episode','execution_*.json')):
-                        execution,xref=self.read(p)
-                        if execution and xref:last_action=xref['at'];action=int(p.stem.split('_')[-1]);refs.append(xref);break
-                    matches.append({'key':key,'folder':episode,'episode':ep['episode_id'],'audit':audit,'assisted':assisted,
+                    action,xref=self.latest_physical_action(episode)
+                    last_action=xref['at'] if xref else None
+                    if xref:refs.append(xref)
+                    if action is None:action=number(result.get('actions'))
+                    matches.append({'key':key,'folder':episode,'episode':episode.name,'audit':audit,'assisted':assisted,
                                     'h001':h001,'result':result,'result_ref':rref,'review':review,'public':public,
+                                    'public_ref':pref,
                                     'scene':scene,'budget':budget,'ledger':ep,'evaluation':evaluation,
                                     'last_action_at':last_action,'actions':action,
                                     'order':last_action or (rref['at'] if rref else eref['at'] if eref else 0)})
@@ -442,7 +479,11 @@ class Dashboard:
                   'video_note':'尚无匹配精确入口的封口录像。','nav_label':name+' · 未开始 / 待适配'}
             if matches:
                 matches.sort(key=lambda x:(x['order'],x['episode']))
-                latest=matches[-1]; original=old_by_id[latest['key']]
+                newest_by_campaign={}
+                for match in matches:
+                    previous=newest_by_campaign.get(match['key'])
+                    if previous is None or int(match['episode'].split('-')[1])>int(previous['episode'].split('-')[1]):newest_by_campaign[match['key']]=match
+                latest=max(newest_by_campaign.values(),key=lambda x:x['order']); original=old_by_id[latest['key']]
                 for field in ('state','state_label','actions','last_action_at','source_at','backend','problem','next'):
                     base[field]=original[field]
                 base['actions']=latest['actions'];base['last_action_at']=latest['last_action_at']
@@ -457,23 +498,43 @@ class Dashboard:
                     video=self.completed_video(match['folder'],'simple-'+match['key'],match['result_ref'],
                                                'SIMPLE 连续物理录像；外部诊断视角与策略相机分开。')
                     if video:
-                        base['videos']=[dict(video,task=name,outcome='精确入口历史学习记录；人工反馈辅助' if match['assisted'] else '精确入口历史学习记录')];break
+                        base['videos']=[dict(video,task=name,outcome='精确入口学习记录；人工反馈辅助' if match['assisted'] else '精确入口学习记录')];break
                 audited=list({x['review']['reset']['reset_id']:x for x in matches if x['audit']}.values());assisted=sum(x['assisted'] is True for x in audited)
                 autonomous=sum(x['assisted'] is False for x in audited);unknown=len(audited)-assisted-autonomous
                 base.update(historical_audited_successes=len(audited),historical_assisted_successes=assisted,
                             historical_autonomous_successes=autonomous,historical_assistance_unknown=unknown)
-                base['mode']='历史学习；'+('人工反馈 H001-004 辅助' if any(x['h001'] for x in matches) else '人工反馈辅助单列' if any(x['assisted'] is True for x in matches) else '辅助信息按回合记录')+'；非新冻结测评'
+                base['mode']='学习记录；当前范围与历史成绩分列；'+('人工反馈 H001-004 辅助' if any(x['h001'] for x in matches) else '人工反馈辅助单列' if any(x['assisted'] is True for x in matches) else '辅助信息按回合记录')+'；非冻结测评'
                 base['summary']=f'{name}：精确入口历史审计成功 {len(audited)}（无辅助 {autonomous}、人工辅助 {assisted}'+(f'、辅助类型未知 {unknown}' if unknown else '')+'）；当前新冻结测评成绩未上报。'
                 base['video_note']='仅显示精确入口已封口录像；历史成功不等于本轮新冻结测评。'
+                phase_ref=latest['public_ref']
+                current_public=latest['public'] if phase_ref and phase_ref['at']>=(latest['last_action_at'] or 0) else {}
+                state_map={'inference_waiting':'modelwaiting','inference_waiting_no_deadline':'modelwaiting','action_executing':'physicsrunning',
+                           'infrastructure_error':'infraerror','connection_unverified':'active-unknown','budget_stop':'budgetstop','safety_stop':'safetystop'}
+                base['phase_report_at']=phase_ref['at'] if current_public else None
                 if latest['result_ref']:
-                    base['state']='review';base['state_label']='历史回合已审计；新测评待确认' if latest['audit'] else '历史回合已封口；新测评待确认'
-                    base['problem']='已有精确入口历史学习证据；当前六项新测评的阶段与成绩尚未上报。人工辅助不计无辅助 Direct。'
-                    base['next']='由唯一主管确认六项调度，明确下一回合模式及验收；历史回合不重复计为新冻结测评。'
-                elif base['state'] in ('complete','episode-complete'):
-                    # A campaign's historical target cannot complete its new active reset.
-                    base['state']='active-unknown';base['state_label']=LABELS['active-unknown']
-                    base['problem']=public_text([latest['public']],'current_problem','problem') or '当前回合未封口；当前存活和阶段尚未上报，历史成功不代表本回合完成。'
-                    base['next']=public_text([latest['public']],'next_step','next') or '由原负责人核对当前回合，完整收尾并审计；不重放动作。'
+                    base['state']=self.terminal(latest['result'],latest['review'])
+                    base['state_label']=LABELS[base['state']]
+                    if base['state']=='review':base['state_label']='回合已封口；完整任务审计未通过或待核验'
+                    current_public={}  # Sealed result wins residual activity and problem text.
+                    base['problem']='本回合已封口；原生结果与完整任务审计分别计数。冻结测评尚未启动。'
+                    base['next']='由原负责人按完整任务审计修订学习；新候选须重新登记，旧成功不回填。'
+                else:
+                    base['state']=state_map.get(current_public.get('state'),'active-unknown')
+                    base['state_label']=('最近上报：'+LABELS[base['state']]+'；存活未独立核验' if current_public else LABELS['active-unknown'])
+                    base['problem']=f"{name} 本回合已有 {latest['actions'] if latest['actions'] is not None else '未知'} 个动作，尚无封口结果；精确阶段未上报，当前存活未独立核验。"
+                    base['next']='保留当前回合，由原负责人完整收尾并审计；不重放已执行动作。'
+                base['problem']=public_text([current_public],'current_problem','problem','blocker') or base['problem']
+                base['next']=public_text([current_public],'next_step','next') or base['next']
+                base['recent_audit_note']=None
+                for prior in reversed(matches):
+                    v=prior['review'];stages=v.get('independently_verified_stages',{})
+                    if (name=='Handover' and v.get('audited_task_success') is False and v.get('native_success') is True
+                        and isinstance(stages,dict) and stages.get('release_and_supported_destination_placement') is False
+                        and all(isinstance(stages.get(k),dict) and (number(stages[k].get('samples')) or 0)>0
+                            for k in ('right_unsupported_hold','giver_clear_left_unsupported_hold'))):
+                        base['recent_audit_note']=prior['episode']+'：转交阶段审计通过，但未完成释放放置；原生成功不等于完整任务成功。'
+                        break
+                base['summary']=f"{name} · {base['episode']} · 动作 {base['actions'] if base['actions'] is not None else '未知'} · {base['state_label']}。"+(base['recent_audit_note'] or '')
                 base['nav_label']=name+' · '+('历史已审计' if latest['audit'] else '已有物理记录')
             base['scorecard']=scorecard(matches,native,owner_ack.get('effective_utc','2026-09-16T12:28:40.091351+00:00'),candidate)
             targets.append(base)
@@ -486,6 +547,27 @@ class Dashboard:
         row['sources'].append(mref);row['source_at']=max(row.get('source_at') or 0,mref['at'])
         if row.get('prerequisite_note'):row['prerequisite_note']='历史迁移证据 · '+row['prerequisite_note']+'；不计本阶段六项原生成绩。'
         return row
+
+    def central_learning_publication(self):
+        """Fixed engineering receipts, never follow release/first-evidence paths."""
+        folder=self.root/'artifacts/architecture-review-20260916/central-skill-publication'
+        pub,pref=self.read(folder/'publication-receipt.json')
+        integration,iref=self.read(folder/'runtime-integration-receipt.json')
+        load,lref=self.read(folder/'first-load-status.json')
+        pointer=pub.get('pointer') if isinstance(pub.get('pointer'),dict) else {}
+        digest=pointer.get('manifest_sha256');release=pointer.get('release_id')
+        published=pub.get('status')=='published' and isinstance(digest,str) and bool(re.fullmatch('[a-f0-9]{64}',digest))
+        integrated=published and pub.get('shared_runner_integrated') is True and integration.get('status')=='integrated_for_next_launch'
+        # Current explicit receipt is a pending-load contract. A future positive
+        # schema needs its actual episode/hash binding checked, not a guessed flag.
+        pending=(published and load.get('release_sha256')==digest and load.get('actual_actor_load_confirmed') is False
+                 and pub.get('first_physical_load_confirmed') is False)
+        note=('中央技能源码已发布；'+('运行入口已集成，下一自然边界加载。' if integrated else '运行入口集成待确认。')+
+              ('首次物理加载待确认。' if pending else '首次物理加载证据未确认。') if published else '持续学习与中央技能发布状态待确认。')
+        note+='旧 240 秒批次不回填新版五次准入；源码发布不代表物理加载或任务收益。'
+        return {'source_published':bool(published),'runtime_integrated':bool(integrated),'physical_load_confirmed':False if pending else None,
+                'release_id':release if isinstance(release,str) and re.fullmatch('[a-zA-Z0-9_-]{1,80}',release) else None,
+                'at':pref['at'] if pref else None,'note':note},[r for r in (pref,iref,lref) if r]
 
     def verified_user_pause(self,row):
         """Public verified process disposition, never a PAUSE marker or heartbeat inference."""

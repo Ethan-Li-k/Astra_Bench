@@ -6,6 +6,8 @@ import shutil
 import datetime
 import fcntl
 import uuid
+import importlib.metadata
+import sys
 
 from rsi.skill_learning import SkillMemory
 
@@ -146,6 +148,12 @@ def _file_digest(path):
     return h.hexdigest()
 
 
+def environment_versions():
+    return {'python':sys.version,'python_executable':str(Path(sys.executable).resolve()),
+            'packages':{d.metadata['Name']:d.version for d in importlib.metadata.distributions()
+                        if d.metadata['Name']}}
+
+
 def snapshot_sources(memory, sources, destination):
     """Pin explicitly reviewed public paths and this memory's cited rollout roots.
 
@@ -206,7 +214,8 @@ def snapshot_sources(memory, sources, destination):
 
 
 def seal_candidate(directory, *, task_id, task_specification, task_text, options,
-                   dependencies, stability_seeds, evaluation_seeds, audit_contract):
+                   dependencies, stability_seeds, evaluation_seeds, audit_contract,
+                   ambient_instruction_sources=(), runtime_environment=None):
     """Seal an already prepared public/ tree. Dependencies are host-only paths.
 
     Caller must supply the actual code, assets, controller and camera dependency
@@ -225,8 +234,11 @@ def seal_candidate(directory, *, task_id, task_specification, task_text, options
         raise ValueError('Exact task and native/independent/terminal hold criteria required')
     payload = dict(protocol='SIX-TASK-FIVE-STABLE-V1', task_id=task_id,
         model='gpt-6-astra', effort='xhigh', task_specification=task_specification,
+        runtime_environment=runtime_environment,
         task_text=task_text, options=options, audit_contract=audit_contract,
         stability_seeds=list(stability_seeds), evaluation_seeds=list(evaluation_seeds),
+        ambient_instruction_sources={str(Path(p).resolve()):_file_digest(p)
+                                     for p in ambient_instruction_sources},
         public_files=file_hashes(directory/'public'),
         dependencies={key:{str(Path(p).resolve()):_file_digest(p) for p in paths}
                       for key, paths in dependencies.items()},
@@ -237,13 +249,15 @@ def seal_candidate(directory, *, task_id, task_specification, task_text, options
     return payload
 
 
-def verify_candidate(directory, *, task_id=None, options=None):
+def verify_candidate(directory, *, task_id=None, options=None, check_environment=False):
     directory = Path(directory).resolve()
     payload = json.loads((directory/'manifest.json').read_text())
     digest = payload.pop('candidate_sha256')
     if _digest(payload) != digest:
         raise ValueError('Candidate manifest was modified')
     payload['candidate_sha256'] = digest
+    if check_environment and payload.get('runtime_environment') != environment_versions():
+        raise ValueError('Frozen runtime environment/package versions changed')
     if task_id is not None and payload['task_id'] != task_id:
         raise ValueError('Candidate belongs to a different exact task')
     if options is not None and payload['options'] != options:
@@ -254,6 +268,9 @@ def verify_candidate(directory, *, task_id=None, options=None):
         for path, digest in paths.items():
             if _file_digest(path) != digest:
                 raise ValueError('Frozen dependency changed: '+path)
+    for path,digest in payload.get('ambient_instruction_sources',{}).items():
+        if _file_digest(path) != digest:
+            raise ValueError('Frozen ambient instructions changed: '+path)
     return payload
 
 
@@ -261,6 +278,9 @@ def claim_episode(directory, *, task_id, options, phase, seed, episode):
     """Exclusive ordered pre-registration; an unresolved prior episode blocks next."""
     directory = Path(directory).resolve()
     manifest = verify_candidate(directory, task_id=task_id, options=options)
+    admission_path=directory/'admission-audit.json'
+    if admission_path.exists() and json.loads(admission_path.read_text()).get('stability_credit_allowed') is False:
+        raise ValueError('Frozen candidate admission was rejected; create a new candidate')
     if phase not in ('stability', 'evaluation'):
         raise ValueError('Frozen phase must be stability or evaluation')
     records = directory/'registrations'; records.mkdir(exist_ok=True)
@@ -309,6 +329,9 @@ def record_episode_audit(directory, episode):
     from tools.audit_simple_campaigns import episode_status
     directory, episode = Path(directory).resolve(), Path(episode).resolve()
     manifest = verify_candidate(directory)
+    admission_path=directory/'admission-audit.json'
+    if admission_path.exists() and json.loads(admission_path.read_text()).get('stability_credit_allowed') is False:
+        raise ValueError('Rejected configuration cannot contribute to frozen scores')
     registration = json.loads((episode/'protocol-registration.json').read_text())
     candidates = [json.loads(p.read_text()) for p in (directory/'registrations').glob('*.json')]
     if (registration not in candidates or registration['episode'] != str(episode)

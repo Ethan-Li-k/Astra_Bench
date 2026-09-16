@@ -1,0 +1,68 @@
+{
+  "id": "door-episode-0020",
+  "status": "audited_source",
+  "env_id": "SIMPLE asset003 push-open variant",
+  "source_episode": "artifacts/R019/door-campaign/episode-0020",
+  "source_access": "Original paths are provenance only; read only frozen files explicitly listed in workspace.",
+  "skill_version": 19,
+  "source_skill": "/home/galbot/lizekai/RSI/artifacts/R019/door-campaign/memory/versions/0019.md",
+  "source_skill_sha256": "887db721d25299fcd09643b89e256b3f92d72a7637bcd1ba7c8a8244babf7baa",
+  "phases": [
+    "approach",
+    "support",
+    "articulated_contact"
+  ],
+  "preconditions": "Same four-point/checkpoint PD and native hand; current moving panel and free push side identified from RGB; stable stance and complete hand clearance.",
+  "action_categories": [
+    "approach",
+    "support",
+    "articulated_contact"
+  ],
+  "principle": "After visible support/hand clearance checks, separate empty-hand approach from bounded panel interaction. If reach saturates, withdraw/unload and reobserve before the next measured approach; follow actual panel motion.",
+  "exit_evidence": "Consult the referenced public final stereo pair and phase-specific public skill; host certification is separate from what each image proves.",
+  "action_range": [
+    1,
+    39
+  ],
+  "range_scope": "whole successful episode, not a claim that every action is an effective atomic skill",
+  "public_observation_range": [
+    "0038",
+    "0039"
+  ],
+  "public_evidence": [
+    {
+      "path": "evidence/door-episode-0020/0038/head_stereo_left.png",
+      "sha256": "ed588946741c5072e12ef37f3f1a5d7fb512a1522c09a80ff0840228913ad5d7",
+      "original_public_path": "/home/galbot/lizekai/RSI/artifacts/R019/door-campaign/episode-0020/rollout/episode/observations/0038/head_stereo_left.png"
+    },
+    {
+      "path": "evidence/door-episode-0020/0038/head_stereo_right.png",
+      "sha256": "515ce2a035dbe83cd8d3cf15a5d45f3d6615c784ab82db06715f6d1b12aacb89",
+      "original_public_path": "/home/galbot/lizekai/RSI/artifacts/R019/door-campaign/episode-0020/rollout/episode/observations/0038/head_stereo_right.png"
+    },
+    {
+      "path": "evidence/door-episode-0020/0039/head_stereo_left.png",
+      "sha256": "9b3a81d1cf134920b37ce2215218cdc647125512edff2f6e6b7f5f960ab5d862",
+      "original_public_path": "/home/galbot/lizekai/RSI/artifacts/R019/door-campaign/episode-0020/rollout/episode/observations/0039/head_stereo_left.png"
+    },
+    {
+      "path": "evidence/door-episode-0020/0039/head_stereo_right.png",
+      "sha256": "b09f3b6d0bb831b17381add0cc604a1d6a930700f74a7e6c73d752520b3c69c5",
+      "original_public_path": "/home/galbot/lizekai/RSI/artifacts/R019/door-campaign/episode-0020/rollout/episode/observations/0039/head_stereo_right.png"
+    }
+  ],
+  "control_contract": {
+    "controller": "model_38000 UMI-4",
+    "pd_profile": "checkpoint",
+    "hand": "native Dex3 mesh",
+    "coordinates": "named world metres; unit wxyz",
+    "timing": "50Hz tracker/200Hz MuJoCo; physics paused for reasoning"
+  },
+  "human_feedback_used": false,
+  "human_demonstration_used": false,
+  "feedback_source": null,
+  "when_not_to_use": "No copied coordinates, pulling/latch mechanics, loaded walking, universal gait or evidence of cross-task robustness. Push-open and closing directions/terminal contracts remain distinct.",
+  "unverified": "No new cross-task outcome, loaded locomotion or true handover established by this index.",
+  "completion_contract": "door-push-contact30deg-dwell1s-standing",
+  "path": "atoms/door-episode-0020.json"
+}

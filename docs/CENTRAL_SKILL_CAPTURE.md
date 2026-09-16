@@ -1,13 +1,9 @@
 # Central skill capture
 
-Fixed capture: `2026-09-16T13:37:44.508154+00:00` (two-pass read ended `2026-09-16T13:37:44.552300+00:00`).
+The original 13:37 capture was development-only. This final increment supersedes that classification for the listed v4 files.
 
-Classification: **development; deployment and physical benefit not inferred**. The copied progress receipt is authoritative only for its own recorded time. The live owners can continue after this bounded source capture.
+Release: `central-20260916-v4`, manifest SHA256 `8bcedb699ddb702c08b751a9d8e134af6c8c938c2560b8fcc018cfefda475073`. Runtime integration is complete for next eligible launch; first physical load remains unconfirmed. Evidence: [release receipt](CENTRAL_SKILL_RELEASE_20260916.json).
 
-Receipt: `artifacts/architecture-review-20260916/central-skill-publication/progress.json`, SHA256 `6b96ee98e0623f5aae72a4269ab1ead3a94d0c6c103544b30bb72b76d30cdf6b`.
+69 offline contract checks, three live-source fake-caller checks and six actual preflight entry checks passed. All entry+runtime texts satisfy the preserved 831-word/6250-character/5357-non-whitespace cap. This does not prove physical benefit, five stable successes, MP compatibility or official L0/L1/L2 alignment. The later user directive requires additional same-state full-task continuation, actual Isaac policy input and separate AMO/PD evaluation; those remain separate engineering work.
 
-Recorded status: `ownership_handoff_requested`; published: `False`; first load confirmed: `False`.
-
-Current core includes frozen-skill source and tests together. Source syntax and snapshot safety checks do not prove full freeze isolation, central publication integration, runtime loading, or five-stable qualification. Complete items must be checked against a corresponding owner receipt.
-
-The seven mapping-correction actor markdown candidates are separate from host-only REVIEW, INTEGRATION, contracts, experience mapping and root acceptance documents. Static acceptance does not mount them into an actor. The newer central-owner rule supersedes historical publisher names.
+The bundle contains its complete hash-pinned public reference set, including simulation images. Raw host audits, production feedback, videos and account state are excluded. Older release copies and failed apply evidence remain local.

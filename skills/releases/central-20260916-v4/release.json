@@ -1,0 +1,323 @@
+{
+  "release_id": "central-20260916-v4",
+  "status": "published",
+  "author": "01a0a949-dc8e-70c3-b8a6-53131882e19d",
+  "executor": "01a0a94d-6143-74c0-80cd-03d0b61acaf0",
+  "tasks": {
+    "simple/G1WholebodyXMovePickTeleop-v0": {
+      "snapshot": "tasks/xmovepick",
+      "source_phases": [
+        "approach",
+        "enclosure",
+        "retention"
+      ],
+      "ready_for_load": true,
+      "bindings": {
+        "task_spec_sha256": "32e465dbb02ff039eeba11f3cef0c86baf0b0c42b3728468cb78b1d6d922d639",
+        "continuous_chunks": true,
+        "verified_placement": false,
+        "door_frame_override": false,
+        "human_feedback_sha256": [
+          "2aa49674accf01bb4229aa4215b8b178b9261d99d1c1d40b758368e6f46ef696"
+        ]
+      },
+      "source": {
+        "kind": "preserved learned/task-adapted entry",
+        "path": "/home/galbot/lizekai/RSI/artifacts/R019/xmovepick-campaign/memory/versions/0003.md",
+        "sha256": "1e3e446f8330b4bba1d60483476614b065a9fd27b213a2349d15459a312510ee"
+      },
+      "admission_note": "learning-only runner integration; exact MP/BetweenTables control or task spec pending where not ready",
+      "feedback_tier": "H001004 semantic assistance"
+    },
+    "simple/G1WholebodyBendPickMP-v0": {
+      "snapshot": "tasks/bendpick",
+      "source_phases": [
+        "low_reach",
+        "enclosure",
+        "retention"
+      ],
+      "ready_for_load": false,
+      "bindings": {
+        "task_spec_sha256": null,
+        "continuous_chunks": true,
+        "verified_placement": false,
+        "door_frame_override": false,
+        "human_feedback_sha256": []
+      },
+      "source": {
+        "kind": "common plus reviewed exact task delta; physical compatibility pending where marked",
+        "base": "/home/galbot/lizekai/RSI/artifacts/architecture-review-20260916/six-task-focus/mapping-correction",
+        "delta_sha256": "31c11e67e8a7cacd15aee588207a2ff071644e470302905bd3fcf4bc9a4ef610"
+      },
+      "admission_note": "learning-only runner integration; exact MP/BetweenTables control or task spec pending where not ready",
+      "feedback_tier": "no new human feedback; inspect selected sources"
+    },
+    "simple/G1WholebodyHandoverTeleop-v0": {
+      "snapshot": "tasks/handover",
+      "source_phases": [
+        "enclosure",
+        "retention",
+        "placement"
+      ],
+      "ready_for_load": true,
+      "bindings": {
+        "task_spec_sha256": "6514347bf0bfaeb4a59a58508a9f0101a128edf4ff0aba956534301fa7f3cf5a",
+        "continuous_chunks": true,
+        "verified_placement": false,
+        "door_frame_override": false,
+        "human_feedback_sha256": []
+      },
+      "source": {
+        "kind": "preserved learned/task-adapted entry",
+        "path": "/home/galbot/lizekai/RSI/artifacts/R019/handover-campaign/memory/versions/0000.md",
+        "sha256": "0d5bc9baf9a2abc0763eac6173ed89da0b8ad8c282d7c0514acc0b1dc7984775"
+      },
+      "admission_note": "learning-only runner integration; exact MP/BetweenTables control or task spec pending where not ready",
+      "feedback_tier": "no new human feedback; inspect selected sources"
+    },
+    "simple/G1WholebodyLocomotionPickBetweenTablesTeleop-v0": {
+      "snapshot": "tasks/mobile",
+      "source_phases": [
+        "approach",
+        "retention",
+        "placement"
+      ],
+      "ready_for_load": true,
+      "bindings": {
+        "task_spec_sha256": "fe32c0248ff7ea216c00e2265f9cf526e068ce5ad44603b9bbc1b98c8b234884",
+        "continuous_chunks": true,
+        "verified_placement": false,
+        "door_frame_override": false,
+        "human_feedback_sha256": []
+      },
+      "source": {
+        "kind": "common plus reviewed exact task delta; physical compatibility pending where marked",
+        "base": "/home/galbot/lizekai/RSI/artifacts/architecture-review-20260916/six-task-focus/mapping-correction",
+        "delta_sha256": "926ad25bb1a02ae13747bfb990723c10ead90d83aabc831efbd9f1c33ffa5ba7"
+      },
+      "admission_note": "learning-only runner integration; exact MP/BetweenTables control or task spec pending where not ready",
+      "feedback_tier": "no new human feedback; inspect selected sources"
+    },
+    "simple/G1WholebodyTabletopGraspMP-v0": {
+      "snapshot": "tasks/grasp",
+      "source_phases": [
+        "enclosure",
+        "retention"
+      ],
+      "ready_for_load": false,
+      "bindings": {
+        "task_spec_sha256": null,
+        "continuous_chunks": true,
+        "verified_placement": false,
+        "door_frame_override": false,
+        "human_feedback_sha256": []
+      },
+      "source": {
+        "kind": "common plus reviewed exact task delta; physical compatibility pending where marked",
+        "base": "/home/galbot/lizekai/RSI/artifacts/architecture-review-20260916/six-task-focus/mapping-correction",
+        "delta_sha256": "55bc835b2075f3879d16e0b9e268294184fe2c738075cfc2d67f3dcc93d14c32"
+      },
+      "admission_note": "learning-only runner integration; exact MP/BetweenTables control or task spec pending where not ready",
+      "feedback_tier": "no new human feedback; inspect selected sources"
+    },
+    "simple/G1WholebodyXMoveBendPickTeleop-v0": {
+      "snapshot": "tasks/xmovebendpick",
+      "source_phases": [
+        "approach",
+        "low_reach",
+        "enclosure",
+        "retention"
+      ],
+      "ready_for_load": true,
+      "bindings": {
+        "task_spec_sha256": "259c3e5fb937e5ab0ecf814c508102aa30efdd5ef08c49819cc8af9262a1a770",
+        "continuous_chunks": true,
+        "verified_placement": false,
+        "door_frame_override": false,
+        "human_feedback_sha256": []
+      },
+      "source": {
+        "kind": "preserved learned/task-adapted entry",
+        "path": "/home/galbot/lizekai/RSI/artifacts/R019/xmovebendpick-campaign/memory/versions/0003.md",
+        "sha256": "97513bfdfef2836f9b3630183d6bd8a59c85803b1df18921c823e6e7c3eaf958"
+      },
+      "admission_note": "learning-only runner integration; exact MP/BetweenTables control or task spec pending where not ready",
+      "feedback_tier": "no new human feedback; inspect selected sources"
+    }
+  },
+  "runtime_sha256": "69e192a4759d2828b9b7039a8de666ecd5e59227c1b7455fcaa637e7aa003fc7",
+  "runtime_code_hashes": {
+    "rsi/skill_release.py": "e30716e764eeb78586355b1f3ebb206b021fc618c21199722ba7c243fd6ffd8b",
+    "rsi/frozen_skill.py": "ad22191bd0efe594a08e461c37db87bb7d67a1233da5ae611ecc9f39399479c9",
+    "rsi/skill_learning.py": "63cf7890f2f44bdf1c77a2b8bce1574936e9f3fedfed0de74ee8ef5d6e88f969",
+    "rsi/codex_app_server.py": "75cc5214088255a7d45e70ca9d5fd7447ab6a32f09b78e631cbba171be6363a1",
+    "rsi/policy_harness.py": "e1365e49d94028e510c7f047a0f8656d25b091448c4c5607baab4cbdc0e25418",
+    "rsi/live.py": "50f481f6b5d9dce4905164404d1867c561738ed97765399a92dfc9a5551bf434",
+    "rsi/simple_live.py": "0390e34ef41980c4831d4800ac4ecf60604ef59325229c1ef0efa3c6e315bf22",
+    "rsi/simple_environment.py": "f1b289df5e01bd21a055dbaffa944ebe24a8331173f5b997d5de2a3e073eb1a2",
+    "rsi/four_point.py": "bab956cf2ed756d135e2979e45c70dc436f9488912b78b314b6d34b2dfee8665",
+    "rsi/scalebfm.py": "37852fc073d066ed9bd0c55e32a6d8224c36e1c2360c488f45e511c4ddfbe73b",
+    "rsi/simple_hand_geometry.py": "3c5dbb7f66d966a43dff681b4bc75bbf9c2038a251016fa9897ac89c9f19935e",
+    "rsi/camera_calibration.py": "0dddca69cecec9626157af7e9784683f91144bd0b40b627db848b3758b04cdf9",
+    "rsi/evaluator.py": "a5b85cc7e8817e359bbe398a2ee66fe9ecb3bd1cb70886b775e09dca16f5db6b",
+    "tools/learn_grasp_skill.py": "fcd6447cbea1c7617e869d894653e3b7b30f80aef343e467bc5c75dd2538a868",
+    "tools/learn_simple_task.py": "88c341025925215401e14eb67d572e05824f6411d086cd7cd71f62f1b533d207"
+  },
+  "public_hashes": {
+    "atomic-index.json": "ec83010a62f7f541677fe1a34e3b9ed0c78b48442d7c5b32660bbc9bb32a6fde",
+    "atoms/apple-episode-0008.json": "b6a99f8fe2c9ee6fd5fbc60d1b234dbd3e76612ecc2b87ec49ede47ea425a60c",
+    "atoms/bendpick-episode-0006.json": "1f587d45f271b979a46495e94a24583ee93776a8e0f6fc295a46378ca93a3be2",
+    "atoms/bendpicksim-episode-0001-counterexample.json": "f08eeedbb31ab6d789f6a90391f5b6453b6eab24fc16551d9402e822b8f98d11",
+    "atoms/boxplace-episode-0003-counterexample.json": "9ee5605c3e349488e91f0f5722900ddcd6d4301243c1d76cf34d6ffffd557084",
+    "atoms/boxplace-episode-0004.json": "565f13e653e5e1087d83baa0305cd0fe2b433595f1925e658a3a58402a687e6b",
+    "atoms/chair-episode-0001.json": "42be092385e6c9df45e3882a12e2538d84ad3a2b8521f483208c4acdab17318f",
+    "atoms/closedoor-episode-0001.json": "136593c151cd24b2bd83c31162b55a6f456a130f70bf1ca0e0934d55b23e5123",
+    "atoms/door-episode-0010.json": "4fb62161451f64490e382938b787dd51a98c43f4c9d2ecdc9afdab93a59afcbe",
+    "atoms/door-episode-0011.json": "f35cbaa492782baf9ee2ff8219447539abeec1532f16a0d37acf96e9b07506a6",
+    "atoms/door-episode-0012.json": "3faa2de9bf714398d0caba5f7e2aee88642585afd4c539efd8ec0c281fe22182",
+    "atoms/door-episode-0013.json": "ea19c0ee3d95af486e21838b9536034ce9d895a224b8ca00677c84590cfdd909",
+    "atoms/door-episode-0014.json": "1b7ad608a8ff6cc22840c99a7c362c07f1347847768de08dbc72145ecb518842",
+    "atoms/door-episode-0016.json": "60d86b5a556d96c8c4a8934c3d99611ce0e3090c5ad357e9393d931859f1ffea",
+    "atoms/door-episode-0017.json": "5f70ba6d7db4c511afa9a5a7111b7da3f089e67eff3efcaf600e385ed874ce83",
+    "atoms/door-episode-0018.json": "f17f08aaefed70ed0544858da9451ac004c42334e40da9bf43def3ff742a1b3c",
+    "atoms/door-episode-0019.json": "c8ce8fc03f1393b5d3c2be5bc594326aa079954da915188a1ef6637d58696401",
+    "atoms/door-episode-0020.json": "67be940c26bec423431250a01ab8e92a734203d07e3540305d30b13682172e2e",
+    "atoms/faucet-episode-0008.json": "a045832edc2e9cc096cff20c06017e9a2e20c531c4f732a4405316be40d844ef",
+    "atoms/mobilecheezit-episode-0001-counterexample.json": "dc8a7a285e3d55a45753afa7c1f213fecb5807fdfb7dc57d534a62c26825093d",
+    "atoms/oven-episode-0001.json": "6523caeec6c3877e5c9b98fc024f35be23681cd525ad684765916549ecd1318d",
+    "atoms/trashcan-episode-0001.json": "d16e657f946dbb3d009e4b3b9b1e80a25a0082ef09a57687560b62fd31bcd8dd",
+    "atoms/xmovebendpick-episode-0001-counterexample.json": "28d1f7adcedba54bebce8d58e1a1110599d6865924a1775292b8eda6d4cffbc4",
+    "atoms/xmovebendpick-episode-0003.json": "fbea9e0de4b92e1122ba11f2d72f0a02e0094e5d183dd8fc8c2fc4427affc986",
+    "atoms/xmovepick-episode-0003.json": "bb64a936da0140f65ce139116b3cebec9269749c4a21fa3dff59413a5691aa51",
+    "atoms/xmovepicksim-episode-0001.json": "b4ddc9986385c2a44169fdecd29726e4d9241d24e3eeed92144b146d4403fba1",
+    "core/SKILL.md": "17329c8ecebe8c939e425df91fb3728ccb2d770cc978b182020339d39c089c8b",
+    "deltas/bendpick.md": "31c11e67e8a7cacd15aee588207a2ff071644e470302905bd3fcf4bc9a4ef610",
+    "deltas/grasp.md": "55bc835b2075f3879d16e0b9e268294184fe2c738075cfc2d67f3dcc93d14c32",
+    "deltas/handover.md": "58653a6268cf6c92fa9af5c11ce6931a15cab0130c22238a76444d04ca015aa9",
+    "deltas/mobile.md": "926ad25bb1a02ae13747bfb990723c10ead90d83aabc831efbd9f1c33ffa5ba7",
+    "deltas/xmovebendpick.md": "e0e7dd48b4915e2e76301d74687a8f4ffd7bc01dbf5190edd07076c8982e1ba5",
+    "deltas/xmovepick.md": "9db446c3d306f6170e12124b73cf71e2a10ffde01fdbd9022e0c625b214fd276",
+    "evidence/apple-episode-0008/0116/head_stereo_left.png": "0698275d9e7fb45c475dfbb1a5b85738d20084399816d90726ac724d980408de",
+    "evidence/apple-episode-0008/0116/head_stereo_right.png": "8a794f066accf536586efb947c0aaab03a04aeade56dd731188956a6745fbef1",
+    "evidence/apple-episode-0008/0117/head_stereo_left.png": "1ee44324f8f6cabc751fa00dd8f82ecd76fffe799477508791c539f5714a6149",
+    "evidence/apple-episode-0008/0117/head_stereo_right.png": "f2c0c3434dbf5c4a6db161ae9a0d25f8e677f3bea73285a65993f440f175b4c3",
+    "evidence/bendpick-episode-0006/0062/head_stereo_left.png": "62e34c1027e438abe35b2487ac6f7197548e79cd6714bfd6acafee798b03c7cd",
+    "evidence/bendpick-episode-0006/0062/head_stereo_right.png": "f13463d85fa5cf9eb71b35669aaff907c1dc8831d1ca1b424ae9acd5f42fa8f7",
+    "evidence/bendpick-episode-0006/0063/head_stereo_left.png": "933845484df2e90d5480514eabf29bdc3268f7b7f7e70d9f7ce8630a608b2854",
+    "evidence/bendpick-episode-0006/0063/head_stereo_right.png": "2752ac2543c4960a2b26715a09cf4d307ca80da725d55220d5b4426172da71cf",
+    "evidence/boxplace-episode-0004/0050/head_stereo_left.png": "7751936a8a6732de7eff18b68b1721ed2ba61921b16aa2c76e38196f1aa663b7",
+    "evidence/boxplace-episode-0004/0050/head_stereo_right.png": "fb7dddac8cd48d2121324428d99d740087c108825f30b73fbca69812800cb12c",
+    "evidence/boxplace-episode-0004/0051/head_stereo_left.png": "37898e2a138e3e0a5236ee255ef97d11828cbfa25ddc4329688841534dbc5d21",
+    "evidence/boxplace-episode-0004/0051/head_stereo_right.png": "0b0c8c5f00d8157593e43b0317d49022d5c0ffe6d7abc1c4a08c2cd199dd22bc",
+    "evidence/chair-episode-0001/0037/head_stereo_left.png": "24c0b44a5bd7d050196a662af60ff7c735d1e96ff142dcdd0459acb0b0447139",
+    "evidence/chair-episode-0001/0037/head_stereo_right.png": "0ab6c824dc61b3222ba7009cf6d3dac32511713fbd0d4ce4032c27f4e0969390",
+    "evidence/chair-episode-0001/0038/head_stereo_left.png": "ca5eb670ef97fad94195234854348097bce510a28cd216caa9beafd5937d8647",
+    "evidence/chair-episode-0001/0038/head_stereo_right.png": "2f04794d03e7b415f2a7e25595e4e56681723c2f5f9e2ad97385bbcdb1af82e6",
+    "evidence/closedoor-episode-0001/0040/head_stereo_left.png": "be0f4380b59b8cc8f455bf9c6454313a103a15ad8eb85f0250ebfe29af4c16af",
+    "evidence/closedoor-episode-0001/0040/head_stereo_right.png": "b94630a1f9a5daac7f23de5ea89b6a7913942a3e805eca47117afe5e9cd07cf9",
+    "evidence/closedoor-episode-0001/0041/head_stereo_left.png": "faba6cd3f2b10b9e5b1b0840a991525b5b41e949336bb24e817686c8bb5ea8fc",
+    "evidence/closedoor-episode-0001/0041/head_stereo_right.png": "a13e943cbf890059032cea64e3e9d522a5b20e1567c3ac422eb31894d67aa496",
+    "evidence/door-episode-0010/0017/head_stereo_left.png": "5614c18dd31869603f118e7cbb24c830d3d0f79e4ef9d15c9facbaf3637c0d40",
+    "evidence/door-episode-0010/0017/head_stereo_right.png": "3fa2b9ac4ee8b248132d5d0ed14b7b2586c29bbb2b7e7d40039954147c65b543",
+    "evidence/door-episode-0010/0018/head_stereo_left.png": "ba4a44ad48feaa26341e9591ba2bceee787a0809e80ac9ab31b691b1f957ac68",
+    "evidence/door-episode-0010/0018/head_stereo_right.png": "8191e31b7262c82a0ab0eaa236f7d12ecef6592f8b631365e5f705908b2eacff",
+    "evidence/door-episode-0011/0027/head_stereo_left.png": "242f16dfdb48c895b854baf94524975f4bfe726da2d956945209459196e7a775",
+    "evidence/door-episode-0011/0027/head_stereo_right.png": "c80f5e2e6c3a43309ec290306181473242f1f9971b1f5d5a8fdfbd655f4f15de",
+    "evidence/door-episode-0011/0028/head_stereo_left.png": "71fe44ce95edccb80cd9af2f78708d33a0e3fdffad4d376a85ae42e6561fb23a",
+    "evidence/door-episode-0011/0028/head_stereo_right.png": "92a020b8430beccda9519466e8b053322284b8120460a9df5d1c5b7dfe2718c3",
+    "evidence/door-episode-0012/0030/head_stereo_left.png": "51a9737e7e4f65168cf87d6aa820147d4c0cd323b441e5c8d876b54eb79a7b2d",
+    "evidence/door-episode-0012/0030/head_stereo_right.png": "7d979eb79f0e9e317a0d340c84c500dcb7efd963cfc57488d627e24fbfb639bf",
+    "evidence/door-episode-0012/0031/head_stereo_left.png": "2f7bd607f723119af828a20804cbe18b1144321038b0ff50e01bb274bc28f8ce",
+    "evidence/door-episode-0012/0031/head_stereo_right.png": "e714a3175c7de639d11e455d485c917a8d2d4cd1b29d973d314b46e240b37fe2",
+    "evidence/door-episode-0013/0033/head_stereo_left.png": "a1be13259cddf2d8b29e113db9b679450b6ab3624dd6a5ae3a43cb9657d02028",
+    "evidence/door-episode-0013/0033/head_stereo_right.png": "af2a635f973c53d6447e29e318efc6456488d07d2172439fa95219b56fbaf0d5",
+    "evidence/door-episode-0013/0034/head_stereo_left.png": "ac42ee5a3e547bb06307888fc0878cec8f2c596636821d538168e5e8ad0d0564",
+    "evidence/door-episode-0013/0034/head_stereo_right.png": "9c1dfd033137a3e4dab10ceb4f55a436692fe91411c4e5d2270c5ee776116b74",
+    "evidence/door-episode-0014/0022/head_stereo_left.png": "4a32bdf402bcc348d3f420aaf021410e07204bae9bbebb4f311387526c792af7",
+    "evidence/door-episode-0014/0022/head_stereo_right.png": "1cc24c266fa98e5462399de40bc38422179eac054b1104a4da26c1d3b789f784",
+    "evidence/door-episode-0014/0023/head_stereo_left.png": "450f772268b9341bd57c4a9f71e4246cf2baf3995fa111c844c6a09b18af4847",
+    "evidence/door-episode-0014/0023/head_stereo_right.png": "86d8bd4d813a6c8124c70781726ac904ac815ca9890fec7affb2d2e5ae17242e",
+    "evidence/door-episode-0016/0024/head_stereo_left.png": "145a1e9dcad84f2a8edcb822e84da74c2a8404a10aaa2f1699fac09ec319e033",
+    "evidence/door-episode-0016/0024/head_stereo_right.png": "4cec769d8a8675e1023b35840f1490787b61936837502438fdee5a4f5d37e959",
+    "evidence/door-episode-0016/0025/head_stereo_left.png": "7a25f1e578576a2ba46b1cb168efdaa30c00fa2cdafee6690d4af3348972e28b",
+    "evidence/door-episode-0016/0025/head_stereo_right.png": "f30f40e379d6d5c485b3cde9f3491c7fd52005781a2776230252202e63c1e65b",
+    "evidence/door-episode-0017/0033/head_stereo_left.png": "cfc575f0df1fb8e38170032656cd0ba65e720d945feece9942757ac11aefaf87",
+    "evidence/door-episode-0017/0033/head_stereo_right.png": "3cd4e3133fc7986c2344d74ad5273a7e9e7e1fa18c8e8a6db709f3fdea051bb2",
+    "evidence/door-episode-0017/0034/head_stereo_left.png": "5eba02fb9ad8aeae96820b883455c3bcdd9965136896e2bb789d854e8e643d3e",
+    "evidence/door-episode-0017/0034/head_stereo_right.png": "f1beab166a043c24397c8e6d250f59ba8b4603a92022d2bfd27669fad9da7654",
+    "evidence/door-episode-0018/0027/head_stereo_left.png": "10d2d285e79f0e6b79ae13eaa518de791f755832808f0368d18b723993d406e7",
+    "evidence/door-episode-0018/0027/head_stereo_right.png": "53615f694c81e3d61f142e285c396b845f6fdbb79b2814f630d962dd8d143bfc",
+    "evidence/door-episode-0018/0028/head_stereo_left.png": "ac37ed7f477ed896935f1a40ddb25a07deea3fe373323f612c7b1427c8265bcc",
+    "evidence/door-episode-0018/0028/head_stereo_right.png": "77988e2e6344eaab783d752409b4ef6c9795e18f32d7afe5a1189abbbd4ad8d6",
+    "evidence/door-episode-0019/0017/head_stereo_left.png": "a15036abfaef50fb0b03e780e56a3e420021143d74d09aadfda2c1a202ff66cc",
+    "evidence/door-episode-0019/0017/head_stereo_right.png": "47da1e95359858d1205ba8f0f4c33c5be5d6211f7978857ad73423d9354035cb",
+    "evidence/door-episode-0019/0018/head_stereo_left.png": "0e1d4f524b437b79ef56c3629afd6159dc5390366596b48a89c5b9ad027cc2ee",
+    "evidence/door-episode-0019/0018/head_stereo_right.png": "561193be127dd67ea43be905413fe7dcb3b9f1fc9b8116780344c95c7d8f3d44",
+    "evidence/door-episode-0020/0038/head_stereo_left.png": "ed588946741c5072e12ef37f3f1a5d7fb512a1522c09a80ff0840228913ad5d7",
+    "evidence/door-episode-0020/0038/head_stereo_right.png": "515ce2a035dbe83cd8d3cf15a5d45f3d6615c784ab82db06715f6d1b12aacb89",
+    "evidence/door-episode-0020/0039/head_stereo_left.png": "9b3a81d1cf134920b37ce2215218cdc647125512edff2f6e6b7f5f960ab5d862",
+    "evidence/door-episode-0020/0039/head_stereo_right.png": "b09f3b6d0bb831b17381add0cc604a1d6a930700f74a7e6c73d752520b3c69c5",
+    "evidence/faucet-episode-0008/0010/head_stereo_left.png": "c69d68b612ed6af4913dab98fc887ea19534b9c28bad3f0f508b9284e24414cc",
+    "evidence/faucet-episode-0008/0010/head_stereo_right.png": "dd6d0ed9d8ca5176f25253499cff056d77f2652ecfeea9431897313661743e15",
+    "evidence/faucet-episode-0008/0011/head_stereo_left.png": "c907e8fc92a623a059fa15651c6b247d101eb204e8f5a33ac5e481f24b518a67",
+    "evidence/faucet-episode-0008/0011/head_stereo_right.png": "47d60e73b51f82e94705ff3a2b95ba425650674e561641b56e3388574887b8cd",
+    "evidence/oven-episode-0001/0013/head_stereo_left.png": "2bfa210b019aa3e8ff0f2cbb2876f112e8f735a18fdaf16ade589bbb0aef8075",
+    "evidence/oven-episode-0001/0013/head_stereo_right.png": "8a088c2662743d52d54190af8e8eba8e4582e2e215655d34c4b4a36e787db4eb",
+    "evidence/oven-episode-0001/0014/head_stereo_left.png": "8f214cd76d2abc6e8fc332df30fef233cd88362c3ef1d83fa551b598dcc5c031",
+    "evidence/oven-episode-0001/0014/head_stereo_right.png": "df0fd405c8ae0868a1535102655f16fc61b1e08f157700e246b3c3f0912d0d73",
+    "evidence/trashcan-episode-0001/0004/head_stereo_left.png": "47b47109d09809d28c0ea3dcb2d75abc9ecc6ec1d51b5e225b068a92f5aa9c19",
+    "evidence/trashcan-episode-0001/0004/head_stereo_right.png": "91797b0bcf83a4ba0376ca2f9ae456ae20be4c6e6d4315f4fb44785dbd109b6c",
+    "evidence/trashcan-episode-0001/0005/head_stereo_left.png": "d36eb3bc576812d0d0bcc2d68965dec3deb63c51ce709909704c1c8eb6a6eacf",
+    "evidence/trashcan-episode-0001/0005/head_stereo_right.png": "af3b60e65f0f155f64226ffea14c9bb7d4c9f732556f900320cf2ca4465b1fdc",
+    "evidence/xmovebendpick-episode-0003/0066/head_stereo_left.png": "4874631149008f705e0c3f685cc48055ed535d9aad3a142e69d54537f9ac9880",
+    "evidence/xmovebendpick-episode-0003/0066/head_stereo_right.png": "e5be784be0ca7acd4233752dd77b0e52236a7321bf627f9584061d9e358eee8e",
+    "evidence/xmovebendpick-episode-0003/0067/head_stereo_left.png": "ef0c91474cc5fc0ea574f73ccb3beec3e758a25227c649645666d4a6fc5a55b0",
+    "evidence/xmovebendpick-episode-0003/0067/head_stereo_right.png": "f2dc93e1cc07baabd7a81ced19fb3f36c058cf8e181b27c942fde17fd64ed731",
+    "evidence/xmovepick-episode-0003/0030/head_stereo_left.png": "6c0428d301d43c0b4db35a48587725539254fecd3e2616efc645a5fdc5e0e906",
+    "evidence/xmovepick-episode-0003/0030/head_stereo_right.png": "fd51e108a9f9969819ae5feccd78591b73281f8c1d988f482e2ee6720c847792",
+    "evidence/xmovepick-episode-0003/0031/head_stereo_left.png": "2694ef69b8d948f7ea805e39e0dbbf4efeaef87d045e4559d2bceb12a2d43c6c",
+    "evidence/xmovepick-episode-0003/0031/head_stereo_right.png": "1f8ba826601ef88a53f7a2c6c6db326461aa764d55609e84a73306be8462afb7",
+    "evidence/xmovepicksim-episode-0001/0037/head_stereo_left.png": "3781fd90f06a55ef5d1a17be70fce9b506e265882a42f7790d500a8733dc6f27",
+    "evidence/xmovepicksim-episode-0001/0037/head_stereo_right.png": "69314ff52e2bc405272367aec45787b94b8449bb18fc8977ce9165c417793e75",
+    "evidence/xmovepicksim-episode-0001/0038/head_stereo_left.png": "d9211f1f2a53be44a2bb0d0a358ac538d29330fc2afe234b3806e6033bd5ad1d",
+    "evidence/xmovepicksim-episode-0001/0038/head_stereo_right.png": "9e0f3a29fcc37fb00755cd19c6362967bc8820e581add756c26da9c048b735f0",
+    "table-cube-foundation.json": "31983ec394e0a4d81c822d2f425d02689166a7dc417176f55b91fe22a2bb3298",
+    "tasks/bendpick/SKILL.md": "37675b0fc24bbbd31fb9dfd0f7c205a59125989b934cf585b703b9691d59c00e",
+    "tasks/bendpick/memory/versions/0000.md": "37675b0fc24bbbd31fb9dfd0f7c205a59125989b934cf585b703b9691d59c00e",
+    "tasks/bendpick/retrieval-labels.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+    "tasks/grasp/SKILL.md": "8e3d1e17e4e3e99c89ae05d40c77d19e901ec38b263480068d6dc1047b39bf4a",
+    "tasks/grasp/memory/versions/0000.md": "8e3d1e17e4e3e99c89ae05d40c77d19e901ec38b263480068d6dc1047b39bf4a",
+    "tasks/grasp/retrieval-labels.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+    "tasks/handover/SKILL.md": "191cfd21669cc1b1048893609f3c3a8ff7bfe54e5a0a164e033140ad29ce56b1",
+    "tasks/handover/memory/versions/0000.md": "191cfd21669cc1b1048893609f3c3a8ff7bfe54e5a0a164e033140ad29ce56b1",
+    "tasks/handover/retrieval-labels.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+    "tasks/mobile/SKILL.md": "958c26619b0216785c9d0afe0102474048eb78abfed77f877d8289cfa8a2dc6d",
+    "tasks/mobile/memory/versions/0000.md": "958c26619b0216785c9d0afe0102474048eb78abfed77f877d8289cfa8a2dc6d",
+    "tasks/mobile/retrieval-labels.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+    "tasks/xmovebendpick/SKILL.md": "d783fca34c417fe0d919d7178724cc805b20c3c3768339013f1b8b2d8c1c4d6f",
+    "tasks/xmovebendpick/memory/versions/0000.md": "d783fca34c417fe0d919d7178724cc805b20c3c3768339013f1b8b2d8c1c4d6f",
+    "tasks/xmovebendpick/retrieval-labels.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+    "tasks/xmovepick/SKILL.md": "3499ec320e48c83c66bcee8545fa93cfe1cd07148da6c7b49b9702aba3f67005",
+    "tasks/xmovepick/memory/versions/0000.md": "3499ec320e48c83c66bcee8545fa93cfe1cd07148da6c7b49b9702aba3f67005",
+    "tasks/xmovepick/retrieval-labels.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+  },
+  "profiles": {
+    "learning": "learning-horizon-v1; no cumulative sim/action/turn stop",
+    "stability": "learning-horizon-v1; use supervisor full sealed candidate, approved public read set and ordered reset registration",
+    "evaluation": "finite registered budget; L0/L1/L2 benchmark alignment remains explicitly blocked"
+  },
+  "scope": "Central conditional skills; no new physical success/benefit. Pending task compatibility remains blocked.",
+  "retrieval": "fixed reviewed pool; select <=3 matching entries; frozen files never acquire new proposals",
+  "rollback": {
+    "release_id": "central-20260916-v3",
+    "manifest_sha256": "71e89225db1bca27d29314ff0c1106817c080b102c4aa6f257399c30a60a4138"
+  },
+  "legacy_rollback": {
+    "shared_core_snapshot": "/home/galbot/lizekai/RSI/artifacts/architecture-review-20260916/central-skill-publication/snapshots/skills/loco-manip-core/SKILL.md",
+    "sha256": "150be7a241e5cfec4a05b8f948196d6f8d4ff3669059fd4b9554415d6a5eeb04",
+    "task_lineage": "/home/galbot/lizekai/RSI/artifacts/architecture-review-20260916/central-skill-publication/skill-source-lineage.json",
+    "note": "First central release has no prior central pointer. Legacy sources remain intact; do not auto-load them into a frozen candidate."
+  },
+  "integration_status": "published immutable content; root-assigned runner integration requires final hash compare and receipt",
+  "evaluation_protocol": "SIX-TASK-BENCHMARK-ALIGNMENT: L0/L1/L2 each10 after fixed-candidate5; live level alignment pending; candidate runner rejects evaluation"
+}
