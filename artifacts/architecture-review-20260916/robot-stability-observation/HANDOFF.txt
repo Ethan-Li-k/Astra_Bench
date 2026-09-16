@@ -1,0 +1,6 @@
+当前问题：robot-only observe/robot_motion 缺少命名 pelvis 高度与倾角，保护停止难以从公开本体采样复盘。
+总目标：ROBOT-STABILITY-OBS-V1 有界候选交付，请唯一 SIMPLE publisher 在自然回合边界逐 hunk 审阅，勿热改在途 actor。
+不可重犯的错误：不改控制/阈值、不传 object/contact/reward/host-audit、不把排队算 ACK/集成/物理收益。
+候选未部署：/home/galbot/lizekai/RSI/artifacts/architecture-review-20260916/robot-stability-observation/FINAL.md；同目录 INTEGRATION.md、robot-stability.patch、source-hashes.json、evidence/。
+77行增量，2文件；倾角同原 xmat 判据，命名 body 高度不无条件等同 qpos[2]，故无 margin。真实 capture 样本保存 sim_s/observation_id/episode目录身份；首样本/缺失/非有限/时间回退不造差分；不跨回合缓存。20/20离线测试+2项红灯+保护方法AST不变+源漂移/dry-run证据齐。未运行物理/模型/API，未改 skill/runtime/shared core；新字段无物体/接触/奖励/审计payload。
+请在自然边界 ACK 接受/拒绝/待测和采用hash，检查实际 SIMPLE root 映射后按 INTEGRATION 做下次已授权回合的公开字段/trace验收；先保留旧证据与人类反馈层，不声称防止失稳。API/IKEA不同入口不可盲用。不等待物理结果，本工程turn交付后结束。

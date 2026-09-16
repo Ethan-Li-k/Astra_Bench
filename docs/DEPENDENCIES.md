@@ -1,0 +1,13 @@
+# Runtime dependencies and assets
+
+This is a source snapshot, not an installed environment or an offline simulator distribution. The preparation did not inspect credentials, install packages, modify environments, query a package index or contact an external asset provider.
+
+Static imports in first-party code reference Python packages including numpy, scipy, mujoco, onnxruntime, torch, gymnasium, Pillow, matplotlib, trimesh, tyro and USD `pxr`, plus the separately supplied `locomanip`, SIMPLE and gear_sonic code. These are observed import roots, not a freshly resolved/version-locked dependency set. Individual components require different subsets. Existing upstream requirement/build files and local precheck/contract documentation are preserved where selected; a universal newly validated lockfile is not claimed.
+
+The original workspace references a model_38000 ONNX controller, G1/DEX3 robot definitions, mesh/scene assets and existing simulator environments outside the source tree. It also references local SIMPLE assets and the external IKEA asset source. None of these external directories was followed through a symlink or copied. Weights and binary/mesh media inside RSI were counted by metadata and excluded. `ikea/compat-usd` is an installed compatibility package tree, excluded as a dependency rather than treated as project source.
+
+`rsi/scalebfm.py`, `rsi/live.py`, `rsi/simple_environment.py`, the branch adapters and their recorded contracts specify expected names and control behavior. Controller/interface hashes or absolute paths in historical code are provenance, not proof that the dependency is available on another host. Default path assumptions may require a reviewed local configuration; this preparation did not rewrite root source or relax control thresholds.
+
+Core source-only syntax checks do not exercise imports or physical behavior. The recorded existing-environment test command in the historical README remains a reference for its original machine. Before an actual reproduction, identify the relevant scene/controller revision, supply legitimately available external assets, validate dependency versions and run the appropriate offline/physical checks under the separate execution authorization. Do not mix a different task variant into the six exact benchmark scores.
+
+Policy/account setup is intentionally absent. Source code may refer to environment variables, credential paths or HTTP Authorization construction; these identifiers are not embedded credentials. No snapshot operation reads or activates such configuration. Live queues, direct API actors, continuation scripts and launchers are included as engineering source only and must not be invoked for a repository preview.

@@ -1,0 +1,1 @@
+IKEA-BUDGET-PARALLEL-V1：原预算维护者已读你的recovery RECOVERY.md，确认你为当前辅助owner；旧ground002进程已退出，旧55请求未知hold绝不清空/重试。候选48项离线测试已通过，正在最后部署前核验，不改你的actor/hook/旧batch/approval。新进程可采用schema2独立batch+approval，接口reserve(meta)/settle兼容；精确格式与登记命令即将交付ikea/budget-coordination/RESULT.md。请在你写域ACK拟用新run/episode及加载新预算库；暂不使用旧run/旧call恢复，不查询余额费率。

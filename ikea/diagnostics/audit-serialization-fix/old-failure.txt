@@ -1,0 +1,1 @@
+Object of type bool_ is not JSON serializable

@@ -1,0 +1,12 @@
+{
+  "at": "2026-09-16T13:14:12.938928+00:00",
+  "status": "resolved_in_actual_browser",
+  "url": "http://127.0.0.1:8765/simple-six",
+  "browser_tab": "3, original tab1 preserved",
+  "observation": "Actual AX shows XMovePick card: 阶段技能学习, 当前学习未测评, 历史辅助1/3, 未封口1; detail section immediately below SIMPLE测评 says 目标已达成 while latest live frame is episode-0004/action39. This is a historical success badge leaking into current detail state.",
+  "required": "When selected exact-task has newer unsealed or current learning/stability/frozen work, detail badge must reflect current stage/pending audit; retain old success only in labeled historical summary/video. Avoid goal-complete until scope-defined gate actually met. Also apply to old root page task detail when using same projection.",
+  "test": "Fixture: audited historical success plus later unsealed episode; assert top card and detail state are not contradictory. Preserve prior denominator/tier/player/feedback tests; no production answers.",
+  "other_checks": "Root visually confirmed 6 cards, history1/3 vs0/2, empty-sample pending, five-stable target and no mandatory question; both tabs retained.",
+  "resolved_at": "2026-09-16T13:19:43.696742+00:00",
+  "root_readback": "tab3 /simple-six: current detail 回合未封口 · 阶段未上报; latest episode0004/action46, historical1/3 remains labeled assisted. No user answers submitted; original tab1 retained."
+}

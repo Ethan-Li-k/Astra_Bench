@@ -1,0 +1,350 @@
+{
+  "ready": true,
+  "at": "2026-09-16T13:19:18.269493+00:00",
+  "new_url": "http://127.0.0.1:8765/simple-six",
+  "old_url": "http://127.0.0.1:8765/",
+  "old_ikea_url": "http://127.0.0.1:8765/#ikea",
+  "user_browser_untouched": true,
+  "ui_pid": 1727563,
+  "service_running": true,
+  "deployed_at": "2026-09-16T13:16:02.213917+00:00",
+  "changes": [
+    "同一服务新增独立六项专页；根页面HTML/CSS保留",
+    "精确入口下按当前/历史、辅助/自主、初始化/控制分层；原生和完整语义审计各有分子、分母、百分比",
+    "正常耗尽物理预算与安全停止经封口审计计未成功；未判定、系统中断、暂停、重放分别列出",
+    "固定候选连续5次与冻结计划10次单列，未登记不从历史回填",
+    "主动建议携带精确六项上下文，仍绑定原source_version并走append-only反馈；原owner/投递/ACK/媒体函数保留",
+    "实际六项ACK和本体已发布、首动作及首完整回合受限审计状态兼容；不推断单因物理收益",
+    "当前未封口回合不继承历史目标已达成标签"
+  ],
+  "checks": {
+    "affected_regressions": "29 passed (affected-tests.log)",
+    "final_targeted_regressions": "12 passed (tests-final.log); includes real episode_step_budget alias and current-episode label",
+    "browser": "13 passed initial + 3 final; own isolated Chrome, no production answers",
+    "range_playback": "completed video actual playback, seek to10s, HTTP206 and refresh position preserved",
+    "routes": {
+      "/": {
+        "status": 200,
+        "content_type": "text/html; charset=utf-8"
+      },
+      "/simple-six": {
+        "status": 200,
+        "content_type": "text/html; charset=utf-8"
+      },
+      "/simple-six/": {
+        "status": 200,
+        "content_type": "text/html; charset=utf-8"
+      },
+      "/api/dashboard": {
+        "status": 200,
+        "content_type": "application/json; charset=utf-8"
+      }
+    },
+    "screenshots_read": [
+      "simple-six-desktop.png",
+      "simple-six-mobile.png",
+      "original-framework.png"
+    ],
+    "preservation": "preservation.json"
+  },
+  "question_eligibility": {
+    "production_eligible_count": 0,
+    "required_questions_created": 0,
+    "unsolicited_feedback_available": true
+  },
+  "source_freshness_limitations": [
+    "页面5秒只读轮询，来源动作时间与浏览器读取分开；未封口/旧推理记录不等于当前存活",
+    "当前无可验证固定候选或冻结批次登记；未测评不是0%",
+    "旧学习技能和运行配置会变化，累计学习率不代表固定策略可靠性",
+    "字段兼容规则写SOURCE_CONTRACT.md；未来owner真实候选合同若不同须核对，不声称已协商"
+  ],
+  "current_score_evidence": [
+    {
+      "name": "XMovePick",
+      "native_env_id": "simple/G1WholebodyXMovePickTeleop-v0",
+      "dispositions": {
+        "valid": 3,
+        "inflight": 1,
+        "pending": 0,
+        "infrastructure": 0,
+        "paused": 0,
+        "replay": 0,
+        "duplicate": 0
+      },
+      "groups": [
+        {
+          "period": "history",
+          "assistance": "assisted",
+          "variant": "native task layout with checkpoint standing reset",
+          "control": "checkpoint",
+          "contract": "native_simple_criterion",
+          "native": {
+            "numerator": 1,
+            "denominator": 3,
+            "percent": 33.333333333333336
+          },
+          "semantic": {
+            "numerator": 1,
+            "denominator": 3,
+            "percent": 33.333333333333336
+          },
+          "skill_versions": 3,
+          "episodes": [
+            "episode-0001",
+            "episode-0002",
+            "episode-0003"
+          ]
+        }
+      ],
+      "stability": {
+        "registered": false,
+        "consecutive": null,
+        "required": 5,
+        "candidate_sha256": null,
+        "note": "未登记完整固定候选；历史成功不回填"
+      },
+      "frozen": {
+        "registered": false,
+        "planned": 10,
+        "native": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        },
+        "semantic": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        },
+        "note": "默认计划 10 回合；批次/seed/reset 清单未登记"
+      }
+    },
+    {
+      "name": "BendPick",
+      "native_env_id": "simple/G1WholebodyBendPickMP-v0",
+      "dispositions": {
+        "valid": 0,
+        "inflight": 0,
+        "pending": 0,
+        "infrastructure": 0,
+        "paused": 0,
+        "replay": 0,
+        "duplicate": 0
+      },
+      "groups": [],
+      "stability": {
+        "registered": false,
+        "consecutive": null,
+        "required": 5,
+        "candidate_sha256": null,
+        "note": "未登记完整固定候选；历史成功不回填"
+      },
+      "frozen": {
+        "registered": false,
+        "planned": 10,
+        "native": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        },
+        "semantic": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        },
+        "note": "默认计划 10 回合；批次/seed/reset 清单未登记"
+      }
+    },
+    {
+      "name": "Handover",
+      "native_env_id": "simple/G1WholebodyHandoverTeleop-v0",
+      "dispositions": {
+        "valid": 0,
+        "inflight": 1,
+        "pending": 0,
+        "infrastructure": 0,
+        "paused": 0,
+        "replay": 0,
+        "duplicate": 0
+      },
+      "groups": [],
+      "stability": {
+        "registered": false,
+        "consecutive": null,
+        "required": 5,
+        "candidate_sha256": null,
+        "note": "未登记完整固定候选；历史成功不回填"
+      },
+      "frozen": {
+        "registered": false,
+        "planned": 10,
+        "native": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        },
+        "semantic": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        },
+        "note": "默认计划 10 回合；批次/seed/reset 清单未登记"
+      }
+    },
+    {
+      "name": "Mobile P&P",
+      "native_env_id": "simple/G1WholebodyLocomotionPickBetweenTablesTeleop-v0",
+      "dispositions": {
+        "valid": 0,
+        "inflight": 0,
+        "pending": 0,
+        "infrastructure": 0,
+        "paused": 0,
+        "replay": 0,
+        "duplicate": 0
+      },
+      "groups": [],
+      "stability": {
+        "registered": false,
+        "consecutive": null,
+        "required": 5,
+        "candidate_sha256": null,
+        "note": "未登记完整固定候选；历史成功不回填"
+      },
+      "frozen": {
+        "registered": false,
+        "planned": 10,
+        "native": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        },
+        "semantic": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        },
+        "note": "默认计划 10 回合；批次/seed/reset 清单未登记"
+      }
+    },
+    {
+      "name": "Grasp",
+      "native_env_id": "simple/G1WholebodyTabletopGraspMP-v0",
+      "dispositions": {
+        "valid": 0,
+        "inflight": 0,
+        "pending": 0,
+        "infrastructure": 0,
+        "paused": 0,
+        "replay": 0,
+        "duplicate": 0
+      },
+      "groups": [],
+      "stability": {
+        "registered": false,
+        "consecutive": null,
+        "required": 5,
+        "candidate_sha256": null,
+        "note": "未登记完整固定候选；历史成功不回填"
+      },
+      "frozen": {
+        "registered": false,
+        "planned": 10,
+        "native": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        },
+        "semantic": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        },
+        "note": "默认计划 10 回合；批次/seed/reset 清单未登记"
+      }
+    },
+    {
+      "name": "XMoveBendPick",
+      "native_env_id": "simple/G1WholebodyXMoveBendPickTeleop-v0",
+      "dispositions": {
+        "valid": 2,
+        "inflight": 1,
+        "pending": 0,
+        "infrastructure": 0,
+        "paused": 0,
+        "replay": 0,
+        "duplicate": 0
+      },
+      "groups": [
+        {
+          "period": "history",
+          "assistance": "autonomous",
+          "variant": "native task layout with checkpoint standing reset",
+          "control": "checkpoint",
+          "contract": "native_simple_criterion",
+          "native": {
+            "numerator": 0,
+            "denominator": 2,
+            "percent": 0
+          },
+          "semantic": {
+            "numerator": 0,
+            "denominator": 2,
+            "percent": 0
+          },
+          "skill_versions": 2,
+          "episodes": [
+            "episode-0001",
+            "episode-0002"
+          ]
+        }
+      ],
+      "stability": {
+        "registered": false,
+        "consecutive": null,
+        "required": 5,
+        "candidate_sha256": null,
+        "note": "未登记完整固定候选；历史成功不回填"
+      },
+      "frozen": {
+        "registered": false,
+        "planned": 10,
+        "native": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        },
+        "semantic": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null
+        },
+        "note": "默认计划 10 回合；批次/seed/reset 清单未登记"
+      }
+    }
+  ],
+  "awaits_owner": "原SIMPLE唯一负责人继续获授权回合并发布真实候选/冻结manifest与审计；本UI任务不等待机器人完成。",
+  "queue_messages": 0,
+  "production_answers": 0,
+  "model_or_physical_calls": 0,
+  "github_upload": false,
+  "changed_files_sha256": {
+    "human-feedback/tools/dashboard.py": "7220cf7f049b5e8d9aa34b09c7c28bd3a309a876c78c8f276ec401f63c55f9d3",
+    "human-feedback/tools/simple_six.py": "b37403c53e5f842a66c00389bc32eaa4e00bb0190e8de03eae4404916348582e",
+    "human-feedback/tools/server.py": "5e00f6ebcac26cd9c7067857505cf5e7ddb41cb7a1f75ff240a0cd1652dc3b79",
+    "human-feedback/tools/feedback_board.py": "7b2462a6f5aa70f486abee7022908a1d2e8d698784d22b210d17fb2f671162db",
+    "human-feedback/ui/app.js": "7d312d9d0bf72f7f97e185bb4c6bfb3649af8bcef053ee3f3065a535af3dbd0d",
+    "human-feedback/ui/simple-six.html": "5f8713818220c9bdf35515294c64f26b66ca96ae66eeac44288dd8be4cfb81bc",
+    "human-feedback/ui/simple-six.js": "11f185c634dd4975def7e2938ae5d702439bce8c5e1a82421fd48de924216b8e",
+    "human-feedback/ui/simple-six.css": "d58e73569efe0aa9e9633b6eda28707d7a4f0d101ab2ee46e412ed6354ed3557"
+  },
+  "backup": "backup-manifest.json",
+  "diff": "changes.patch",
+  "start_command": "cd /home/galbot/lizekai/RSI && bash human-feedback/tools/run_server.sh",
+  "tmux": "rsi-human-feedback-h001",
+  "restart_identity_evidence": [
+    "restart-before.json",
+    "restart-after.json",
+    "final-health.json"
+  ]
+}

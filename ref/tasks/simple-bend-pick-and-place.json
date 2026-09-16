@@ -1,0 +1,23 @@
+{
+  "task_id": "simple-bend-pick-and-place",
+  "env_id": "simple/G1WholebodyBendPickAndPlaceTeleop-v0",
+  "instruction": "Find the cracker box and the basket-like container on the table. Grasp the box, lift and transport it clear of the rim, then lower and release it into or stably supported by the container while remaining standing.",
+  "scene_contract": "Native SIMPLE box-and-container layout with other distractors. Original MuJoCo object meshes may be white rather than printed. Identify target and container from fresh stereo RGB. Current table, robot and objects must be reobserved; positions and grasp feasibility from a prior task are not given.",
+  "completion": [
+    "Host native outcome uses box-container contact with no hand-box contact and a small accumulated reward threshold. It does not by itself prove inside-container geometry, an intentional lift or stable placement.",
+    "Independently use RGB to verify acquisition, retained transport, release and final box support by/in the intended container, rather than mere rim or outside-wall contact. Host will audit final geometry separately.",
+    "One independent reset success is required. When rollout_finished is true stop actions and complete skill_update; no extra post-terminal motion."
+  ],
+  "phase_guidance": [
+    "Inspect stereo RGB for target, container opening, rims, distractors and hand approach clearance; use only supplied camera calibration and robot geometry.",
+    "Select from shared core, own cube skill and the reviewed BendPick v6/public rollout. Explain what current evidence supports transfer and what changed. It establishes one prior grasp/lift, not this new placement task.",
+    "Approach with an open hand and a trackable attitude; evaluate all finger/palm surfaces rather than wrist coordinates or bounding-box centroids alone.",
+    "Treat the nearby basket rim and outer walls as obstacles during acquisition. Inspect visible separation for the whole hand before closing; the prior episode ended on native contact during closure before any lift or release. Use its public observations as counterexamples, not a completed placement recipe.",
+    "Close only after a visible grasp envelope is plausible. Verify visible box-hand co-motion in a small lift and retention before transporting. Reacquire if the box slips or tips.",
+    "Observe a clear path above the container rim; move the retained object in bounded increments with fresh stereo and tracking feedback. Reposition only if needed under the available four-point interface.",
+    "Lower into the observed container/support, release, withdraw enough to establish no hand support and observe whether the box remains supported at the intended destination."
+  ],
+  "failure_guidance": "Preserve reason, evidence, excluded hypotheses and a changed safe test. finish_attempt records a stall only, then continue this same episode until native success/failure, runtime safety/system termination or physical budget. Do not end because three actions were completed, reasoning is slow or temporary progress is absent.",
+  "known_interface_limits": "Formal policy is Astra/xhigh with UMI-4 ScaleBFM, checkpoint PD and native Dex3 hand geometry. No direct joint control, fixed grasp centre, hidden contact/object state or oracle trajectory. Physics pauses during reasoning.",
+  "experience_limits": "Prior BendPick uses the same target mechanism but does not establish placement success. No controller state is transferred. No human semantic feedback or demonstration is supplied to this task."
+}

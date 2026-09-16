@@ -1,0 +1,24 @@
+{
+  "task_id": "simple_close_door_repaired_frame",
+  "env_id": "simple/G1WholebodyCloseDoorTeleop-v0",
+  "instruction": "Approach the initially open room door and close its moving panel against the fixed frame while remaining standing. Identify the panel, frame, hinge side and accessible hand contact from the current stereo view.",
+  "scene_contract": "Native CloseDoor layout and articulated initial state are preserved. The previously verified asset003 fixed-frame collision is represented by four frame bars matching its source ring; no push-open side rotation or forced closed reset is applied. This is a declared collision-repair variant of the native closing objective, not the completed push-open task.",
+  "completion": [
+    "Close the door visibly into its frame; host reports the unchanged native angle-based accumulated closing criterion. Wait for rollout_finished and finish skill_update.",
+    "Independent audit also checks that the robot actually interacted with and closed the initially open door while standing; spontaneous passive closing or an already-closed reset is not a policy success.",
+    "Preserve continuous video, all actions and public evidence. A requested wrist target, contact hypothesis or door-like image motion alone is insufficient."
+  ],
+  "phase_guidance": [
+    "Select applicable own experience before acting. Door20 supports re-observation, open-hand interaction, unloaded approach and actual-support checks; its opening side, positive direction, world poses and chunks do not transfer to closing.",
+    "Use current calibrated stereo to distinguish fixed frame from moving panel and hinge. Identify reachable closing surface and free path; do not infer a latch operation is required from appearance alone.",
+    "Approach only with verified whole-hand and support clearance, rechecking actual root/wrist/support trends. Unload saturated arms before a changed stance hypothesis; ankle lift or target_reached alone does not establish a stable step.",
+    "First establish stationary reachable interaction. Test a bounded motion that reduces the observed panel-frame opening; compare fresh images and measured wrist response. If the panel opens farther, reconsider interaction direction and stance.",
+    "Follow the panel with small observed corrections toward the frame, separating stationary interaction from unloaded stance changes. Preserve hand clearance as the gap narrows. No prior numerical door trajectory may be replayed.",
+    "If contact or reach stalls, record current evidence, excluded hypotheses and a changed safe test, then continue the same episode. Stop physical actions only at actual terminal/budget/safety/system boundary."
+  ],
+  "known_interface_limits": "Formal model_38000 UMI-4/checkpoint PD, native Dex3, calibrated stereo, bounded continuous chunks, 240s physical budget. Physics pauses during full Astra reasoning; MuJoCo, not RTC/Isaac/hardware.",
+  "failure_guidance": "Separate observation uncertainty, missed hand contact, wrist undertracking, stance/support drift and door progress. finish_attempt records a nonterminal stall; continue its returned next_call with a changed safe hypothesis. Do not terminate after three actions or because reasoning is slow.",
+  "prohibited_shortcuts": "No object pose/contact truth, hidden reward inspection, evaluator source, external demonstrations, direct joint control, mid-episode reset, old action replay or forced object motion.",
+  "guidance_status": "Task semantics and qualitative phases; actions chosen from current authorized observations.",
+  "robot_proprioception_contract": "New robot_root measurements describe the named pelvis body origin: world height in metres, body-to-world unit wxyz orientation, and tilt in degrees between local +Z and world +Z. This is robot body feedback, not object state or centre of mass. robot_root_summary reports only sampled changes/extrema within the just-executed action; missing/null data are unknown, not zero or evidence of stability. Compare actual body and wrist trends before further reach; target arrival alone does not establish stable support."
+}

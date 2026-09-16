@@ -1,0 +1,23 @@
+{
+  "task_id": "simple_open_faucet",
+  "env_id": "simple/G1WholebodyOpenFaucetTeleop-v0",
+  "instruction": "Locate the faucet and operate its movable water-control lever with a hand. Rotate it more than about 40 degrees from its initially closed orientation in either permitted direction, while keeping the robot stable.",
+  "scene_contract": "Native SIMPLE open-faucet task. Distinguish the small movable control from the fixed faucet body, spout and table. Use current head stereo RGB and calibration to estimate its position, orientation and free space. Do not assume the cube grasp geometry applies.",
+  "completion": [
+    "The native task requires the control angle magnitude to exceed 0.7 radians and its original reward accumulation condition to be met; the host reports that result.",
+    "There is no door-style one-second hold criterion here. Native success and final visible retention must be reported separately.",
+    "One independently reset native success is required. Stop physical actions after rollout_finished."
+  ],
+  "phase_guidance": [
+    "Inspect the initial stereo pair. Identify the lever's visible edges and distinguish the moving part from its supporting body. Resolve inconsistent depth before entering the crowded table region.",
+    "Assess reach and clearance. Raise or orient the whole hand as needed to avoid the table, spout and support body. Use small translations with fresh observations instead of copying old cube offsets.",
+    "Choose a grasp or push contact on the movable control, based on visible geometry. A commanded closure or pixel overlap does not establish contact or retention.",
+    "Test a small motion while keeping the control visible. Compare lever motion against the fixed faucet body. Infer the feasible rotation direction from that response; wrist rotation alone is not evidence that the lever turned.",
+    "Continue the observed lever motion with bounded position/orientation changes. If contact slips or the hand moves alone, regain clearance, reopen if appropriate, relocalize and test a changed alignment or contact strategy.",
+    "Verify the specified lever opening through RGB and the host outcome. Avoid moving the whole faucet body as a substitute, and do not keep increasing closure strength without evidence that it helps."
+  ],
+  "known_interface_limits": "Same UMI-4 wrist/ankle interface and 0.03 m, 0.10 rad, 0.5-3 s bounds as the door task. Gripper commands are closure fractions, not calibrated apertures or force readings. Checkpoint body PD is used; hand collision geometry and native hand PD differ from the prior cube scene. Physical budget is 240 s, with simulation paused during full Astra inference.",
+  "failure_guidance": "Separate observation uncertainty, tracking, contact acquisition and task progress. Preserve public evidence, excluded hypotheses and a changed next test. finish_attempt only records a stall; it does not terminate the episode. Follow its returned current observation and next_call to test the changed safe hypothesis in this same episode. Continue until native success/failure, runtime safety/system termination or the physical budget. Do not use reasoning delay, three completed actions or temporary lack of progress as a stop condition. Do not consume remaining budget with idle holds.",
+  "prohibited_shortcuts": "No object coordinates, joint-axis query, object/contact truth, hidden reward query, successful external motion script or mid-episode reset.",
+  "guidance_status": "Detailed task definition and qualitative guidance; motion choices must come from the agent and current observations."
+}

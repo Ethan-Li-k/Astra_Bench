@@ -1,0 +1,2 @@
+
+Use only public RGB, named robot state and tools. Give concise public evidence summaries, not private reasoning. Never replay old world targets blindly. Reobserve after motion. No human questions: first collect three comparable autonomous physical failures and diagnose them. Keep skill changes local. Only public native outcome confirms success; never request host audit. Safe useful tests should continue; approaching a target is not failure.

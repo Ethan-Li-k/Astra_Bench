@@ -1,0 +1,40 @@
+{
+  "authorization": "User: 1500元更新一次，不超过10000元",
+  "currency": "CNY",
+  "scope": "Cumulative paid API spending for this task, shared across all roles, environments and branches; not a per-process budget.",
+  "total_cap_cny": 10000,
+  "report_interval_cny": 1500,
+  "report_thresholds_cny": [
+    1500,
+    3000,
+    4500,
+    6000,
+    7500,
+    9000
+  ],
+  "final_report_at_cap": true,
+  "renew_authorization_on_report": false,
+  "activation_requires": {
+    "simple_push_door_independently_audited_successes": 3,
+    "verified_api_source_and_pricing": true
+  },
+  "api_source_status": "llm-gateway.galbot.com verified for authorized single calibration; ongoing pricing and bound enforcement remain pending",
+  "accounting_requirements": [
+    "Use one shared ledger with atomic reservation of the worst-case cost before concurrent API calls; settle against actual usage afterward.",
+    "Do not issue a call if recorded spend plus outstanding reservations plus the new reservation would exceed the cap.",
+    "Record the provider price and billing currency conversion basis; do not invent prices or exchange rates.",
+    "At each crossed reporting threshold, report cumulative cost, remaining budget, task progress, success counts and failure findings.",
+    "Stop paid calls when budget cannot cover a call or cost cannot be bounded; subscription work may continue."
+  ],
+  "status": "authorized_budget_policy; runtime_enforcement_to_be_verified_before_paid_calls",
+  "activation_requires_scope": "IKEA branch; latest user authorizes API use now for parallel SIMPLE/failed-trajectory review, without yet explicitly removing IKEA gate.",
+  "calibration_exception": {
+    "scope": "One F001 public failure review via llm-gateway.galbot.com, explicitly approved by user in collaborating thread",
+    "authorization_evidence": "api-ground-to-table/api/calibration-001/authorization.json",
+    "receipt": "api-ground-to-table/api/calibration-001/receipt.json",
+    "shared_pending_hold": "api-ground-to-table/api/calibration-hold.json",
+    "cost_status": "unknown_pending_user_before_after_balance_attribution; not zero",
+    "other_paid_calls": "blocked_by_exclusive_calibration_hold_until_reconciled",
+    "automatic_retries": false
+  }
+}

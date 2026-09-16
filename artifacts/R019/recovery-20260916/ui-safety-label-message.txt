@@ -1,0 +1,4 @@
+当前问题：既有视频页将XMovePick1稳定性保护停止标为终态物理失败。
+总目标：展示真实停止类别并与账本同步。
+不可重犯：不改原始result、不热改控制、不把安全停止当三自主物理失败。
+已实际GET /api/dashboard并保存在recovery-20260916/dashboard-door10-snapshot.json（移除csrf）；目录动态发现与门10/10、苹果8、椅1录像均通过。xmovepick1原result backend_stop_reason=diagnostic_stability_stop，failure_review及campaign_audit为runtime_safety_stop，不是跌倒/闭合抓持失败。请在现有分类中明确显示稳定性保护停止，保持其他原生failure和预算分类；不用新服务。另外4在途任务public-progress/supervisor-state稍后刷新，当前缺状态不要推断死亡。仅修展示，完整回合证据路径不变。

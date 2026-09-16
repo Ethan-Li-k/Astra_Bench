@@ -1,0 +1,8 @@
+{
+  "human-feedback/tools/dashboard.py": "93b0b68d70399e699b2b9a8a419070da594823c840a49770b0d15e434548f0c2",
+  "human-feedback/tools/server.py": "48b411ad5ec99bf196b53caf27d6aa84ae48ec5d6ac3f8e1f5a52c3f646e9355",
+  "human-feedback/ui/app.js": "f626a16985db1dd9ab801d9e56aaa3dfe1a22a9598d7af9d920581c8a9eeeb0a",
+  "human-feedback/ui/index.html": "7634344f21df0295101850705b5e1cd08040fe2daf84ce6e8e0400f57adfc586",
+  "human-feedback/ui/style.css": "2d325f462add9a2fdd8156ff3c45ef5b94847ef1ca4c54c9c1e710da9dcb30d3",
+  "human-feedback/tools/feedback_board.py": "c786846ad7613b77295eb5175221dbfac80a14946ce3125375fc9c818bfe8e8e"
+}

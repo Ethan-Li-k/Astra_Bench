@@ -1,0 +1,23 @@
+{
+  "task_id": "simple_push_office_chair",
+  "env_id": "simple/G1WholebodyPushOfficeChairTeleop-v0",
+  "instruction": "Approach the office chair and push it toward the visible table while keeping the robot stable. Establish controlled hand contact and translate the chair, rather than only rotating the seat or moving the robot.",
+  "scene_contract": "Native SIMPLE office-chair pushing task. Identify chair, movable frame/contact surfaces, table and free path from current stereo RGB. Do not assume chair position, caster response, table coordinates or contact truth.",
+  "completion": [
+    "The native evaluator requires more than0.8m absolute chair displacement along the scene X direction from its initialized position, plus original accumulated reward threshold(default0.9). This geometric threshold is a task definition, not live object state.",
+    "Independent task review must also establish controlled chair translation toward the intended table while the robot stays standing. A native flag from motion in the wrong direction, tipping or uncontrolled collision is not sufficient task evidence.",
+    "One independently reset complete physical episode and skill_update is required. Stop at rollout_finished; no extra terminal hold is imposed by this native criterion."
+  ],
+  "phase_guidance": [
+    "Inspect both head views and the camera calibration. Distinguish chair base/seat/back from the table and estimate the desired push direction using visible scene relationships. Resolve uncertainty by safe observation or repositioning; do not infer hidden coordinates.",
+    "Assess a clear approach and stationary reachable contact pose. Reuse only compatible empty-hand approach principles with measured support feedback; empty-hand approach is not a validated loaded pushing gait.",
+    "Choose a broad accessible chair surface and check whole-hand/forearm clearance. Use small open-hand contact tests and compare chair motion against the fixed table and floor. Distinguish chair translation, seat swiveling, hand slip, robot-base movement and tracking residual.",
+    "After visible translation is established, follow with bounded actions and stable support. If reach saturates, unload and reassess a closer stance rather than walking blindly under contact. Test any coordinated loaded motion as an unverified hypothesis, never as a copied skill.",
+    "Reobserve after each motion to keep chair and table direction consistent. Correct yaw/side drift while avoiding tipping or collision; advance only when visible chair movement supports the hypothesis.",
+    "Continue until host terminal or genuine safety/system/physical-budget boundary. Preserve successful and failed coupling/stance hypotheses and sources in local skill memory."
+  ],
+  "known_interface_limits": "Formal model_38000 UMI-4/checkpoint PD, native Dex3 robot geometry, 50Hz tracker/200Hz physics. Use delivered single-waypoint/continuous contracts; no joint/torque actions. Wrist frames are not TCPs; gripper fractions are not force.240s physical budget and complete Astra reasoning with paused physics.",
+  "failure_guidance": "finish_attempt is a nonterminal stall record. Within remaining physical budget continue a changed safe test; reasoning wait or a few actions never imply failure. Distinguish observation, control tracking, coupling, support and task displacement.",
+  "prohibited_shortcuts": "No object pose/contact/wheel-axis or hidden reward queries, oracle actions, mid-episode resets, table movement, old-action replay or importing a loaded gait without evidence.",
+  "guidance_status": "Qualitative task semantics and transfer limits, no motion demonstration."
+}

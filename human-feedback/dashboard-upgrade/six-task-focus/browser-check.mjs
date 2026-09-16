@@ -1,0 +1,48 @@
+import fs from 'node:fs';
+const base='/home/galbot/lizekai/RSI/human-feedback/dashboard-upgrade',out=base+'/six-task-focus';
+const port=fs.readFileSync(out+'/browser-profile/DevToolsActivePort','utf8').split('\n')[0];
+const targets=await(await fetch(`http://127.0.0.1:${port}/json/list`)).json();
+const ws=new WebSocket(targets.find(x=>x.type==='page').webSocketDebuggerUrl);await new Promise((r,j)=>{ws.onopen=r;ws.onerror=j;});
+let seq=0;const pending=new Map(),errors=[],passed=[];
+ws.onmessage=e=>{const m=JSON.parse(e.data);if(m.id){const p=pending.get(m.id);pending.delete(m.id);m.error?p.reject(Error(JSON.stringify(m.error))):p.resolve(m.result);}else if(m.method==='Runtime.exceptionThrown')errors.push(m.params.exceptionDetails);};
+const call=(method,params={})=>new Promise((resolve,reject)=>{const id=++seq;pending.set(id,{resolve,reject});ws.send(JSON.stringify({id,method,params}));});
+const ev=async expression=>{const r=await call('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true,userGesture:true});if(r.exceptionDetails)throw Error(JSON.stringify(r.exceptionDetails));return r.result.value;};
+const run=code=>ev('(async()=>{'+code+'})()');
+const check=(ok,name)=>{if(!ok)throw Error(name);passed.push(name);};
+async function until(expression){for(let i=0;i<150;i++){if(await ev(expression))return;await new Promise(r=>setTimeout(r,100));}throw Error(expression);}
+try {
+ await call('Page.enable');await call('Runtime.enable');
+ await call('Emulation.setDeviceMetricsOverride',{width:1440,height:1080,deviceScaleFactor:1,mobile:false});
+ await call('Page.navigate',{url:'http://127.0.0.1:8765/#simple'});
+ await until("document.querySelectorAll('#subtasks button').length===6 && document.querySelector('#scope-note').textContent.includes('六项')");
+ const response=await fetch('http://127.0.0.1:8765/api/dashboard');const status=await response.json();const simple=status.tasks.find(t=>t.id==='simple');const mapping=JSON.parse(fs.readFileSync(out+'/public-source-snapshot/benchmark-mapping-evidence.json','utf8')).mapping;
+ check(response.ok&&!status.fixture&&JSON.stringify(simple.subtasks.map(t=>t.native_env_id))===JSON.stringify(Object.values(mapping))&&await ev("document.querySelectorAll('#subtasks button').length===6 && !document.querySelector('#scope-note').textContent.includes('全91')"),'six_exact_native_targets_replace_old_active_scope');
+ check(status.tasks.filter(t=>['ikea','ground'].includes(t.id)).every(t=>t.state==='paused')&&await ev("['ikea','ground'].every(id=>document.querySelector('[data-task='+id+'] .badge').textContent.includes('用户已暂停'))"),'both_paused_lanes_visible_and_not_running');
+ await ev("document.querySelector('[data-subtask=benchmark-2]').click()");
+ check(await ev("document.querySelector('#phase').textContent.includes('未开始') && document.querySelector('#context').textContent.includes('G1WholebodyBendPickMP-v0') && document.querySelector('#summary').textContent.includes('新冻结测评成绩未知')"),'bendpick_mp_unknown_not_teleop_score');
+ await ev("document.querySelector('[data-subtask=benchmark-4]').click()");
+ check(await ev("document.querySelector('#phase').textContent.includes('未开始') && document.querySelector('#context').textContent.includes('G1WholebodyLocomotionPickBetweenTablesTeleop-v0')"),'between_tables_unknown_not_mobilecheezit_score');
+ await ev("document.querySelector('#task-history').open=true;document.querySelector('#history-subtasks [data-subtask=boxpick]').click()");
+ check(await ev("document.querySelector('#summary').textContent.includes('历史 / 迁移记录') && document.querySelector('#history-subtasks [data-subtask=door]') && document.querySelector('#history-subtasks [data-subtask=mobilecheezit]')"),'historical_task_ids_and_variant_evidence_preserved');
+ await ev("document.querySelector('#task-history').open=false;document.querySelector('[data-subtask=benchmark-1]').click()");
+ check(simple.subtasks[0].success===null&&simple.subtasks[0].historical_assisted_successes===1&&await ev("document.querySelector('#context').textContent.includes('H001-004') && document.querySelector('#summary').textContent.includes('人工辅助 1') && document.querySelector('#summary').textContent.includes('新冻结测评成绩未上报')"),'xmovepick_h001004_assisted_history_separate_from_new_frozen_score');
+ await until("document.querySelector('#player').readyState>=2 && document.querySelector('#player').getAttribute('src').includes('simple-xmovepick-episode-0003')");
+ const url=await ev("document.querySelector('#player').getAttribute('src')");const range=await fetch('http://127.0.0.1:8765'+url,{headers:{Range:'bytes=64-127'}});
+ check(range.status===206&&(await range.arrayBuffer()).byteLength===64,'exact_task_completed_video_range_still_works');
+ await run("window.qaPlayer=document.querySelector('#player');window.qaSrc=qaPlayer.currentSrc;qaPlayer.muted=true;await qaPlayer.play()");await until('qaPlayer.currentTime>1');await ev('qaPlayer.currentTime=Math.min(3,qaPlayer.duration/3)');await until('!qaPlayer.seeking');await ev('window.qaTime=qaPlayer.currentTime');await until('qaPlayer.currentTime>qaTime+6');
+ check(await ev("qaPlayer===document.querySelector('#player') && qaPlayer.currentSrc===qaSrc && !qaPlayer.paused"),'task_filter_play_seek_and_status_poll_preserve_playback');await ev('qaPlayer.pause()');
+ fs.writeFileSync(out+'/production-six-tasks.png',Buffer.from((await call('Page.captureScreenshot',{format:'png',captureBeyondViewport:true})).data,'base64'));
+ await ev("document.querySelector('[data-task=ground]').click();document.querySelector('#prior-status').open=true");
+ await until("document.querySelector('#phase').textContent.includes('用户已暂停')");
+ check(await ev("document.querySelector('#prior-status-body').textContent.includes('HTTP 429') && document.querySelector('#problem').textContent.includes('用户要求暂停')"),'ground_pause_current_and_http429_historical_separate');
+ await ev("document.querySelector('[data-task=ikea]').click();document.querySelector('#prior-status').open=true");
+ await until("document.querySelector('#phase').textContent.includes('用户已暂停')");
+ check(await ev("document.querySelector('#prior-status-body').textContent.includes('EOF') && document.querySelector('#source-age').textContent.includes('心跳') && document.querySelector('#answer-form') && !document.querySelector('#answer').disabled"),'ikea_pause_eof_history_heartbeat_and_feedback_available_without_submission');
+ fs.writeFileSync(out+'/production-paused-ikea.png',Buffer.from((await call('Page.captureScreenshot',{format:'png',captureBeyondViewport:true})).data,'base64'));
+ await ev("document.querySelector('[data-task=simple]').click()");await call('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
+ check(await ev('document.documentElement.scrollWidth<=document.documentElement.clientWidth'),'six_target_and_exact_id_view_fits_mobile');
+ fs.writeFileSync(out+'/production-mobile.png',Buffer.from((await call('Page.captureScreenshot',{format:'png',captureBeyondViewport:true})).data,'base64'));
+ check(errors.length===0,'no_browser_runtime_errors');
+ fs.writeFileSync(out+'/production-public.json',JSON.stringify({observed_at:status.observed_at,tasks:status.tasks,eligible_cases:status.help.eligible_count},null,2));
+ const report={at:new Date().toISOString(),url:'http://127.0.0.1:8765/',passed,errors,screenshots:['production-six-tasks.png','production-paused-ikea.png','production-mobile.png'],feedback_submissions:0,queue_messages:0,model_api_calls:0,physical_requests:0};fs.writeFileSync(out+'/browser-results.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
+}catch(e){fs.writeFileSync(out+'/browser-failure.json',JSON.stringify({passed,errors,error:String(e)},null,2));throw e;}finally{await call('Browser.close');ws.close();}

@@ -1,0 +1,4 @@
+当前问题：SIMPLE新增苹果入碗完整审计成功，供条件化经验复用。
+总目标：各自任务继续，公开经验共享。
+不可重犯：不迁移坐标/物体真值/实时tracker，不把静止搬移当持物行走。
+artifacts/R019/public-atomic-experience-20260916.json新增apple_side_enclosure_retained_transport_h001004_v8；源apple-campaign/memory/versions/0008.md与episode0008/rollout。先开手撤离、调整高度/深度后重新包络，确认留握再越碗缘移动释放；第一次高位前探闭合抬手未留握为反例。H001004语义辅助成功单列，无动作示教，未验证撤手保持/跨场景/持物行走，shared core未晋升。door18成功累计8/10；door19、chair1、xmovebendpick1在途。无需改写我方campaign，仅自然边界检查机制适用性。

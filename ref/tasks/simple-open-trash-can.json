@@ -1,0 +1,23 @@
+{
+  "task_id": "simple_open_trash_can",
+  "env_id": "simple/G1WholebodyOpenTrashCanTeleop-v0",
+  "instruction": "Approach the trash can and open its movable lid using controlled hand interaction while keeping the robot stable.",
+  "scene_contract": "Native SIMPLE trash-can opening task. Distinguish the lid from the fixed bin body, surrounding table and unrelated objects. Determine accessible moving edge/handle and opening direction from current stereo images and observed response. Do not assume a pedal, latch, hinge axis or motion direction from task name alone.",
+  "completion": [
+    "The native criterion requires opening angle greater than 0.5 radians and its original accumulated reward threshold (default 0.9). Host outcome reports this without exposing object joint or reward state to the actor.",
+    "Supervisor also reviews actual lid motion relative to the bin and stable robot support. Moving the entire bin or an unrelated part is insufficient. No door-style one-second or release hold is added.",
+    "One independently reset complete episode plus skill_update is required; stop motion after rollout_finished."
+  ],
+  "phase_guidance": [
+    "Inspect both head RGB views with delivered render_intrinsics. Identify the bin body, lid edges and visible reachable contact surfaces; record uncertainty before approaching.",
+    "Assess distance, free space and required stance. Retrieve compatible empty-hand approach experience selectively, adapt to current robot poses and verify measured support and view changes. Do not copy prior trajectories or mistake ankle rise for whole-foot clearance.",
+    "Establish a stable working stance and check full hand/forearm clearance against the bin, lid and surrounding surfaces. Choose a visible opening interaction: enclosure if a graspable feature exists, or contact on an edge if geometry supports it.",
+    "Test one small bounded motion with a predicted lid response relative to fixed body. Commanded closure and wrist motion do not establish coupling. Reject surface shadow or occlusion as evidence of hinge movement.",
+    "Follow verified opening motion with short replanned actions while rechecking support and clearance. If hand slips, reach saturates or direction is wrong, unload, regain clearance and test a changed hypothesis in the same episode.",
+    "Continue to host termination, then preserve sources, unsuccessful hypotheses, public evidence and a concise revised task entry. Report opening under contact and post-release retention separately."
+  ],
+  "known_interface_limits": "Formal model_38000 UMI-4 with checkpoint body PD, native Dex3 geometry and continuous-chunk contract when enabled. Gripper fractions are not aperture or force; wrist frames are not TCPs. Physical budget240s, physics pauses during inference; all complete Astra turns awaited.",
+  "failure_guidance": "finish_attempt only records a nonterminal stall. Continue safe changed exploration within the same reset until actual native/safety/system terminal or physical budget. Inference delay, three actions or low progress do not end the task. Distinguish budget, early stop, infrastructure and actual physical failure.",
+  "prohibited_shortcuts": "No object poses/contact/joint-axis/reward queries, oracle trajectories, hidden geometry, external demonstrations, mid-episode resets or replayed actions.",
+  "guidance_status": "Task semantics and qualitative planning input, not motion demonstration."
+}

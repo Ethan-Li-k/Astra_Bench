@@ -1,0 +1,11 @@
+当前问题：新发布者回执已确认ROBOT-STABILITY-OBS-V1在XMovePick3正式首动作加载验证，页面仍依据原候选回执显示未部署。总目标：最小同步真实发布与字段验证状态；不可重犯：不改写原候选/发布证据，不重复等值诊断，不把首动作字段验证称为完整任务成功/收益。
+
+仍是原唯一辅助UI owner，上一schema turn已完整结束。直接只读 artifacts/R019/robot-stability-integration-20260916/status.json 和 first-action-physical-verification.json 两个真实源。root已核对actual-backend-root-mapping-xmovepick3.json及当前源码hash与发布回执一致；不再重复这些诊断、不向UI暴露host-only映射或其他审计包。
+
+仅扩展Dashboard.stability_observation，在原候选状态之后按匹配ROBOT-STABILITY-OBS-V1 ACK、明确published状态及来源hash字段/首动作验证组合覆盖旧候选文字。当前真实status为published_first_formal_action_fields_verified，first_physical_boundary=xmovepick-campaign/episode-0003；firstaction.actual_formal_physical_action=1，samples=251，published_sources_match_formal_runtime=true，same_action_time_and_episode_identity=true，summary_recomputation_exact=true；高度差0、倾角差9.805489753489383e-13。首动作episode必须与publisher边界一致，不信任源中任意path，不把first_action_evidence用于任意读文件。请直接以实际JSON字段做测试，不再假定ready字段。
+
+网页明确显示“本体状态观测已发布；首动作字段验证通过”，并分开显示“完整回合和任务收益尚未验证”。pub.physical_benefit_verified=false及full_episode_and_task_benefit=pending与验证里的physical_task_benefit_verified=false不能被动作数/数学等值替代。原candidate结果保持历史证据且不回写；最新publisher ACK覆盖原候选中的未ACK/未集成/未部署状态。当前问题/下一步为等待原任务完整回合审计、不重复该字段等值诊断、在途旧版冻结。保留NT已发布/door19加载/真实网络恢复未验证及其他里程碑。没有有效publisher时回落原候选语义；源缺失/矛盾明确未确认，未知不补0/true。只投影白名单工程字段，无对象/接触真值、原始异常、凭据或host审计路径载荷。
+
+先用这次实际回执结构复现旧页面未部署错误，后补少量定向检查：真实pub+firstaction正确；缺验证不冒称字段验证；episode错配不混算；candidate旧值不盖pub；物理收益独立。保留备份/失败日志；原未变反馈/媒体/负责人路由沿用证据。只测试受影响适配函数与原候选相关回归，不新建平台、不改机器人或重跑20字段等值检查。
+
+复用原UI重启与浏览器脚本；核验UI身份后只重启网页，实际8765做3项内验证并保存一张读取过的截图。不得发生产测试答案，不发模型/API/物理请求，不查计费，不改skill/runtime/controller/安全阈值/任何在途/环境，不新建子代理，不唤醒桌面账号。无需任何对外queue。当前辅助账号openai/Astra/xhigh保持。留progress.json、FINAL.md、result.json、证据与差异后完整结束这个有限turn，网页继续运行。

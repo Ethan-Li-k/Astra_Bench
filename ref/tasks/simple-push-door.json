@@ -1,0 +1,28 @@
+{
+  "task_id": "simple_push_door",
+  "env_id": "simple/G1WholebodyCloseDoorTeleop-v0",
+  "instruction": "Use a hand to push the initially closed door away from the robot, open it at least 30 degrees relative to its starting orientation, maintain that opening for at least one simulated second, and remain standing.",
+  "scene_contract": "SIMPLE asset003 push-open variant. This is an explicit variant of the original close-door task. The door starts closed; do not pull its handle. Locate its moving panel, frame, hinge side and accessible push area from current RGB. No object coordinates, hinge pose or contact truth are supplied.",
+  "completion": [
+    "Host verifies actual hand-door contact, at least 30 degrees opening, one second of physical dwell and standing.",
+    "A tracking success is not task success. Stop after rollout_finished; count only the native success receipt.",
+    "Ten independently reset successes are required. Keep final visible state separate from the native criterion."
+  ],
+  "phase_guidance": [
+    "Inspect initial stereo views and camera calibration. Identify the moving door separately from its frame and nearby table. Estimate reachability from visible geometry; keep uncertain depth explicit.",
+    "If the door is beyond reach, establish real approach before extending the arms. Compare named ankle positions and camera/body motion. Arm motion or camera lean alone does not establish a step or foot unloading.",
+    "Once reachable, choose an accessible part of the moving panel. A point farther from the visible hinge generally gives more opening leverage; infer it visually rather than using a supplied location. Approach with hand and body clearance.",
+    "Establish gentle contact, make a small push away from the robot and inspect panel motion relative to the fixed frame. Adapt the hand path to the observed motion. If the hand slides or the door stays still, reobserve and change the contact hypothesis.",
+    "Continue observed opening with bounded actions. Verify the opening criterion and physical dwell while maintaining support. Do not use a handle pull to substitute for the specified push."
+  ],
+  "known_interface_limits": "model_38000 UMI-4 at 50 Hz, native SIMPLE physics/PD at 200 Hz, checkpoint body PD profile. Four-point targets currently allow 0.03 m per active point and 0.10 rad; each waypoint lasts 0.5-3 s. No walking primitive is assumed. Physical episode budget is 240 s; inference is fully awaited.",
+  "failure_guidance": "Separate observation uncertainty, tracking, contact acquisition and task progress. Preserve public evidence, excluded hypotheses and a changed next test. finish_attempt only records a stall; it does not terminate the episode. Follow its returned current observation and next_call to test the changed safe hypothesis in this same episode. Continue until native success/failure, runtime safety/system termination or the physical budget. Do not use reasoning delay, three completed actions or temporary lack of progress as a stop condition. Do not consume remaining budget with idle holds.",
+  "prohibited_shortcuts": "No teleportation, reset during the episode, external trajectory demonstration, object-state query, hidden reward inspection or replacement of the original goal.",
+  "guidance_status": "Task definition and qualitative planning guidance, not a successful motion script or demonstration.",
+  "continuous_locomotion_exploration_guidance": [
+    "When the observed continuous interface is enabled, an isolated vertical foot lift is not a prerequisite for testing one bounded coordinated transfer/swing/landing hypothesis. The entire candidate must obey the current public chunk contract; choose its geometry and timing from current RGB and robot state.",
+    "Compare a materially changed amplitude, timing or coordination hypothesis after small isolated references show negligible response. Do not indefinitely alternate wrist-only checks and the same small loaded-foot pulses. Change one factor when a causal comparison is intended; otherwise explicitly call the test a feasibility probe.",
+    "Use the public within-chunk robot trace to distinguish transient motion, endpoint arrival, ankle tilt and actual relocation. Inspect support and scene visibility after every chunk. Stop/recover on measured instability or unsafe clearance; task success still requires the unchanged host door criterion.",
+    "These are qualitative exploration instructions, not a demonstrated gait. No synthetic diagnostic trajectory, object pose, contact truth or successful action parameters are supplied."
+  ]
+}

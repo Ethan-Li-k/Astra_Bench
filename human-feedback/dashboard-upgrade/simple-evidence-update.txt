@@ -1,0 +1,2 @@
+SIMPLE协作方刚给出实际新证据（不要中断在途进程）：artifacts/R019/door-campaign/episode-0015/app_server/rpc_out.jsonl里turn/started=1、error=5、没有turn/completed，错误responseStreamDisconnected。动作61在08:56完成，之后有模型/接口活动。需核实是否仍在生成，再决定等待或同回合恢复；绝不能重放动作61或reset，既有事件/视频保留，不计物理失败。artifacts/R019/PROGRESS.md和ITERATIONS末段还记录苹果7/水龙头7/放盒3均到240秒物理预算，尚无新成功。相机接口修正已测fx606.30/fy454.72、诊断误差由>10px降到<0.75px，但物理收益未验证；勿与harness长度/经验检索改动冲突，也不要把全部抓取失败归因内参。
+网页请分开连接状态待核实、完整推理等待、物理预算结束；状态陈旧只是陈旧不能自动断言卡死。最新完整三项视频应自动被发现，不继续只显示旧案例。

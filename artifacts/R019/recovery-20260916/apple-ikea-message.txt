@@ -1,0 +1,4 @@
+当前问题：SIMPLE苹果首次完整物理审计成功，供IKEA自然边界核查机制适用性。
+总目标：三方独立环境共享公开经验。
+不可重犯：不热注入在途、不复制坐标/相机数值/host真值，不把SIMPLE当IKEA成绩。
+公共候选artifacts/R019/public-atomic-experience-20260916.json中的apple_side_enclosure_retained_transport_h001004_v8，源apple-campaign/memory/versions/0008.md与episode0008/rollout。属于H001004语义辅助、无动作示教；先开放撤离降高再重入包络，确认留握及整体越缘后搬移释放。第一高位前探闭合未留握为反例。最终入碗真实审计成功，但原生释放时结束，未验证撤手保持或跨场景/持物步行。共享core未晋升。请保留你方独立合同与人工反馈标签，仅在自然边界选择适用项。

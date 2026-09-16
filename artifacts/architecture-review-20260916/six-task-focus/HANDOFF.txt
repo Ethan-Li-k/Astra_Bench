@@ -1,0 +1,7 @@
+当前问题：SIX-TASK-FOCUS-V1 暂停收尾与六类技能候选已交付；此前PAUSE/排队并不等于实际停止。
+总目标：唯一 SIMPLE publisher 在自然边界审阅 /home/galbot/lizekai/RSI/artifacts/architecture-review-20260916/six-task-focus/FINAL.md、TASK-PLAN.md、INTEGRATION.md；继续现有六类调度，候选未部署。
+不可重犯：不恢复IKEA/地面，不热改在途，不把原生触发当真实转手/持物移动，不复制host审计给actor。
+pause-status.json已有双重身份与终止后核验：IKEA apple0002在43动作/152.72sim_s用户暂停，actor/app-server/ffmpeg/manager/continuation退出，录像封口；14完整turn，第15无终态且远端未知，不重发。原EOF result保留另记user_requested_pause。地面005 HTTP429原件/未知请求/封口视频保留，actor/owner退出，仅零模型阻塞休眠watcher；均保留PAUSE。无SIGKILL/共享服务变动/新物理或模型调用。
+仅candidate/可考虑进actor：一份短共同SKILL+每次一个六类delta，原已学经验保留。六组合含实际runtime+恢复预留最大716words/5333chars/4613非空白，validator/超长拒绝/源漂移/原件完整性通过。XMoveBendPick1=49动作46timeout零闭合；BendPickSim1=65动作44timeout、18动作有闭合，需按阶段归因，均预算结束。Handover原生/SimToReal/PlaceBack/Bend变体判据不同，先查完整转手合同；Mobile现有合同保留，无预置持物步行成功。
+XMovePick3、XMovePickSim1、BendPick6为分层历史源，门10与桌面10不重刷。BendPickSim2/XMoveBendPick3/MobileCheezit1在途版本不动。Grasp入口待用户澄清，其余无需等；不选MP示教/新机器人。不重套已上线NT/长度/memory-priority/本体补丁，不晋升core。
+请自然边界ACK接受/拒绝/采用hash，并按新真实事件回传公开观察与适用边界；工程回执/host准则与actor候选分离。本有限review交付后结束，不接管调度、不等全部任务完成。

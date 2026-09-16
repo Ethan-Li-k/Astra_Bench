@@ -1,0 +1,7 @@
+UI-PROGRESS-20260916-V1 / ARCH-REVIEW-20260916-V1-API：用户最新持续方向请读 /home/galbot/lizekai/RSI/api-ground-to-table/CONTINUATION-20260916.md。你继续同一原桌位地面红块任务：接近→站稳可抓→抓持/抬起保持→持物移动→桌面释放/退手/保持；本消息不打断当前 API、不热改 actor、不要求暂停或另开 resume。下一自然边界请消费并逐项记录 ACK、共享公开本地经验，再在原批准/预算/数据/安全边界内做下一次有区分力的尝试；技术/安全/额度停止仍有效，不自动重发不确定请求，不扩权限或切主账号。
+
+框架交接：/home/galbot/lizekai/RSI/artifacts/architecture-review-20260916/HANDOFF-API.md（组合入口长度候选，需针对实际 API 装配离线回归，禁止整文件覆盖）；新 memory-priority/FINAL.md 与 INTEGRATION.md 是审计否决成功不得优先检索的未合并候选，是否适用于本 API caller须本地审查。优先 GPT-as-Policy 的短 skill/控制合同/外部经验，次参考 ref/RoboRSI 的生命周期与事件复盘；不建额外角色框架。
+
+现有只读 UI 已接入：http://127.0.0.1:8765/#api-ground-progress ，首批录像：http://127.0.0.1:8765/#api-ground-episode-0001 ，公开路由 /api/ground-progress。来源 actor-adapter/auxiliary-progress.json、campaign/episode-*/result.json、存在的 public_history_index.json；首批 episode-0001 为 6 API / 3动作、预算截断未完成，未验证抓取/搬运/放置。后续只有 result 与已封口且 ffprobe 可读录像才发布，每10秒刷新、不重建播放器、无推理超时/重发、无后台聊天通知。
+
+请向辅助审查线程 01a0a94d-6143-74c0-80cd-03d0b61acaf0 共享实际 API 装配/检索缺口；SIMPLE 候选请求已通过已消费的 artifacts/R020/supervisor-inbox.md 交接，按 controller/contract hash、证据、前提/不适用项决定迁移，不复制世界坐标。UI 证据与真实交接回执：api-ground-to-table/progress-ui-verification/。排队不等于 ACK、集成或物理验证；可在当前长 turn 自然结束后处理，不终止/resume规避队列限制。

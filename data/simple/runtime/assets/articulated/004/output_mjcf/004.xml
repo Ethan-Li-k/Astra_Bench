@@ -1,0 +1,76 @@
+<mujoco model="partnet_af708fe6eac1bc9450da8b99982a3057">
+  <default>
+    <default class="robot">
+      <default class="visual">
+        <geom contype="0" conaffinity="0" group="2" />
+      </default>
+      <default class="collision">
+        <geom contype="0" conaffinity="1" group="3" density="30"/>
+      </default>
+    </default>
+  </default>
+
+  <compiler angle="radian" meshdir="." balanceinertia="true" />
+
+  <visual>
+    <global offwidth="3840" offheight="2160" />
+  </visual>
+
+  <worldbody>
+    <body name="articulate_base" childclass="robot" pos="0 0 0.0969">
+      <body name="link_2" quat="0.5 0.5 -0.5 -0.5">
+        <geom name="link_2_collision_0" type="mesh" mesh="collision_new_5_1" class="collision" />
+        <geom name="link_2_collision_1" type="mesh" mesh="collision_original_97_1" class="collision" />
+        <geom name="link_2_collision_2" type="mesh" mesh="collision_new_0_1" class="collision" />
+        <geom name="link_2_collision_3" type="mesh" mesh="collision_new_3_1" class="collision" />
+        <geom name="link_2_collision_4" type="mesh" mesh="collision_original_3_1" class="collision" />
+        <geom name="link_2_collision_5" type="mesh" mesh="collision_original_5_1" class="collision" />
+        <geom name="link_2_visual_0" type="mesh" mesh="link_2_merged_link_1_1" material="new_5_material-0" class="visual" pos="0 0 0" />
+        <body name="link_0" pos="-0.00021325983070135055 -0.00012657275550549433 -0.02980021161972236">
+          <joint name="articulate_joint_0" type="hinge" range="-1.5707963267948966 1.5707963267948966" axis="0 1 -0.2" damping="0.2" frictionloss="0.3" armature="0.05"/>
+          <geom name="link_0_collision" pos="0.00021325983070135055 0.00012657275550549433 0.02980021161972236" type="mesh" mesh="collision_original_90_1" class="collision" />
+          <geom name="link_0_visual" pos="0.00021325983070135055 0.00012657275550549433 0.02980021161972236" type="mesh" mesh="link_0_original_90_1" material="new_5_material-0" class="visual" />
+        </body>
+        <body name="link_1" pos="-0.0017635280178889508 -0.008354003959414035 -0.06748204606312751">
+          <joint name="articulate_joint_1" type="slide" range="-0.061199999999999984 0.02519999999999999" axis="0 -1 0.27" damping="0.5" frictionloss="0.5" armature="0.05"/>
+          <geom name="link_1_collision" pos="0.0017635280178889508 0.008354003959414035 0.06748204606312751" type="mesh" mesh="collision_original_98_1" class="collision" />
+          <geom name="link_1_visual" pos="0.0017635280178889508 0.008354003959414035 0.06748204606312751" type="mesh" mesh="link_1_original_98_1" material="new_5_material-0" class="visual" />
+        </body>
+      </body>
+      <!-- <freejoint name="floating_base" /> -->
+    </body>
+
+  </worldbody>
+
+  <asset>
+    <material name="new_5_material-0" rgba="1 1 1 1" />
+    <mesh name="link_0_original_90" file="meshes/textured_objs/original_90.obj" />
+    <mesh name="link_0_original_90_1" file="meshes/textured_objs/original_90.obj" scale="0.15 0.15 0.15" />
+    <mesh name="link_1_original_98" file="meshes/textured_objs/original_98.obj" />
+    <mesh name="link_1_original_98_1" file="meshes/textured_objs/original_98.obj" scale="0.15 0.15 0.15" />
+    <mesh name="collision_new_5.stl" file="meshes/textured_objs/new_5.stl" />
+    <mesh name="collision_new_5_1" file="meshes/textured_objs/new_5.stl" scale="0.15 0.15 0.15" />
+    <mesh name="collision_original_97.stl" file="meshes/textured_objs/original_97.stl" />
+    <mesh name="collision_original_97_1" file="meshes/textured_objs/original_97.stl" scale="0.15 0.15 0.15" />
+    <mesh name="collision_new_0.stl" file="meshes/textured_objs/new_0.stl" />
+    <mesh name="collision_new_0_1" file="meshes/textured_objs/new_0.stl" scale="0.15 0.15 0.15" />
+    <mesh name="collision_new_3.stl" file="meshes/textured_objs/new_3.stl" />
+    <mesh name="collision_new_3_1" file="meshes/textured_objs/new_3.stl" scale="0.15 0.15 0.15" />
+    <mesh name="collision_original_3.stl" file="meshes/textured_objs/original_3.stl" />
+    <mesh name="collision_original_3_1" file="meshes/textured_objs/original_3.stl" scale="0.15 0.15 0.15" />
+    <mesh name="collision_original_5.stl" file="meshes/textured_objs/original_5.stl" />
+    <mesh name="collision_original_5_1" file="meshes/textured_objs/original_5.stl" scale="0.15 0.15 0.15" />
+    <mesh name="collision_original_90.stl" file="meshes/textured_objs/original_90.stl" />
+    <mesh name="collision_original_90_1" file="meshes/textured_objs/original_90.stl" scale="0.15 0.15 0.15" />
+    <mesh name="collision_original_98.stl" file="meshes/textured_objs/original_98.stl" />
+    <mesh name="collision_original_98_1" file="meshes/textured_objs/original_98.stl" scale="0.15 0.15 0.15" />
+    <mesh name="link_2_merged_link_1" file="meshes/textured_objs/link_2_merged_link_1.obj" />
+    <mesh name="link_2_merged_link_1_1" file="meshes/textured_objs/link_2_merged_link_1.obj" scale="0.15 0.15 0.15" />
+   
+  </asset>
+
+
+  <visual>
+    <rgba haze="0.15 0.25 0.35 1" />
+  </visual>
+</mujoco>

@@ -1,0 +1,2 @@
+当前问题：恢复后的门16、水龙头8已经完整turn/skill_update并独立host审计通过。总目标：SIMPLE门10与所有可用操作各1；不可重犯：不把短入口/标定/检索并变归因于单项，不把空手补站位当持物行走。
+ARCH长度/MEMORY-PRIORITY现已有真实调用链验证：door16 25动作96.36s，门累计6/10；faucet8 11动作31.38s，首次原生任务成功。开始/修订组合长度分别door780/793words、faucet789/811words，字符及非空白均过限内。见 artifacts/R019/instruction-cap-integration/status.json；审计host-only保留于各episode/success_review.json，不喂actor。公共原子经验更新 artifacts/R019/public-atomic-experience-20260916.json，含版本hash、前提、反例与不适用项；共享core未晋升。门17、苹果8、放盒4、烤箱1在途，勿中断。NT仅采用ACK无限等待与不确定提交锁，完整自动网络续接仍待你方针对中间failed-turn落盘/审计合同反馈。请自然边界消费，不另建runner或watcher。

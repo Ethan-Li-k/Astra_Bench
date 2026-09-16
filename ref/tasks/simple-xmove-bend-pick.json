@@ -1,0 +1,24 @@
+{
+  "task_id": "simple_xmove_bend_pick",
+  "env_id": "simple/G1WholebodyXMoveBendPickTeleop-v0",
+  "instruction": "Approach the low table, establish a stable reachable stance, grasp the cracker box with a Dex3 hand and lift it at least 8 cm above its initial height while remaining standing. Identify the rectangular box by current visible geometry among distractors.",
+  "scene_contract": "Native SIMPLE XMoveBendPick task: approaching from the initial distant stance is part of this scene. Original table, objects and layout stay unchanged. The box can appear white without printed texture. Do not copy prior box coordinates, table height, gait or closure settings.",
+  "completion": [
+    "Native reward is the clipped target height increase divided by 0.10 m, with threshold 0.8; the host reports native success. It has no grip-contact or dwell requirement.",
+    "Independently verify box-hand co-motion and visible retained support; a bumped or transiently tossed box may satisfy height without a secure grasp. Report those outcomes separately.",
+    "One independently reset success is required. Stop physical actions when rollout_finished and finish skill_update."
+  ],
+  "phase_guidance": [
+    "Inspect current stereo RGB and robot state; identify the box, table boundaries, accessible narrow faces and whole-hand approach clearance. Resolve uncertain stereo matches before contact.",
+    "Select the relevant self-generated cube grasp experience and current shared method with experience_select. Adapt it to the larger rectangular box and native mesh fingers.",
+    "Before bending or reaching to the target, compare current reach and view against the table and robot support. If repositioning is needed, test bounded coordinated four-point references, check actual translation/support and stabilize before contact. Empty-hand approach is not loaded walking; ankle rise alone is not foot clearance. Do not continually stretch the arm into an unreachable target.",
+    "Arrange a collision-free approach using wrist pose and full distal-finger geometry. Prefer a visible approach; establish clearance before moving the fingers over the table surface.",
+    "Align thumb opposition against index/middle around a suitable cross-section. Close gradually and inspect fresh images; closure fractions are not aperture or force measurements.",
+    "Test a small lift with a stable grasp attitude. Require visible box-hand co-motion rather than equating wrist ascent with lifting the box. If it slips, reopen as appropriate and alter contact geometry before retrying.",
+    "Continue a confirmed grasp toward the requested lift height. Keep the box in view when possible and verify support until the host ends the attempt. If reach/tracking stalls, withdraw safely and record a different next hypothesis."
+  ],
+  "known_interface_limits": "Four-point model_38000 UMI-4, checkpoint PD, native Dex3 geometry and bounded continuous chunks. Gripper commands are not force/aperture. Physical budget240s; paused physics during full Astra/xhigh inference, not RTC.",
+  "failure_guidance": "Separate observation uncertainty, tracking, contact acquisition and task progress. Preserve public evidence, excluded hypotheses and a changed next test. finish_attempt only records a stall; it does not terminate the episode. Follow its returned current observation and next_call to test the changed safe hypothesis in this same episode. Continue until native success/failure, runtime safety/system termination or the physical budget. Do not use reasoning delay, three completed actions or temporary lack of progress as a stop condition. Do not consume remaining budget with idle holds.",
+  "prohibited_shortcuts": "No object poses/contact truth, hidden reward query, task/evaluator source access, human/external demonstrations, replay as task credit or mid-episode reset.",
+  "guidance_status": "Detailed task input and qualitative guidance; the actor chooses motion using current allowed observations."
+}

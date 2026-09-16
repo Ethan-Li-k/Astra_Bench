@@ -1,0 +1,42 @@
+import fs from 'node:fs';
+const base='/home/galbot/lizekai/RSI/human-feedback/dashboard-upgrade',out=base+'/publisher-sync';
+const port=fs.readFileSync(base+'/browser-profile/DevToolsActivePort','utf8').split('\n')[0];
+const targets=await(await fetch(`http://127.0.0.1:${port}/json/list`)).json();
+const ws=new WebSocket(targets.find(x=>x.type==='page').webSocketDebuggerUrl);await new Promise((r,j)=>{ws.onopen=r;ws.onerror=j;});
+let seq=0;const pending=new Map(),errors=[],passed=[];
+ws.onmessage=e=>{const m=JSON.parse(e.data);if(m.id){const p=pending.get(m.id);pending.delete(m.id);m.error?p.reject(Error(JSON.stringify(m.error))):p.resolve(m.result);}else if(m.method==='Runtime.exceptionThrown')errors.push(m.params.exceptionDetails);};
+const call=(method,params={})=>new Promise((resolve,reject)=>{const id=++seq;pending.set(id,{resolve,reject});ws.send(JSON.stringify({id,method,params}));});
+const ev=async expression=>{const r=await call('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true,userGesture:true});if(r.exceptionDetails)throw Error(JSON.stringify(r.exceptionDetails));return r.result.value;};
+const run=code=>ev('(async()=>{'+code+'})()');
+const check=(ok,name)=>{if(!ok)throw Error(name);passed.push(name);};
+async function until(expression){for(let i=0;i<150;i++){if(await ev(expression))return;await new Promise(r=>setTimeout(r,100));}throw Error(expression);}
+try{
+ await call('Page.enable');await call('Runtime.enable');await call('Runtime.discardConsoleEntries');errors.length=0;
+ await call('Emulation.setDeviceMetricsOverride',{width:1440,height:1080,deviceScaleFactor:1,mobile:false});
+ await call('Page.navigate',{url:'http://127.0.0.1:8765/#framework'});
+ await until("document.querySelector('#task-title')?.textContent==='Skill/Harness优化' && document.querySelectorAll('#lanes button').length===4");
+ check(await ev("document.querySelector('#phase').textContent.includes('SIMPLE 分项已上线') && document.querySelector('#phase').textContent.includes('NT 部分上线')"),'framework_actual_partial_deployment_visible');
+ check(await ev("['ARCH 组合长度','MEMORY-PRIORITY 检索','相机标定','门16、水龙头8','完整自动网络续接未上线','未晋升','下一新 reset'].every(x=>document.querySelector('#milestones').textContent.includes(x))"),'publisher_components_real_regression_and_remaining_boundaries_visible');
+ check(await ev("document.querySelector('#problem').textContent.includes('不能证明单项收益或泛化') && document.querySelector('#sources').textContent.includes('instruction-cap-integration/status.json')"),'publisher_source_and_no_causal_claim_visible');
+ fs.writeFileSync(out+'/production-framework.png',Buffer.from((await call('Page.captureScreenshot',{format:'png',captureBeyondViewport:true})).data,'base64'));
+ await ev("document.querySelector('[data-task=simple]').click()");await until("document.querySelector('[data-subtask=oven]')!==null");
+ check(await ev("JSON.stringify([...document.querySelectorAll('#subtasks button')].map(x=>x.dataset.subtask))===JSON.stringify(['door','apple','faucet','boxpick','boxplace','oven'])"),'original_five_order_then_attempted_oven_only');
+ await ev("document.querySelector('[data-subtask=oven]').click()");await until("document.querySelector('#summary').textContent.includes('OpenOven') && document.querySelector('#player').readyState>=2");
+ check(await ev("document.querySelector('#summary').textContent.includes('公开动作 14') && !document.querySelector('#problem').textContent.includes('正在等待下一项模型决策') && document.querySelector('#video-caption').textContent.includes('episode-0001')"),'oven_actions_terminal_over_stale_wait_and_completed_video');
+ await until("document.querySelector('#preview').complete && document.querySelector('#preview').naturalWidth>0");
+ check(await ev("document.querySelector('#preview').src.includes('simple-oven-episode-0001') && document.querySelector('#source-age').textContent.includes('来源更新')"),'oven_public_preview_and_source_time_load');
+ const url=await ev("document.querySelector('#player').getAttribute('src')");const range=await fetch('http://127.0.0.1:8765'+url,{headers:{Range:'bytes=64-127'}});
+ check(range.status===206&&(await range.arrayBuffer()).byteLength===64,'oven_video_range_seek_support');
+ await run("window.testPlayer=document.querySelector('#player');window.testSrc=testPlayer.currentSrc;testPlayer.muted=true;await testPlayer.play()");await until('testPlayer.currentTime>1');await ev('testPlayer.currentTime=8');await until('!testPlayer.seeking && testPlayer.currentTime>=8');
+ await ev('window.beforePollTime=testPlayer.currentTime');await until('testPlayer.currentTime>beforePollTime+5');
+ check(await ev("testPlayer===document.querySelector('#player') && testPlayer.currentSrc===testSrc && !testPlayer.paused"),'oven_actual_play_seek_and_poll_preserves_position');await ev('testPlayer.pause()');
+ check(await ev("document.querySelector('#answer-form') && !document.querySelector('#answer').disabled"),'existing_feedback_form_untouched_no_submit');
+ fs.writeFileSync(out+'/production-oven.png',Buffer.from((await call('Page.captureScreenshot',{format:'png',captureBeyondViewport:true})).data,'base64'));
+ await call('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
+ check(await ev('document.documentElement.scrollWidth<=document.documentElement.clientWidth'),'six_task_buttons_fit_mobile_width');
+ fs.writeFileSync(out+'/production-oven-mobile.png',Buffer.from((await call('Page.captureScreenshot',{format:'png',captureBeyondViewport:true})).data,'base64'));
+ const response=await fetch('http://127.0.0.1:8765/api/dashboard');const status=await response.json();delete status.csrf;
+ check(response.ok&&!status.fixture&&!JSON.stringify(status.tasks.find(x=>x.id==='framework')).includes('host_review'),'production_public_projection_without_nested_host_audit');
+ fs.writeFileSync(out+'/production-public.json',JSON.stringify(status,null,2));check(errors.length===0,'no_browser_runtime_errors');
+ const report={at:new Date().toISOString(),passed,errors,feedback_submissions:0,model_calls:0};fs.writeFileSync(out+'/browser-results.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
+}catch(e){fs.writeFileSync(out+'/browser-failure.json',JSON.stringify({passed,errors,error:String(e)},null,2));throw e;}finally{await call('Browser.close');ws.close();}

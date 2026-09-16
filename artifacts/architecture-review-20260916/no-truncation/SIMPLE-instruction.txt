@@ -1,0 +1,3 @@
+用户最新明确要求，请在当前完整推理自然边界消费，不中断当前推理/动作：完整读取 /home/galbot/lizekai/RSI/ref/USER_UPDATE_20260916_NO_TRUNCATION_SHARED_SKILLS.md。ref/GPT-as-Policy为第一优先级，RoboRSI第二。任务推理不得因耗时、短续接次数、暂时无进展或低成功预期被截断停止；确认旧turn已结束后同thread/同reset/同仿真续接，保留最新观测和ACK，不重发不确定请求或重放动作。预算/安全/额度/基础设施边界必须独立记录，不能把它们伪装为物理失败，也不取消既有总预算。当前公共adapter已经next_message(None)，请根据实际回执定位caller/网络/预算等原因，不重复改已修点。每次新证据或任务合同变化更新本地skill候选；共享控制、移动和操作机制经验，必须注明前置条件、公开证据、失败反例、版本和不适用条件；新回合明确所选原子经验及待重查条件。通过既有辅助账号queue给架构维护者01a0a94d-6143-74c0-80cd-03d0b61acaf0回传有新内容的证据与候选；共享core仍仅SIMPLE发布者写。先回复NO-TRUNCATION-SHARED-SKILLS-20260916 ACK及当前run/episode、截断类别/生效边界。只用辅助账号或既有授权API，固定Astra/xhigh，不唤醒主账号桌面任务。
+
+你的具体职责：你负责SIMPLE测评与唯一共享发布；在自然边界核查caller的turn/动作预算和当前苹果、水龙头、推门等真实结束原因，优先使用既有修复而不是重新做已有finish修复。

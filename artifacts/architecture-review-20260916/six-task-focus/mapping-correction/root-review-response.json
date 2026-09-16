@@ -1,0 +1,58 @@
+{
+  "at": "2026-09-16T13:03:22.845876+00:00",
+  "review": "snapshots/root-candidate-review.json",
+  "status": "four_corrections_and_validation_complete_candidate_only",
+  "items": [
+    {
+      "item": "Grasp",
+      "status": "corrected",
+      "entry": "simple/G1WholebodyTabletopGraspMP-v0",
+      "pending": "publisher compatibility, not user name clarification",
+      "files": [
+        "candidate/deltas/grasp.md",
+        "host-contracts.json",
+        "TASK-PLAN.md"
+      ]
+    },
+    {
+      "item": "Mobile P&P",
+      "status": "corrected",
+      "entry": "simple/G1WholebodyLocomotionPickBetweenTablesTeleop-v0",
+      "historical_only": "MobileCheezit",
+      "files": [
+        "candidate/deltas/mobile.md",
+        "host-contracts.json",
+        "TASK-PLAN.md"
+      ]
+    },
+    {
+      "item": "BendPick",
+      "status": "corrected",
+      "entry": "simple/G1WholebodyBendPickMP-v0",
+      "historical_only": "Teleop/Sim source and scores",
+      "files": [
+        "candidate/deltas/bendpick.md",
+        "host-contracts.json",
+        "TASK-PLAN.md"
+      ]
+    },
+    {
+      "item": "Handover",
+      "status": "corrected",
+      "entry": "simple/G1WholebodyHandoverTeleop-v0",
+      "mandatory": "right-to-left independent retention then container placement/release",
+      "files": [
+        "candidate/deltas/handover.md",
+        "host-contracts.json",
+        "TASK-PLAN.md"
+      ]
+    },
+    {
+      "item": "combined caps and hashes",
+      "status": "passed",
+      "evidence": "checks/summary.json"
+    }
+  ],
+  "newer_protocol": "SIX-TASK-FIVE-STABLE-V1 documented; actual isolation/counters publisher owned; candidate prose is not enforcement",
+  "shared_core_promoted": false
+}

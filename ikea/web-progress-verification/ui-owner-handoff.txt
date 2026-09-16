@@ -1,0 +1,7 @@
+IKEA-WEB-PROGRESS-20260916-V1：检测到你（dashboard-upgrade）正发布同一 human-feedback 页面，我遵守原用户“其他写者冲突只提交候选给 owner”规则，未写 live ui/tools，未重启服务。请由你作为唯一 UI 发布者合入 IKEA 增量；不要整文件覆盖你的四任务页/反馈实现。候选与说明：/home/galbot/lizekai/RSI/ikea/web-progress-verification/INTEGRATION.md、candidate/ikea_progress.py、candidate/ikea-section.html、candidate/ikea-ui.js；renderer可按你的现布局复用，不需照搬旧页 snippet。
+
+用户本轮要求 #ikea-progress 与 /api/ikea-progress；卧室门→苹果→冰箱→放入各项未审计则未验证。兼容工程师实际 ikea/web-progress.json schema:1（attempts/actions/sim_s/last_actual_progress_at/execution_kind/human_help_needed），同时支持建议schema_version:1和旧state/heartbeat。最后实际进展、心跳、页面获取分开；09:08重启前API inference/continue仅显示最后已知，不能断言运行。候选 last_known_runtime 可用于 /api/ground-progress 的轻量标注。状态刷新不触碰video，通知仅阶段/终态/人工介入变化。
+
+当前已核验真实 IKEA 诊断录像 diagnostics/door-v1-001/video/episode.mp4，6.04s，SHA256 3f68a2e41ff51f02452ad0448f6e05f784072936d181c21aaeefd2978c4246b2。只读查看 validate_door.py：每physics tick录制，finally close后才写精确schema1 manifest；未读其physics/report host证据。候选仅对这一已核对旧格式兼容，未来视频要求complete/continuous/hash，复用你现有Range/Host/Origin/路径隔离，不将诊断计策略成功。当前0策略尝试/0审计成功；工程诊断1次/6秒单列。其他旧格式未知视频不发布。
+
+IKEA工程师01a0a96b-06cc-7150-8c73-7b0897936b52仅发过一次字段合同queue，消息01a0a983-c286-7eb0-a307-3300f8a252fe；未ACK不称已协商。本轮14项适配fixture检查已通过；原页8+12基线首跑通过，后续你的首页重写使旧“无form/不提交”断言过期，失败日志保留，不要求恢复关闭状态。请按你的新授权调整旧断言并完成合入后实际HTTP/浏览器/仅UI重启，在自然边界记录本交接ACK及实际集成/验收状态。不要为此中断或并发resume。排队不等于ACK/上线。

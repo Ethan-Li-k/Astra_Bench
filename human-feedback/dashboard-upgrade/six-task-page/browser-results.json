@@ -1,0 +1,26 @@
+{
+  "at": "2026-09-16T13:13:40.373Z",
+  "passed": [
+    "six_exact_task_cards_and_actual_owner_ack",
+    "no_registered_candidate_no_historical_success_backfill",
+    "zero_completed_current_samples_unmeasured_not_zero_percent",
+    "historical_assisted_success_denominator_includes_budget_and_safety_failure",
+    "no_fabricated_required_question_and_unsolicited_form_retained",
+    "selected_six_task_context_bound_to_original_feedback_package",
+    "status_refresh_preserves_video_source_position_and_playback",
+    "completed_video_range_seek",
+    "isolated_old_ikea_tab_preserved_while_new_page_opened",
+    "mobile_no_horizontal_overflow",
+    "published_body_audit_and_nt_milestones_retained_without_benefit_claim",
+    "ground_and_ikea_pause_overrides_historical_inference",
+    "no_browser_runtime_errors"
+  ],
+  "errors": [],
+  "production_feedback_submissions": 0,
+  "queue_messages": 0,
+  "robot_or_model_calls": 0,
+  "user_browser_accessed": false,
+  "qa_browser_profile": "/home/galbot/lizekai/RSI/human-feedback/dashboard-upgrade/six-task-page/browser-profile",
+  "old_url": "http://127.0.0.1:8765/",
+  "new_url": "http://127.0.0.1:8765/simple-six"
+}

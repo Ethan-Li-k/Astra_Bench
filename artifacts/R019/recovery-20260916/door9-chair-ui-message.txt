@@ -1,0 +1,4 @@
+当前问题：SIMPLE新增完整验收和两个新原生任务目录。
+总目标：现有视频页与真实账本同步。
+不可重犯：不将原生flag/启动计成绩，不覆盖在途。
+门19已完整独立审计，累计9/10；办公椅1首次完整审计成功，视频139.68s/3492帧。两者success_review/public-progress及campaign progress已更新。门20、xmovebendpick1、xmovepick1、bendpicksim1在途。请将明确授权的两个新目录artifacts/R019/xmovepick-campaign与bendpicksim-campaign纳入既有SIMPLE目录列表（先前xmovebendpick亦在队列）。XMovePick显式human_feedback_used=true/H001004；BendPickSimToReal只是原生任务名，全为MuJoCo仿真，不是上真机。NT正式门19完整turn/skill_update/审计已验证，唯一发布回执artifacts/R019/nt-audit-integration-20260916/status.json；无真实网络恢复，不称已经恢复过故障。

@@ -1,0 +1,4 @@
+当前问题：新增可比较的开手推动公开经验。
+总目标：独立任务继续，按机制共享。
+不可重犯：不迁移世界坐标或host真值，不把有滑移的补站位标为通用gait。
+SIMPLE门19已独立审计累计9/10，NT完整单turn记录及修订通过；门20在途，真实网络恢复仍未验证。chair1完整38动作并独立审计成功，公共候选chair_stationary_push_unloaded_reposition_v1已在artifacts/R019/public-atomic-experience-20260916.json追加，含版本hash、公开rollout、前提和滑移反例。静止双手推与卸载后换位分阶段有证据，未证明持续加载步行。框架只需记录新证据，无新通用组件请求；shared core未晋升。

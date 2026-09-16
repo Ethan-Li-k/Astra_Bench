@@ -1,0 +1,11 @@
+{
+  "at": "2026-09-16T13:16:32.147Z",
+  "passed": [
+    "current_episode_not_completed_by_historical_goal_and_next_step_visible",
+    "final_mobile_layout",
+    "original_page_body_publication_and_nt_distinct"
+  ],
+  "errors": [],
+  "production_feedback_submissions": 0,
+  "user_browser_accessed": false
+}

@@ -1,0 +1,23 @@
+{
+  "task_id": "simple_pick_place_apple",
+  "env_id": "simple/G1WholebodyPickAndPlaceAppleTeleop-v0",
+  "instruction": "Pick up the apple beside the bowl, carry it over the bowl, and release it into the bowl while remaining standing. Verify that the apple stays in the bowl after the hand withdraws.",
+  "scene_contract": "Native SIMPLE apple-and-bowl task, with G1 and Dex3 hands. The apple is the grasp target; the bowl is the destination. Identify both from current stereo RGB. No object position, dimensions, contact state or successful trajectory are supplied. The initial robot pose and body PD use the documented ScaleBFM adaptation; native objects, placement and object forces are preserved.",
+  "completion": [
+    "The host reports the original SIMPLE success receipt; its criterion checks accumulated apple-bowl contact without hand-apple contact.",
+    "That native criterion alone does not prove the apple is inside the bowl. Aim for the specified placement, inspect the final images, and preserve native success separately from visible task completion.",
+    "A closed hand, target_reached, or overlapping pixels do not prove a grasp or placement. Do not push against the outside of the bowl as a substitute for placing the apple inside."
+  ],
+  "phase_guidance": [
+    "Inspect the apple, bowl rim, table and both hands in stereo. Locate a graspable part of the apple and a clear route to the bowl. Estimate depth from calibrated stereo rather than projecting everything onto an assumed table plane.",
+    "Select relevant grasp experience. Reuse clearance checks, incremental approach, partial closure and lift verification as methods; recompute the geometry for the apple and current hand. Its shape, friction and required closure differ from the cube.",
+    "Approach with fingers open and clearance for the whole hand. Align the opposing finger surfaces around the apple. If the apple is occluded, change the view or approach before relying on a guessed contact.",
+    "Close gradually and apply a small physical lift probe. Check that the apple moves with the hand and clears the table. If it slides, rolls away or remains on the table, reopen and revise the alignment instead of repeating closure blindly.",
+    "Carry a verified grasp above the bowl with rim clearance. Lower the apple toward the visible opening, release it, and withdraw without striking the rim. Use fresh images to distinguish the apple inside the bowl from the hand merely passing in front of it.",
+    "Observe the released apple and support posture. If rollout_finished occurs, stop immediately and record the available evidence; do not claim a later hold or withdrawal that was not executed."
+  ],
+  "known_interface_limits": "model_38000 UMI-4 at 50 Hz with checkpoint body PD; native SIMPLE physics at 200 Hz. Active points allow 0.03 m translation and 0.10 rad rotation per waypoint, duration 0.5-3 s. Wrist link origins are not calibrated grasp centres. Physical episode budget is 240 s. Simulation pauses during reasoning and complete inference is awaited.",
+  "failure_guidance": "Separate observation uncertainty, tracking, contact acquisition and task progress. Preserve public evidence, excluded hypotheses and a changed next test. finish_attempt only records a stall; it does not terminate the episode. Follow its returned current observation and next_call to test the changed safe hypothesis in this same episode. Continue until native success/failure, runtime safety/system termination or the physical budget. Do not use reasoning delay, three completed actions or temporary lack of progress as a stop condition. Do not consume remaining budget with idle holds.",
+  "prohibited_shortcuts": "No object-state queries, evaluator inspection, teleportation, episode reset, external demonstration, direct joint command or simulator changes. Do not reuse cube coordinates, table height or closure values as facts about this scene.",
+  "guidance_status": "Task definition and qualitative guidance based on native task semantics and prior self-experience; no motion demonstration."
+}

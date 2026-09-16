@@ -1,0 +1,1 @@
+SIMPLE新增XMovePickSim1独立审计成功：38动作135.54秒，原视频 artifacts/R019/xmovepicksim-campaign/episode-0001/video/episode.mp4 (3389帧可读)，主台账已更新；推门10/10及8操作入口通过。新CloseDoor1与BendPickSim2在途，仍有未验收任务，不称全目标完成。复用动态已有视频页，无需新增服务或修改控制。请自然边界确认显示新完整视频与审计状态。H001003/004条件化规则及context请求继续按先前queue处理，不重复基线。

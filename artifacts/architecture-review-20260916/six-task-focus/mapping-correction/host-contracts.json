@@ -1,0 +1,146 @@
+{
+  "version": "six-task-mapping-v2",
+  "candidate_only": true,
+  "actor_access": false,
+  "purpose": "Host contract review document, not a runner config or new auditor implementation. Never mount this file or native source in actor workspace.",
+  "mapping_source": "snapshots/benchmark-mapping-evidence.json",
+  "contracts": {
+    "XMovePick": {
+      "env_id": "simple/G1WholebodyXMovePickTeleop-v0",
+      "native_source": "version-v1/snapshots/ref/tasks/simple-xmove-pick.json",
+      "semantic_audit": "independent from native outcome; reviewer/host only; no runtime values forwarded to actor",
+      "new_physical_validation_this_turn": false,
+      "native": {
+        "basis": "previous task snapshot: height reward /0.10 with threshold0.9; no retention requirement; publisher must pin live contract",
+        "default_height_delta_m": 0.09
+      },
+      "required_sequence": [
+        "actual approach",
+        "stable reachable stance",
+        "acquisition",
+        "independent retained lift/hold",
+        "declared task goal"
+      ],
+      "history": "episode0003 historical H001004-assisted source; SimToReal episode0001 is separate, no new stability/eval credit",
+      "compatibility": "preserve validated existing skill; optional relevant delta only"
+    },
+    "BendPick": {
+      "env_id": "simple/G1WholebodyBendPickMP-v0",
+      "native_source": "snapshots/canonical-native-root-review.json",
+      "semantic_audit": "independent from native outcome; reviewer/host only; no runtime values forwarded to actor",
+      "new_physical_validation_this_turn": false,
+      "native": {
+        "source": "snapshots/external-task-definitions/g1_wholebody_bend_pick_mp.py:315",
+        "default_height_delta_m": 0.09,
+        "basis": "height reward /0.10, default success_criteria=0.9; not legacy Teleop 0.08",
+        "proves_retention": false
+      },
+      "required_sequence": [
+        "stationary stable low reach",
+        "enclosure and acquisition",
+        "independent retained lift/hold",
+        "declared task lift goal"
+      ],
+      "compatibility": "publisher must validate native g1_wholebody/hand/actuator/control contract; no Teleop or Sim score substitution",
+      "history": "bendpick-campaign episode0006 is a Teleop conditional source, not MP success"
+    },
+    "Handover": {
+      "env_id": "simple/G1WholebodyHandoverTeleop-v0",
+      "native_source": "snapshots/canonical-native-root-review.json",
+      "semantic_audit": "independent from native outcome; reviewer/host only; no runtime values forwarded to actor",
+      "new_physical_validation_this_turn": false,
+      "native": {
+        "source": "snapshots/external-task-definitions/g1_wholebody_handover_teleop.py:300",
+        "reward_path_line": 354,
+        "basis": "target/container contact accumulates +0.1 per reward invocation; otherwise zero; threshold uses success_criteria; hand-contact check is commented out",
+        "proves_right_to_left_transfer_or_release": false
+      },
+      "required_sequence": [
+        "right-hand acquisition and independent load support",
+        "left-hand enclosure while right supports",
+        "right releases and clears",
+        "left independently retains load",
+        "left places into destination container",
+        "release and observed stable container support"
+      ],
+      "direction": "right_to_left",
+      "placement_required": true,
+      "history": "No handover success is created or inferred from cube/door/box sources; do not substitute left-touch SimToReal criteria"
+    },
+    "Mobile P&P": {
+      "env_id": "simple/G1WholebodyLocomotionPickBetweenTablesTeleop-v0",
+      "native_source": "snapshots/canonical-native-root-review.json",
+      "semantic_audit": "independent from native outcome; reviewer/host only; no runtime values forwarded to actor",
+      "new_physical_validation_this_turn": false,
+      "native": {
+        "source": "snapshots/external-task-definitions/g1_wholebody_locomotion_pick_between_tables_teleop.py:316",
+        "reward_path_line": 377,
+        "basis": "container contact plus no hand contact accumulates +0.02 per reward invocation; otherwise zero; threshold uses success_criteria",
+        "precedence_qualification": "A or B and XY_gate: XY<=0.12 applies only to reversed contact ordering in current native code. Preserve original score; any correction needs separately versioned contract.",
+        "proves_pickup_carry_route": false
+      },
+      "required_sequence": [
+        "empty-hand approach",
+        "acquisition and separate retention",
+        "loaded relocation between tables",
+        "destination stabilization",
+        "placement into destination container",
+        "release and stable support"
+      ],
+      "history": "MobileCheezit is historical transfer only; xmovepicksim1/boxplace4 do not establish loaded walking",
+      "compatibility": "use exact BetweenTables asset/controller contract; do not continue a Cheezit episode as canonical evaluation"
+    },
+    "Grasp": {
+      "env_id": "simple/G1WholebodyTabletopGraspMP-v0",
+      "native_source": "snapshots/canonical-native-root-review.json",
+      "semantic_audit": "independent from native outcome; reviewer/host only; no runtime values forwarded to actor",
+      "new_physical_validation_this_turn": false,
+      "native": {
+        "source": "snapshots/external-task-definitions/g1_wholebody_tabletop_grasp_mp.py:352",
+        "default_height_delta_m": 0.018,
+        "basis": "height reward /0.02, fixed threshold=0.9",
+        "proves_retention": false
+      },
+      "required_sequence": [
+        "native asset/control compatibility",
+        "visible enclosure and acquisition",
+        "retained lift and independently observed hold",
+        "declared task lift goal"
+      ],
+      "compatibility": "entry resolved, no user clarification pending; native MP adapter is publisher prerequisite",
+      "history": "R018 table10 is historical acquisition evidence, not this canonical score"
+    },
+    "XMoveBendPick": {
+      "env_id": "simple/G1WholebodyXMoveBendPickTeleop-v0",
+      "native_source": "version-v1/snapshots/ref/tasks/simple-xmove-bend-pick.json",
+      "semantic_audit": "independent from native outcome; reviewer/host only; no runtime values forwarded to actor",
+      "new_physical_validation_this_turn": false,
+      "native": {
+        "basis": "previous task snapshot: height reward /0.10 with threshold0.8; no retention/hold requirement; publisher must pin live contract",
+        "default_height_delta_m": 0.08
+      },
+      "required_sequence": [
+        "actual approach",
+        "stable low reach",
+        "whole-hand clearance/enclosure",
+        "closure",
+        "independent retained lift/hold",
+        "declared task goal"
+      ],
+      "history": "episode0001 49 actions/46 timeout/no closure is reach-stage budget evidence, not tested closed-grasp failure"
+    }
+  },
+  "credit_policy": {
+    "protocol": "SIX-TASK-FIVE-STABLE-V1",
+    "historical_credit_in_new_stability": 0,
+    "stability": "five consecutive independently reset complete independently audited successes under one complete frozen candidate configuration",
+    "evaluation": "ten preregistered independent episodes after stability; separate seeds/reset list and ledger",
+    "counter_implementation": "publisher owned; not implemented/tested by this static candidate",
+    "native_vs_semantic": "store separately, no silent native rule rewriting",
+    "terminal_hold": "preregister feasible evidence; native termination with missing stage is unverified, never invented postterminal dwell",
+    "budget_or_safety": "not successful completion, preserve separate reason",
+    "infrastructure_unknown": "separate unresolved entry with original order/replacement link; never replay uncertain actions",
+    "feedback": "retain source tier; no retrospective relabeling"
+  },
+  "freeze_prerequisite": "Existing caller writes memory.update at terminal skill_update. Publisher must isolate proposals/outputs and pin loaded skill plus public retrieval corpus/rules before stability/evaluation; prose is not enforcement."
+}

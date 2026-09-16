@@ -1,0 +1,44 @@
+import fs from 'node:fs';
+const base='/home/galbot/lizekai/RSI/human-feedback/dashboard-upgrade',out=base+'/root-review';
+const port=fs.readFileSync(base+'/browser-profile/DevToolsActivePort','utf8').split('\n')[0];
+const targets=await(await fetch(`http://127.0.0.1:${port}/json/list`)).json();
+const ws=new WebSocket(targets.find(x=>x.type==='page').webSocketDebuggerUrl);await new Promise((r,j)=>{ws.onopen=r;ws.onerror=j;});
+let seq=0;const pending=new Map(),errors=[],passed=[];
+ws.onmessage=e=>{const m=JSON.parse(e.data);if(m.id){const p=pending.get(m.id);pending.delete(m.id);m.error?p.reject(Error(JSON.stringify(m.error))):p.resolve(m.result);}else if(m.method==='Runtime.exceptionThrown')errors.push(m.params.exceptionDetails);};
+const call=(method,params={})=>new Promise((resolve,reject)=>{const id=++seq;pending.set(id,{resolve,reject});ws.send(JSON.stringify({id,method,params}));});
+const ev=async expression=>{const r=await call('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true,userGesture:true});if(r.exceptionDetails)throw Error(JSON.stringify(r.exceptionDetails));return r.result.value;};
+const run=code=>ev('(async()=>{'+code+'})()');
+const check=(ok,name)=>{if(!ok)throw Error(name);passed.push(name);};
+async function until(expression){for(let i=0;i<150;i++){if(await ev(expression))return;await new Promise(r=>setTimeout(r,100));}throw Error(expression);}
+try{
+ await call('Page.enable');await call('Runtime.enable');await call('Runtime.discardConsoleEntries');errors.length=0;
+ await call('Emulation.setDeviceMetricsOverride',{width:1440,height:1080,deviceScaleFactor:1,mobile:false});
+ await call('Page.navigate',{url:'http://127.0.0.1:8765/#simple'});
+ await until("document.querySelector('#task-title')?.textContent==='SIMPLE测评' && document.querySelectorAll('#lanes button').length===4");
+ check(await ev("document.querySelector('#prerequisite').textContent==='前置桌面抓取：10次原生成功（终态仍持有5次），学习成绩' && document.querySelectorAll('#subtasks button').length===5"),'prerequisite_visible_separate_from_five_simple_counts');
+ check(await ev("document.querySelector('#recovery-note').textContent.includes('负责人报告') && document.querySelector('#recovery-note').textContent.includes('旧推门15') && document.querySelector('#recovery-note').textContent.includes('不计物理失败')"),'old_door15_owner_report_preserved_not_current_inference');
+ await until("document.querySelector('#preview').complete && document.querySelector('#preview').naturalWidth>0");
+ check(await ev("document.querySelector('#preview').src.includes('episode-') && document.querySelector('#preview-caption').textContent.includes('动作') && document.querySelector('#source-age').textContent.includes('来源更新')"),'episode_bound_public_preview_loads_with_source_age');
+ await until("document.querySelector('#player').readyState>=2");
+ await run("window.playerBefore=document.querySelector('#player');window.srcBefore=playerBefore.currentSrc;playerBefore.muted=true;await playerBefore.play()");
+ await until('playerBefore.currentTime>1');await ev('playerBefore.currentTime=5');await until('!playerBefore.seeking && playerBefore.currentTime>=5');
+ await ev('window.timeBefore=playerBefore.currentTime');await until('playerBefore.currentTime>timeBefore+5');
+ check(await ev("playerBefore===document.querySelector('#player') && playerBefore.currentSrc===srcBefore && !playerBefore.paused"),'playing_video_and_seek_preserved_across_normal_poll');
+ await ev('playerBefore.pause()');
+ fs.writeFileSync(out+'/production-simple.png',Buffer.from((await call('Page.captureScreenshot',{format:'png',captureBeyondViewport:true})).data,'base64'));
+ await ev("document.querySelector('[data-task=ground]').click()");await until("document.querySelector('#task-title').textContent==='地面物块搬运'");
+ check(await ev("document.querySelector('#delivery-note').textContent.includes('已核实的现任搬运负责人') && !document.body.textContent.includes('新映射待主控确认')"),'ground_current_owner_handoff_text_visible');
+ check(await ev("document.querySelector('#problem').textContent.includes('安全停止') && !document.querySelector('#problem').textContent.includes('正在完整等待推理')"),'ground_public_stop_and_recovery_note_visible');
+ check(await ev("!document.querySelector('#answer').disabled && document.querySelector('#form-title').textContent.includes('补充观察') && document.querySelector('#form-binding').textContent.includes('地面物块搬运')"),'unsolicited_ground_form_preserved_without_live_submission');
+ fs.writeFileSync(out+'/production-ground.png',Buffer.from((await call('Page.captureScreenshot',{format:'png',captureBeyondViewport:true})).data,'base64'));
+ await ev("document.querySelector('[data-task=framework]').click()");await until("document.querySelector('#task-title').textContent==='Skill/Harness优化'");
+ check(await ev("document.querySelector('#phase').textContent.includes('离线验证 / 已交付；待集成与物理验证') && document.querySelector('#milestones').textContent.includes('18项通过') && document.querySelector('#milestones').textContent.includes('3个已排队；0个确认')"),'framework_offline_delivery_not_publication_or_ack');
+ check(await ev("document.querySelector('#sources').textContent.includes('no-truncation/progress.json') && document.querySelector('#sources').textContent.includes('no-truncation/result.json')"),'framework_new_public_sources_visible');
+ fs.writeFileSync(out+'/production-framework.png',Buffer.from((await call('Page.captureScreenshot',{format:'png',captureBeyondViewport:true})).data,'base64'));
+ const response=await fetch('http://127.0.0.1:8765/api/dashboard');const status=await response.json();delete status.csrf;
+ check(response.ok&&status.tasks.length===4&&!status.fixture,'production_four_task_data_not_fixture');
+ check(status.help.eligible_count===0,'production_no_invented_help_cases');
+ fs.writeFileSync(out+'/production-public.json',JSON.stringify(status,null,2));
+ check(errors.length===0,'no_browser_runtime_errors');
+ const report={at:new Date().toISOString(),passed,errors,feedback_submissions:0,model_calls:0};fs.writeFileSync(out+'/browser-results.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
+}catch(e){fs.writeFileSync(out+'/browser-failure.json',JSON.stringify({passed,errors,error:String(e)},null,2));throw e;}finally{await call('Browser.close');ws.close();}

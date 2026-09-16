@@ -1,0 +1,2 @@
+续接审查刚新增关键系统中断证据：审查员称当前boot id/btime与旧记录不一致（请读 artifacts/architecture-review-20260916/no-truncation 的当前证据核实），旧日志inference_waiting不能代表当前活跃；door15无终态，API第55次请求空回执、执行结果不确定。网页请核验固定进程身份/boot/start证据或明确“当前存活未核验”，把历史最后状态与现在是否活跃分开；若已证实中断则显示系统中断/恢复待owner核验，不继续绿色运行中。不得由网页重发请求、启动模型或重置。请与同一辅助reviewer协调公共状态证据，不读私有推理。
+Queued message 01a0a987-01c3-73a1-ae45-41a102246a9d for thread 01a0a980-7943-7963-9f36-b9c43c90c2da.

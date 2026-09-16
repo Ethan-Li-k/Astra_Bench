@@ -1,0 +1,11 @@
+body[data-view=simple-six] #lanes,body[data-view=simple-six] #global-note{display:none}
+body[data-view=simple-six] header{padding-top:20px;padding-bottom:12px}
+body[data-view=simple-six] header a{font-size:12px}
+#six-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.six-card{background:white;border:1px solid var(--border);border-radius:10px;padding:14px 16px;min-width:0}
+.six-card[data-selected=true]{border-color:var(--blue)}
+.six-title{font-size:19px;font-weight:700;border:0;padding:0;background:transparent;color:#1e487b;text-align:left}
+.six-phase{font-size:12px;color:#526175;margin:3px 0 8px}.six-rate{font-size:14px;font-weight:650}.six-blocker{font-size:12px;min-height:36px;line-height:1.5;margin:8px 0}.six-link{padding:0;border:0;background:none;color:var(--blue);font-size:12px;text-decoration:underline}.six-card details{margin-top:8px;font-size:12px}.six-card .fine{margin:3px 0;overflow-wrap:anywhere}
+#six-help{font-size:13px;margin:12px 0 8px;padding:10px 14px}#six-help a{margin-left:10px;white-space:nowrap}#six-help button{display:block}
+@media(max-width:1000px){#six-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){#six-cards{grid-template-columns:1fr}.six-card{padding:12px 14px}}

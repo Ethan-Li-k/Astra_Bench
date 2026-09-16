@@ -1,0 +1,68 @@
+from pathlib import Path
+import json,hashlib,datetime
+root=Path.cwd(); parent=root.parent; refs=Path('/home/galbot/lizekai/RSI')
+manifest=json.loads((root/'evidence/manifest.json').read_text())
+by_path={x['path']:x for x in manifest}
+def E(rel,lo,hi=None,ref=False):
+    p=(refs if ref else parent)/rel
+    row=by_path[str(p)]
+    return dict(path=str(p),line_start=lo,line_end=hi or lo,snapshot_path=row['snapshot_path'],sha256=row['sha256'])
+def link(label,rel,line=None,ref=False):
+    row=by_path[str((refs if ref else parent)/rel)]
+    target=row['snapshot_path']+(f':{line}' if line else '')
+    return f'[{label}]({target})'
+gpt='GPT-as-Policy/hybrid_rollout/robodojo/robodojo-gpt-only-rollout/'
+robo='ref/RoboRSI/roborsi/'
+findings=[
+ dict(id='F1',severity='high',status='reproduced_in_pure_state_machine',title='先抓后走仍被记为规定阶段次序',evidence=[E('ground_task.py',134,139),E('TASK.md',21)],trigger='初态在地面；先令 grasped=True、floor_contact=False、cube_bottom>=.05 保持0.6秒；抓持不间断完成两脚步进，再保持0.6秒、运输和释放。实际抓取发生于移动前，审计却延后登记 ground_grasp 并最终成功。',observed='logic_probe.json: grasp_before_locomotion_is_accepted -> overall_success=true',minimum_fix_or_test='记录移动完成、地面接触结束和抓持建立的实际时刻；要求移动完成后从地面发生连续抓持起升，不允许通过延后打标改写阶段次序。将此反例加入负例，并保留合法次序正例。',limitation='仅验证状态机接受该合成序列，未运行或声称物理可执行。'),
+ dict(id='F2',severity='high',status='reproduced_in_pure_state_machine',title='桌侧接触可延续失去抓持后的运输成绩',evidence=[E('ground_task.py',140,156),E('ground_task.py',200,220)],trigger='合法抓持和运输后，grasped=False、table_contact=True、inside_table=False（方块底约.54m，接触桌侧，桌面.63m），持续0.5秒；再推至桌内并撤手保持2秒。侧面与桌面共用同一 geom，table_contact 不区分支撑面。',observed='logic_probe.json: table_side_contact_keeps_transport_credit -> overall_success=true',minimum_fix_or_test='仅在持物连续过渡到有效桌面支撑时保留运输成绩；未到有效支撑即失去抓持应清除/失效。加入桌侧、桌底和桌边托靠后推上桌的负例，以及正常降低释放正例。',limitation='合成审计输入反例；尚未在 MuJoCo 验证该操作序列的可达性。'),
+ dict(id='F3',severity='high',status='field_coverage_defect_reproduced_without_physics',title='模型封印未覆盖全部会改变动力学的字段',evidence=[E('ground_task.py',22,31),E('ground_task.py',52,76)],trigger='seal 之后更改 model.body_gravcomp 或 geom_solref；现有 model_digest 哈希不变，tick 无法依此识别。qpos/qvel/time/eq_active 与 mass/force 已有部分保护，并不等于所有运行时修改均被拦截。',observed='logic_probe.json: model_digest_probe.hash_unchanged=true；使用属性桩，不构造仿真。',minimum_fix_or_test='扩展规范化模型封印至重力补偿、接触求解参数、力矩限制及 opt 求解配置等实际可变字段；配合唯一宿主写权限。逐字段突变负例须失败，合法控制正例仍通过；禁止回合中重建/重封印 reset。',limitation='未测被修改字段对当前场景的物理影响。'),
+ dict(id='F4',severity='high',status='static_isolation_gap_runtime_not_verified',title='公开工具包未含目标真值，但文件读取边界尚无强制隔离证据',evidence=[E('rsi/live.py',146,170),E('tools/learn_grasp_skill.py',239,256),E('rsi/codex_app_server.py',72,85),E('ground_task.py',227,244)],trigger='若复用现有 normal_tools=True actor 启动路径且进程可读父工程，原生文件工具可读取 ground_task.py 中初始目标布局、setting_manifest.json 或 audit/audit.jsonl 目标/接触真值。runtimeWorkspaceRoots 及禁止读取的提示本身没有在这些文件中落实读取白名单。',observed='静态确认原生工具开启、审计文件含隐藏真值；未启动 actor，未证明实际泄漏已发生。',minimum_fix_or_test='保留计算/图片/笔记能力，但为 actor 提供仅含公开证据与净化经验的文件视图或受限文件服务；宿主审计、源码、manifest、本 reviewer/ 不可读。用无秘密哨兵文件验证路径遍历、绝对路径、符号链接拒读；逐工具返回包按 schema/白名单回归。'),
+ dict(id='F5',severity='medium',status='static_proxy_gap_requires_host_contact_test',title='两指接触加闭合命令还不足以证明抓持',evidence=[E('ground_task.py',197,234),E('ground_task.py',135,147)],trigger='方块由前臂/躯干托住，食指与中指同侧施力均>.01N，闭合命令>.1；无地面/桌面接触且离地>.05m持续.5秒，再移动>.15m。采样器只按手指种类数量产生 grasped，不排除其他机器人支撑、不检查物手相对运动或对向约束。',observed='源码谓词缺少上述区分；未进行接触物理复现，不能声称该具体姿态已出现。',minimum_fix_or_test='增加接触拓扑、物手相对位姿/速度持续性及非抓持支撑审计。覆盖两指推挤、前臂托物、单次擦碰与真实持续抓持对照；不向 actor 暴露这些真值。')
+]
+verified=[
+ dict(id='V1',claim='18 个 provenance 原件逐一匹配 snapshot.json；12 个本地 rsi 模块与原件逐字节一致。',evidence=[E('provenance/snapshot.json',3,93)],artifact=str(root/'source_comparison.json'),scope='来源及字节比较，不是运行成绩'),
+ dict(id='V2',claim='GroundSim 仍调用原 MuJoCo G1/双 DEX3、model_38000、具名 UMI-4 和默认 WristPI；50Hz tracker/250Hz PD 的代码链保留。checkpoint 实际文件 SHA256 匹配原常量。',evidence=[E('ground_task.py',34,50),E('rsi/scalebfm.py',16,48),E('rsi/live.py',63,68),E('rsi/live.py',108,120),E('rsi/live.py',337,351),E('rsi/live.py',376,397),E('rsi/four_point.py',8,13)],checkpoint_sha256=by_path['/home/galbot/Downloads/model_38000.onnx']['sha256'],scope='静态调用链及只读文件哈希；没有新建仿真或执行模型'),
+ dict(id='V3',claim='地面初态、桌及四腿水平平移、工作区半径 .25->2m 已显式记录；质量、摩擦、桌高与原构造参数一致，单步限制及失稳门槛保留。',evidence=[E('setting_manifest.json',7,51),E('ground_task.py',34,47),E('rsi/live.py',23,47),E('rsi/live.py',403,406)],scope='只证明适配显式、源码未改这些参数；不证明新布局可达或能走到'),
+ dict(id='V4',claim='新 PhaseAudit/GroundEvaluator 已存在；AST 提取后运行原11项纯逻辑测试全部通过。追加无桌面接触悬浮负例被拒绝，但另两条负例误通过。',evidence=[E('ground_task.py',88,248),E('tests/test_ground_audit.py',25,99)],artifacts=[str(root/'logic_probe.py'),str(root/'logic_probe.log'),str(root/'logic_probe.json')],scope='不导入 mujoco、不创建 backend、不加载策略；非物理执行/示范'),
+ dict(id='V5',claim='保存的 preflight 宿主记录101帧覆盖约5–7秒，无抓持、无足离地，所有阶段和 overall_success=false。',evidence=[E('artifacts/preflight-01/result.json',1,32),E('artifacts/preflight-01/audit/evaluation.json',1,29)],artifact=str(root/'preflight_record_check.json'),scope='只审已有记录；不认证完整 preflight 退出/录像，不算任务回合成功'),
+ dict(id='V6',claim='observe() 未直接携带目标 pose/接触；动态观测使用具名机器人状态、RGB和标定，native_outcome 为三态。推理循环完整等 turn/completed，暂停物理已写明。',evidence=[E('rsi/live.py',146,170),E('rsi/policy_harness.py',279,291),E('rsi/policy_harness.py',467,487),E('ground_task.py',246,248),E('rsi/codex_app_server.py',149,166),E('setting_manifest.json',67,82)],scope='公开 packet 构造检查；文件隔离另见 F4')
+]
+source_checks=[
+ dict(source='GPT-as-Policy Direct',evidence=[E(gpt+'SKILL.md',18,22,True),E(gpt+'SKILL.md',35,61,True),E(gpt+'context/eef_control.md',9,24,True),E(gpt+'context/teacher_context.md',15,27,True)],exact_excerpts=['partial credit or apparent visual completion is not\nsuccess.','Gripper proprio is the last controller opening command, not a measured finger\n  gap or proof of grasp.','Prior successes are not evidence that the current episode is complete.'],application='复用短 skill、合同、逐次 ACK 与可撤销阶段记忆；X5 数值和夹爪语义不迁移到 DEX3，旧成绩不计新任务。'),
+ dict(source='RoboRSI selector / wiki',evidence=[E(robo+'agents/engineer.py',147,159,True),E(robo+'agents/skill_selector.py',16,17,True),E(robo+'agents/skill_selector.py',61,65,True),E(robo+'agents/task_wiki.py',267,304,True),E(robo+'embodied/skills/base/open_hinged_door/libero/SKILL.md',19,25,True)],exact_excerpts=['if ns == "robotwin" and n_active > SKILL_LIST_SOFT_CAP:','recent_results=[],','UNVERIFIED HYPOTHESIS from a single failed run'],application='选择仅该调用点执行前且多工具时触发；采用前提/禁用条件和失败事实与原因假设分离，不把显式路由称神经 MoE。'),
+ dict(source='RoboRSI reviewer / validator',evidence=[E(robo+'agents/reviewer.py',286,305,True),E(robo+'agents/reviewer.py',733,749,True),E(robo+'agents/reviewer.py',763,787,True),E(robo+'agents/reviewer.py',946,958,True),E(robo+'agents/validator.py',90,114,True),E(robo+'agents/task_wiki.py',539,560,True)],exact_excerpts=['if rep.overall_pass:','ok, msg = self._auto_apply(pid)','Uses --skip-harness since we just ran the\n        gate ourselves in ProposalValidator'],application='准确限定既有报告：这条 auto 路径先过 validator，再跳过 apply 时重复 harness；不能称完全无验证，但不经本项目唯一 Manager。临时写共享文件和 LH gt_state 权限不照搬。'),
+ dict(source='RoboRSI history / LH example',evidence=[E(robo+'agents/skill_history.py',32,62,True),E(robo+'embodied/skills/long_horizon/clean_table/SKILL.md',20,48,True)],exact_excerpts=['Append one record per skill that fired in this success trace.','暂时无法真跑'],application='成功技能关联及 git commit 不是独立 reset/内容依赖哈希证据；posttrain 示例不构成此项目训练四个模型或角色收益证据。')
+]
+not_yet=[
+ dict(item='地面任务 actor/runner 完整接线与 task skill',evidence=[E('tools/learn_grasp_skill.py',22,33),E('tools/learn_grasp_skill.py',53,58),E('tools/learn_grasp_skill.py',289,299),E('ground_task.py',171,174),E('rsi/tool_host.py',54,61)],reason='本次捕获入口仍默认桌面 TASK、LiveSim、GraspLiftEvaluator；新增地面文件只有 preflight 调用。GroundEvaluator 必须绑定 output 的工厂；不能以存在类定义推断已完成接线。',required='专用 task/host 工厂/本地短 skill/公共经验索引落地后再审；核对180秒物理预算、独立 reset、GroundEvaluator 与视频、第二账号固定 Astra/xhigh。'),
+ dict(item='独立 reset 去重及旧成绩隔离',evidence=[E('rsi/skill_learning.py',86,108),E('USER_UPDATE.md',3,5)],reason='已有 ledger 只按 episode_id 去重、数 success=True；同一 reset 改 ID 或导入旧桌面 progress 可重复计数。当前未见新任务 ledger 证明隔离。',required='新 ledger 绑定 task_spec/setting/controller/skill hash、reset receipt、原始 trace/video hash；旧 R018 10次作为用户基线保留、不计入新增成功。复制同一 receipt/旧任务结果须拒绝。'),
+ dict(item='接触、步进、释放保持的真实物理与视频验证',evidence=[E('ground_task.py',118,156),E('ground_task.py',197,234),E('rsi/live.py',337,351),E('rsi/policy_harness.py',403,410),E('tools/ground_preflight.py',17,24)],reason='目前只有静立 preflight 和50Hz审计；未证明低位可达、真实步进、持物运输或终态；也未核验250Hz子步内短暂失稳/触地会否被漏采。',required='补：纯腕平移/倾身；短脚步后双脚滑行凑总位移；无夹持推挤/托举；桌侧支撑；无桌接触悬浮；未放手、1.99秒保持、终帧跌落；reset中途/焊接/漏检动力学突变。记录采样率和完整全身/脚部、接触、释放视频。'),
+ dict(item='来源合同与外部依赖完整锁定',evidence=[E('provenance/snapshot.json',3,97),E('setting_manifest.json',47,52),E('provenance/originals/actor_context/ROBOT_CONTRACT.md',26,33),E('rsi/live.py',11,16)],reason='manifest 未穷尽外部 WristPI/ScaleTrack/metadata/XML include/mesh 依赖；旧合同含 app-server 尚未实现等过时表述。只锁 scene 顶层哈希不足以保证所有原资产版本一致。',required='引用本次证据哈希形成依赖闭包，写本任务合同差异；回合固定版本、不热改；本报告未完整认证所有 mesh 和依赖。'),
+ dict(item='actor 文件拒读、净化经验与角色收益',evidence=[E('tools/learn_grasp_skill.py',223,256),E('rsi/skill_learning.py',51,82),E('PEER_HANDOFF.md',18,20)],reason='没有真实地面 actor 的隔离拒读证据；skill_update 仅检查证据路径存在及长度，不自动净化隐藏真值；没有角色收益对照。',required='按 F4 验证公共视图；本 reviewer/、manifest、audit 仅工程审查，公开经验须独立剥离真值与开发动作。')
+]
+roles=dict(basis=[E('ref/ACCOUNT2_ROLE_SKILL_REVIEW.md',7,30,True),E('PEER_HANDOFF.md',18,20),E('USER_UPDATE.md',7,13)],planner='仅任务/可达性前置条件变化或有证据的重大失败时触发；输出短阶段、可观察验收和唯一新假设；未验证步进/低位可达性不得列作满足。',engineer='每环境唯一物理动作写入者；继续使用已固定控制接口；保留完整 ACK、reset、失败/成功录像和宿主评估。',reviewer='回合结束、控制器/接口修改、共享候选提案时读取原始 RGB/动作/宿主审计；区分观测、真值、推测；本报告不作 actor 经验。',manager='只发布已经同任务复现、匹配机制迁移并通过原抓取回归的候选；本分支只交候选，SIMPLE supervisor 是共享 core 唯一发布者。',minimal_task_delta='本地短 skill 仅增地面拾取—真实腿脚移动—放桌机制/阶段合同及适用与禁用条件；按既定 TASK 顺序验收。索引 pin controller/contract/skill/依赖 hash，记录 reset/episode 与公开证据、失败分母、hypothesis/validated 状态；保持<=831 words/6250 chars，旧版与失败不删。',interpretation='同一冻结 Astra/xhigh 的职责、提示与外部记忆迭代，不是四套模型训练；确定性显式 skill 选择不是神经 MoE。')
+time=datetime.datetime.now(datetime.timezone.utc).isoformat()
+report=dict(review_time=time,review_type='bounded_independent_implementation_readiness_review',verdict='not_ready_for_official_success_accounting',scope='只针对 reviewer/evidence 中一次捕获版本；父工程可能继续变化，本次不轮询；报告仅工程/审查使用。',reviewer_model_requirement='gpt-6-astra/xhigh',model_processes_started=0,new_simulations_started=0,new_physical_successes_verified=0,prior_R018_successes_recounted=0,snapshot_capture_start=manifest[0]['captured_at'],evidence_manifest=str(root/'evidence/manifest.json'),reviewed_file_hashes={x['path']:x['sha256'] for x in manifest},hash_scope='列表包含内容/摘录审查与来源字节核对的捕获文件；未逐行审计全部代码。外部checkpoint仅哈希；精确语义结论以各 evidence 行号为准。',verified=verified,findings=findings,source_verification=source_checks,not_yet_verified=not_yet,minimal_role_skill_delta=roles,next_review_trigger=['已落地 evaluator 修复及这些反例的结果','首个独立地面回合完成，提交 reset/动作/RGB/宿主审计/视频和版本哈希','控制器、接口、工作区/初态、actor权限、task skill 或共享候选发生变化'],exit_policy='此次写完即退出；不等待、不轮询、不发送消息或操控 supervisor。',actor_boundary=dict(public=['head/right-wrist RGB','相机标定','具名机器人本体状态','动作ACK','三态 outcome','净化的自身公开经验'],host_only=['目标pose/contact/phase审计','setting/源码隐藏布局','开发/合成反例','本reviewer目录全部产物'],report_must_not_be_used_as_actor_experience=True))
+(root/'review.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
+md=f'''本次结论：**正式成功记分尚未就绪**。review_time：{time}。仅审一次捕获版本；R018旧10次不重计，新增物理成功未验证。哈希、行号和详细反例见 [review.json]({root}/review.json)；全部产物仅供工程/审查，不得进入 actor 经验。
+
+已核验：18份原件匹配来源哈希，12个 rsi 模块与原件一致（[比较]({root}/source_comparison.json)）。{link('原MuJoCo G1/DEX3、model_38000、具名UMI-4', 'rsi/scalebfm.py',16)} 与 {link('默认WristPI、50/250Hz控制链','rsi/live.py',108)} 保留；权重实际哈希匹配。{link('manifest','setting_manifest.json',7)} 明示地面初态、桌腿平移及工作区0.25→2m，保留质量/摩擦/桌高。这里只证明代码与记录，未证明可达性。
+
+评估器已落地；{link('原11项反例','tests/test_ground_audit.py',25)} 的纯逻辑测试全过，追加悬浮负例被拒绝。静立 {link('preflight','artifacts/preflight-01/audit/evaluation.json',1)} 全阶段为假，不是正式成功。
+
+- **F1 高：阶段次序误计。** {link('ground_task.py:134','ground_task.py',134)} 允许先抓起、一直持物行走，再延后登记抓取。合成反例最终成功；需绑定移动完成、离地、抓持建立的实际时刻。
+- **F2 高：桌侧接触保留运输。** {link('ground_task.py:142','ground_task.py',142)} 只在无桌接触时清除失抓成绩；桌侧托靠后推上桌仍通过。需仅接受连续抓持到有效桌面支撑的交接，补桌侧/桌底负例。
+- **F3 高：封印漏字段。** {link('ground_task.py:24','ground_task.py',24)} 漏掉 body_gravcomp、geom_solref；属性桩突变后哈希不变。补动力学/求解参数封印与逐字段负例。前三项证据见 [logic_probe.json]({root}/logic_probe.json)，均未运行物理。
+- **F4 高：文件隔离未证实。** {link('actor开启原生工具','tools/learn_grasp_skill.py',239)}，仅提示禁止读真值；未见读取白名单落实。公开观测无目标pose，但源码/审计可成为旁路。需公开文件视图和路径穿越/符号链接拒读测试，不能声称已发生泄漏。
+- **F5 中：抓持代理不足。** {link('两指接触+闭合命令','ground_task.py',230)} 未排除前臂托物、同侧推挤；需物手相对运动与支撑拓扑对照，此项物理反例待验证。
+
+原文核验复用 {link('已有角色报告','ref/ACCOUNT2_ROLE_SKILL_REVIEW.md',7,True)}：GPT Direct要求 {link('“partial credit or apparent visual completion is not success”',gpt+'SKILL.md',18,True)}；EEF合同明确闭合命令非抓持。RoboRSI {link('selector','ref/RoboRSI/roborsi/agents/engineer.py',150,True)} 仅在该入口工具数>50时调用；wiki分离失败事实与假设。{link('auto路径','ref/RoboRSI/roborsi/agents/reviewer.py',733,True)} **先过validator**，再跳过重复harness，不能误说完全无验证；临时覆盖共享文件、LH真值权限不照搬。
+
+最小差异：Planner只在任务/可达前提变化触发；Engineer唯一物理写入；Reviewer在回合、控制器变更、共享提案时看原始证据；Manager仅发布复现及回归验证候选，共享core仍由SIMPLE方唯一发布。本地短skill加阶段/禁用条件，逐回合pin依赖哈希，保留失败、旧版和reset来源，遵守831词/6250字符。角色记忆迭代不是四套训练；显式skill选择不是神经MoE。
+
+未验证：{link('现有入口仍默认桌面任务','tools/learn_grasp_skill.py',25)}，专用地面接线、task skill、独立reset去重、完整依赖锁定、真实步进/低位抓取/释放保持与录像均待审。工程还须覆盖纯腕/倾身、滑脚凑位移、无抓持推物、悬浮、未释放、保持不足/终帧跌落、中途reset和同reset换ID重计。下次仅由新代码、新完整回合或共享提案触发；本次退出，不轮询。
+'''
+(root/'REVIEW.md').write_text(md)
+print('Wrote REVIEW.md and review.json; reviewed hashes:',len(manifest))
+print('Readable body characters excluding markdown URLs:',len(__import__('re').sub(r'\]\([^)]*\)',']',md)))

@@ -1,0 +1,24 @@
+# 用户新指令：暂停两支线，集中六类任务
+
+生效：2026-09-16T12:28:40.091351+00:00
+
+用户原话：“下发任务，先停止IKEA探索和地面物块搬运工作，集中力量测评XMovePick BendPick Handover Mobile P&P Grasp XMoveBendPick这六个任务，注意复用原有skill，思考从已经完成的抓取木块以及simple开门，抓盒子等任务来看还有哪些可以优化的点，对于新的任务skill如何设置比较合适？”
+
+## 当前执行约束
+
+1. 暂停IKEA探索和地面物块搬运；两分支continuation/PAUSE已设置。保留轨迹/录像/原回执/未知API请求，不自动重试、重启或转回主账号。仍在途的已识别进程由暂停收尾审查处理，排队不等于已停。用户明确暂停单列user_requested_pause，不计物理失败或成功。
+2. SIMPLE后续只安排六类：XMovePick、BendPick、Handover、Mobile P&P、Grasp、XMoveBendPick。原91入口库存保留，但旧“全部入口继续探索”不再授权扩张本阶段范围。已经结束的其他任务不重复刷数；非六类在途保留并收尾后不续开。
+3. 复用现有campaign和任务适配skill，不复制目录重复运行。同一环境单动作写者，SIMPLE原supervisor唯一调度者/共享core发布者。原辅助账号Astra/xhigh与既有获授权API共享预算边界不变，不查收费、不启主账号模型。
+4. 已从本地 SIMPLE 原始 README 六项 benchmark 表确认精确映射：XMovePick=simple/G1WholebodyXMovePickTeleop-v0；BendPick=simple/G1WholebodyBendPickMP-v0；Handover=simple/G1WholebodyHandoverTeleop-v0；Mobile P&P=simple/G1WholebodyLocomotionPickBetweenTablesTeleop-v0；Grasp=simple/G1WholebodyTabletopGraspMP-v0；XMoveBendPick=simple/G1WholebodyXMoveBendPickTeleop-v0。来源 /home/galbot/lizekai/psi_0_deploy5090/Psi0/third_party/SIMPLE/README.md:567。用户列名与该六项表完全对应，因此用原始表解除 Grasp 名称歧义；若用户另有明确澄清则覆盖。此前 BendPickTeleop、BendPickSimToReal、MobilePickAndPlaceCheezit、原10次木块等只作相关变体/迁移证据，不能当作这六项原生测评分数。现有非精确入口在途妥善收尾，不续开同变体凑六项。MP后缀不是调用示教规划器、读取特权对象状态或切换机器人/手型的授权；先检查原任务定义/控制适配/验收合同，复用现有ScaleBFM四点和既有skill，不能兼容的入口明确标待适配，不以近似变体替代。
+5. 已有成绩是迁移来源/历史基线，不冒称当前六类新一轮测评。先固定每类原生成功准则与独立真实保持/移交/放置证据，学习期可修skill，冻结测评另行记录，仍至少按旧要求各任务一真实审计成功，不自行追加十次门槛。
+6. 任务skill采用短共同控制合同+任务阶段门槛+少量同机制经验/反例。阶段分开记录接近、稳定站位/弯腰、可见包络、闭合、留握、小抬升、搬运/转手/释放/终态验证。命令闭合不等于握住，target_reached不等于成功；到位timeout结合实测误差变化、姿态/视野和阶段解释，不直接判不可达/夹持失败。预算结束、网络/系统错误、用户暂停、安全停止与物理失败分开。
+7. 优先复用10次木块及SIMPLE抓盒的可见包络、真实留握检验；门成功只迁移接近、稳定支撑、测量追踪与渐进接触等机制，不迁移门坐标/推力/关节语义。Mobile持物步行、Handover承载转移没有证据前不宣称已掌握。
+8. 完整等待仍获授权回合的模型推理，不以延迟结束；本次用户明确要求停工的两支线例外按用户暂停收尾，不扩展为其它任务超时截断。技能/运行入口保持831words/6250chars/5357非空白上限并保留版本、来源、失败，host审计不进actor。
+9. 至少3个同阶段、同机制、可比独立真实失败后才考虑人工求助；主动反馈仍随时允许。现有H001004反馈保留并分层，不当无辅助Direct。
+
+## 归属与ACK
+
+SIMPLE supervisor 01a0a867-d7aa-71f2-8547-e264d6d09ede 负责六类调度、原skill复用与实际测评。
+架构辅助审查者 01a0a94d-6143-74c0-80cd-03d0b61acaf0 负责停工验证与六类skill/验收候选，不并发写共享core。
+UI原owner 01a0a980-7943-7963-9f36-b9c43c90c2da 只依据公开暂停/六类状态维护网页，不启动机器人。
+请各owner写SIX-TASK-FOCUS-20260916 ACK，列暂停边界/仍在途、六类映射、已有成绩与下一回合、加载skill版本和待确认入口。只走辅助队列/文件，不唤醒桌面主账号。

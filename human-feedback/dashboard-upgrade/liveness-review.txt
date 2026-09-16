@@ -1,0 +1,1 @@
+审阅当前 dashboard.py 发现 ground() 仍把历史 a[state]=inference_waiting_no_deadline 写成“正在完整等待推理”，framework() 只读 no-truncation/status.json 而实际较新公开状态是 progress.json。请在交付前核对先前 liveness-handoff.txt：使用搬运 owner 已确认重启中断的公开回执或确认来源，至少把未验证存活的历史记录文字改成“最近记录为等待推理；当前运行状态未确认”，不能绿色当前运行；如已证实同宿主重启则明确系统中断。只读主机身份不得把异机 boot ID 直接比较。框架读取新的 progress/result 明确离线已验证、待发布，别把已交付继续显示审查中。请把以上纳入回归与最终截图，勿截断现有测试。

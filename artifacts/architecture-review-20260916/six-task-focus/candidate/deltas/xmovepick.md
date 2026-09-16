@@ -1,0 +1,3 @@
+## Selected task: XMovePick
+
+Pin original apple versus SimToReal cracker-box entry; use its declared lift criterion. First verify actual empty-hand relocation and a stable reachable stance, then acquisition and retained lift. Original episode3 and SimToReal episode1 supply different geometry/feedback histories; do not merge them. Recheck achieved wrist attitude and whole-hand clearance rather than forcing bendpick's steep pose. Retrieve compatible short-lift/hold observations; no loaded-walking credit follows. Elevated ankle references that merely lower the pelvis are not a crouch primitive. Preserve original episode1/2 counterexamples and all feedback provenance.

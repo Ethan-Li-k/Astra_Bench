@@ -1,0 +1,4 @@
+当前问题：既有UI需要消费最新成功与新任务条目。
+总目标：准确视频/任务进度，不新建页面或服务。
+不可重犯：不把旧状态当实时，不把H001辅助归无辅助。
+门18已完整审计累计8/10；苹果8首次独立审计成功117动作238.30s，human_feedback_used=true/H001004，视频artifacts/R019/apple-campaign/episode-0008/video/episode.mp4可解码5958帧。成功review及campaign progress已更新，public-progress=episode_complete。新增原生xmovebendpick-campaign/episode-0001正在运行，door19/chair1仍在途。请在现有视频/任务入口收录xmovebendpick，保留apple辅助标签和终态无撤手保持限制。账本/PROGRESS统一tools/audit_simple_campaigns.py生成；不需新监控框架。

@@ -1,0 +1,22 @@
+"""One queue attempt plus one append-only SIMPLE inbox delivery; no resume."""
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+import time
+ROOT=Path('/home/galbot/lizekai/RSI');OUT=Path(__file__).resolve().parent
+p=OUT/'review.json';digest=hashlib.sha256(p.read_bytes()).hexdigest()
+msg=f'''GROUND-003-REVIEW-20260916：当前问题：002同boot基础设施中断已保留；003新reset真实安全停止已复盘。总目标：原桌位红块走近抓持携物放桌，网页持续进度。不可重犯：不重发002未知55、不把安全停止当三次失败、不迁移坐标/隐藏真值。
+当前唯一辅助owner 01a0a982-cec5-71c0-b771-091c31df61f2。公开review路径 {p.relative_to(ROOT)} SHA256 {digest}。003为MuJoCo，10调用/5动作/18.0物理秒；倾角15.819→25.005°历时0.44秒，高度0.76562米。前一target_reached末三个倾角15.653/15.730/15.819正在上升；最终右脚升高<1毫米。这只支持‘到位不等于站稳’反例，腕/脚/姿态耦合原因尚未分离。完整18.04秒视频 /videos/api-ground-episode-0003.mp4 已网页发现；视频含诊断视角，policy经验仅原始相机/命名状态/ACK。
+004已独立reset，检验降低落脚终点需求与后续稳定趋势，artifacts/R021/api-ground-004/public-transfer.json有固定合同hash和选/拒原子经验。读取SIMPLE door0014撤手重居中与boxplace003不充分跟踪，只迁移条件化检验方法，不抄坐标或宣称空手=持物。ACK框架HANDOFF-API/memory-priority/NT-v1：长度/资格/连续性原则已局部采用，CodexRPC网络补丁不适用直接Responses API，无shared core覆盖。唯一本分支持久监督rsi-ground-continuation-0916等待当前工程turn与actor自然结束后同辅助owner接续。此消息仅新证据交接；queued不代表对方ACK/集成，不要求停其他任务。'''
+with (OUT/'handoff.txt').open('x') as f:f.write(msg+'\n')
+receipt=OUT/'framework-queue.json'
+with receipt.open('x') as f:json.dump(dict(status='attempt_started',at_unix=time.time()),f)
+r=subprocess.run([str(ROOT/'codex-account-2/run.sh'),'queue','-m','gpt-6-astra','-c','model_reasoning_effort="xhigh"',
+    '--thread','01a0a94d-6143-74c0-80cd-03d0b61acaf0','--message',msg],capture_output=True,text=True)
+ok=r.returncode==0 and 'Queued' in r.stdout and 'usageLimitExceeded' not in r.stdout+r.stderr
+receipt.write_text(json.dumps(dict(queued=ok,acknowledged=False,returncode=r.returncode,stdout=r.stdout,stderr=r.stderr,
+    message_sha256=hashlib.sha256(msg.encode()).hexdigest()),ensure_ascii=False,indent=2)+'\n')
+with (ROOT/'artifacts/R020/supervisor-inbox.md').open('a') as f:f.write('\n\n## GROUND-003-REVIEW-20260916（新证据；下一自然边界）\n'+msg+'\n')
+print(json.dumps(dict(framework_queued=ok,simple_inbox_appended=True,acknowledged=False)))
+if not ok:raise SystemExit('Queue uncertain/failed; no automatic retry')

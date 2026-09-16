@@ -1,0 +1,9 @@
+当前问题：你上一轮按旧暂定映射交付的候选已被root审查要求修改；最新用户六名在原README有精确对应，SIMPLE主管已ACK，Grasp不是待用户澄清。
+总目标：只修正上一轮候选/任务合同/集成交付文档的精确映射，完成后交SIMPLE唯一publisher；不重新暂停、诊断或运行机器人。
+不可重犯的错误：不能延用MobileCheezit、BendPickTeleop/Sim代替原始六项，不把Handover的放置当可选，不删旧版证据。
+
+先读上一级root-candidate-review.json、benchmark-mapping-evidence.json、canonical-native-root-review.json以及ref/USER_UPDATE_20260916_SIX_TASK_FOCUS.md。root已核验source：XMovePickTeleop、BendPickMP、HandoverTeleop、LocomotionPickBetweenTablesTeleop、TabletopGraspMP、XMoveBendPickTeleop（simple/G1Wholebody前缀-v0后缀）。SIMPLE已正式ACK精确6入口，其两个MP控制适配由SIMPLE处理，你只修skill和host合同候选。
+
+保留前版完整candidate/checks/REVIEW/FINAL/INTEGRATION等到version-v1，修改必要差异文件/说明/RESULT：Grasp明确入口、兼容性待publisher；BendPick绑定MP且Teleop经验仅迁移；Mobile绑定BetweenTables、Cheezit仅历史来源；Handover明确右到左独立承载移交后放置容器。原生判据与独立语义审计分开，不把host真值给actor。共有skill维持短小，不新加大框架或强迫替换已验证XMovePick skill。重新校验组合runtime+one delta和SHA，把root-review4项逐项回应。过去已通过暂停无需重做。
+
+修正后向SIMPLE辅助队列只发送一条候选修正交付，明确v1已被取代、保留历史、未部署/不热改在途，验证合格才能下轮选择适用delta。固定账号2Astra/xhigh；不要通知桌面main、不读api.json、不启动物理/API。本轮静态修正验证结束就完成，不无限等待集成。产物result.json、最终diff/长度/来源、queue回执。

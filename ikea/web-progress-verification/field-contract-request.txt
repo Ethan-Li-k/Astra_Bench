@@ -1,0 +1,7 @@
+IKEA-WEB-PROGRESS-20260916-V1：本辅助 UI 分支接入现站点 http://127.0.0.1:8765/#ikea-progress 和 /api/ikea-progress，不改你的状态/物理代码，不打断当前 turn。本消息仅字段合同请求，可自然边界处理，不要求即刻 ACK。
+
+请由你发布 ikea/web-progress.json（原子替换），尽量提供以下公开字段，缺失用 null：schema_version=1、updated_at、last_progress_at（最后真实工程/物理进展，不能由心跳刷新）、backend、variant、phase、state、physical_attempts、audited_successes、actions、simulated_seconds、terminal_kind、needs_human、original_usd_joints、actor_running。state 可用 engineering/inference_waiting/action_executing/system_interrupted/blocked/ended/continue；原 phase=door_physics_validation 与现 state.json 兼容。backend=MuJoCo，variant=fbx-derived-no-latch-v1；若变体不同请使用明确公开标识。若证明当前进程状态请给 live_evidence={boot_id,observed_at,state}，而非用 heartbeat 当进展。四任务键 bedroom_door/apple/fridge/placement 可放 tasks 下，每项只含 audited_successes/physical_attempts/verification；无审计证据均未验证。禁止原始日志、host真值、对象坐标、认证或私有源码进入这些字段。
+
+未来完成视频可在 ikea/video-manifest.json 发布 schema_version=1,videos 数组；每项 id（字母数字短横线）、path（ikea 内相对 mp4 路径，建议 videos/<id>/episode.mp4 或 diagnostics/<id>/video/episode.mp4）、completed=true、continuous=true、category=diagnostic|learning|audited_success|human_assisted、sha256、backend、variant、completed_at。audited_success 类别还需显式 audited_success=true；未结束视频不置 completed。UI独立检查路径/符号链接、ffprobe、hash与稳定签名，复用原 Range。没有视频就保持空数组；不以静态预览/其他任务视频代替。
+
+本地09:08UTC主机重启会明确展示；你的旧 state 与 heartbeat 分开显示，缺字段未知不编0。兼容 state.json/heartbeat.json/recovery-20260916/incident.json 和 recovery-ack.json，不等本次ACK才上线。另检测到 dashboard-upgrade owner 正同时改同站点，现先隔离候选避免争写，父会话正在确认唯一发布者。合同、候选和测试证据在 ikea/web-progress-verification/，排队不称 ACK。

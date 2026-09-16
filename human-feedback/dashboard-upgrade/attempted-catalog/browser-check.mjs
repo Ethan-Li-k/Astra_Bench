@@ -1,0 +1,46 @@
+import fs from 'node:fs';
+const base='/home/galbot/lizekai/RSI/human-feedback/dashboard-upgrade',out=base+'/attempted-catalog';
+const port=fs.readFileSync(base+'/browser-profile/DevToolsActivePort','utf8').split('\n')[0];
+const targets=await(await fetch(`http://127.0.0.1:${port}/json/list`)).json();
+const ws=new WebSocket(targets.find(x=>x.type==='page').webSocketDebuggerUrl);await new Promise((r,j)=>{ws.onopen=r;ws.onerror=j;});
+let seq=0;const pending=new Map(),errors=[],passed=[];
+ws.onmessage=e=>{const m=JSON.parse(e.data);if(m.id){const p=pending.get(m.id);pending.delete(m.id);m.error?p.reject(Error(JSON.stringify(m.error))):p.resolve(m.result);}else if(m.method==='Runtime.exceptionThrown')errors.push(m.params.exceptionDetails);};
+const call=(method,params={})=>new Promise((resolve,reject)=>{const id=++seq;pending.set(id,{resolve,reject});ws.send(JSON.stringify({id,method,params}));});
+const ev=async expression=>{const r=await call('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true,userGesture:true});if(r.exceptionDetails)throw Error(JSON.stringify(r.exceptionDetails));return r.result.value;};
+const run=code=>ev('(async()=>{'+code+'})()');
+const check=(ok,name)=>{if(!ok)throw Error(name);passed.push(name);};
+async function until(expression){for(let i=0;i<150;i++){if(await ev(expression))return;await new Promise(r=>setTimeout(r,100));}throw Error(expression);}
+try{
+ await call('Page.enable');await call('Runtime.enable');await call('Runtime.discardConsoleEntries');errors.length=0;
+ await call('Emulation.setDeviceMetricsOverride',{width:1440,height:1080,deviceScaleFactor:1,mobile:false});
+ await call('Page.navigate',{url:'http://127.0.0.1:8765/#framework'});
+ await until("document.querySelector('#task-title')?.textContent==='Skill/Harness优化' && document.querySelectorAll('#lanes button').length===4");
+ check(await ev("document.querySelector('#phase').textContent==='续接审计已发布；门19已加载；真实断线恢复尚未验证'"),'nt_published_loaded_unverified_recovery_separated');
+ check(await ev("document.querySelector('#milestones').textContent.includes('63项通过') && document.querySelector('#milestones').textContent.includes('已在正式物理动作验证') && document.querySelector('#milestones').textContent.includes('未晋升')"),'nt_63_offline_tests_and_permission_physical_verification_visible');
+ check(await ev("!document.querySelector('#milestones').textContent.includes('完整自动网络续接未上线') && !document.querySelector('#milestones').textContent.includes('待中间回执与逐 turn 审计兼容')"),'old_candidate_partial_text_retired');
+ check(await ev("document.querySelector('#sources').textContent.includes('nt-audit-integration-20260916/status.json') && document.querySelector('#sources').textContent.includes('episode-0019/policy_instruction_budget.json')"),'publication_and_loading_sources_visible');
+ fs.writeFileSync(out+'/production-framework.png',Buffer.from((await call('Page.captureScreenshot',{format:'png',captureBeyondViewport:true})).data,'base64'));
+ await ev("document.querySelector('[data-task=simple]').click()");await until("document.querySelector('[data-subtask=trashcan]') && document.querySelector('[data-subtask=chair]') && document.querySelector('[data-subtask=xmovebendpick]')");
+ check(await ev("JSON.stringify([...document.querySelectorAll('#subtasks button')].slice(0,6).map(x=>x.dataset.subtask))===JSON.stringify(['door','apple','faucet','boxpick','boxplace','oven'])"),'existing_six_ids_order_preserved');
+ check(await ev("document.querySelector('[data-subtask=trashcan]').textContent.includes('垃圾桶') && document.querySelector('[data-subtask=chair]').textContent.includes('办公椅') && document.querySelector('[data-subtask=xmovebendpick]').textContent.includes('XMoveBendPick')"),'three_new_actual_task_rows_visible');
+ await ev("document.querySelector('[data-subtask=xmovebendpick]').click()");await until("document.querySelector('#summary').textContent.includes('XMoveBendPick')");
+ check(await ev("document.querySelector('#sources').textContent.includes('xmovebendpick-campaign') && document.querySelector('#summary').textContent.includes('公开动作')"),'dynamic_task_selection_uses_its_own_public_source');
+ fs.writeFileSync(out+'/production-xmovebendpick.png',Buffer.from((await call('Page.captureScreenshot',{format:'png',captureBeyondViewport:true})).data,'base64'));
+ await ev("document.querySelector('[data-subtask=trashcan]').click()");await until("document.querySelector('#summary').textContent.includes('垃圾桶') && document.querySelector('#player').readyState>=2");
+ await until("document.querySelector('#preview').complete && document.querySelector('#preview').naturalWidth>0");
+ check(await ev("document.querySelector('#preview').src.includes('simple-trashcan-episode-') && document.querySelector('#player').getAttribute('src').includes('simple-trashcan-episode-')"),'dynamic_preview_and_video_bound_to_trashcan');
+ const url=await ev("document.querySelector('#player').getAttribute('src')");const range=await fetch('http://127.0.0.1:8765'+url,{headers:{Range:'bytes=64-127'}});
+ check(range.status===206&&(await range.arrayBuffer()).byteLength===64,'new_completed_video_range_works');
+ await run("window.testPlayer=document.querySelector('#player');window.testSrc=testPlayer.currentSrc;testPlayer.muted=true;await testPlayer.play()");await until('testPlayer.currentTime>1');await ev('testPlayer.currentTime=Math.min(3,testPlayer.duration/3)');await until('!testPlayer.seeking');
+ await ev('window.beforePollTime=testPlayer.currentTime');await until('testPlayer.currentTime>beforePollTime+5');
+ check(await ev("testPlayer===document.querySelector('#player') && testPlayer.currentSrc===testSrc && !testPlayer.paused"),'new_video_actual_play_seek_and_poll_preserves_position');await ev('testPlayer.pause()');
+ fs.writeFileSync(out+'/production-trashcan.png',Buffer.from((await call('Page.captureScreenshot',{format:'png',captureBeyondViewport:true})).data,'base64'));
+ await call('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
+ check(await ev('document.documentElement.scrollWidth<=document.documentElement.clientWidth'),'expanded_catalog_fits_mobile_width');
+ fs.writeFileSync(out+'/production-mobile.png',Buffer.from((await call('Page.captureScreenshot',{format:'png',captureBeyondViewport:true})).data,'base64'));
+ const response=await fetch('http://127.0.0.1:8765/api/dashboard');const status=await response.json();delete status.csrf;
+ check(response.ok&&!status.fixture&&status.tasks.length===4&&!JSON.stringify(status).includes('original-snapshot')&&!JSON.stringify(status).includes('host_audit'),'production_projection_no_host_audit_or_fixture');
+ check(await ev("document.querySelector('#answer-form') && !document.querySelector('#answer').disabled"),'feedback_form_preserved_no_production_submit');
+ fs.writeFileSync(out+'/production-public.json',JSON.stringify(status,null,2));check(errors.length===0,'no_browser_runtime_errors');
+ const report={at:new Date().toISOString(),passed,errors,feedback_submissions:0,model_calls:0};fs.writeFileSync(out+'/browser-results.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
+}catch(e){fs.writeFileSync(out+'/browser-failure.json',JSON.stringify({passed,errors,error:String(e)},null,2));throw e;}finally{await call('Browser.close');ws.close();}

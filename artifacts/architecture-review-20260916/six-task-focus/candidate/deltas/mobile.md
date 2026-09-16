@@ -1,0 +1,3 @@
+## Selected task: Mobile pick and place
+
+Continue the existing mobilecheezit campaign. Separate empty-hand approach, stationary acquisition/hold, carried relocation and destination release. XMovePickSim1 acquisition and boxplace4 release are conditional sources, not evidence of walking with a payload. Before loaded motion verify retained co-motion and clearance, then test bounded measured relocation while monitoring grasp attitude, pelvis and supports. Stabilize/reobserve after undertracking or loss. At the second table verify lowering and visible support, release, and inspect withdrawal only while the host remains active. Do not credit pushing, throwing, empty-hand travel or an unobserved post-termination hold.

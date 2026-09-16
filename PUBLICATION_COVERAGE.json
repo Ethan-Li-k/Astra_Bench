@@ -1,0 +1,128 @@
+{
+  "schema": 2,
+  "capture_at": "2026-09-16T13:37:44.508154+00:00",
+  "capture_finished_at": "2026-09-16T13:37:44.552300+00:00",
+  "required_core_complete_at_capture": true,
+  "source_changed_during_snapshot": false,
+  "source_capture_method": "Two consecutive complete reads of the fixed group; membership and content/metadata equal.",
+  "areas": {
+    "rsi": {
+      "eligible_sources": 30,
+      "included_sources": 30,
+      "missing_paths": []
+    },
+    "tools": {
+      "eligible_sources": 67,
+      "included_sources": 67,
+      "missing_paths": []
+    },
+    "tests": {
+      "eligible_sources": 33,
+      "included_sources": 33,
+      "missing_paths": []
+    },
+    "skills": {
+      "eligible_sources": 3,
+      "included_sources": 3,
+      "missing_paths": []
+    },
+    ".cursor/skills": {
+      "eligible_sources": 4,
+      "included_sources": 4,
+      "missing_paths": []
+    },
+    "actor_context": {
+      "eligible_sources": 3,
+      "included_sources": 3,
+      "missing_paths": []
+    },
+    "human-feedback/tools": {
+      "eligible_sources": 21,
+      "included_sources": 21,
+      "missing_paths": []
+    },
+    "human-feedback/ui": {
+      "eligible_sources": 9,
+      "included_sources": 9,
+      "missing_paths": []
+    }
+  },
+  "frozen_source_and_test_pair_present": true,
+  "mapping_actor_candidates": [
+    "artifacts/architecture-review-20260916/six-task-focus/mapping-correction/candidate/deltas/bendpick.md",
+    "artifacts/architecture-review-20260916/six-task-focus/mapping-correction/candidate/deltas/grasp.md",
+    "artifacts/architecture-review-20260916/six-task-focus/mapping-correction/candidate/deltas/handover.md",
+    "artifacts/architecture-review-20260916/six-task-focus/mapping-correction/candidate/deltas/mobile.md",
+    "artifacts/architecture-review-20260916/six-task-focus/mapping-correction/candidate/deltas/xmovebendpick.md",
+    "artifacts/architecture-review-20260916/six-task-focus/mapping-correction/candidate/deltas/xmovepick.md",
+    "artifacts/architecture-review-20260916/six-task-focus/mapping-correction/candidate/loco-manip-direct/SKILL.md"
+  ],
+  "UI_owner_hash_pins": {
+    "human-feedback/tools/dashboard.py": "7220cf7f049b5e8d9aa34b09c7c28bd3a309a876c78c8f276ec401f63c55f9d3",
+    "human-feedback/tools/simple_six.py": "b37403c53e5f842a66c00389bc32eaa4e00bb0190e8de03eae4404916348582e",
+    "human-feedback/tools/server.py": "5e00f6ebcac26cd9c7067857505cf5e7ddb41cb7a1f75ff240a0cd1652dc3b79",
+    "human-feedback/tools/feedback_board.py": "7b2462a6f5aa70f486abee7022908a1d2e8d698784d22b210d17fb2f671162db",
+    "human-feedback/ui/app.js": "7d312d9d0bf72f7f97e185bb4c6bfb3649af8bcef053ee3f3065a535af3dbd0d",
+    "human-feedback/ui/simple-six.html": "5f8713818220c9bdf35515294c64f26b66ca96ae66eeac44288dd8be4cfb81bc",
+    "human-feedback/ui/simple-six.js": "11f185c634dd4975def7e2938ae5d702439bce8c5e1a82421fd48de924216b8e",
+    "human-feedback/ui/simple-six.css": "d58e73569efe0aa9e9633b6eda28707d7a4f0d101ab2ee46e412ed6354ed3557"
+  },
+  "UI_owner_hashes_match": true,
+  "development_source_claim": "Code presence does not establish production loading or physical validation.",
+  "UI_source_version": "Completed six-task-page receipt; nine files read from the later alignment pre-edit backup, all other UI sources from the fixed capture.",
+  "inherited_initial_manifest_sha256": "c9c3f640adc9b333ca6f7572e8682f349a28084faff29a35699b0caf60071d94",
+  "inherited_other_sources": "Unchanged historical snapshot sources retain their earlier per-file provenance; not recaptured in this increment.",
+  "withheld_files": [
+    {
+      "path": "GPT-as-Policy/hybrid_rollout/robodojo/test_auth_profiles.py",
+      "categories": [
+        "sensitive_literal_assignment",
+        "url_userinfo"
+      ]
+    },
+    {
+      "path": "GPT-as-Policy/hybrid_rollout/robodojo/test_proxy_config.py",
+      "categories": [
+        "url_userinfo"
+      ]
+    },
+    {
+      "path": "GPT-as-Policy/hybrid_rollout/robodojo/test_quota_guard.py",
+      "categories": [
+        "sensitive_literal_assignment"
+      ]
+    },
+    {
+      "path": "artifacts/architecture-review-20260916/six-task-focus/pause_ikea.py",
+      "categories": [
+        "sensitive_literal_assignment"
+      ]
+    },
+    {
+      "path": "human-feedback/dashboard-upgrade/explicit-blockers/test_explicit_blockers.py",
+      "categories": [
+        "sensitive_literal_assignment"
+      ]
+    },
+    {
+      "path": "ikea/budget-coordination/tests/test_parallel.py",
+      "categories": [
+        "sensitive_literal_assignment"
+      ]
+    },
+    {
+      "path": "ref/RoboRSI/tests/test_litellm_kwargs.py",
+      "categories": [
+        "sensitive_literal_assignment"
+      ]
+    },
+    {
+      "path": "ref/RoboRSI/tests/test_web_search_tool.py",
+      "categories": [
+        "sensitive_literal_assignment"
+      ]
+    }
+  ],
+  "withheld_files_reread": false,
+  "raw_evidence_excluded_from_source_coverage": true
+}

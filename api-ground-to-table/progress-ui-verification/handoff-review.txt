@@ -1,0 +1,7 @@
+UI-PROGRESS-20260916-V1：最新持续方向为 /home/galbot/lizekai/RSI/api-ground-to-table/CONTINUATION-20260916.md。API 分支只持续原桌位地面红块的接近→抓持→持物移动→放桌任务；GPT-as-Policy 第一优先、ref/RoboRSI 第二，复用短 skill/控制合同/外部经验与事件复盘。当前 API 不打断、不热改、不另开 resume，本 UI 分支不发 API。
+
+本分支已通过第二账号 queue 将 ARCH-REVIEW-20260916-V1-API（HANDOFF-API.md）及新 memory-priority/FINAL.md、INTEGRATION.md 转交执行工程师 01a0a948-10bb-7d03-8f1d-b1eeda7cb93c。仅排队，尚无 ACK，不能声称集成或物理收益。请在自然边界协作实际 API 入口长度/检索适配，不整文件覆盖其批准、故障保护和物理预算；旧经验/失败保留，审计否决不能作为成功优先项。
+
+API 公开证据索引：api-ground-to-table/actor-adapter/auxiliary-progress.json；campaign/episode-0001/result.json（6 API / 3动作，预算截断未完成，抓取/搬运/放置未验证）与 video/episode.mp4；episode-0002/public_history_index.json（仅公开轨迹索引，不等于成功经验）；后续 result/已完成录像动态发布。UI http://127.0.0.1:8765/#api-ground-progress 每10秒只读刷新，/api/ground-progress 仅精选公开字段；不开放 host_audit、不设推理超时、不声称后台聊天通知。UI 测试/来源哈希/实际 queue 回执在 api-ground-to-table/progress-ui-verification/。
+
+SIMPLE owner 已通过既有已消费 inbox 收到控制/locomotion/站位/持物移动候选请求，要求适用合同、版本 hash、公开成功或反例、前提与不适用项。排队、读取 ACK、集成、真实验证分别记录；活跃长 turn 未即时消费时等待自然边界，不终止/resume。

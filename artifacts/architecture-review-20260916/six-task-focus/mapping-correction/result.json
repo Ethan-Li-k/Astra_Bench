@@ -1,0 +1,126 @@
+{
+  "version": "six-task-mapping-v2",
+  "at": "2026-09-16T13:06:04.554713+00:00",
+  "status": "completed_static_correction_delivered",
+  "candidate_only": true,
+  "deployed": false,
+  "shared_core_promoted": false,
+  "supersedes": "v1 provisional task mappings/integration advice; full history retained in version-v1 and original parent",
+  "archive": {
+    "receipt": "archive-receipt.json",
+    "files": 134,
+    "originals_unchanged": true
+  },
+  "root_review_response": "root-review-response.json",
+  "corrected_mappings": {
+    "XMovePick": "simple/G1WholebodyXMovePickTeleop-v0",
+    "BendPick": "simple/G1WholebodyBendPickMP-v0",
+    "Handover": "simple/G1WholebodyHandoverTeleop-v0",
+    "Mobile P&P": "simple/G1WholebodyLocomotionPickBetweenTablesTeleop-v0",
+    "Grasp": "simple/G1WholebodyTabletopGraspMP-v0",
+    "XMoveBendPick": "simple/G1WholebodyXMoveBendPickTeleop-v0"
+  },
+  "actor_files": [
+    "candidate/deltas/bendpick.md",
+    "candidate/deltas/grasp.md",
+    "candidate/deltas/handover.md",
+    "candidate/deltas/mobile.md",
+    "candidate/deltas/xmovebendpick.md",
+    "candidate/deltas/xmovepick.md",
+    "candidate/loco-manip-direct/SKILL.md"
+  ],
+  "host_only_files": [
+    "host-contracts.json",
+    "REVIEW.md",
+    "TASK-PLAN.md",
+    "INTEGRATION.md",
+    "root-review-response.json",
+    "source-hashes.json",
+    "snapshots/",
+    "version-v1/"
+  ],
+  "checks": {
+    "at": "2026-09-16T13:06:04.554713+00:00",
+    "passed": true,
+    "checks": [
+      "six complete common+one-delta+runtime combinations",
+      "oversize rejection without truncation",
+      "README row567 exact mapping plus reviewed native-source hashes",
+      "actor candidate file allowlist and host-source marker check",
+      "skill-creator frontmatter validation",
+      "v1 archive hashes and candidate patch dry run",
+      "delivery source drift",
+      "full correction patch dry run and report links"
+    ],
+    "combined_maxima": {
+      "words": 742,
+      "characters": 5638,
+      "non_whitespace": 4896
+    },
+    "caps": {
+      "words": 831,
+      "characters": 6250,
+      "non_whitespace": 5357
+    },
+    "changed_source_count": 0,
+    "not_tested": [
+      "MP native control adapter",
+      "stability counter/frozen retrieval enforcement",
+      "models, physics or generalization"
+    ]
+  },
+  "patches": [
+    "candidate.patch",
+    "correction.patch"
+  ],
+  "settings": {
+    "account": "2",
+    "provider": "openai",
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh",
+    "launcher": "/home/galbot/lizekai/RSI/codex-account-2/run.sh",
+    "evidence": "run.sh; source-hashes.json",
+    "evidence_scope": "explicit current launch script and requested settings; no credential or billing queries"
+  },
+  "actions_not_performed": [
+    "physics/model/API experiments",
+    "main-account tools or subagents",
+    "new environments",
+    "pause/process diagnosis",
+    "live rsi/tools/skills/campaign/UI edits"
+  ],
+  "publisher": "01a0a867-d7aa-71f2-8547-e264d6d09ede",
+  "remaining_publisher_actions": [
+    "review exact native/control compatibility for both MP entries",
+    "preserve proven existing skills, select only applicable delta at natural boundary",
+    "revalidate actual composed entry/runtime and source versions at adoption",
+    "implement and test isolation of terminal suggestions/evaluation outputs from next-episode loaded skill/retrieval before five-stable/frozen evaluation",
+    "pin native and independent semantic contracts separately with feasible stage/hold evidence"
+  ],
+  "delivery": {
+    "status": "queued",
+    "receipt": "delivery-receipt.json",
+    "acknowledged": false,
+    "integrated": false,
+    "queue_id": "01a0aa52-47f2-7811-a2ea-a3f9f26ff5b4",
+    "attempts": 1
+  },
+  "incoming_ack": "incoming-ack.json: parent-relayed mapping ACK only, not this v2 delivery ACK",
+  "limitations": [
+    "static text/source/length checks only",
+    "no physical benefit or generalization claim",
+    "MP adapter and frozen isolation/counters not implemented or tested here",
+    "no refreshed robotics status or new success counts"
+  ],
+  "changed_candidate_paths": [
+    "candidate/deltas/bendpick.md",
+    "candidate/deltas/grasp.md",
+    "candidate/deltas/handover.md",
+    "candidate/deltas/mobile.md",
+    "candidate/deltas/xmovebendpick.md",
+    "candidate/deltas/xmovepick.md",
+    "candidate/loco-manip-direct/SKILL.md",
+    "host-contracts.json",
+    "experience-map.json"
+  ]
+}

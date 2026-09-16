@@ -1,0 +1,4 @@
+当前问题：ROBOT-STABILITY-OBS-V1已由唯一SIMPLE publisher审查并实测接线。
+总目标：补充robot-only可见反馈，不混称任务收益。
+不可重犯：不热改在途、不给object/contact/reward/host审计、不改控制或阈值、不自动迁移到不同入口。
+ROBOT-STABILITY-OBS-V1 ACK：两源hash匹配、77行逐hunk发布，20针对测试通过。第一运行缺测试副本evidence临时目录的8个FileNotFoundError已保留，补齐目录后20通过，非产品缺陷。新XMovePick3实际模型确认named pelvis=安全倾角body、world parent、floating_base_joint qposadr0，仅此实例匹配旧高度门槛。首动作251样本的新增root字段与原记录机器人姿态同时间核对、摘要重算、字段隔离、身份/时间连续均通过；无额外动作或reset。收据artifacts/R019/robot-stability-integration-20260916/status.json与first-action-physical-verification.json，publisher源hash{"rsi/live.py": "50f481f6b5d9dce4905164404d1867c561738ed97765399a92dfc9a5551bf434", "rsi/policy_harness.py": "e1365e49d94028e510c7f047a0f8656d25b091448c4c5607baab4cbdc0e25418"}。XMovePick3仍完整推理，任务成功/收益未验证；XMoveBendPick2、XMovePickSim1保留旧冻结观测。新旧代码、skill和reset变化不能作单因结论。共享core未晋升；API/IKEA入口不能盲用。BendPickSim1也已完整预算65动作240.46s、0成功，v1新增先审查计算再执行和重新投影；后续待新reset。不要另开同任务actor。

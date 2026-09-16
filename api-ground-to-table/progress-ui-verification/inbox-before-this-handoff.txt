@@ -1,0 +1,27 @@
+# R020 用户要求交接（预算/ACK 已更新）
+
+2026-09-16 修正：旧版“预算待答复、ACK未到”已被新事实取代；原文与当时回执保存在 R020/history 的标注历史快照中。本文件是已交付要求的当前记录，不要求再次发消息/再次确认。
+
+主控 thread：01a0a867-d7aa-71f2-8547-e264d6d09ede。已有公开日志真实确认：
+
+> R020-PARALLEL-SKILLS-20260916 ACK — 已读新增要求及预算文件；IKEA 须满足 3 次独立完整 host 审计成功且 API 配置明确，当前不启动。
+
+证据：delivery-state.json、ack-verification.json，含原始公开日志字节偏移与事件哈希；queue-receipt.txt 单独只是入队回执。
+
+主攻 SIMPLE 推门（总目标10次），其余任务独立并行；推门3次独立重置、完整回合、真实 host 审计成功后，再并行 IKEA 右侧棕色卧室门，SIMPLE继续。当前推门0/3，locomotion未验证，不启动IKEA探索。所有正式成绩仍需用户指定接口，不计诊断、回放或自述成功。
+
+API预算已经明确授权：所有角色/环境/分支累计合计不超过10000元，每累计1500元向用户汇报，汇报不追加或重置预算。唯一授权源 ref/tasks/api-budget.json。API来源、模型价格、计费币种/换算依据和实际限额接口仍未核实，当前付费调用0；不读取api.json/auth.json、不猜来源、不重新询问预算。缺来源只阻塞付费调用，不阻塞SIMPLE。
+
+SIMPLE supervisor 是 skills/loco-manip-core/SKILL.md 唯一发布者。ground-to-table 由其独立thread在 codex-account-2/workspace/ground-to-table 写域维护；只交换有证据和版本的候选。直接复用 ref/ACCOUNT2_ROLE_SKILL_REVIEW.md，不重复研究角色架构。
+
+本辅助线程独占 tools/coordination 与对应 R020 维护；共享账本和门槛只有离线校验/登记功能，不发请求、不启动环境。rsi-r020-coordination-wait 仅检查门槛/预算状态和ACK。主控自然结束接续已由 rsi-simple-continuation-0916 / codex-account-2/continuation/watch.py 负责；不建立其他resume watcher，不并发resume，不修改主控runner/控制器。
+
+
+## ARCH-REVIEW-20260916-V1（只追加，下一自然边界）
+
+辅助账号架构评审已交付：/home/galbot/lizekai/RSI/artifacts/architecture-review-20260916/HANDOFF-SIMPLE.md 。08:28UTC快照桌面10、门5、抓盒1；候选只修skill+runtime总长检查，8项离线回归通过，未部署/未物理验证。保留已有提前结束、异常与placement改动。请先保留并压缩各任务入口再考虑合入，勿打断在途回合。API交接文件HANDOFF-API.md仅待owner转交。此追加只算queued；ACK和集成需主管另行明确。
+
+
+## ARCH-MEMORY-PRIORITY-20260916-V1（候选未合并，下一自然边界）
+
+第二项有界修复已交付：/home/galbot/lizekai/RSI/artifacts/architecture-review-20260916/memory-priority/FINAL.md 。真实放盒0001审计否决置顶问题已复现；现有success_review→episode_status经两个runner接入，每次检索更新资格，不回写经验、不暴露host载荷。18项检索回归及组合后的原8项长度回归通过；独立/组合补丁择一，勿重复叠加。第一轮协调者ACK按父任务转述记录，非部署证据；本条仅queued，待主管逐项ACK。当前相关live hash与快照一致，未改在线文件或运行物理/API。固定合同/控制器/reset验收及公共反例见INTEGRATION.md；勿打断在途回合。

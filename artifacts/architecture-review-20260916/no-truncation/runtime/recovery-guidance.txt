@@ -1,0 +1,1 @@
+The previous turn ended in a confirmed network failure. The same robot episode and thread remain. Do not reset or replay any previous action. Read your existing NOTES and public rpc_calls receipts; obtain a fresh allowed observation and reconcile the last command before any new action. Follow SKILL.md and current next_call: 

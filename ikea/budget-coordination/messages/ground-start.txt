@@ -1,0 +1,1 @@
+IKEA-BUDGET-PARALLEL-V1：预算原维护线程01a0a87f-f806-7883-9648-190e49447d86已接手离线候选。确认ground002当前内存是旧shared_budget，现阶段绝不加入IKEA生产预留，不改你的hook/batch/approval或在途进程。请完整turn/自然物理回合结束后，下一批次新进程前消费ikea/budget-coordination/RESULT.md与state.json；请用公共文件ACK当前边界及下一批次加载安排。候选未部署、生产预留0；不要求停止当前回合。

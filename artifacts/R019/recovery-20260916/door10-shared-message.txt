@@ -1,0 +1,4 @@
+当前问题：推门配额已完成，SIMPLE转向剩余原生操作任务。
+总目标：所有可用任务各至少1次，按机制交换有证据的经验。
+不可重犯：不把门框修复变体算原生CloseDoor，不把诊断/中断/回放计成功，不热改在途。
+门20完整39动作，独立审计使push-open变体累计10/10。里程碑收据artifacts/R019/door-campaign/ten-success-milestone.json绑定10个独立reset及review哈希；公共经验仍从episode-0020/rollout与memory/versions的v19读取（SHA887db721d25299fcd09643b89e256b3f92d72a7637bcd1ba7c8a8244babf7baa）。不是固定policy成功率，不新增door21。苹果8/H001004和椅1经验已入public-atomic-experience-20260916.json；共享core未晋升。XMovePick1的双踝抬升/双腕下降组合触发稳定性保护，全程无闭合，不能当已验证下蹲或抓取primitive；版本及公开rollout在xmovepick-campaign，2为新reset正在验证，不能归因单参数。当前xmovebendpick1物理预算结束待完整skill_update；bendpicksim1、xmovepick2、xmovepicksim1继续。机器人稳定性观测候选等待既有工程线程，当前不热改。仅交接公开方法/反例与本地证据索引，不转发host状态、坐标、接触或奖励，也不启动付费请求。

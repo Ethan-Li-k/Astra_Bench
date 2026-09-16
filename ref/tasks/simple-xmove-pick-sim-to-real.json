@@ -1,0 +1,24 @@
+{
+  "task_id": "simple_xmove_pick_sim_to_real",
+  "env_id": "simple/G1WholebodyXMovePickSimToRealTeleop-v0",
+  "instruction": "In this simulated measured-table scene, move forward from the initial distant stance, identify the cracker box among distractors, grasp it with a Dex3 hand and lift it at least3cm above its initial height while remaining standing.",
+  "scene_contract": "Native SIMPLE XMovePickSimToReal scene with cracker-box target and multiple distractors. This is only MuJoCo simulation, not real hardware. It inherits the measured-table grasp criterion but requires its own approach from a farther initial stance. Use current shape, calibrated stereo, named robot state and whole-hand clearance; do not transfer prior coordinates, table heights or gesture sequences.",
+  "completion": [
+    "Native reward is clipped target height increase divided by0.10m, with metadata threshold0.3 (3cm). It has no grasp-contact or dwell condition, so a bumped object alone is insufficient for independently audited task success.",
+    "Independently verify box-hand co-motion and visible retained support; a bumped or transiently tossed box may satisfy height without a secure grasp. Report those outcomes separately.",
+    "One independently reset success is required. Stop physical actions when rollout_finished and finish skill_update."
+  ],
+  "phase_guidance": [
+    "Inspect current stereo RGB and robot state; identify the box, table boundaries, accessible narrow faces and whole-hand approach clearance. Resolve uncertain stereo matches before contact.",
+    "Select the relevant self-generated cube grasp experience and current shared method with experience_select. Adapt it to the larger rectangular box and native mesh fingers.",
+    "Approach the table with current observed clearance and support, using only selectively compatible empty-hand experience. Verify actual support relocation and stable reach before manipulating. Unload saturated arms before reconsidering stance; a commanded ankle rise is not whole-foot clearance and empty-hand approach is not loaded walking.",
+    "Arrange a collision-free approach using wrist pose and full distal-finger geometry. Prefer a visible approach; establish clearance before moving the fingers over the table surface.",
+    "Align thumb opposition against index/middle around a suitable cross-section. Close gradually and inspect fresh images; closure fractions are not aperture or force measurements.",
+    "Test a small lift with a stable grasp attitude. Require visible box-hand co-motion rather than equating wrist ascent with lifting the box. If it slips, reopen as appropriate and alter contact geometry before retrying.",
+    "Continue a confirmed grasp toward the requested lift height. Keep the box in view when possible and verify support until the host ends the attempt. If reach/tracking stalls, withdraw safely and record a different next hypothesis."
+  ],
+  "known_interface_limits": "Model_38000 UMI-4/checkpoint PD, native Dex3 mesh geometry, 50Hz tracker and200Hz MuJoCo. Bounded continuous chunks; current observation defines limits.240s physical budget, full Astra turns awaited, paused physics not RTC. SimToReal is the registered scene name, not a hardware trial.",
+  "failure_guidance": "Separate observation uncertainty, tracking, contact acquisition and task progress. Preserve public evidence, excluded hypotheses and a changed next test. finish_attempt only records a stall; it does not terminate the episode. Follow its returned current observation and next_call to test the changed safe hypothesis in this same episode. Continue until native success/failure, runtime safety/system termination or the physical budget. Do not use reasoning delay, three completed actions or temporary lack of progress as a stop condition. Do not consume remaining budget with idle holds.",
+  "prohibited_shortcuts": "No object poses/contact truth, hidden reward query, task/evaluator source access, human/external demonstrations, replay as task credit or mid-episode reset.",
+  "guidance_status": "Detailed task input and qualitative guidance; the actor chooses motion using current allowed observations."
+}

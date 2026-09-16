@@ -1,0 +1,23 @@
+{
+  "task_id": "simple_open_oven",
+  "env_id": "simple/G1WholebodyOpenOvenTeleop-v0",
+  "instruction": "Approach the oven, identify its movable access door or doors and open one sufficiently while keeping the robot stable. Use the visible panel or handle to establish a controlled opening interaction.",
+  "scene_contract": "Native SIMPLE oven-opening task. Distinguish the appliance enclosure, access door panels and handles from unrelated objects and the floor. Determine which surface can move and in what direction using current stereo RGB and bounded observed interaction; do not assume a household oven hinge layout or transfer the push-door direction.",
+  "completion": [
+    "The native benchmark accepts either designated access-door joint exceeding 1.4 radians in its opening direction, with the original reward accumulation reaching 0.5. The host reports the outcome; joint state and reward are not actor inputs.",
+    "Independent supervisor review must confirm the visible appliance door actually opens. Movement of a hand, grasp closure or appliance base is insufficient. There is no extra one-second or release-hold criterion; report release retention separately.",
+    "One independent reset, complete turn and skill revision are required; stop physical actions at rollout_finished."
+  ],
+  "phase_guidance": [
+    "Inspect both head images with the delivered camera calibration. Identify access panels and any visible handles; record uncertainty in motion direction and free space rather than importing an axis or object coordinates.",
+    "Assess reach and visibility from current measured robot poses. If approach is needed, selectively read compatible own empty-hand locomotion candidates, revalidate actual support motion and body stability, and establish a stationary working stance. Ankle rise alone does not prove full sole clearance.",
+    "Check whole-hand and forearm clearance against visible appliance surfaces and floor. Choose a handle enclosure or panel interaction compatible with observed geometry; push-open door and faucet side-push success do not prove this opening mechanism.",
+    "Use a small bounded test with an explicit predicted visible panel response. Keep track of panel versus fixed housing; commanded wrist motion and closure do not demonstrate coupling. Reobserve after each action.",
+    "If the hand moves without the door, diagnose miss, slip, tracking residual, reach saturation or wrong direction using public evidence. Withdraw to clearance and revise one justified condition. Reposition only after unloading contact; prior empty-hand motion is not validated while holding a handle.",
+    "Once visible opening is established, follow the observed door path with short replanned motions, checking support and whole-hand clearance. Continue to host terminal, then preserve successes and failed hypotheses in task-local experience."
+  ],
+  "known_interface_limits": "Formal model_38000 four-point UMI-4 at checkpoint PD. Read current action and continuous-chunk contracts. Gripper fractions are not forces or calibrated aperture. Wrist frames are not TCPs. No joint/torque policy output. Physical budget 240s; physics pauses during full model reasoning.",
+  "failure_guidance": "finish_attempt records a nonterminal stall and returns the next safe action obligation. Continue within the same reset until native terminal, actual safety/system termination or physical budget. Do not stop for inference delay, temporary low progress or a small action count. Separate incomplete budget from physical failure.",
+  "prohibited_shortcuts": "No object position/contact/joint-axis/reward queries, oracle trajectories, mid-episode reset or action replay. No copying prior task world coordinates.",
+  "guidance_status": "Qualitative task definition from native task semantics; no motion demonstration or hidden state supplied."
+}

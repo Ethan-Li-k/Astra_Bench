@@ -1,0 +1,3 @@
+## Selected task: BendPick
+
+Keep original and SimToReal variants separate. Establish stationary reach and useful stereo views before bending/entry; verify support drift and achieved wrist attitude. Reuse episode0006 enclosure, small lift and separate hold as conditional geometry checks, not target replay. SimToReal episode0001 displaced the box and tried closure/lift probes without verified retention: inspect calculations before action, reject whole-hand interference, relocalize after tipping and restore the view. Test acquisition before pursuing the variant's final lift height; do not infer grip friction from mixed tracking and perception failures.

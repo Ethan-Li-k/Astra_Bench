@@ -1,0 +1,1161 @@
+V-HACD V2.2
+Syntax: testVHACD [options] --input infile.obj --output outfile.obj --log logfile.txt
+
+Options:
+       --input                     Wavefront .obj input file name
+       --output                    VRML 2.0 output file name
+       --log                       Log file name
+       --resolution                Maximum number of voxels generated during the voxelization stage (default=100,000, range=10,000-16,000,000)
+       --depth                     Maximum number of clipping stages. During each split stage, parts with a concavity higher than the user defined threshold are clipped according the "best" clipping plane (default=20, range=1-32)
+       --concavity                 Maximum allowed concavity (default=0.0025, range=0.0-1.0)
+       --planeDownsampling         Controls the granularity of the search for the "best" clipping plane (default=4, range=1-16)
+       --convexhullDownsampling    Controls the precision of the convex-hull generation process during the clipping plane selection stage (default=4, range=1-16)
+       --alpha                     Controls the bias toward clipping along symmetry planes (default=0.05, range=0.0-1.0)
+       --beta                      Controls the bias toward clipping along revolution axes (default=0.05, range=0.0-1.0)
+       --gamma                     Controls the maximum allowed concavity during the merge stage (default=0.00125, range=0.0-1.0)
+       --delta                     Controls the bias toward maximaxing local concavity (default=0.05, range=0.0-1.0)
+       --pca                       Enable/disable normalizing the mesh before applying the convex decomposition (default=0, range={0,1})
+       --mode                      0: voxel-based approximate convex decomposition, 1: tetrahedron-based approximate convex decomposition (default=0, range={0,1})
+       --maxNumVerticesPerCH       Controls the maximum number of triangles per convex-hull (default=64, range=4-1024)
+       --minVolumePerCH            Controls the adaptive sampling of the generated convex-hulls (default=0.0001, range=0.0-0.01)
+       --convexhullApproximation   Enable/disable approximation when computing convex-hulls (default=1, range={0,1})
+       --oclAcceleration           Enable/disable OpenCL acceleration (default=0, range={0,1})
+       --oclPlatformID             OpenCL platform id (default=0, range=0-# OCL platforms)
+       --oclDeviceID               OpenCL device id (default=0, range=0-# OCL devices)
+       --help                      Print usage
+
+Examples:
+       testVHACD.exe --input bunny.obj --output bunny_acd.obj --log log.txt
+
++ OpenCL (OFF)
++ Parameters
+	 input                                       data/dataset/179/textured_objs/new-4.obj
+	 resolution                                  1000000
+	 max. depth                                  20
+	 max. concavity                              0.001
+	 plane down-sampling                         4
+	 convex-hull down-sampling                   4
+	 alpha                                       0.05
+	 beta                                        0.05
+	 gamma                                       0.0005
+	 pca                                         0
+	 mode                                        0
+	 max. vertices per convex-hull               64
+	 min. volume to add vertices to convex-hulls 0.0001
+	 convex-hull approximation                   1
+	 OpenCL acceleration                         1
+	 OpenCL platform ID                          0
+	 OpenCL device ID                            0
+	 output                                      data/dataset/179/textured_objs/new-4_vhacd.obj
+	 log                                         data/dataset/179/textured_objs/new-4_log.txt
++ Load mesh
++ Voxelization
+	 dim = 64	-> 2408 voxels
+	 dim = 468	-> 129571 voxels
+	 time 0.325339s
++ Compute primitive set
+	 # primitives               129571
+	 # inside surface           0
+	 # on surface               129571
+	 time 0.042466s
++ Approximate Convex Decomposition
+	 Subdivision level 1
+	 -> Part[0] C  = 0.946435, E  = 0.0541005, VS = 129571, VI = 0
+		 [Regular sampling] Number of clipping planes 186
+
+			 Best  0011 T=0.694205 C=0.691971 B=0.002234 S=0.000000 (1.0, 0.0, 0.0, -0.444)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0005 T=0.693601 C=0.691427 B=0.002175 S=0.000000 (1.0, 0.0, 0.0, -0.445)
+
+	 Subdivision level 2
+	 -> Part[0] C  = 0.0687065, E  = 0.003843, VS = 9204, VI = 0
+		 [Regular sampling] Number of clipping planes 66
+
+			 Best  0044 T=0.045418 C=0.045408 B=0.000009 S=0.000000 (0.0, 0.0, 1.0, 0.136)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0002 T=0.046134 C=0.046124 B=0.000010 S=0.000000 (0.0, 0.0, 1.0, 0.138)
+
+	 -> Part[1] C  = 0.623476, E  = 0.0502575, VS = 120367, VI = 0
+		 [Regular sampling] Number of clipping planes 172
+
+			 Best  0050 T=0.607187 C=0.593112 B=0.000610 S=0.013465 (0.0, 1.0, 0.0, -0.009)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0004 T=0.607944 C=0.593869 B=0.000610 S=0.013465 (0.0, 1.0, 0.0, -0.009)
+
+	 Subdivision level 3
+	 -> Part[0] C  = 0.00420613, E  = 0.000468058, VS = 1121, VI = 0
+		 [Regular sampling] Number of clipping planes 33
+
+			 Best  0019 T=0.000879 C=0.000847 B=0.000000 S=0.000031 (0.0, 1.0, 0.0, 0.113)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0004 T=0.000955 C=0.000924 B=0.000000 S=0.000031 (0.0, 1.0, 0.0, 0.113)
+
+	 -> Part[1] C  = 0.0424241, E  = 0.00337494, VS = 8083, VI = 0
+		 [Regular sampling] Number of clipping planes 57
+
+			 Best  0015 T=0.028816 C=0.028812 B=0.000004 S=0.000000 (0.0, 1.0, 0.0, 0.106)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0005 T=0.028758 C=0.028754 B=0.000004 S=0.000000 (0.0, 1.0, 0.0, 0.105)
+
+	 -> Part[2] C  = 0.178941, E  = 0.0152484, VS = 36520, VI = 0
+		 [Regular sampling] Number of clipping planes 81
+
+			 Best  0036 T=0.177062 C=0.177046 B=0.000016 S=0.000000 (0.0, 1.0, 0.0, 0.043)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0000 T=0.177110 C=0.177102 B=0.000008 S=0.000000 (0.0, 1.0, 0.0, 0.046)
+
+	 -> Part[3] C  = 0.41584, E  = 0.0350091, VS = 83847, VI = 0
+		 [Regular sampling] Number of clipping planes 126
+
+			 Best  0114 T=0.414561 C=0.414187 B=0.000373 S=0.000000 (0.0, 0.0, 1.0, 0.026)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0001 T=0.414323 C=0.413986 B=0.000337 S=0.000000 (0.0, 0.0, 1.0, 0.028)
+
+	 Subdivision level 4
+	 -> Part[0] C  = 0.000438814, E  = 0.000205428, VS = 492, VI = 0
+	 -> Part[1] C  = 0.000798774, E  = 0.00026263, VS = 629, VI = 0
+	 -> Part[2] C  = 0.00994311, E  = 0.000678078, VS = 1624, VI = 0
+		 [Regular sampling] Number of clipping planes 38
+
+			 Best  0033 T=0.002224 C=0.002078 B=0.000000 S=0.000146 (0.0, 0.0, 1.0, 0.075)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0002 T=0.002145 C=0.001999 B=0.000000 S=0.000146 (0.0, 0.0, 1.0, 0.077)
+
+	 -> Part[3] C  = 0.0198834, E  = 0.00269686, VS = 6459, VI = 0
+		 [Regular sampling] Number of clipping planes 47
+
+			 Best  0004 T=0.013321 C=0.013320 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.440)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0003 T=0.013297 C=0.013296 B=0.000001 S=0.000000 (1.0, 0.0, 0.0, -0.439)
+
+	 -> Part[4] C  = 0.091834, E  = 0.00807598, VS = 19342, VI = 0
+		 [Regular sampling] Number of clipping planes 63
+
+			 Best  0047 T=0.077232 C=0.077225 B=0.000006 S=0.000000 (0.0, 0.0, 1.0, 0.105)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0008 T=0.079107 C=0.079103 B=0.000004 S=0.000000 (0.0, 0.0, 1.0, 0.101)
+
+	 -> Part[5] C  = 0.0854311, E  = 0.00717243, VS = 17178, VI = 0
+		 [Regular sampling] Number of clipping planes 53
+
+			 Best  0018 T=0.084814 C=0.084813 B=0.000001 S=0.000000 (0.0, 1.0, 0.0, 0.020)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0004 T=0.084827 C=0.084826 B=0.000001 S=0.000000 (0.0, 1.0, 0.0, 0.020)
+
+	 -> Part[6] C  = 0.328574, E  = 0.0256985, VS = 61548, VI = 0
+		 [Regular sampling] Number of clipping planes 114
+
+			 Best  0004 T=0.301631 C=0.301613 B=0.000018 S=0.000000 (1.0, 0.0, 0.0, -0.464)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0006 T=0.302170 C=0.302163 B=0.000006 S=0.000000 (1.0, 0.0, 0.0, -0.465)
+
+	 -> Part[7] C  = 0.0857803, E  = 0.00931063, VS = 22299, VI = 0
+		 [Regular sampling] Number of clipping planes 84
+
+			 Best  0005 T=0.055362 C=0.055361 B=0.000001 S=0.000000 (1.0, 0.0, 0.0, -0.467)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0001 T=0.055331 C=0.055329 B=0.000002 S=0.000000 (1.0, 0.0, 0.0, -0.465)
+
+	 Subdivision level 5
+	 -> Part[0] C  = 0.000453044, E  = 0.000415866, VS = 996, VI = 0
+	 -> Part[1] C  = 0.00164265, E  = 0.000262212, VS = 628, VI = 0
+		 [Regular sampling] Number of clipping planes 21
+
+			 Best  0010 T=0.000611 C=0.000585 B=0.000000 S=0.000026 (0.0, 1.0, 0.0, 0.125)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0007 T=0.000330 C=0.000304 B=0.000000 S=0.000026 (0.0, 1.0, 0.0, 0.122)
+
+	 -> Part[2] C  = 0.00558906, E  = 0.00107098, VS = 2565, VI = 0
+		 [Regular sampling] Number of clipping planes 36
+
+			 Best  0025 T=0.001822 C=0.001795 B=0.000000 S=0.000027 (0.0, 0.0, 1.0, 0.097)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0004 T=0.002809 C=0.002781 B=0.000000 S=0.000027 (0.0, 0.0, 1.0, 0.097)
+
+	 -> Part[3] C  = 0.00773669, E  = 0.00162588, VS = 3894, VI = 0
+		 [Regular sampling] Number of clipping planes 43
+
+			 Best  0039 T=0.004809 C=0.004800 B=0.000000 S=0.000009 (0.0, 0.0, 1.0, 0.071)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0007 T=0.004474 C=0.004465 B=0.000000 S=0.000009 (0.0, 0.0, 1.0, 0.068)
+
+	 -> Part[4] C  = 0.0336936, E  = 0.00357244, VS = 8556, VI = 0
+		 [Regular sampling] Number of clipping planes 47
+
+			 Best  0042 T=0.026209 C=0.026207 B=0.000003 S=0.000000 (0.0, 0.0, 1.0, 0.116)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0002 T=0.025336 C=0.025333 B=0.000002 S=0.000000 (0.0, 0.0, 1.0, 0.118)
+
+	 -> Part[5] C  = 0.0499733, E  = 0.00450354, VS = 10786, VI = 0
+		 [Regular sampling] Number of clipping planes 51
+
+			 Best  0003 T=0.039757 C=0.039752 B=0.000004 S=0.000000 (1.0, 0.0, 0.0, -0.457)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0006 T=0.039658 C=0.039655 B=0.000004 S=0.000000 (1.0, 0.0, 0.0, -0.459)
+
+	 -> Part[6] C  = 0.0417544, E  = 0.0034931, VS = 8366, VI = 0
+		 [Regular sampling] Number of clipping planes 45
+
+			 Best  0000 T=0.041576 C=0.041570 B=0.000006 S=0.000000 (1.0, 0.0, 0.0, -0.446)
+
+		 [Refining] Number of clipping planes 5
+
+			 Best  0000 T=0.041577 C=0.041572 B=0.000006 S=0.000000 (1.0, 0.0, 0.0, -0.446)
+
+	 -> Part[7] C  = 0.0431844, E  = 0.00367932, VS = 8812, VI = 0
+		 [Regular sampling] Number of clipping planes 45
+
+			 Best  0000 T=0.042984 C=0.042976 B=0.000008 S=0.000000 (1.0, 0.0, 0.0, -0.447)
+
+		 [Refining] Number of clipping planes 5
+
+			 Best  0001 T=0.042851 C=0.042845 B=0.000006 S=0.000000 (1.0, 0.0, 0.0, -0.448)
+
+	 -> Part[8] C  = 0.143877, E  = 0.0126543, VS = 30307, VI = 0
+		 [Regular sampling] Number of clipping planes 109
+
+			 Best  0101 T=0.083205 C=0.083174 B=0.000031 S=0.000000 (0.0, 0.0, 1.0, 0.055)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0007 T=0.083302 C=0.083265 B=0.000037 S=0.000000 (0.0, 0.0, 1.0, 0.052)
+
+	 -> Part[9] C  = 0.159036, E  = 0.0130442, VS = 31241, VI = 0
+		 [Regular sampling] Number of clipping planes 110
+
+			 Best  0102 T=0.093709 C=0.093673 B=0.000036 S=0.000000 (0.0, 0.0, 1.0, 0.055)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0006 T=0.093796 C=0.093756 B=0.000040 S=0.000000 (0.0, 0.0, 1.0, 0.053)
+
+	 -> Part[10] C  = 0.024705, E  = 0.00443465, VS = 10621, VI = 0
+		 [Regular sampling] Number of clipping planes 79
+
+			 Best  0001 T=0.007759 C=0.007759 B=0.000001 S=0.000000 (1.0, 0.0, 0.0, -0.453)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0001 T=0.006316 C=0.006315 B=0.000001 S=0.000000 (1.0, 0.0, 0.0, -0.450)
+
+	 -> Part[11] C  = 0.0307596, E  = 0.00487598, VS = 11678, VI = 0
+		 [Regular sampling] Number of clipping planes 80
+
+			 Best  0004 T=0.008781 C=0.008781 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.480)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0005 T=0.008643 C=0.008642 B=0.000001 S=0.000000 (1.0, 0.0, 0.0, -0.481)
+
+	 Subdivision level 6
+	 -> Part[0] C  = 0.000190493, E  = 0.00011858, VS = 284, VI = 0
+	 -> Part[1] C  = 0.000336293, E  = 0.000143632, VS = 344, VI = 0
+	 -> Part[2] C  = 0.0015561, E  = 0.000731523, VS = 1752, VI = 0
+		 [Regular sampling] Number of clipping planes 23
+
+			 Best  0015 T=0.000781 C=0.000778 B=0.000000 S=0.000003 (0.0, 0.0, 1.0, 0.126)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0004 T=0.000788 C=0.000785 B=0.000000 S=0.000003 (0.0, 0.0, 1.0, 0.126)
+
+	 -> Part[3] C  = 0.00183306, E  = 0.000339457, VS = 813, VI = 0
+		 [Regular sampling] Number of clipping planes 22
+
+			 Best  0019 T=0.000314 C=0.000305 B=0.000000 S=0.000009 (0.0, 0.0, 1.0, 0.069)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0004 T=0.000516 C=0.000507 B=0.000000 S=0.000009 (0.0, 0.0, 1.0, 0.069)
+
+	 -> Part[4] C  = 0.00408556, E  = 0.00134279, VS = 3216, VI = 0
+		 [Regular sampling] Number of clipping planes 35
+
+			 Best  0001 T=0.002493 C=0.002492 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.444)
+
+		 [Refining] Number of clipping planes 7
+
+			 Best  0004 T=0.002493 C=0.002492 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.444)
+
+	 -> Part[5] C  = 0.000592436, E  = 0.000283089, VS = 678, VI = 0
+	 -> Part[6] C  = 0.0199921, E  = 0.00253068, VS = 6061, VI = 0
+		 [Regular sampling] Number of clipping planes 40
+
+			 Best  0022 T=0.016098 C=0.015463 B=0.000000 S=0.000635 (0.0, 1.0, 0.0, 0.081)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0004 T=0.016133 C=0.015498 B=0.000000 S=0.000635 (0.0, 1.0, 0.0, 0.081)
+
+	 -> Part[7] C  = 0.00538264, E  = 0.00104175, VS = 2495, VI = 0
+		 [Regular sampling] Number of clipping planes 39
+
+			 Best  0006 T=0.001978 C=0.001978 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.468)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0002 T=0.001887 C=0.001887 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.466)
+
+	 -> Part[8] C  = 0.0187203, E  = 0.00154196, VS = 3693, VI = 0
+		 [Regular sampling] Number of clipping planes 44
+
+			 Best  0011 T=0.009218 C=0.008911 B=0.000000 S=0.000308 (0.0, 1.0, 0.0, 0.108)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0002 T=0.009196 C=0.008888 B=0.000000 S=0.000308 (0.0, 1.0, 0.0, 0.110)
+
+	 -> Part[9] C  = 0.0211591, E  = 0.00296158, VS = 7093, VI = 0
+		 [Regular sampling] Number of clipping planes 43
+
+			 Best  0038 T=0.011171 C=0.011170 B=0.000001 S=0.000000 (0.0, 0.0, 1.0, 0.064)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0004 T=0.011171 C=0.011170 B=0.000001 S=0.000000 (0.0, 0.0, 1.0, 0.064)
+
+	 -> Part[10] C  = 7.39304e-05, E  = 0.000347807, VS = 833, VI = 0
+	 -> Part[11] C  = 0.0415034, E  = 0.0031453, VS = 7533, VI = 0
+		 [Regular sampling] Number of clipping planes 45
+
+			 Best  0025 T=0.038121 C=0.037088 B=0.000002 S=0.001031 (0.0, 0.0, 1.0, 0.112)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0004 T=0.038122 C=0.037089 B=0.000002 S=0.001031 (0.0, 0.0, 1.0, 0.112)
+
+	 -> Part[12] C  = 0.000223602, E  = 0.000418788, VS = 1003, VI = 0
+	 -> Part[13] C  = 0.0426257, E  = 0.00326054, VS = 7809, VI = 0
+		 [Regular sampling] Number of clipping planes 44
+
+			 Best  0024 T=0.039702 C=0.038478 B=0.000002 S=0.001221 (0.0, 0.0, 1.0, 0.108)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0004 T=0.039739 C=0.038516 B=0.000002 S=0.001221 (0.0, 0.0, 1.0, 0.108)
+
+	 -> Part[14] C  = 0.0621088, E  = 0.00890437, VS = 21326, VI = 0
+		 [Regular sampling] Number of clipping planes 102
+
+			 Best  0001 T=0.018291 C=0.018281 B=0.000010 S=0.000000 (1.0, 0.0, 0.0, -0.453)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0002 T=0.014297 C=0.014290 B=0.000007 S=0.000000 (1.0, 0.0, 0.0, -0.451)
+
+	 -> Part[15] C  = 0.0224121, E  = 0.00374989, VS = 8981, VI = 0
+		 [Regular sampling] Number of clipping planes 88
+
+			 Best  0001 T=0.006199 C=0.006197 B=0.000003 S=0.000000 (1.0, 0.0, 0.0, -0.453)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0001 T=0.003275 C=0.003273 B=0.000002 S=0.000000 (1.0, 0.0, 0.0, -0.450)
+
+	 -> Part[16] C  = 0.0691461, E  = 0.00908892, VS = 21768, VI = 0
+		 [Regular sampling] Number of clipping planes 103
+
+			 Best  0004 T=0.018539 C=0.018532 B=0.000007 S=0.000000 (1.0, 0.0, 0.0, -0.481)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0005 T=0.017971 C=0.017965 B=0.000005 S=0.000000 (1.0, 0.0, 0.0, -0.482)
+
+	 -> Part[17] C  = 0.025825, E  = 0.00395532, VS = 9473, VI = 0
+		 [Regular sampling] Number of clipping planes 89
+
+			 Best  0004 T=0.005673 C=0.005670 B=0.000003 S=0.000000 (1.0, 0.0, 0.0, -0.481)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0005 T=0.005166 C=0.005163 B=0.000003 S=0.000000 (1.0, 0.0, 0.0, -0.482)
+
+	 -> Part[18] C  = 0.00118845, E  = 0.00185845, VS = 4451, VI = 0
+	 -> Part[19] C  = 0.00512628, E  = 0.0025762, VS = 6170, VI = 0
+		 [Regular sampling] Number of clipping planes 76
+
+			 Best  0001 T=0.003056 C=0.003056 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.455)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0006 T=0.002990 C=0.002990 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.456)
+
+	 -> Part[20] C  = 0.00532525, E  = 0.00263382, VS = 6308, VI = 0
+		 [Regular sampling] Number of clipping planes 77
+
+			 Best  0002 T=0.003251 C=0.003251 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.473)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0006 T=0.003151 C=0.003151 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.475)
+
+	 -> Part[21] C  = 0.00315182, E  = 0.00224217, VS = 5370, VI = 0
+		 [Regular sampling] Number of clipping planes 65
+
+			 Best  0000 T=0.002252 C=0.002252 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.482)
+
+		 [Refining] Number of clipping planes 4
+
+			 Best  0001 T=0.001554 C=0.001554 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.483)
+
+	 Subdivision level 7
+	 -> Part[0] C  = 0.000304057, E  = 0.000192066, VS = 460, VI = 0
+	 -> Part[1] C  = 0.00052338, E  = 0.000539456, VS = 1292, VI = 0
+	 -> Part[2] C  = 0.000523061, E  = 0.000283507, VS = 679, VI = 0
+	 -> Part[3] C  = 0.000147258, E  = 5.59498e-05, VS = 134, VI = 0
+	 -> Part[4] C  = 0.00138716, E  = 0.00049645, VS = 1189, VI = 0
+		 [Regular sampling] Number of clipping planes 28
+
+			 Best  0013 T=0.000551 C=0.000541 B=0.000000 S=0.000010 (0.0, 0.0, 1.0, 0.122)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0004 T=0.000552 C=0.000542 B=0.000000 S=0.000010 (0.0, 0.0, 1.0, 0.122)
+
+	 -> Part[5] C  = 0.00111003, E  = 0.000846345, VS = 2027, VI = 0
+		 [Regular sampling] Number of clipping planes 32
+
+			 Best  0018 T=0.000572 C=0.000572 B=0.000000 S=0.000000 (0.0, 0.0, 1.0, 0.119)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0004 T=0.000587 C=0.000586 B=0.000000 S=0.000000 (0.0, 0.0, 1.0, 0.119)
+
+	 -> Part[6] C  = 0.00639154, E  = 0.00124968, VS = 2993, VI = 0
+		 [Regular sampling] Number of clipping planes 29
+
+			 Best  0023 T=0.003202 C=0.003202 B=0.000000 S=0.000000 (0.0, 0.0, 1.0, 0.138)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0005 T=0.003168 C=0.003168 B=0.000000 S=0.000000 (0.0, 0.0, 1.0, 0.137)
+
+	 -> Part[7] C  = 0.00962782, E  = 0.001281, VS = 3068, VI = 0
+		 [Regular sampling] Number of clipping planes 27
+
+			 Best  0006 T=0.004581 C=0.004581 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.468)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0002 T=0.004576 C=0.004576 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.466)
+
+	 -> Part[8] C  = 0.000416663, E  = 0.000409603, VS = 981, VI = 0
+	 -> Part[9] C  = 0.00147884, E  = 0.000632149, VS = 1514, VI = 0
+		 [Regular sampling] Number of clipping planes 27
+
+			 Best  0015 T=0.000565 C=0.000556 B=0.000000 S=0.000009 (0.0, 1.0, 0.0, 0.068)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0005 T=0.000560 C=0.000551 B=0.000000 S=0.000009 (0.0, 1.0, 0.0, 0.067)
+
+	 -> Part[10] C  = 0.00281028, E  = 0.000701878, VS = 1681, VI = 0
+		 [Regular sampling] Number of clipping planes 23
+
+			 Best  0018 T=0.000927 C=0.000881 B=0.000000 S=0.000046 (0.0, 0.0, 1.0, 0.075)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0005 T=0.000915 C=0.000869 B=0.000000 S=0.000046 (0.0, 0.0, 1.0, 0.074)
+
+	 -> Part[11] C  = 0.00613402, E  = 0.000840082, VS = 2012, VI = 0
+		 [Regular sampling] Number of clipping planes 33
+
+			 Best  0001 T=0.002497 C=0.002497 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.450)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0003 T=0.002313 C=0.002313 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.449)
+
+	 -> Part[12] C  = 0.00807221, E  = 0.00194947, VS = 4669, VI = 0
+		 [Regular sampling] Number of clipping planes 39
+
+			 Best  0020 T=0.004075 C=0.004051 B=0.000000 S=0.000024 (0.0, 1.0, 0.0, 0.072)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0002 T=0.004031 C=0.004007 B=0.000000 S=0.000024 (0.0, 1.0, 0.0, 0.074)
+
+	 -> Part[13] C  = 0.00321301, E  = 0.00101211, VS = 2424, VI = 0
+		 [Regular sampling] Number of clipping planes 31
+
+			 Best  0004 T=0.002000 C=0.002000 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.475)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0004 T=0.002001 C=0.002001 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.475)
+
+	 -> Part[14] C  = 0.00817106, E  = 0.00106513, VS = 2551, VI = 0
+		 [Regular sampling] Number of clipping planes 26
+
+			 Best  0005 T=0.003762 C=0.003450 B=0.000000 S=0.000311 (1.0, 0.0, 0.0, -0.465)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0005 T=0.003722 C=0.003410 B=0.000000 S=0.000311 (1.0, 0.0, 0.0, -0.466)
+
+	 -> Part[15] C  = 0.0299418, E  = 0.00208016, VS = 4982, VI = 0
+		 [Regular sampling] Number of clipping planes 38
+
+			 Best  0006 T=0.014041 C=0.014041 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.469)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0007 T=0.013930 C=0.013930 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.472)
+
+	 -> Part[16] C  = 0.00828246, E  = 0.00107933, VS = 2585, VI = 0
+		 [Regular sampling] Number of clipping planes 25
+
+			 Best  0005 T=0.003877 C=0.003604 B=0.000000 S=0.000273 (1.0, 0.0, 0.0, -0.467)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0005 T=0.003895 C=0.003622 B=0.000000 S=0.000273 (1.0, 0.0, 0.0, -0.468)
+
+	 -> Part[17] C  = 0.0311138, E  = 0.00218121, VS = 5224, VI = 0
+		 [Regular sampling] Number of clipping planes 38
+
+			 Best  0007 T=0.014410 C=0.014410 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.475)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0000 T=0.014468 C=0.014468 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.471)
+
+	 -> Part[18] C  = 0.00633554, E  = 0.00551398, VS = 13206, VI = 0
+		 [Regular sampling] Number of clipping planes 96
+
+			 Best  0041 T=0.005492 C=0.005490 B=0.000001 S=0.000001 (0.0, 1.0, 0.0, -0.155)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0004 T=0.005506 C=0.005504 B=0.000001 S=0.000001 (0.0, 1.0, 0.0, -0.155)
+
+	 -> Part[19] C  = 0.00794966, E  = 0.00339039, VS = 8120, VI = 0
+		 [Regular sampling] Number of clipping planes 100
+
+			 Best  0001 T=0.005255 C=0.005255 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.455)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0004 T=0.005256 C=0.005255 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.455)
+
+	 -> Part[20] C  = 0.00151406, E  = 0.00291857, VS = 6990, VI = 0
+	 -> Part[21] C  = 0.00175717, E  = 0.000831314, VS = 1991, VI = 0
+		 [Regular sampling] Number of clipping planes 34
+
+			 Best  0001 T=0.000944 C=0.000944 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.455)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0005 T=0.000922 C=0.000922 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.455)
+
+	 -> Part[22] C  = 0.00997273, E  = 0.00379498, VS = 9089, VI = 0
+		 [Regular sampling] Number of clipping planes 101
+
+			 Best  0002 T=0.006204 C=0.006204 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.474)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0006 T=0.006012 C=0.006012 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.475)
+
+	 -> Part[23] C  = 0.00707411, E  = 0.00529394, VS = 12679, VI = 0
+		 [Regular sampling] Number of clipping planes 95
+
+			 Best  0000 T=0.004297 C=0.004295 B=0.000002 S=0.000000 (1.0, 0.0, 0.0, -0.483)
+
+		 [Refining] Number of clipping planes 3
+
+			 Best  0000 T=0.004297 C=0.004295 B=0.000002 S=0.000000 (1.0, 0.0, 0.0, -0.483)
+
+	 -> Part[24] C  = 0.00213175, E  = 0.00087098, VS = 2086, VI = 0
+		 [Regular sampling] Number of clipping planes 35
+
+			 Best  0003 T=0.001030 C=0.001030 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.477)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0003 T=0.001026 C=0.001026 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.476)
+
+	 -> Part[25] C  = 0.00303126, E  = 0.00308434, VS = 7387, VI = 0
+	 -> Part[26] C  = 0.00154929, E  = 0.00136409, VS = 3267, VI = 0
+		 [Regular sampling] Number of clipping planes 71
+
+			 Best  0001 T=0.001303 C=0.001303 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.455)
+
+		 [Refining] Number of clipping planes 7
+
+			 Best  0002 T=0.001177 C=0.001177 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.453)
+
+	 -> Part[27] C  = 0.00143961, E  = 0.00121211, VS = 2903, VI = 0
+		 [Regular sampling] Number of clipping planes 75
+
+			 Best  0023 T=0.001155 C=0.001152 B=0.000000 S=0.000004 (0.0, 1.0, 0.0, -0.129)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0004 T=0.001180 C=0.001176 B=0.000000 S=0.000004 (0.0, 1.0, 0.0, -0.129)
+
+	 -> Part[28] C  = 0.00178809, E  = 0.00139666, VS = 3345, VI = 0
+		 [Regular sampling] Number of clipping planes 75
+
+			 Best  0033 T=0.001292 C=0.001289 B=0.000000 S=0.000003 (0.0, 1.0, 0.0, -0.165)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0004 T=0.001386 C=0.001383 B=0.000000 S=0.000003 (0.0, 1.0, 0.0, -0.165)
+
+	 -> Part[29] C  = 0.0013651, E  = 0.00123716, VS = 2963, VI = 0
+		 [Regular sampling] Number of clipping planes 72
+
+			 Best  0020 T=0.001104 C=0.001098 B=0.000000 S=0.000006 (0.0, 1.0, 0.0, -0.129)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0004 T=0.001169 C=0.001163 B=0.000000 S=0.000006 (0.0, 1.0, 0.0, -0.129)
+
+	 -> Part[30] C  = 0.000425494, E  = 0.000668892, VS = 1602, VI = 0
+	 -> Part[31] C  = 0.000992694, E  = 0.00157327, VS = 3768, VI = 0
+	 Subdivision level 8
+	 -> Part[0] C  = 0.000195026, E  = 0.000134447, VS = 322, VI = 0
+	 -> Part[1] C  = 0.000388872, E  = 0.000362003, VS = 867, VI = 0
+	 -> Part[2] C  = 0.000155276, E  = 0.000101044, VS = 242, VI = 0
+	 -> Part[3] C  = 0.000459173, E  = 0.000745301, VS = 1785, VI = 0
+	 -> Part[4] C  = 0.001299, E  = 0.000477661, VS = 1144, VI = 0
+		 [Regular sampling] Number of clipping planes 21
+
+			 Best  0013 T=0.000957 C=0.000948 B=0.000000 S=0.000008 (0.0, 1.0, 0.0, 0.098)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0002 T=0.000947 C=0.000938 B=0.000000 S=0.000008 (0.0, 1.0, 0.0, 0.100)
+
+	 -> Part[5] C  = 0.00190488, E  = 0.000772024, VS = 1849, VI = 0
+		 [Regular sampling] Number of clipping planes 27
+
+			 Best  0014 T=0.000917 C=0.000907 B=0.000000 S=0.000010 (0.0, 1.0, 0.0, 0.103)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0006 T=0.000869 C=0.000859 B=0.000000 S=0.000010 (0.0, 1.0, 0.0, 0.101)
+
+	 -> Part[6] C  = 0.00249038, E  = 0.000627556, VS = 1503, VI = 0
+		 [Regular sampling] Number of clipping planes 23
+
+			 Best  0018 T=0.001153 C=0.001153 B=0.000000 S=0.000000 (0.0, 0.0, 1.0, 0.133)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0004 T=0.001153 C=0.001153 B=0.000000 S=0.000000 (0.0, 0.0, 1.0, 0.133)
+
+	 -> Part[7] C  = 0.00220871, E  = 0.000653443, VS = 1565, VI = 0
+		 [Regular sampling] Number of clipping planes 21
+
+			 Best  0017 T=0.001166 C=0.001166 B=0.000000 S=0.000000 (0.0, 0.0, 1.0, 0.131)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0004 T=0.001166 C=0.001166 B=0.000000 S=0.000000 (0.0, 0.0, 1.0, 0.131)
+
+	 -> Part[8] C  = 0.00040513, E  = 0.00043883, VS = 1051, VI = 0
+	 -> Part[9] C  = 0.00018458, E  = 0.000193319, VS = 463, VI = 0
+	 -> Part[10] C  = 0.000453326, E  = 0.000437577, VS = 1048, VI = 0
+	 -> Part[11] C  = 0.000481932, E  = 0.0002643, VS = 633, VI = 0
+	 -> Part[12] C  = 0.00152016, E  = 0.000392066, VS = 939, VI = 0
+		 [Regular sampling] Number of clipping planes 29
+
+			 Best  0011 T=0.000601 C=0.000598 B=0.000000 S=0.000004 (0.0, 1.0, 0.0, 0.073)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0005 T=0.000580 C=0.000576 B=0.000000 S=0.000004 (0.0, 1.0, 0.0, 0.072)
+
+	 -> Part[13] C  = 0.000820674, E  = 0.000448016, VS = 1073, VI = 0
+	 -> Part[14] C  = 0.00341328, E  = 0.0013716, VS = 3285, VI = 0
+		 [Regular sampling] Number of clipping planes 30
+
+			 Best  0027 T=0.002421 C=0.002421 B=0.000000 S=0.000000 (0.0, 0.0, 1.0, 0.071)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0003 T=0.002359 C=0.002359 B=0.000000 S=0.000000 (0.0, 0.0, 1.0, 0.072)
+
+	 -> Part[15] C  = 0.000814977, E  = 0.000577869, VS = 1384, VI = 0
+	 -> Part[16] C  = 0.00142535, E  = 0.000666805, VS = 1597, VI = 0
+		 [Regular sampling] Number of clipping planes 29
+
+			 Best  0026 T=0.000915 C=0.000915 B=0.000000 S=0.000000 (0.0, 0.0, 1.0, 0.056)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0002 T=0.000841 C=0.000841 B=0.000000 S=0.000000 (0.0, 0.0, 1.0, 0.057)
+
+	 -> Part[17] C  = 0.000582598, E  = 0.000345302, VS = 827, VI = 0
+	 -> Part[18] C  = 0.00171979, E  = 0.000534863, VS = 1281, VI = 0
+		 [Regular sampling] Number of clipping planes 21
+
+			 Best  0002 T=0.000681 C=0.000681 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.455)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0003 T=0.000658 C=0.000658 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.454)
+
+	 -> Part[19] C  = 0.00185197, E  = 0.00053027, VS = 1270, VI = 0
+		 [Regular sampling] Number of clipping planes 20
+
+			 Best  0015 T=0.000827 C=0.000827 B=0.000000 S=0.000000 (0.0, 0.0, 1.0, 0.127)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0005 T=0.000816 C=0.000816 B=0.000000 S=0.000000 (0.0, 0.0, 1.0, 0.126)
+
+	 -> Part[20] C  = 0.00941588, E  = 0.00100125, VS = 2398, VI = 0
+		 [Regular sampling] Number of clipping planes 34
+
+			 Best  0001 T=0.002047 C=0.002047 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.451)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0003 T=0.001961 C=0.001961 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.450)
+
+	 -> Part[21] C  = 0.00505023, E  = 0.00107891, VS = 2584, VI = 0
+		 [Regular sampling] Number of clipping planes 31
+
+			 Best  0027 T=0.001199 C=0.001157 B=0.000000 S=0.000042 (0.0, 0.0, 1.0, 0.057)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0003 T=0.001062 C=0.001020 B=0.000000 S=0.000042 (0.0, 0.0, 1.0, 0.057)
+
+	 -> Part[22] C  = 0.00203769, E  = 0.00055574, VS = 1331, VI = 0
+		 [Regular sampling] Number of clipping planes 21
+
+			 Best  0001 T=0.000813 C=0.000813 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.453)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0006 T=0.000752 C=0.000752 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.455)
+
+	 -> Part[23] C  = 0.00167753, E  = 0.00052359, VS = 1254, VI = 0
+		 [Regular sampling] Number of clipping planes 20
+
+			 Best  0016 T=0.000744 C=0.000744 B=0.000000 S=0.000000 (0.0, 0.0, 1.0, 0.119)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0004 T=0.000744 C=0.000744 B=0.000000 S=0.000000 (0.0, 0.0, 1.0, 0.119)
+
+	 -> Part[24] C  = 0.00932321, E  = 0.00102756, VS = 2461, VI = 0
+		 [Regular sampling] Number of clipping planes 35
+
+			 Best  0001 T=0.002170 C=0.002170 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.453)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0001 T=0.001662 C=0.001662 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.450)
+
+	 -> Part[25] C  = 0.00571438, E  = 0.00115365, VS = 2763, VI = 0
+		 [Regular sampling] Number of clipping planes 32
+
+			 Best  0026 T=0.001014 C=0.000966 B=0.000000 S=0.000048 (0.0, 0.0, 1.0, 0.056)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0005 T=0.000959 C=0.000911 B=0.000000 S=0.000048 (0.0, 0.0, 1.0, 0.055)
+
+	 -> Part[26] C  = 0.00398668, E  = 0.00397369, VS = 9517, VI = 0
+		 [Regular sampling] Number of clipping planes 61
+
+			 Best  0053 T=0.002125 C=0.002125 B=0.000000 S=0.000000 (0.0, 0.0, 1.0, 0.078)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0001 T=0.001971 C=0.001971 B=0.000000 S=0.000000 (0.0, 0.0, 1.0, 0.080)
+
+	 -> Part[27] C  = 0.00157726, E  = 0.00154029, VS = 3689, VI = 0
+		 [Regular sampling] Number of clipping planes 47
+
+			 Best  0021 T=0.001353 C=0.001352 B=0.000000 S=0.000001 (0.0, 1.0, 0.0, -0.229)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0000 T=0.001357 C=0.001356 B=0.000000 S=0.000001 (0.0, 1.0, 0.0, -0.226)
+
+	 -> Part[28] C  = 0.00179737, E  = 0.00139499, VS = 3341, VI = 0
+		 [Regular sampling] Number of clipping planes 96
+
+			 Best  0022 T=0.001172 C=0.001160 B=0.000000 S=0.000013 (0.0, 1.0, 0.0, -0.082)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0000 T=0.001262 C=0.001249 B=0.000000 S=0.000013 (0.0, 1.0, 0.0, -0.079)
+
+	 -> Part[29] C  = 0.00346218, E  = 0.0019954, VS = 4779, VI = 0
+		 [Regular sampling] Number of clipping planes 97
+
+			 Best  0025 T=0.002185 C=0.002170 B=0.000000 S=0.000014 (0.0, 1.0, 0.0, -0.090)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0004 T=0.002267 C=0.002252 B=0.000000 S=0.000014 (0.0, 1.0, 0.0, -0.090)
+
+	 -> Part[30] C  = 0.000494481, E  = 0.000453861, VS = 1087, VI = 0
+	 -> Part[31] C  = 0.000429789, E  = 0.000377452, VS = 904, VI = 0
+	 -> Part[32] C  = 0.00315712, E  = 0.00188643, VS = 4518, VI = 0
+		 [Regular sampling] Number of clipping planes 97
+
+			 Best  0022 T=0.001953 C=0.001942 B=0.000000 S=0.000011 (0.0, 1.0, 0.0, -0.079)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0006 T=0.002004 C=0.001993 B=0.000000 S=0.000011 (0.0, 1.0, 0.0, -0.081)
+
+	 -> Part[33] C  = 0.00284918, E  = 0.00190856, VS = 4571, VI = 0
+		 [Regular sampling] Number of clipping planes 97
+
+			 Best  0022 T=0.001807 C=0.001794 B=0.000000 S=0.000013 (0.0, 1.0, 0.0, -0.082)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0004 T=0.001884 C=0.001871 B=0.000000 S=0.000013 (0.0, 1.0, 0.0, -0.082)
+
+	 -> Part[34] C  = 0.000256077, E  = 0.000486429, VS = 1165, VI = 0
+	 -> Part[35] C  = 0.00387073, E  = 0.00480751, VS = 11514, VI = 0
+	 -> Part[36] C  = 0.000467527, E  = 0.000397912, VS = 953, VI = 0
+	 -> Part[37] C  = 0.000560997, E  = 0.000473068, VS = 1133, VI = 0
+	 -> Part[38] C  = 0.000536704, E  = 0.000658871, VS = 1578, VI = 0
+	 -> Part[39] C  = 0.000638063, E  = 0.000705218, VS = 1689, VI = 0
+	 -> Part[40] C  = 0.000422559, E  = 0.000410855, VS = 984, VI = 0
+	 -> Part[41] C  = 0.000891495, E  = 0.000801251, VS = 1919, VI = 0
+	 -> Part[42] C  = 0.000861825, E  = 0.000721084, VS = 1727, VI = 0
+	 -> Part[43] C  = 0.000766781, E  = 0.000675573, VS = 1618, VI = 0
+	 -> Part[44] C  = 0.000369155, E  = 0.000359081, VS = 860, VI = 0
+	 -> Part[45] C  = 0.000951179, E  = 0.000878078, VS = 2103, VI = 0
+	 Subdivision level 9
+	 -> Part[0] C  = 0.000342039, E  = 0.000184133, VS = 441, VI = 0
+	 -> Part[1] C  = 0.000613577, E  = 0.000293528, VS = 703, VI = 0
+	 -> Part[2] C  = 0.00045543, E  = 0.000450521, VS = 1079, VI = 0
+	 -> Part[3] C  = 0.000488989, E  = 0.000321503, VS = 770, VI = 0
+	 -> Part[4] C  = 0.000844351, E  = 0.000453861, VS = 1087, VI = 0
+	 -> Part[5] C  = 0.000314596, E  = 0.000173695, VS = 416, VI = 0
+	 -> Part[6] C  = 0.000433894, E  = 0.000290605, VS = 696, VI = 0
+	 -> Part[7] C  = 0.000755994, E  = 0.000362839, VS = 869, VI = 0
+	 -> Part[8] C  = 0.000129179, E  = 0.000105637, VS = 253, VI = 0
+	 -> Part[9] C  = 0.000544135, E  = 0.00028643, VS = 686, VI = 0
+	 -> Part[10] C  = 0.00188361, E  = 0.00101044, VS = 2420, VI = 0
+		 [Regular sampling] Number of clipping planes 27
+
+			 Best  0010 T=0.001056 C=0.001054 B=0.000000 S=0.000002 (0.0, 1.0, 0.0, 0.105)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0002 T=0.001063 C=0.001061 B=0.000000 S=0.000002 (0.0, 1.0, 0.0, 0.106)
+
+	 -> Part[11] C  = 0.000552698, E  = 0.000361168, VS = 865, VI = 0
+	 -> Part[12] C  = 0.000282439, E  = 0.000232985, VS = 558, VI = 0
+	 -> Part[13] C  = 0.000571279, E  = 0.00043382, VS = 1039, VI = 0
+	 -> Part[14] C  = 0.000359363, E  = 0.000295198, VS = 707, VI = 0
+	 -> Part[15] C  = 0.000299263, E  = 0.000239666, VS = 574, VI = 0
+	 -> Part[16] C  = 0.000454327, E  = 0.000290605, VS = 696, VI = 0
+	 -> Part[17] C  = 0.000379915, E  = 0.000239666, VS = 574, VI = 0
+	 -> Part[18] C  = 0.000975065, E  = 0.000573277, VS = 1373, VI = 0
+	 -> Part[19] C  = 0.000995536, E  = 0.000427974, VS = 1025, VI = 0
+	 -> Part[20] C  = 0.000453242, E  = 0.00075574, VS = 1810, VI = 0
+	 -> Part[21] C  = 0.000566505, E  = 0.000323173, VS = 774, VI = 0
+	 -> Part[22] C  = 0.000408423, E  = 0.000289352, VS = 693, VI = 0
+	 -> Part[23] C  = 0.000346806, E  = 0.000266388, VS = 638, VI = 0
+	 -> Part[24] C  = 0.00058998, E  = 0.000342379, VS = 820, VI = 0
+	 -> Part[25] C  = 0.000171658, E  = 0.000181211, VS = 434, VI = 0
+	 -> Part[26] C  = 0.000442292, E  = 0.00055407, VS = 1327, VI = 0
+	 -> Part[27] C  = 0.00122015, E  = 0.000473486, VS = 1134, VI = 0
+		 [Regular sampling] Number of clipping planes 18
+
+			 Best  0002 T=0.000549 C=0.000549 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.458)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0003 T=0.000546 C=0.000546 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.457)
+
+	 -> Part[28] C  = 7.27581e-08, E  = 0.000750729, VS = 1798, VI = 0
+	 -> Part[29] C  = 0.000911805, E  = 0.000402922, VS = 965, VI = 0
+	 -> Part[30] C  = 0.00197183, E  = 0.00188977, VS = 4526, VI = 0
+		 [Regular sampling] Number of clipping planes 53
+
+			 Best  0047 T=0.001706 C=0.001706 B=0.000000 S=0.000000 (0.0, 0.0, 1.0, 0.099)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0006 T=0.001705 C=0.001705 B=0.000000 S=0.000000 (0.0, 0.0, 1.0, 0.098)
+
+	 -> Part[31] C  = 3.85529e-17, E  = 0.00208392, VS = 4991, VI = 0
+	 -> Part[32] C  = 0.000978944, E  = 0.00106806, VS = 2558, VI = 0
+	 -> Part[33] C  = 0.000413649, E  = 0.000472233, VS = 1131, VI = 0
+	 -> Part[34] C  = 0.000321971, E  = 0.000334864, VS = 802, VI = 0
+	 -> Part[35] C  = 0.00104551, E  = 0.00106012, VS = 2539, VI = 0
+	 -> Part[36] C  = 0.000730103, E  = 0.000575782, VS = 1379, VI = 0
+	 -> Part[37] C  = 0.0017794, E  = 0.00141962, VS = 3400, VI = 0
+		 [Regular sampling] Number of clipping planes 70
+
+			 Best  0001 T=0.001358 C=0.001358 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.460)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0004 T=0.001358 C=0.001358 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.460)
+
+	 -> Part[38] C  = 0.000561229, E  = 0.000485177, VS = 1162, VI = 0
+	 -> Part[39] C  = 0.00162651, E  = 0.00140125, VS = 3356, VI = 0
+		 [Regular sampling] Number of clipping planes 73
+
+			 Best  0001 T=0.001392 C=0.001392 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.470)
+
+		 [Refining] Number of clipping planes 9
+
+			 Best  0005 T=0.001390 C=0.001390 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.471)
+
+	 -> Part[40] C  = 0.000563317, E  = 0.000510229, VS = 1222, VI = 0
+	 -> Part[41] C  = 0.00151763, E  = 0.00139833, VS = 3349, VI = 0
+		 [Regular sampling] Number of clipping planes 72
+
+			 Best  0001 T=0.001254 C=0.001254 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.480)
+
+		 [Refining] Number of clipping planes 7
+
+			 Best  0003 T=0.001194 C=0.001194 B=0.000000 S=0.000000 (1.0, 0.0, 0.0, -0.479)
+
+	 Subdivision level 10
+	 -> Part[0] C  = 0.000367257, E  = 0.000299791, VS = 718, VI = 0
+	 -> Part[1] C  = 0.000768773, E  = 0.000710646, VS = 1702, VI = 0
+	 -> Part[2] C  = 0.000258407, E  = 0.000222547, VS = 533, VI = 0
+	 -> Part[3] C  = 0.000289032, E  = 0.000250939, VS = 601, VI = 0
+	 -> Part[4] C  = 0.000572138, E  = 0.000643423, VS = 1541, VI = 0
+	 -> Part[5] C  = 0.00113569, E  = 0.00124634, VS = 2985, VI = 0
+	 -> Part[6] C  = 0.000676385, E  = 0.000729435, VS = 1747, VI = 0
+	 -> Part[7] C  = 0.000681489, E  = 0.000690187, VS = 1653, VI = 0
+	 -> Part[8] C  = 0.000718791, E  = 0.000717326, VS = 1718, VI = 0
+	 -> Part[9] C  = 0.000670381, E  = 0.000683924, VS = 1638, VI = 0
+	 -> Part[10] C  = 0.000633416, E  = 0.000707306, VS = 1694, VI = 0
+	 -> Part[11] C  = 0.000560915, E  = 0.000691022, VS = 1655, VI = 0
++ Generate 91 convex-hulls 
+	 time 10.651s
++ Merge Convex Hulls
+		 Merging (42, 41) 4.49091e-05
+
+		 Merging (45, 13) 8.11414e-05
+
+		 Merging (65, 57) 9.16441e-05
+
+		 Merging (38, 37) 0.000125431
+
+		 Merging (20, 18) 0.00015009
+
+		 Merging (81, 29) 0.00016064
+
+		 Merging (40, 39) 0.00016448
+
+		 Merging (12, 5) 0.000167124
+
+		 Merging (27, 23) 0.00016953
+
+		 Merging (38, 20) 0.000179492
+
+		 Merging (73, 72) 0.000185157
+
+		 Merging (70, 63) 0.000187476
+
+		 Merging (73, 22) 0.000189254
+
+		 Merging (11, 10) 0.000209707
+
+		 Merging (64, 56) 0.000232319
+
+		 Merging (40, 12) 0.000263286
+
+		 Merging (70, 24) 0.000279003
+
+		 Merging (25, 3) 0.000281364
+
+		 Merging (45, 42) 0.000322076
+
+		 Merging (51, 26) 0.000331344
+
+		 Merging (48, 18) 0.000333526
+
+		 Merging (44, 43) 0.000343743
+
+		 Merging (64, 57) 0.00034582
+
+		 Merging (67, 59) 0.000354038
+
+		 Merging (36, 35) 0.000374369
+
+		 Merging (58, 36) 0.000392639
+
+		 Merging (19, 10) 0.000408406
+
+		 Merging (14, 8) 0.000416093
+
+		 Merging (30, 27) 0.000416792
+
+		 Merging (44, 32) 0.000418091
+
+		 Merging (48, 40) 0.000426896
+
+	 time 0.453489s
++ Simplify 60 convex-hulls 
+		 Simplify CH[00000] 56 V, 108 T
+		 Simplify CH[00001] 48 V, 92 T
+		 Simplify CH[00002] 62 V, 120 T
+		 Simplify CH[00003] 73 V, 142 T
+		 Simplify CH[00004] 45 V, 86 T
+		 Simplify CH[00005] 41 V, 78 T
+		 Simplify CH[00006] 24 V, 44 T
+		 Simplify CH[00007] 31 V, 58 T
+		 Simplify CH[00008] 30 V, 56 T
+		 Simplify CH[00009] 37 V, 70 T
+		 Simplify CH[00010] 63 V, 122 T
+		 Simplify CH[00011] 50 V, 96 T
+		 Simplify CH[00012] 44 V, 84 T
+		 Simplify CH[00013] 71 V, 138 T
+		 Simplify CH[00014] 81 V, 158 T
+		 Simplify CH[00015] 41 V, 78 T
+		 Simplify CH[00016] 37 V, 70 T
+		 Simplify CH[00017] 36 V, 68 T
+		 Simplify CH[00018] 36 V, 68 T
+		 Simplify CH[00019] 30 V, 56 T
+		 Simplify CH[00020] 62 V, 120 T
+		 Simplify CH[00021] 42 V, 80 T
+		 Simplify CH[00022] 58 V, 112 T
+		 Simplify CH[00023] 42 V, 80 T
+		 Simplify CH[00024] 63 V, 122 T
+		 Simplify CH[00025] 60 V, 116 T
+		 Simplify CH[00026] 46 V, 88 T
+		 Simplify CH[00027] 52 V, 100 T
+		 Simplify CH[00028] 68 V, 132 T
+		 Simplify CH[00029] 57 V, 110 T
+		 Simplify CH[00030] 21 V, 38 T
+		 Simplify CH[00031] 32 V, 60 T
+		 Simplify CH[00032] 55 V, 106 T
+		 Simplify CH[00033] 45 V, 86 T
+		 Simplify CH[00034] 44 V, 84 T
+		 Simplify CH[00035] 75 V, 146 T
+		 Simplify CH[00036] 76 V, 148 T
+		 Simplify CH[00037] 51 V, 98 T
+		 Simplify CH[00038] 67 V, 130 T
+		 Simplify CH[00039] 50 V, 96 T
+		 Simplify CH[00040] 67 V, 130 T
+		 Simplify CH[00041] 68 V, 132 T
+		 Simplify CH[00042] 60 V, 116 T
+		 Simplify CH[00043] 72 V, 140 T
+		 Simplify CH[00044] 49 V, 94 T
+		 Simplify CH[00045] 31 V, 58 T
+		 Simplify CH[00046] 56 V, 108 T
+		 Simplify CH[00047] 60 V, 116 T
+		 Simplify CH[00048] 31 V, 58 T
+		 Simplify CH[00049] 55 V, 106 T
+		 Simplify CH[00050] 39 V, 74 T
+		 Simplify CH[00051] 8 V, 12 T
+		 Simplify CH[00052] 34 V, 64 T
+		 Simplify CH[00053] 50 V, 96 T
+		 Simplify CH[00054] 48 V, 92 T
+		 Simplify CH[00055] 72 V, 140 T
+		 Simplify CH[00056] 48 V, 92 T
+		 Simplify CH[00057] 77 V, 150 T
+		 Simplify CH[00058] 58 V, 112 T
+		 Simplify CH[00059] 42 V, 80 T
+	 time 0.00294385s
++ Generate output: 60 convex-hulls 
+	 CH[00000] 10 V, 16 T
+	 CH[00001] 15 V, 26 T
+	 CH[00002] 14 V, 24 T
+	 CH[00003] 16 V, 28 T
+	 CH[00004] 11 V, 18 T
+	 CH[00005] 14 V, 24 T
+	 CH[00006] 10 V, 16 T
+	 CH[00007] 10 V, 16 T
+	 CH[00008] 15 V, 26 T
+	 CH[00009] 11 V, 18 T
+	 CH[00010] 16 V, 28 T
+	 CH[00011] 14 V, 24 T
+	 CH[00012] 15 V, 26 T
+	 CH[00013] 17 V, 30 T
+	 CH[00014] 20 V, 36 T
+	 CH[00015] 16 V, 28 T
+	 CH[00016] 13 V, 22 T
+	 CH[00017] 13 V, 22 T
+	 CH[00018] 15 V, 26 T
+	 CH[00019] 10 V, 16 T
+	 CH[00020] 18 V, 32 T
+	 CH[00021] 12 V, 20 T
+	 CH[00022] 16 V, 28 T
+	 CH[00023] 15 V, 26 T
+	 CH[00024] 17 V, 30 T
+	 CH[00025] 14 V, 24 T
+	 CH[00026] 17 V, 30 T
+	 CH[00027] 18 V, 32 T
+	 CH[00028] 13 V, 22 T
+	 CH[00029] 17 V, 30 T
+	 CH[00030] 12 V, 20 T
+	 CH[00031] 11 V, 18 T
+	 CH[00032] 19 V, 34 T
+	 CH[00033] 14 V, 24 T
+	 CH[00034] 14 V, 24 T
+	 CH[00035] 18 V, 32 T
+	 CH[00036] 20 V, 36 T
+	 CH[00037] 17 V, 30 T
+	 CH[00038] 15 V, 26 T
+	 CH[00039] 17 V, 30 T
+	 CH[00040] 17 V, 30 T
+	 CH[00041] 18 V, 32 T
+	 CH[00042] 18 V, 32 T
+	 CH[00043] 15 V, 26 T
+	 CH[00044] 14 V, 24 T
+	 CH[00045] 14 V, 24 T
+	 CH[00046] 13 V, 22 T
+	 CH[00047] 13 V, 22 T
+	 CH[00048] 15 V, 26 T
+	 CH[00049] 15 V, 26 T
+	 CH[00050] 14 V, 24 T
+	 CH[00051] 8 V, 12 T
+	 CH[00052] 11 V, 18 T
+	 CH[00053] 13 V, 22 T
+	 CH[00054] 12 V, 20 T
+	 CH[00055] 14 V, 24 T
+	 CH[00056] 18 V, 32 T
+	 CH[00057] 20 V, 36 T
+	 CH[00058] 12 V, 20 T
+	 CH[00059] 16 V, 28 T

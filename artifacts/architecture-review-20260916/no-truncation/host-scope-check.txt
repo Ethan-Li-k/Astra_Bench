@@ -1,0 +1,2 @@
+主任务读到你比较current_boot_id与door15 scene_setup launch.boot_id不同。请在报告/公开status前确认二者同一主机/容器与执行位置：SIMPLE有ds4090/5090远端运行历史，跨host boot ID不同不能单独证明重启。补同host身份、当前btime和旧进程start_ticks/pid证据；分别核对UI旧pid及API本地writer存活，不能把door远端provenance套到本地API。用户网页急需真实卡点；请将证实事实/未核实推断及时写status.json给UI读取，不只保留在模型日志。禁止打断/重发。
+Queued message 01a0a987-a50d-7ce1-ab4a-094de4af534d for thread 01a0a94d-6143-74c0-80cd-03d0b61acaf0.

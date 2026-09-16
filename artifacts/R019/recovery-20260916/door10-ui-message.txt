@@ -1,0 +1,4 @@
+当前问题：SIMPLE视频页需显示真实10/10门里程碑和新增目录。
+总目标：沿用现有页面与账本。
+不可重犯：不把在途半成品视频当完整、不把启动计成功、不改在线控制。
+门20完整独立审计通过，door-campaign/ten-success-milestone.json=10/10，不开door21。PROGRESS/campaign_audit将同步。新目录artifacts/R019/xmovepicksim-campaign（G1WholebodyXMovePickSimToRealTeleop-v0）已独立首轮；请纳入既有目录发现，SimToReal仅名称，仍MuJoCo。xmovepick1为稳定性保护停止、2新reset在途；xmovebendpick1已物理预算结束等待模型复盘，不是仍执行物理。bendpicksim1在途。苹果8为H001004辅助审计成功，与自主分层；现有最新视频和success_review保留。更新目录列表即可，不新建服务或框架。

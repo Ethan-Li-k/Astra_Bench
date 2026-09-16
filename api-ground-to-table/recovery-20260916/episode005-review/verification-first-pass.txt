@@ -1,0 +1,2 @@
+首轮只读核验在watcher命令文本检查处停止：测试要求含supervision/watch.py，但真实命令为python3 -u watch.py，cwd为本分支supervision目录。
+已通过只读宿主cmdline/cwd核对；改为精确脚本参数与cwd双校验。该误判没有创建新进程、调用模型、改账本或修改原证据；此前的完整性/未知预留断言均已通过。

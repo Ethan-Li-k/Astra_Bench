@@ -1,0 +1,79 @@
+{
+  "schema": 2,
+  "snapshot_id": "astra-bench-20260916-final-core-ui",
+  "capture_at": "2026-09-16T13:37:44.508154+00:00",
+  "capture_finished_at": "2026-09-16T13:37:44.552300+00:00",
+  "original_capture_created_at": "2026-09-16T13:09:29.756469+00:00",
+  "previous_manifest_sha256": "c9c3f640adc9b333ca6f7572e8682f349a28084faff29a35699b0caf60071d94",
+  "source_root_label": "Existing RSI workspace",
+  "source_changed_during_snapshot": false,
+  "later_live_changes_outside_capture": true,
+  "capture_semantics": "Fixed source group stable across two complete reads; not an atomic filesystem snapshot. Other files inherited from the prior manifest.",
+  "core_group": [
+    "rsi",
+    "tools",
+    "tests",
+    "skills",
+    ".cursor/skills",
+    "actor_context"
+  ],
+  "development_paths": [
+    "artifacts/architecture-review-20260916/central-skill-publication/SOURCE_HINTS.md",
+    "artifacts/architecture-review-20260916/central-skill-publication/TASK.md",
+    "artifacts/architecture-review-20260916/central-skill-publication/build_sources.py",
+    "artifacts/architecture-review-20260916/central-skill-publication/candidate/tests/test_learning_horizon.py",
+    "artifacts/architecture-review-20260916/central-skill-publication/candidate/tests/test_release_runner.py",
+    "artifacts/architecture-review-20260916/central-skill-publication/candidate/tools/learn_grasp_skill.py",
+    "artifacts/architecture-review-20260916/central-skill-publication/candidate/tools/learn_simple_task.py",
+    "artifacts/architecture-review-20260916/central-skill-publication/progress.json",
+    "artifacts/architecture-review-20260916/central-skill-publication/source-hashes.json"
+  ],
+  "host_only_mapping_documents": [
+    "artifacts/architecture-review-20260916/six-task-focus/mapping-correction/FINAL.md",
+    "artifacts/architecture-review-20260916/six-task-focus/mapping-correction/INTEGRATION.md",
+    "artifacts/architecture-review-20260916/six-task-focus/mapping-correction/REVIEW.md",
+    "artifacts/architecture-review-20260916/six-task-focus/mapping-correction/experience-map.json",
+    "artifacts/architecture-review-20260916/six-task-focus/mapping-correction/host-contracts.json",
+    "artifacts/architecture-review-20260916/six-task-focus/mapping-correction/result.json",
+    "artifacts/architecture-review-20260916/six-task-focus/mapping-correction/root-acceptance.json",
+    "artifacts/architecture-review-20260916/six-task-focus/mapping-correction/root-review-response.json"
+  ],
+  "UI_result_path": "human-feedback/dashboard-upgrade/six-task-page/result.json",
+  "UI_result_sha256": "21c1090224daff174fc721fb9a6180954f616fc603f8fc517b26b302b80bdc76",
+  "UI_deployed_at": "2026-09-16T13:16:02.213917+00:00",
+  "UI_hashes_match": true,
+  "UI_completion_gate": {
+    "path": "human-feedback/dashboard-upgrade/six-task-page/engineer.jsonl",
+    "bytes": 390028,
+    "mtime_ns": 1789564767483736327,
+    "protocol_events": [
+      "thread.started",
+      "turn.started",
+      "turn.completed"
+    ],
+    "turn_completed": true,
+    "raw_log_copied": false,
+    "ignored_non_JSON_diagnostic_line_count": 29,
+    "message_and_usage_fields_not_exported": true
+  },
+  "UI_source_version": "Completed six-task-page version; later benchmark-alignment changes are not included.",
+  "UI_retained_backup_root": "human-feedback/dashboard-upgrade/benchmark-alignment/backup",
+  "source_changed_since_UI_completion_receipt": true,
+  "UI_root_review_status": "resolved_in_actual_browser",
+  "backend": "MuJoCo; planning pauses simulation; no real-time or real-robot claim",
+  "GitHub_commit_status": "Defined by root publisher external receipt, not by this local capture",
+  "companion_manifest": "publication/astra-bench-20260916/manifest.json",
+  "excluded_types": [
+    "credentials",
+    "account/session directories",
+    "raw JSONL/logs",
+    "media/frames",
+    "weights/binary assets",
+    "installed environments/caches",
+    "nested git metadata",
+    "symlinks"
+  ],
+  "network_calls": 0,
+  "GitHub_writes": 0,
+  "uploaded": false
+}

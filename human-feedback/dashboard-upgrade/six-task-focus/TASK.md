@@ -1,0 +1,9 @@
+当前问题：用户现已明确暂停 IKEA 与地面搬运，并集中 SIMPLE 原始六项 benchmark；网页仍显示旧的运行/全91任务范围，容易误导。
+总目标：在现有网页做最小必要更新，让用户直接看清暂停、六项精确入口、已有历史证据与当前卡点；不运行机器人。
+不可重犯的错误：队列不等于ACK，PAUSE标记不等于进程停止，相关变体不混算原始六项成绩，历史成功不冒充新冻结测评；不新建框架、不改共享actor或环境。
+
+你是原UI唯一owner，本次继续已有辅助账号 Astra/xhigh 任务。先读 ref/USER_UPDATE_20260916_SIX_TASK_FOCUS.md 和 artifacts/architecture-review-20260916/six-task-focus/benchmark-mapping-evidence.json。新任务覆盖旧范围，不再宣传全91入口是当前目标。实际暂停已核验，固定来源 artifacts/architecture-review-20260916/six-task-focus/pause-status.json：all_requested_branches_paused=true、分支actor=false、暂停是user_requested_pause；IKEA原管理状态仍保留历史continue，必须以已核验暂停覆盖当前展示，原EOF/HTTP429仍可展开查看而非改原文件。原episode影像继续可看，零模型heartbeat不得渲染成物理在跑。用户暂停本身不产生人工求助案例。
+
+精确六项在原README表：XMovePick=G1WholebodyXMovePickTeleop-v0，BendPick=G1WholebodyBendPickMP-v0，Handover=G1WholebodyHandoverTeleop-v0，Mobile P&P=G1WholebodyLocomotionPickBetweenTablesTeleop-v0，Grasp=G1WholebodyTabletopGraspMP-v0，XMoveBendPick=G1WholebodyXMoveBendPickTeleop-v0（统一simple/前缀）。请在现有SIMPLE区域做简洁的六项目标/阶段/卡点/下一步视图或筛选，不另起新站。只按精确native_env_id及可核验审计匹配当前记录；XMovePick3 H001004反馈辅助明确，旧BendPickTeleop、BendPickSim、MobileCheezit与木块十次保留在历史/迁移任务，不能凑六项分数。无精确已运行来源显示未开始/待适配，勿根据名称猜测成功。原连续录像、当前帧、source时间、主动反馈入口照常工作，别重建旧六固定ID或删除其他历史任务。若SIMPLE主管发布明确six-task ACK/status优先消费有验证来源，缺失则显示已下发/待调度确认，不假装已加载skill。
+
+用现有UI测试结构写最小失败复现：1旧statecontinue但核验pause；2零模型heartbeat不物理运行；3BendPickTeleop/MobileCheezit不计MP/BetweenTables；4缺失精确任务显示未知未开始；5XMovePick辅助层保留。通过后只重启UI服务并在真实localhost浏览器验证，给result.json、截图、服务PID、证据路径。不得改原actor数据/回执、产生生产测试回答、队列消息、付费API或物理动作。允许必要UI接口只读刷新，长任务tmux+tee。不要无限等待机器人；页面变更验证完成就结束本轮。

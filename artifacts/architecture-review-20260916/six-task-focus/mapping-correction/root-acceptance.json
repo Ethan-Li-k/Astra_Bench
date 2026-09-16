@@ -1,0 +1,36 @@
+{
+  "at": "2026-09-16T13:06:41.596374+00:00",
+  "status": "static_mapping_corrections_accepted_for_publisher_review",
+  "supersedes_root_review": "../root-candidate-review.json applies to v1 only",
+  "checks": {
+    "grasp": {
+      "exact_entry": true,
+      "sha256": "55bc835b2075f3879d16e0b9e268294184fe2c738075cfc2d67f3dcc93d14c32",
+      "no_pending_user_mapping": true
+    },
+    "bendpick": {
+      "exact_entry": true,
+      "sha256": "56f066308983b4543a6a02eb51ec0bd71ae0b8e120085ac0c8526370ba965610"
+    },
+    "mobile": {
+      "exact_entry": true,
+      "sha256": "e7cea85909ac585baafe8ec54aec7fb88dc01c52f8f47874cac7fba673831c8d",
+      "no_continue_cheezit": true
+    },
+    "handover": {
+      "exact_entry": true,
+      "sha256": "58653a6268cf6c92fa9af5c11ce6931a15cab0130c22238a76444d04ca015aa9",
+      "right_left_and_required_placement": true
+    }
+  },
+  "reported_combined_caps": {
+    "words": 742,
+    "characters": 5638,
+    "non_whitespace": 4896
+  },
+  "reported_static_checks_passed": true,
+  "physical_benefit_verified": false,
+  "deployed": false,
+  "freeze_isolation_implemented": false,
+  "publisher_required": "Only select compatible task delta at natural boundary; preserve proven skills, source versions and independent semantic audit. MP compatibility and five-stable/frozen isolation remain publisher prerequisites."
+}

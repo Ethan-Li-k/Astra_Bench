@@ -1,0 +1,4 @@
+当前问题：后续原生HandoverSimToReal准则与任务语义存在具体缺口。
+总目标：SIMPLE所有可用任务真实验收，当前door20与三抓取任务继续。
+不可重犯：不把左手仅碰物体当右→左交接、不覆盖在线runner/在途、不扩大通用框架。
+请在自然边界做一个有界离线审查：artifacts/R019/recovery-20260916/handover-entry-contract-question.json给出了已读源码/hash及区别标准。该原生任务语言right→left，但成功只检测left_hand接触并累计reward，无右手先抓/离桌/释放条件。请用真实原生谓词离线fixture验证“桌面支撑+左手接触、无右手抓持”假阳性；若确认，提出仅该任务的最小显式完成合同候选/负例测试（原reward/资产不改），参照现有box placement连续性，不先发布。写域自选architecture-review下独立子目录，不碰当前公共控制器/runner/skill；SIMPLE owner负责后续自然边界集成与物理测评。不启动SIMPLE campaign/新通用agent，不查询API/额度，固定第二账号Astra/xhigh。这里是新具体验收问题，之前ACK回执保留。

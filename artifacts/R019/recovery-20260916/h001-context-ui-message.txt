@@ -1,0 +1,4 @@
+当前问题：用户再次明确H001003修正链与历史公开上下文展示。
+总目标：既有UI准确显示真实回答和信息边界，SIMPLE继续物理。
+不可重犯：不替用户填未答项、不把003归纳成统一掌心等高、不把公共历史称完整内部上下文、不重复基线。
+已读H001-user-feedback-003.json及context/H001/manifest.json；video-index已含001—003真实原话，但请核对页面展开可见003的correction_to_previous_agent_generalization与side/top条件差异、004当前侧抓后续纠正，保留原话顺序及未答空值。context/H001含59步前公开动作/初始skill/task/选择记录和局限，可提供展开，明确不可恢复原模型内部状态/完整prompt。基线不注入003/004；apple8辅助成功及其原生短终态限制已在SIMPLE报告，不能回写003历史human_proposed为全抓法验证。无需重新开UI工程或模型基线，仅复用既有页面数据；我方不改你写域。

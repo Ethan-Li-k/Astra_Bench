@@ -1,0 +1,235 @@
+<mujoco model="partnet_6f36520144753550f91663a74ccd2338">
+  <default>
+    <default class="robot">
+      <default class="visual">
+        <geom contype="0" conaffinity="0" group="2" />
+      </default>
+      <default class="collision">
+        <geom contype="1" conaffinity="1" group="3" density="0.0001" friction="0.01 0.001 0.0001" />
+      </default>
+    </default>
+
+    
+  </default>
+
+  <compiler angle="radian" meshdir="." balanceinertia="true" boundmass="0.001" boundinertia="0.000001"/>
+
+  <visual>
+    <global offwidth="3840" offheight="2160" />
+  </visual>
+
+  <worldbody>
+    <body name="base" childclass="robot" pos="0.000000 0.000000 0.178700">
+      <!-- <freejoint name="base"/> -->
+      <body name="link_16" quat="0.5 0.5 -0.5 -0.5">
+        <geom name="link_16_collision_0" type="mesh" mesh="collision_original-24_vhacd" class="collision" />
+        <geom name="link_16_collision_1" type="mesh" mesh="collision_original-5_vhacd" class="collision" />
+        <geom name="link_16_collision_2" type="mesh" mesh="collision_original-20_vhacd" class="collision" />
+        <geom name="link_16_collision_3" type="mesh" mesh="collision_original-6_vhacd" class="collision" />
+        <geom name="link_16_collision_4" type="mesh" mesh="collision_original-30_vhacd" class="collision" />
+        <geom name="link_16_collision_5" type="mesh" mesh="collision_original-31_vhacd" class="collision" />
+        <geom name="link_16_collision_6" type="mesh" mesh="collision_original-32_vhacd" class="collision" />
+        <geom name="link_16_visual_0" type="mesh" mesh="link_16_merged_link" material="original-24_material_0_0" class="visual" pos="0.000000 0.000000 0.000000" />
+        <geom name="link_16_visual_5" type="mesh" mesh="link_16_merged_link_1" material="original-31_material_0_0" class="visual" pos="0.000000 0.000000 0.000000" />
+        <body name="link_0" pos="0.002412 -0.342715 0.313055">
+          <joint name="joint_0" type="hinge" axis="0 1 0" />
+          <geom name="link_0_collision" pos="-0.002412 0.342715 -0.313055" type="mesh" mesh="collision_original-1_vhacd" class="collision" />
+          <geom name="link_0_visual" pos="-0.002412 0.342715 -0.313055" type="mesh" mesh="link_0_original-1" material="original-24_material_0_0" class="visual" />
+          <body name="link_1" pos="-0.002412 -0.050998 0.005321">
+            <joint name="joint_1" type="hinge" axis="1 0 0" />
+            <geom name="link_1_collision" pos="0.000000 0.393713 -0.318375" type="mesh" mesh="collision_original-13_vhacd" class="collision" />
+            <geom pos="0.000000 0.393713 -0.318375" type="mesh" class="visual" name="link_1_visual_0" mesh="link_1_original-13_0" material="original-13_material_1_0" />
+            <geom pos="0.000000 0.393713 -0.318375" type="mesh" class="visual" name="link_1_visual_1" mesh="link_1_original-13_1" material="original-24_material_0_0" />
+          </body>
+          <body name="link_2" pos="-0.002412 -0.050998 0.005321">
+            <joint name="joint_2" type="hinge" axis="1 0 0" />
+            <geom name="link_2_collision" pos="0.000000 0.393713 -0.318375" type="mesh" mesh="collision_original-22_vhacd" class="collision" />
+            <geom pos="0.000000 0.393713 -0.318375" type="mesh" class="visual" name="link_2_visual_0" mesh="link_2_original-22_0" material="original-13_material_1_0" />
+            <geom pos="0.000000 0.393713 -0.318375" type="mesh" class="visual" name="link_2_visual_1" mesh="link_2_original-22_1" material="original-24_material_0_0" />
+          </body>
+        </body>
+        <body name="link_3" pos="-0.237631 -0.340699 0.136593">
+          <joint name="joint_3" type="hinge" axis="0 1 0" />
+          <geom name="link_3_collision" pos="0.237631 0.340699 -0.136593" type="mesh" mesh="collision_original-3_vhacd" class="collision" />
+          <geom name="link_3_visual" pos="0.237631 0.340699 -0.136593" type="mesh" mesh="link_3_original-3" material="original-24_material_0_0" class="visual" />
+          <body name="link_4" pos="-0.022382 -0.053012 -0.051392">
+            <joint name="joint_4" type="hinge" axis="-0.31143727124422005 3.465755326456095e-05 -0.9502667124964487" />
+            <geom name="link_4_collision" pos="0.260014 0.393711 -0.085202" type="mesh" mesh="collision_original-23_vhacd" class="collision" />
+            <geom pos="0.260014 0.393711 -0.085202" type="mesh" class="visual" name="link_4_visual_0" mesh="link_4_original-23_0" material="original-13_material_1_0" />
+            <geom pos="0.260014 0.393711 -0.085202" type="mesh" class="visual" name="link_4_visual_1" mesh="link_4_original-23_1" material="original-24_material_0_0" />
+          </body>
+          <body name="link_5" pos="-0.022382 -0.053012 -0.051392">
+            <joint name="joint_5" type="hinge" axis="-0.31143727124422005 3.465755326456095e-05 -0.9502667124964487" />
+            <geom name="link_5_collision" pos="0.260014 0.393711 -0.085202" type="mesh" mesh="collision_original-18_vhacd" class="collision" />
+            <geom pos="0.260014 0.393711 -0.085202" type="mesh" class="visual" name="link_5_visual_0" mesh="link_5_original-18_0" material="original-13_material_1_0" />
+            <geom pos="0.260014 0.393711 -0.085202" type="mesh" class="visual" name="link_5_visual_1" mesh="link_5_original-18_1" material="original-24_material_0_0" />
+          </body>
+        </body>
+        <body name="link_6" pos="-0.146012 -0.339773 -0.141841">
+          <joint name="joint_6" type="hinge" axis="0 1 0" />
+          <geom name="link_6_collision" pos="0.146012 0.339773 0.141841" type="mesh" mesh="collision_original-10_vhacd" class="collision" />
+          <geom name="link_6_visual" pos="0.146012 0.339773 0.141841" type="mesh" mesh="link_6_original-10" material="original-24_material_0_0" class="visual" />
+          <body name="link_7" pos="0.022827 -0.053940 -0.026806">
+            <joint name="joint_7" type="hinge" axis="-0.8075151932136608 -5.378786135316403e-06 0.5898467705261876" />
+            <geom name="link_7_collision" pos="0.123185 0.393713 0.168647" type="mesh" mesh="collision_original-2_vhacd" class="collision" />
+            <geom pos="0.123185 0.393713 0.168647" type="mesh" class="visual" name="link_7_visual_0" mesh="link_7_original-2_0" material="original-13_material_1_0" />
+            <geom pos="0.123185 0.393713 0.168647" type="mesh" class="visual" name="link_7_visual_1" mesh="link_7_original-2_1" material="original-24_material_0_0" />
+          </body>
+          <body name="link_8" pos="0.022827 -0.053940 -0.026806">
+            <joint name="joint_8" type="hinge" axis="-0.8075151932136608 -5.378786135316403e-06 0.5898467705261876" />
+            <geom name="link_8_collision" pos="0.123185 0.393713 0.168647" type="mesh" mesh="collision_original-14_vhacd" class="collision" />
+            <geom pos="0.123185 0.393713 0.168647" type="mesh" class="visual" name="link_8_visual_0" mesh="link_8_original-14_0" material="original-13_material_1_0" />
+            <geom pos="0.123185 0.393713 0.168647" type="mesh" class="visual" name="link_8_visual_1" mesh="link_8_original-14_1" material="original-24_material_0_0" />
+          </body>
+        </body>
+        <body name="link_9" pos="0.151184 -0.415071 -0.138924">
+          <joint name="joint_9" type="hinge" axis="0 1 0" />
+          <geom name="link_9_collision" pos="-0.151184 0.415071 0.138924" type="mesh" mesh="collision_original-15_vhacd" class="collision" />
+          <geom name="link_9_visual" pos="-0.151184 0.415071 0.138924" type="mesh" mesh="link_9_original-15" material="original-24_material_0_0" class="visual" />
+          <body name="link_10" pos="-0.026094 0.021358 -0.034224">
+            <joint name="joint_10" type="hinge" axis="-0.8105932913436219 0 -0.5856095252202734" />
+            <geom name="link_10_collision" pos="-0.125090 0.393713 0.173148" type="mesh" mesh="collision_original-35_vhacd" class="collision" />
+            <geom pos="-0.125090 0.393713 0.173148" type="mesh" class="visual" name="link_10_visual_0" mesh="link_10_original-35_0" material="original-13_material_1_0" />
+            <geom pos="-0.125090 0.393713 0.173148" type="mesh" class="visual" name="link_10_visual_1" mesh="link_10_original-35_1" material="original-24_material_0_0" />
+          </body>
+          <body name="link_11" pos="-0.026094 0.021358 -0.034224">
+            <joint name="joint_11" type="hinge" axis="-0.8105932913436219 0 -0.5856095252202734" />
+            <geom name="link_11_collision" pos="-0.125090 0.393713 0.173148" type="mesh" mesh="collision_original-36_vhacd" class="collision" />
+            <geom pos="-0.125090 0.393713 0.173148" type="mesh" class="visual" name="link_11_visual_0" mesh="link_11_original-36_0" material="original-13_material_1_0" />
+            <geom pos="-0.125090 0.393713 0.173148" type="mesh" class="visual" name="link_11_visual_1" mesh="link_11_original-36_1" material="original-24_material_0_0" />
+          </body>
+        </body>
+        <body name="link_12" pos="0.239858 -0.342656 0.133830">
+          <joint name="joint_12" type="hinge" axis="0 1 0" />
+          <geom name="link_12_collision" pos="-0.239858 0.342656 -0.133830" type="mesh" mesh="collision_original-11_vhacd" class="collision" />
+          <geom name="link_12_visual" pos="-0.239858 0.342656 -0.133830" type="mesh" mesh="link_12_original-11" material="original-24_material_0_0" class="visual" />
+          <body name="link_13" pos="0.027914 -0.051062 -0.047554">
+            <joint name="joint_13" type="hinge" axis="0.3065887364620658 -6.41029691319091e-05 -0.951842078585205" />
+            <geom name="link_13_collision" pos="-0.267771 0.393718 -0.086276" type="mesh" mesh="collision_original-33_vhacd" class="collision" />
+            <geom pos="-0.267771 0.393718 -0.086276" type="mesh" class="visual" name="link_13_visual_0" mesh="link_13_original-33_0" material="original-13_material_1_0" />
+            <geom pos="-0.267771 0.393718 -0.086276" type="mesh" class="visual" name="link_13_visual_1" mesh="link_13_original-33_1" material="original-24_material_0_0" />
+          </body>
+          <body name="link_14" pos="0.027914 -0.051062 -0.047554">
+            <joint name="joint_14" type="hinge" axis="0.3065887364620658 -6.41029691319091e-05 -0.951842078585205" />
+            <geom name="link_14_collision" pos="-0.267771 0.393718 -0.086276" type="mesh" mesh="collision_original-34_vhacd" class="collision" />
+            <geom pos="-0.267771 0.393718 -0.086276" type="mesh" class="visual" name="link_14_visual_0" mesh="link_14_original-34_0" material="original-13_material_1_0" />
+            <geom pos="-0.267771 0.393718 -0.086276" type="mesh" class="visual" name="link_14_visual_1" mesh="link_14_original-34_1" material="original-24_material_0_0" />
+          </body>
+        </body>
+        <body name="link_15_helper" pos="0.003475 0.000000 0.059095">
+          <joint name="joint_17" type="slide" range="0.000000 0.050000" axis="0 -1 0" />
+          <inertial pos="0.000000 0.000000 0.000000" mass="0.01" diaginertia="0.0001 0.0001 0.0001" />      
+          <body name="link_15">   
+            <joint name="joint_15" type="hinge" axis="0 1 0" />
+            <geom name="link_15_collision_0" pos="-0.003475 0.000000 -0.059095" type="mesh" mesh="collision_original-19_vhacd" class="collision" />
+            <geom name="link_15_collision_1" pos="-0.003475 0.000000 -0.059095" type="mesh" mesh="collision_original-4_vhacd" class="collision" />
+            <geom name="link_15_collision_2" pos="-0.003475 0.000000 -0.059095" type="mesh" mesh="collision_original-26_vhacd" class="collision" />
+            <geom name="link_15_collision_3" pos="-0.003475 0.000000 -0.059095" type="mesh" mesh="collision_new-4_vhacd" class="collision" />
+            <geom name="link_15_collision_4" pos="-0.003475 0.000000 -0.059095" type="mesh" mesh="collision_new-5_vhacd" class="collision" />
+            <geom name="link_15_collision_5" pos="-0.003475 0.000000 -0.059095" type="mesh" mesh="collision_original-29_vhacd" class="collision" />
+            <geom name="link_15_collision_6" pos="-0.003475 0.000000 -0.059095" type="mesh" mesh="collision_original-16_vhacd" class="collision" />
+            <geom name="link_15_collision_7" pos="-0.003475 0.000000 -0.059095" type="mesh" mesh="collision_original-25_vhacd" class="collision" />
+            <geom name="link_15_collision_8" pos="-0.003475 0.000000 -0.059095" type="mesh" mesh="collision_new-2_vhacd" class="collision" />
+            <geom name="link_15_collision_9" pos="-0.003475 0.000000 -0.059095" type="mesh" mesh="collision_new-3_vhacd" class="collision" />
+            <geom name="link_15_collision_10" pos="-0.003475 0.000000 -0.059095" type="mesh" mesh="collision_original-8_vhacd" class="collision" />
+            <geom name="link_15_collision_11" pos="-0.003475 0.000000 -0.059095" type="mesh" mesh="collision_original-28_vhacd" class="collision" />
+            <geom name="link_15_collision_12" pos="-0.003475 0.000000 -0.059095" type="mesh" mesh="collision_original-21_vhacd" class="collision" />
+            <geom name="link_15_collision_13" pos="-0.003475 0.000000 -0.059095" type="mesh" mesh="collision_original-7_vhacd" class="collision" />
+            <geom name="link_15_collision_14" pos="-0.003475 0.000000 -0.059095" type="mesh" mesh="collision_original-12_vhacd" class="collision" />
+            <geom name="link_15_collision_15" pos="-0.003475 0.000000 -0.059095" type="mesh" mesh="collision_original-9_vhacd" class="collision" />
+            <geom name="link_15_collision_16" pos="-0.003475 0.000000 -0.059095" type="mesh" mesh="collision_original-17_vhacd" class="collision" />
+            <geom name="link_15_visual_1" pos="-0.003475 0.000000 -0.059095" type="mesh" mesh="link_15_original-4" material="original-4_material_0_0" class="visual" />
+            <geom name="link_15_visual_5" pos="0.000000 0.000000 0.000000" type="mesh" mesh="link_15_merged_link" material="original-24_material_0_0" class="visual" />
+            <geom pos="0.000000 0.000000 0.000000" type="mesh" class="visual" name="link_15_visual_0_0" mesh="link_15_merged_link" material="original-13_material_1_0" />
+            <geom pos="-0.003475 0.000000 -0.059095" type="mesh" class="visual" name="link_15_visual_0_1" mesh="link_15_original-19_1" material="original-19_material_0_0" />
+            <geom pos="0.000000 0.000000 0.000000" type="mesh" class="visual" name="link_15_visual_3_1" mesh="link_15_merged_link" material="original-31_material_0_0" />
+          </body>
+        </body>
+      </body>
+      <freejoint name="floating_base" />
+    </body>
+    <light pos="0.000000 0.000000 1.000000" dir="0 0 -1" directional="true" />
+    </worldbody>
+
+  <asset>
+    <material name="original-24_material_0_0" rgba="0 0 0 1" />
+    <material name="original-31_material_0_0" rgba="0.4117647058823529 0.4117647058823529 0.4117647058823529 1" />
+    <material name="original-4_material_0_0" texture="texture_0" />
+    <material name="original-13_material_1_0" rgba="0.8823529411764706 0.8823529411764706 0.7843137254901961 1" />
+    <material name="original-19_material_0_0" rgba="1 1 1 1" />
+    <mesh name="link_0_original-1" file="meshes/textured_objs/original-1.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_3_original-3" file="meshes/textured_objs/original-3.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_6_original-10" file="meshes/textured_objs/original-10.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_9_original-15" file="meshes/textured_objs/original-15.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_12_original-11" file="meshes/textured_objs/original-11.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_15_original-4" file="meshes/textured_objs/original-4.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-24_vhacd" file="meshes/textured_objs/original-24_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-5_vhacd" file="meshes/textured_objs/original-5_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-20_vhacd" file="meshes/textured_objs/original-20_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-6_vhacd" file="meshes/textured_objs/original-6_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-30_vhacd" file="meshes/textured_objs/original-30_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-31_vhacd" file="meshes/textured_objs/original-31_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-32_vhacd" file="meshes/textured_objs/original-32_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-1_vhacd" file="meshes/textured_objs/original-1_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-13_vhacd" file="meshes/textured_objs/original-13_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-22_vhacd" file="meshes/textured_objs/original-22_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-3_vhacd" file="meshes/textured_objs/original-3_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-23_vhacd" file="meshes/textured_objs/original-23_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-18_vhacd" file="meshes/textured_objs/original-18_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-10_vhacd" file="meshes/textured_objs/original-10_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-2_vhacd" file="meshes/textured_objs/original-2_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-14_vhacd" file="meshes/textured_objs/original-14_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-15_vhacd" file="meshes/textured_objs/original-15_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-35_vhacd" file="meshes/textured_objs/original-35_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-36_vhacd" file="meshes/textured_objs/original-36_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-11_vhacd" file="meshes/textured_objs/original-11_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-33_vhacd" file="meshes/textured_objs/original-33_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-34_vhacd" file="meshes/textured_objs/original-34_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-19_vhacd" file="meshes/textured_objs/original-19_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-4_vhacd" file="meshes/textured_objs/original-4_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-26_vhacd" file="meshes/textured_objs/original-26_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_new-4_vhacd" file="meshes/textured_objs/new-4_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_new-5_vhacd" file="meshes/textured_objs/new-5_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-29_vhacd" file="meshes/textured_objs/original-29_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-16_vhacd" file="meshes/textured_objs/original-16_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-25_vhacd" file="meshes/textured_objs/original-25_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_new-2_vhacd" file="meshes/textured_objs/new-2_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_new-3_vhacd" file="meshes/textured_objs/new-3_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-8_vhacd" file="meshes/textured_objs/original-8_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-28_vhacd" file="meshes/textured_objs/original-28_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-21_vhacd" file="meshes/textured_objs/original-21_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-7_vhacd" file="meshes/textured_objs/original-7_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-12_vhacd" file="meshes/textured_objs/original-12_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-9_vhacd" file="meshes/textured_objs/original-9_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="collision_original-17_vhacd" file="meshes/textured_objs/original-17_vhacd.stl" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_1_original-13_0" file="meshes/textured_objs/original-13/original-13_0.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_1_original-13_1" file="meshes/textured_objs/original-13/original-13_1.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_2_original-22_0" file="meshes/textured_objs/original-22/original-22_0.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_2_original-22_1" file="meshes/textured_objs/original-22/original-22_1.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_4_original-23_0" file="meshes/textured_objs/original-23/original-23_0.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_4_original-23_1" file="meshes/textured_objs/original-23/original-23_1.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_5_original-18_0" file="meshes/textured_objs/original-18/original-18_0.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_5_original-18_1" file="meshes/textured_objs/original-18/original-18_1.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_7_original-2_0" file="meshes/textured_objs/original-2/original-2_0.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_7_original-2_1" file="meshes/textured_objs/original-2/original-2_1.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_8_original-14_0" file="meshes/textured_objs/original-14/original-14_0.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_8_original-14_1" file="meshes/textured_objs/original-14/original-14_1.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_10_original-35_0" file="meshes/textured_objs/original-35/original-35_0.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_10_original-35_1" file="meshes/textured_objs/original-35/original-35_1.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_11_original-36_0" file="meshes/textured_objs/original-36/original-36_0.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_11_original-36_1" file="meshes/textured_objs/original-36/original-36_1.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_13_original-33_0" file="meshes/textured_objs/original-33/original-33_0.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_13_original-33_1" file="meshes/textured_objs/original-33/original-33_1.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_14_original-34_0" file="meshes/textured_objs/original-34/original-34_0.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_14_original-34_1" file="meshes/textured_objs/original-34/original-34_1.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_15_original-19_1" file="meshes/textured_objs/original-19/original-19_1.obj" scale="0.500000 0.500000 0.500000" />
+    <texture type="2d" name="texture_0" file="../images/texture_0.png" />
+    <mesh name="link_16_merged_link" file="meshes/textured_objs/link_16_merged_link.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_16_merged_link_1" file="meshes/textured_objs/link_16_merged_link_1.obj" scale="0.500000 0.500000 0.500000" />
+    <mesh name="link_15_merged_link" file="meshes/textured_objs/link_15_merged_link.obj" scale="0.500000 0.500000 0.500000" />
+    </asset>
+
+  <visual>
+    <rgba haze="0.15 0.25 0.35 1" />
+  </visual>
+</mujoco>

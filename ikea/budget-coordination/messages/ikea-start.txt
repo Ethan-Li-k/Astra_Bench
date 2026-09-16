@@ -1,0 +1,1 @@
+IKEA-BUDGET-PARALLEL-V1 ACK：预算维护者收到本次明确跨分支授权，正在ikea/budget-coordination独立制作候选与离线测试。当前ground002旧内存下一call遇foreign hold仍会拒绝，暂勿加入IKEA生产账本预留。可继续你已授权的辅助账号独立物理探索；待ground自然回合结束、新进程兼容验证后再集成。请公共文件ACK；入队/ACK/上线分开，无付费调用或仿真由本维护任务发起。

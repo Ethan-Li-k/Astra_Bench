@@ -1,0 +1,40 @@
+source 28 closure {'left': 0.0, 'right': 0.0} finger angles [-0.054 -0.042 -0.054 -0.042  0.     0.021  0.02 ]
+left_wrist_yaw_link0 xyz [-0.331  0.042  0.873] [-0.256  0.116  0.927] gap 0.0386
+left_wrist_yaw_link1 xyz [-0.281 -0.014  0.869] [-0.175  0.085  0.917] gap 0.02
+left_hand_thumb_0_link0 xyz [-0.264  0.037  0.865] [-0.233  0.066  0.897] gap 0.0268
+left_hand_thumb_1_link0 xyz [-0.272  0.04   0.828] [-0.241  0.069  0.861] gap 0.0168
+left_hand_thumb_2_link0 xyz [-0.273  0.04   0.779] [-0.246  0.07   0.838] gap 0.0281
+left_hand_middle_0_link0 xyz [-0.2    0.007  0.864] [-0.134  0.061  0.896] gap 0.008
+left_hand_middle_1_link0 xyz [-0.161 -0.009  0.861] [-0.104  0.038  0.884] gap 0.0002
+left_hand_index_0_link0 xyz [-0.23  -0.042  0.866] [-0.164  0.013  0.898] gap 0.0223
+left_hand_index_1_link0 xyz [-0.191 -0.058  0.863] [-0.134 -0.01   0.886] gap 0.0145
+source 29 closure {'left': 0.15, 'right': 0.0} finger angles [-0.141 -0.147 -0.141 -0.147  0.     0.112  0.199]
+left_wrist_yaw_link0 xyz [-0.331  0.042  0.873] [-0.256  0.116  0.927] gap 0.0386
+left_wrist_yaw_link1 xyz [-0.281 -0.014  0.869] [-0.175  0.085  0.917] gap 0.02
+left_hand_thumb_0_link0 xyz [-0.264  0.037  0.865] [-0.233  0.066  0.897] gap 0.0268
+left_hand_thumb_1_link0 xyz [-0.269  0.039  0.828] [-0.24   0.067  0.86 ] gap 0.0152
+left_hand_thumb_2_link0 xyz [-0.267  0.036  0.778] [-0.239  0.067  0.838] gap 0.0245
+left_hand_middle_0_link0 xyz [-0.2    0.007  0.86 ] [-0.134  0.061  0.894] gap 0.0052
+left_hand_middle_1_link0 xyz [-0.162 -0.008  0.85 ] [-0.107  0.038  0.88 ] gap -0.0106
+left_hand_index_0_link0 xyz [-0.231 -0.042  0.863] [-0.164  0.013  0.896] gap 0.0195
+left_hand_index_1_link0 xyz [-0.192 -0.056  0.852] [-0.137 -0.01   0.882] gap 0.0037
+source 30 closure {'left': 0.25, 'right': 0.0} finger angles [-0.251 -0.316 -0.319 -0.346 -0.     0.207  0.368]
+left_wrist_yaw_link0 xyz [-0.331  0.042  0.873] [-0.256  0.116  0.927] gap 0.0386
+left_wrist_yaw_link1 xyz [-0.281 -0.014  0.869] [-0.175  0.085  0.917] gap 0.02
+left_hand_thumb_0_link0 xyz [-0.264  0.037  0.865] [-0.233  0.066  0.897] gap 0.0268
+left_hand_thumb_1_link0 xyz [-0.266  0.037  0.828] [-0.238  0.066  0.86 ] gap 0.0135
+left_hand_thumb_2_link0 xyz [-0.263  0.031  0.781] [-0.229  0.064  0.838] gap 0.0164
+left_hand_middle_0_link0 xyz [-0.2    0.008  0.854] [-0.136  0.061  0.894] gap 0.0001
+left_hand_middle_1_link0 xyz [-0.165 -0.002  0.828] [-0.119  0.04   0.873] gap -0.0299
+left_hand_index_0_link0 xyz [-0.23  -0.041  0.859] [-0.165  0.013  0.896] gap 0.0162
+left_hand_index_1_link0 xyz [-0.194 -0.053  0.836] [-0.145 -0.009  0.877] gap -0.0102
+source 33 closure {'left': 0.35, 'right': 0.0} finger angles [-0.324 -0.41  -0.477 -0.523  0.002  0.197  0.478]
+left_wrist_yaw_link0 xyz [-0.331  0.042  0.873] [-0.256  0.116  0.927] gap 0.0386
+left_wrist_yaw_link1 xyz [-0.281 -0.014  0.869] [-0.175  0.085  0.917] gap 0.02
+left_hand_thumb_0_link0 xyz [-0.264  0.037  0.865] [-0.233  0.066  0.897] gap 0.0268
+left_hand_thumb_1_link0 xyz [-0.266  0.037  0.828] [-0.238  0.066  0.86 ] gap 0.0137
+left_hand_thumb_2_link0 xyz [-0.264  0.029  0.783] [-0.226  0.064  0.838] gap 0.014
+left_hand_middle_0_link0 xyz [-0.2    0.009  0.85 ] [-0.139  0.061  0.894] gap -0.0049
+left_hand_middle_1_link0 xyz [-0.168  0.005  0.813] [-0.133  0.041  0.866] gap -0.0294
+left_hand_index_0_link0 xyz [-0.231 -0.041  0.856] [-0.166  0.013  0.896] gap 0.0143
+left_hand_index_1_link0 xyz [-0.195 -0.05   0.828] [-0.151 -0.009  0.874] gap -0.0175

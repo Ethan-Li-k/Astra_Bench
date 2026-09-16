@@ -1,0 +1,81 @@
+{
+  "version": "six-task-mapping-v2",
+  "candidate_only": true,
+  "sources": [
+    {
+      "id": "table-cube-public",
+      "public_path": "/home/galbot/lizekai/RSI/artifacts/R018/campaign/episode-0438/rollout",
+      "sha256": null,
+      "applicability": "acquisition verification after current visual adaptation",
+      "when_not_to_use": "Historical acquisition method only: not canonical TabletopGraspMP credit or compatible native asset/actuators.",
+      "human_feedback_derived": false,
+      "selection_required": "publisher registers exact public paths; actor must explicitly select compatible sources"
+    },
+    {
+      "id": "door18-public",
+      "public_path": "/home/galbot/lizekai/RSI/artifacts/R019/door-campaign/memory/versions/0017.md",
+      "sha256": "ae82e3f92849c895970c0fb820f7696d7a147bc2a6c93926eeae5eea9a0bf5b2",
+      "applicability": "empty-hand reach unloading, observed support and incremental contact",
+      "when_not_to_use": "No door pose/force/hinge transfer; no carrying or generic gait.",
+      "human_feedback_derived": false,
+      "selection_required": "publisher registers exact public paths; actor must explicitly select compatible sources"
+    },
+    {
+      "id": "bendpick6-public",
+      "public_path": "/home/galbot/lizekai/RSI/artifacts/R019/bendpick-campaign/memory/versions/0006.md",
+      "sha256": "a6d9fd159062efacacc598a09e438a1151669691cadd4bef95381fecdff64152",
+      "applicability": "visible enclosure, small lift and independent hold",
+      "when_not_to_use": "Teleop source only: not MP scores, native asset/control equivalence, geometry replay or terminal dwell.",
+      "human_feedback_derived": false,
+      "selection_required": "publisher registers exact public paths; actor must explicitly select compatible sources"
+    },
+    {
+      "id": "xmovepick3-public",
+      "public_path": "/home/galbot/lizekai/RSI/artifacts/R019/xmovepick-campaign/memory/versions/0003.md",
+      "sha256": "1e3e446f8330b4bba1d60483476614b065a9fd27b213a2349d15459a312510ee",
+      "applicability": "apple enclosure and retention after real approach",
+      "when_not_to_use": "H001004-derived; keep human feedback tier; not loaded walking.",
+      "human_feedback_derived": true,
+      "selection_required": "publisher registers exact public paths; actor must explicitly select compatible sources"
+    },
+    {
+      "id": "xmovepicksim1-public",
+      "public_path": "/home/galbot/lizekai/RSI/artifacts/R019/xmovepicksim-campaign/memory/versions/0001.md",
+      "sha256": "9243384c90379c159f82607f3779b4f86649835fe2b370913364e4f161a29bee",
+      "applicability": "measured-table box acquisition and separate retention hold",
+      "when_not_to_use": "SimToReal source only: not canonical XMovePick credit, loaded walking or target replay.",
+      "human_feedback_derived": false,
+      "selection_required": "publisher registers exact public paths; actor must explicitly select compatible sources"
+    },
+    {
+      "id": "xmovebendpick1-counterexample",
+      "public_path": "/home/galbot/lizekai/RSI/artifacts/R019/xmovebendpick-campaign/memory/versions/0001.md",
+      "sha256": "755a6ded216f675ea50882c79479e6a172d581d5ffbfa362f32e37691dc4a692",
+      "applicability": "open-hand reach/attitude/enclosure failures",
+      "when_not_to_use": "No closed-grasp or friction conclusion from this open-hand attempt.",
+      "human_feedback_derived": false,
+      "selection_required": "publisher registers exact public paths; actor must explicitly select compatible sources"
+    },
+    {
+      "id": "bendpicksim1-counterexample",
+      "public_path": "/home/galbot/lizekai/RSI/artifacts/R019/bendpicksim-campaign/memory/versions/0001.md",
+      "sha256": "dc781d16dee03e8f9b41149885b0dd447fc7b698b5bfe0a89671d48d63e4718b",
+      "applicability": "calculation review, target relocalization and failed lift/hold probes",
+      "when_not_to_use": "Within-reset probes are not independent terminal failures.",
+      "human_feedback_derived": false,
+      "selection_required": "publisher registers exact public paths; actor must explicitly select compatible sources"
+    },
+    {
+      "id": "boxplace4-public",
+      "public_path": "/home/galbot/lizekai/RSI/artifacts/R019/boxplace-campaign/memory/versions/0004.md",
+      "sha256": "6b45019f7179f7c71c28c1ede5be6f68c58d31ed63d7f11cda340ddcdc4cfc38",
+      "applicability": "retained stationary transport and controlled release",
+      "when_not_to_use": "Not evidence of carried locomotion or native unmodified criterion.",
+      "human_feedback_derived": false,
+      "selection_required": "publisher registers exact public paths; actor must explicitly select compatible sources"
+    }
+  ],
+  "note": "Method-level sources only. Audited success is reviewed outside actor and does not make a source universally applicable.",
+  "supersedes": "six-task-focus-v1 candidate mapping only; raw histories unchanged",
+  "selection_and_freeze": "Publisher allowlists exact public files, not entire directories. Before stability lock source versions/content hashes and retrieval rules; newly written lessons are not readable until a new learning candidate. Human feedback provenance is preserved. Audit-rejected/unreviewed sources are never represented as audited successful experience."
+}

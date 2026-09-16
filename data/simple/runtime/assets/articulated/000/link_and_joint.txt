@@ -1,0 +1,40 @@
+links: 
+base
+link_0
+link_1
+link_2
+link_3
+link_4
+link_5
+link_6
+link_7
+link_8
+link_9
+link_10
+link_11
+link_12
+link_13
+link_14
+link_15
+link_16
+link_15_helper
+
+joints: 
+joint_name: joint_0 joint_type: continuous parent_link: link_16 child_link: link_0
+joint_name: joint_1 joint_type: continuous parent_link: link_0 child_link: link_1
+joint_name: joint_2 joint_type: continuous parent_link: link_0 child_link: link_2
+joint_name: joint_3 joint_type: continuous parent_link: link_16 child_link: link_3
+joint_name: joint_4 joint_type: continuous parent_link: link_3 child_link: link_4
+joint_name: joint_5 joint_type: continuous parent_link: link_3 child_link: link_5
+joint_name: joint_6 joint_type: continuous parent_link: link_16 child_link: link_6
+joint_name: joint_7 joint_type: continuous parent_link: link_6 child_link: link_7
+joint_name: joint_8 joint_type: continuous parent_link: link_6 child_link: link_8
+joint_name: joint_9 joint_type: continuous parent_link: link_16 child_link: link_9
+joint_name: joint_10 joint_type: continuous parent_link: link_9 child_link: link_10
+joint_name: joint_11 joint_type: continuous parent_link: link_9 child_link: link_11
+joint_name: joint_12 joint_type: continuous parent_link: link_16 child_link: link_12
+joint_name: joint_13 joint_type: continuous parent_link: link_12 child_link: link_13
+joint_name: joint_14 joint_type: continuous parent_link: link_12 child_link: link_14
+joint_name: joint_15 joint_type: continuous parent_link: link_15_helper child_link: link_15
+joint_name: joint_16 joint_type: fixed parent_link: base child_link: link_16
+joint_name: joint_17 joint_type: prismatic parent_link: link_16 child_link: link_15_helper

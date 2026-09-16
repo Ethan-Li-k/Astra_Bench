@@ -1,0 +1,132 @@
+{
+  "schema": 1,
+  "title": "RSI 视频与进展",
+  "mode": "read_only",
+  "videos": [
+    {
+      "id": "simple-door-0008",
+      "title": "SIMPLE 推门 · episode-0008",
+      "source": "artifacts/R019/door-campaign/episode-0008/video/episode.mp4",
+      "kind": "continuous_physics_recording",
+      "view": "完整双画面物理录像，可含额外外部诊断视角；不能将整幅画面视作策略同信息输入。",
+      "timing": "完整录像 66.12 秒；25 fps。按模拟记录播放，不是模型推理的墙钟耗时。",
+      "result_note": "进展录像，不据此声明推门成功。",
+      "provenance_basis": "用户指定的完整物理录像；ffprobe核对时长、尺寸与帧数。",
+      "url": "/videos/simple-door-0008.mp4",
+      "sha256": "a9ff1d149cf7638aca72fe36205b4296a1218021144219a07a54dadc1307e18e",
+      "size_bytes": 4571469,
+      "duration_s": 66.12,
+      "width": 1280,
+      "height": 424,
+      "fps": "25/1",
+      "frames": 1653
+    },
+    {
+      "id": "h001-closure-lift",
+      "title": "H001 · 新动力学基线的闭合 / 抬腕片段",
+      "source": "human-feedback/reproductions/H001/evidence/closure-lift-head-left.mp4",
+      "kind": "continuous_excerpt_of_new_physics_baseline",
+      "view": "head_stereo_left 头部左目，保留该相机完整640×360画幅；从合成录像提取，无标注或特权叠层。",
+      "timing": "13.84秒片段；模拟时间205.925–219.765秒，对应闭合/抬腕阶段。来自新物理 attempt-002；提取片段不是额外一次物理尝试。",
+      "result_note": "旧动作基线已复现失败；不是修正规则成功，根因仍未确认。",
+      "provenance_basis": "human-feedback/reproductions/H001/evidence/video-provenance.json",
+      "url": "/videos/h001-closure-lift.mp4",
+      "sha256": "9e331f66d96f0b606fa6c9aeaf5ca8c7a7b6f4df792331749056a5f48086fe32",
+      "size_bytes": 1190178,
+      "duration_s": 13.84,
+      "width": 640,
+      "height": 360,
+      "fps": "25/1",
+      "frames": 346
+    },
+    {
+      "id": "f001-baseline",
+      "title": "F001 · 地面搬运旧动作基线",
+      "source": "api-ground-to-table/reproductions/F001-baseline-001/video/episode.mp4",
+      "kind": "continuous_physics_baseline_recording",
+      "view": "左：track 外部诊断相机（原actor不可见）；右：head_cam 头部RGB。按协作分支录像类与F001公开说明核对。",
+      "timing": "7.48秒连续物理录像，25 fps；是独立执行的旧动作诊断基线，不是actor-observations.mp4精选帧序列。",
+      "result_note": "已有用户反馈已保留；固定旧动作基线不计作新增独立探索失败，也不计成功。",
+      "provenance_basis": "api-ground-to-table/cases/F001/submission.json；codex-account-2/workspace/ground-to-table/rsi/episode_video.py",
+      "url": "/videos/f001-baseline.mp4",
+      "sha256": "620a6b66d371de0b19c7c4088ae632d9e97a23b4cb44b35a55dc0fb65a6bd0d1",
+      "size_bytes": 487207,
+      "duration_s": 7.48,
+      "width": 1280,
+      "height": 544,
+      "fps": "25/1",
+      "frames": 187
+    }
+  ],
+  "human_help": {
+    "open": false,
+    "minimum_comparable_independent_exploration_failures": 3,
+    "verified_cluster_available": false,
+    "verified_count": null,
+    "reason": "目前没有审核通过至少3次可比独立真实探索失败的代表性失败簇；不显示待答问题，不催答。固定动作复现、回放、文件数量不能凑数。"
+  },
+  "feedback": {
+    "H001": {
+      "status": "three_verbatim_replies_imported",
+      "annotation_id": "HF-H001-6d4d09a7b6384051b78dd91b0ca4458b",
+      "receipt_url": "/api/annotation/HF-H001-6d4d09a7b6384051b78dd91b0ca4458b",
+      "case_sha256": "8f6c833128c65545b32f2dd17636071d17407c92a97ad7f32b1a7d3737ec6a54",
+      "replies": [
+        {
+          "question_id": "observation",
+          "verbatim": "不能，手掌明显位于苹果上方，闭合会抓空，另外也看不到拇指",
+          "source": "human-feedback/H001-user-feedback-001.json",
+          "sha256": "9c228320a2afbbfc4db2654134cb0e4a990ac5dc4463666436b2c068fa1076e8"
+        },
+        {
+          "question_id": "priority_and_gate",
+          "verbatim": "向下移动手的位置，手掌和苹果还有一定距离，看到手至少和苹果处于同一平面",
+          "source": "human-feedback/H001-user-feedback-002.json",
+          "sha256": "e6d771248140bc60beb07519c4d29eb0113e8aa175b5e209d6450ce53693ea7f"
+        },
+        {
+          "question_id": "grasp_method_dependent_height_reference",
+          "verbatim": "视抓取方法而定，如果是侧向抓取选1,如果是从上向下抓取则是包夹区域合适更为重要，可以理解为手腕必须在苹果周围的同心圆上，抓取方法不同手掌摆放方式不同",
+          "source": "human-feedback/H001-user-feedback-003.json",
+          "sha256": "4031cb4e187e36433726c526683ead25d6820f12a7dea915fcdfdd622edd2fe4"
+        }
+      ]
+    },
+    "F001": {
+      "status": "feedback_received_preserved_in_owning_branch",
+      "verbatim": "先移动，确定方块在弯腰不走动就可以抓到的范围内再弯腰抓取",
+      "rule_status": "human_proposed",
+      "source": "api-ground-to-table/cases/F001/user-feedback-001.json",
+      "source_sha256": "96c197f27281725442c73642e01371388e40f951ba74890a32b048d626805d85",
+      "no_duplicate_import": true
+    }
+  },
+  "selected_frame_warning": "actor-observations.mp4是按固定时长组织的原始公开RGB精选帧序列，不是连续物理原录像；本页未用它代替连续录像。",
+  "accounting_note": "协作分支已记录API费用3.39元；本页面不发API请求、不修改账本。",
+  "sources": [
+    {
+      "path": "human-feedback/reproductions/H001/status.json",
+      "sha256": "a907a9575064e93a5ee04c921165365f5f8e591769436886ae7987dfec12c4c9"
+    },
+    {
+      "path": "human-feedback/reproductions/H001/evidence/video-provenance.json",
+      "sha256": "3f423e9bd687e3b049d361dfe130c4514a11e092cb9b6fb7d3d67e71c1f0dc54"
+    },
+    {
+      "path": "api-ground-to-table/cases/F001/submission.json",
+      "sha256": "337edbd4ab21bcf18afef87f039c441c8aca9f0130bb1dbc9b2587a55a195216"
+    },
+    {
+      "path": "api-ground-to-table/reproductions/F001-baseline-001/provenance.json",
+      "sha256": "137c63b8f1dbc8f7da3261852fa55570b5c92cf4215c8bddc8be874ef53b8da5"
+    },
+    {
+      "path": "api-ground-to-table/status.json",
+      "sha256": "91fafd65c55d737ea72eb0c8f038ee7435ea3d9e55d528b56dc9e137348120db"
+    },
+    {
+      "path": "codex-account-2/workspace/ground-to-table/rsi/episode_video.py",
+      "sha256": "0031e112aaace4d44e1e59b7ed200cad3e0a27df17bc0eb0d21cc30b34b875c5"
+    }
+  ]
+}

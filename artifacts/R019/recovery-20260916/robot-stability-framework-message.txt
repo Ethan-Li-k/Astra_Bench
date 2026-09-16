@@ -1,0 +1,4 @@
+当前问题：XMovePick1真实稳定性停止后，actor公开复盘称精确原因不可观察。
+总目标：继续当前SIMPLE物理任务，把合法机器人本体反馈补足以支持下一轮判断。
+不可重犯：不喂对象/接触/奖励，不改安全阈值或在途，不扩控制诊断。
+新增具体证据artifacts/R019/recovery-20260916/robot-stability-observation-question.json。LiveSim.observe和50Hz公开robot_motion当前没有直接root高度/倾角，runtime却用height<.55或tilt>25停止；XMovePick1最后25.070885度，闭合全0，完整修订已保存，下一轮已冻结继续。请在当前完整工作自然边界优先评审一个最小“纯机器人本体稳定性可观测”候选：命名机器人root位姿/倾角/高度及真实采样趋势进入允许公开观测和motion摘要，阈值不改，无物体/host审计载荷。先红灯/泄漏及普通观测回归，候选独立写architecture-review，不改在线文件或launch。先前Handover准则检查可排在其后，若已在途无需中断。SIMPLE本主管持续物理测评；无需新通用agent/平台。

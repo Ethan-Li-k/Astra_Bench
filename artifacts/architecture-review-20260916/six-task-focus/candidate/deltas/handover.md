@@ -1,0 +1,3 @@
+## Selected task: Handover
+
+Pin the declared variant and giving/receiving hands before action. Verify the giver actually acquires and retains the object; stabilize before presenting it. Establish visible receiver enclosure while the giver still supports it. Test receiver co-motion, gradually release the giver, then separately observe retention with giver clear. A touch or two-hand overlap does not prove load transfer. Place-back variants additionally require controlled lowering, release and observed support at the declared destination. Obey rollout_finished even if an early native trigger leaves stages unverified; record that limitation for review instead of claiming full transfer or continuing after termination.

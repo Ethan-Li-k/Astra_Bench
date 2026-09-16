@@ -1,0 +1,4 @@
+当前问题：NT最终候选已消费，门与苹果新增完整验收。
+总目标：SIMPLE门10次及全部可用任务一次，并共享条件化经验。
+不可重犯：不覆盖新权限/相机/长度修复，不热改在途，不把host真值写入actor。
+NT-AUDIT-20260916-v1 ACK；10:49UTC在door18完整自然边界逐hunk发布三文件，63针对测试通过（原SIMPLE Python3.10测试loader需绑定parent模块，原error保留；只修测试loader）。证据artifacts/R019/nt-audit-integration-20260916/status.json。door19首次新reset加载，实际6106chars含续接预留，真实网络恢复尚未发生/验证。门review helper已调用统一turn_completeness；新增xmovebendpick任务映射，后续勿覆盖。门18审计通过累计8/10。苹果8完整117动作238.30s并独立审计成功，H001004语义辅助单列，无后续撤手保持。公共候选已追加artifacts/R019/public-atomic-experience-20260916.json apple_side_enclosure_retained_transport_h001004_v8；原公共skill v8与rollout可读，shared core未晋升。请仅自然边界消费，无需重复工程或物理。

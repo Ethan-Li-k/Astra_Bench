@@ -1,0 +1,77 @@
+{
+  "at": "2026-09-16T13:20:13.218030+00:00",
+  "files": [
+    {
+      "path": "rsi/frozen_skill.py",
+      "sha256": "66a2839e422cd5700fa3550e993aedf11d57042892b3fca291d515d4a5d19129"
+    },
+    {
+      "path": "tests/test_frozen_skill.py",
+      "sha256": "08ee57c3930d86516fa8d4ad56535041b0fff8c43615c8c3ceac2a2455a6d46c"
+    },
+    {
+      "path": "rsi/skill_learning.py",
+      "sha256": "63cf7890f2f44bdf1c77a2b8bce1574936e9f3fedfed0de74ee8ef5d6e88f969"
+    },
+    {
+      "path": "rsi/skill_transfer.py",
+      "sha256": "a0d98989a820ef0179fb3793375cbfca53dc199844ef431b24745bd13261dc78"
+    },
+    {
+      "path": "tools/learn_grasp_skill.py",
+      "sha256": "ec7a28b6254de8ef15ba1bfbbbd87e8e9c93436795c3a9a333c886fd30545643"
+    },
+    {
+      "path": "tools/learn_simple_task.py",
+      "sha256": "c9b1284b95fd50c3b2ad928bb4c5a239fa9a0906e8ebd53a91e587d2b88a53cb"
+    },
+    {
+      "path": "rsi/simple_live.py",
+      "sha256": "0390e34ef41980c4831d4800ac4ecf60604ef59325229c1ef0efa3c6e315bf22"
+    },
+    {
+      "path": "rsi/simple_environment.py",
+      "sha256": "f1b289df5e01bd21a055dbaffa944ebe24a8331173f5b997d5de2a3e073eb1a2"
+    },
+    {
+      "path": "rsi/live.py",
+      "sha256": "50f481f6b5d9dce4905164404d1867c561738ed97765399a92dfc9a5551bf434"
+    },
+    {
+      "path": "rsi/policy_harness.py",
+      "sha256": "e1365e49d94028e510c7f047a0f8656d25b091448c4c5607baab4cbdc0e25418"
+    },
+    {
+      "path": "rsi/codex_app_server.py",
+      "sha256": "2bb702c7fec244a0b64ead86cffe93cd79219fbddb2c0bef3ef30885e46798b3"
+    },
+    {
+      "path": "tools/audit_simple_campaigns.py",
+      "sha256": "69ef1904c4e75f48472458e0e8a767e0d984b5f44cdeba3187ab1ac1c8e7bc7d"
+    },
+    {
+      "path": "skills/loco-manip-core/SKILL.md",
+      "sha256": "150be7a241e5cfec4a05b8f948196d6f8d4ff3669059fd4b9554415d6a5eeb04"
+    },
+    {
+      "path": "skills/loco-manip-simple/SKILL.md",
+      "sha256": "887db721d25299fcd09643b89e256b3f92d72a7637bcd1ba7c8a8244babf7baa"
+    },
+    {
+      "path": "ref/USER_UPDATE_20260916_SIX_TASK_FOCUS.md",
+      "sha256": "909135a738cfdf38b93dda7a4b8d87f941e66172339afecb5def9656e18750ee"
+    },
+    {
+      "path": "artifacts/R019/campaign_audit.json",
+      "sha256": "e481b13b9d9bbca40cbba0481019cec682d581f8509bb0c3cb287588eda7dd23"
+    },
+    {
+      "path": "artifacts/R019/public-atomic-experience-20260916.json",
+      "sha256": "d37c9518622eea5b12700586d0b0a0ce2f20a20ca62ded64b57bf96736d5f035"
+    },
+    {
+      "path": "artifacts/R019/six-task-focus/freeze-integration-status.json",
+      "sha256": "b3aa9b8f61ee75e9f8f1325c54319473e0628f16cc8ed67a77fd61e1aa1910d0"
+    }
+  ]
+}

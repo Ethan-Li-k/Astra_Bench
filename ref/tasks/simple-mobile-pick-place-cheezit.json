@@ -1,0 +1,23 @@
+{
+  "task_id": "simple_mobile_pick_place_cheezit",
+  "env_id": "simple/G1WholebodyMobilePickAndPlaceCheezitTeleop-v0",
+  "instruction": "Pick up the cracker (Cheez-It) box from the first table, carry it while moving to the second table offset by a quarter-turn, then release it onto the second tabletop while remaining standing.",
+  "scene_contract": "Native SIMPLE mobile pick-and-place scene in MuJoCo simulation. Two original fixed measured tables, native box/hand geometry and current camera calibration. Locate destination visually; no scene relocation, coordinates or hidden object state is supplied.",
+  "completion": [
+    "Native terminal criterion is target contact on the second tabletop without hand contact. A surface collision, throw or dropped object does not prove pickup and carrying.",
+    "Independent audit additionally requires actual retained pickup off the first table, continuous controlled transport with robot relocation, release and visible support on the second table. Report phases separately.",
+    "Stop physics at rollout_finished and complete skill_update; record any unverified phase. One independently reset audited success is required."
+  ],
+  "phase_guidance": [
+    "Inspect fresh stereo and named robot state; identify the box, first and second tables, reachable hand clearance and a path without relocating any scene object. If destination is outside view, inspect through bounded robot motion and updated images.",
+    "Use experience_select to review measured-table XMovePickSim1 enclosure/hold and boxplace4 retained transport/release. Their poses and approach coordinates do not transfer; neither establishes walking with a payload.",
+    "Achieve a stable reachable stance at the first table, review full-hand meshes and achieved wrist attitude, establish opposing enclosure, then close and test a small lift plus separate hold. Reopen and correct the geometry after loss.",
+    "Before loaded movement, verify retained box-hand co-motion, clear the first table and note the current pelvis height/tilt, wrist tracking and actual support drift. Empty-hand approach examples are hypotheses only when carrying.",
+    "Use bounded coordinated four-point references to test one small loaded movement at a time. Keep the grasp attitude and payload visually monitored; reobserve after each chunk. Reject lost support or worsening instability; stabilize rather than repeating the same saturated reach.",
+    "At the second table establish a stance that permits lowering without whole-hand collision. Lower onto the visible tabletop, open only when support is visually established, then withdraw and inspect if the host remains in progress. Do not claim a hold after native termination."
+  ],
+  "known_interface_limits": "Model_38000 UMI-4/checkpoint PD, native Dex3 mesh geometry, 50Hz tracker and200Hz MuJoCo. Bounded continuous chunks; current observation defines limits.240s physical budget, full Astra turns awaited, paused physics not RTC. SimToReal is the registered scene name, not a hardware trial.",
+  "failure_guidance": "Separate observation uncertainty, tracking, contact acquisition and task progress. Preserve public evidence, excluded hypotheses and a changed next test. finish_attempt only records a stall; it does not terminate the episode. Follow its returned current observation and next_call to test the changed safe hypothesis in this same episode. Continue until native success/failure, runtime safety/system termination or the physical budget. Do not use reasoning delay, three completed actions or temporary lack of progress as a stop condition. Do not consume remaining budget with idle holds.",
+  "prohibited_shortcuts": "No object poses/contact truth, hidden reward query, task/evaluator source access, human/external demonstrations, replay as task credit or mid-episode reset.",
+  "guidance_status": "Task semantics and current interface limits, not an action demonstration. All motion inferred by actor from permitted observations."
+}

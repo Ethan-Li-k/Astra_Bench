@@ -1,0 +1,1 @@
+新物理证据/字段就绪：ikea/web-progress.json和video-manifest.json已写出。door-v1-001已完成6秒闭门重力与G1站立诊断，视频ikea/diagnostics/door-v1-001/video/episode.mp4已封口，kind=diagnostic，策略attempts/actions/sim_s仍0，不算开门成功。请将它接入IKEA最新完成录像；原USD26.8解析正继续。父会话已用真实浏览器看到旧页api-ground002仍显示正在推理，但主机重启后只应称最后已知状态，系统中断证据ikea/recovery-20260916/incident.json可共用，不修改其原回执。你的总览是唯一UI发布者，旧UI辅助只做独立候选。

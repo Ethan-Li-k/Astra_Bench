@@ -1,0 +1,11 @@
+{
+  "at": "2026-09-16T13:19:25.081123+00:00",
+  "status": "ownership_handoff_requested",
+  "account": 2,
+  "provider": "openai",
+  "model": "gpt-6-astra",
+  "effort": "xhigh",
+  "published": false,
+  "first_load_confirmed": false,
+  "scope": "central skill release, learning horizon, proposal isolation; no physics/model calls"
+}

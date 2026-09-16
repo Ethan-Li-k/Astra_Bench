@@ -1,0 +1,310 @@
+<mujoco model="partnet_6f36520144753550f91663a74ccd2338">
+  <default>
+    <default class="robot">
+      <default class="visual">
+        <geom contype="0" conaffinity="0" group="2" />
+      </default>
+      <default class="collision">
+        <geom contype="0" conaffinity="1" group="3" />
+      </default>
+    </default>
+    <!-- <default class="floor">
+      <geom type="plane" size="0 0 0.05" material="groundplane" />
+    </default> -->
+  </default>
+
+  <compiler angle="radian" meshdir="." balanceinertia="true" boundmass="0.001" boundinertia="0.000001"/>
+
+  <visual>
+    <global offwidth="3840" offheight="2160" />
+  </visual>
+
+  <worldbody>
+    <body name="base" childclass="robot" pos="0 0 0.2502">
+      <body name="link_16" quat="0.5 0.5 -0.5 -0.5">
+        <geom name="link_16_collision_0" type="mesh" mesh="collision_original_24_1" class="collision" />
+        <geom name="link_16_collision_1" type="mesh" mesh="collision_original_5_1" class="collision" />
+        <geom name="link_16_collision_2" type="mesh" mesh="collision_original_20_1" class="collision" />
+        <geom name="link_16_collision_3" type="mesh" mesh="collision_original_6_1" class="collision" />
+        <geom name="link_16_collision_4" type="mesh" mesh="collision_original_30_1" class="collision" />
+        <geom name="link_16_collision_5" type="mesh" mesh="collision_original_31_1" class="collision" />
+        <geom name="link_16_collision_6" type="mesh" mesh="collision_original_32_1" class="collision" />
+        <geom name="link_16_visual_0" type="mesh" mesh="link_16_merged_link_2_1" material="original_24_material_0_0" class="visual" pos="0 0 0" />
+        <geom name="link_16_visual_5" type="mesh" mesh="link_16_merged_link_3_1" material="original_31_material_0_0" class="visual" pos="0 0 0" />
+        <body name="link_0" pos="0.0033771922472977684 -0.47980148661370475 0.4382766142071487">
+          <joint name="articulate_joint_0" type="hinge" axis="0 1 0" />
+          <geom name="link_0_collision" pos="-0.0033771922472977684 0.47980148661370475 -0.4382766142071487" type="mesh" mesh="collision_original_1_1" class="collision" />
+          <geom name="link_0_visual" pos="-0.0033771922472977684 0.47980148661370475 -0.4382766142071487" type="mesh" mesh="link_0_original_1_1" material="original_24_material_0_0" class="visual" />
+          <body name="link_1" pos="-0.0033771922472977684 -0.0713967133862952 0.007448735792851279">
+            <joint name="articulate_joint_1" type="hinge" axis="1 0 0" />
+            <geom name="link_1_collision" pos="0.0 0.5511982 -0.44572534999999996" type="mesh" mesh="collision_original_13_2" class="collision" />
+            <geom pos="0.0 0.5511982 -0.44572534999999996" type="mesh" class="visual" name="link_1_visual_0" mesh="collision_original_13_0_1" material="original_13_material_1_0" />
+            <geom pos="0.0 0.5511982 -0.44572534999999996" type="mesh" class="visual" name="link_1_visual_1" mesh="collision_original_13_1_1" material="original_24_material_0_0" />
+          </body>
+          <body name="link_2" pos="-0.0033771922472977684 -0.0713967133862952 0.007448735792851279">
+            <joint name="articulate_joint_2" type="hinge" axis="1 0 0" />
+            <geom name="link_2_collision" pos="0.0 0.5511982 -0.44572534999999996" type="mesh" mesh="collision_original_22_2" class="collision" />
+            <geom pos="0.0 0.5511982 -0.44572534999999996" type="mesh" class="visual" name="link_2_visual_0" mesh="collision_original_22_0_1" material="original_13_material_1_0" />
+            <geom pos="0.0 0.5511982 -0.44572534999999996" type="mesh" class="visual" name="link_2_visual_1" mesh="collision_original_22_1_1" material="original_24_material_0_0" />
+          </body>
+        </body>
+        <body name="link_3" pos="-0.3326838017097223 -0.47697839441363477 0.19123047107612481">
+          <joint name="articulate_joint_3" type="hinge" axis="0 1 0" />
+          <geom name="link_3_collision" pos="0.3326838017097223 0.47697839441363477 -0.19123047107612481" type="mesh" mesh="collision_original_3_1" class="collision" />
+          <geom name="link_3_visual" pos="0.3326838017097223 0.47697839441363477 -0.19123047107612481" type="mesh" mesh="link_3_original_3_1" material="original_24_material_0_0" class="visual" />
+          <body name="link_4" pos="-0.031335380505560985 -0.0742166012333715 -0.07194812824844017">
+            <joint name="articulate_joint_4" type="hinge" axis="-0.31143727124422005 3.465755326456095e-05 -0.9502667124964487" />
+            <geom name="link_4_collision" pos="0.3640191822152833 0.5511949956470062 -0.11928234282768463" type="mesh" mesh="collision_original_23_2" class="collision" />
+            <geom pos="0.3640191822152833 0.5511949956470062 -0.11928234282768463" type="mesh" class="visual" name="link_4_visual_0" mesh="collision_original_23_0_1" material="original_13_material_1_0" />
+            <geom pos="0.3640191822152833 0.5511949956470062 -0.11928234282768463" type="mesh" class="visual" name="link_4_visual_1" mesh="collision_original_23_1_1" material="original_24_material_0_0" />
+          </body>
+          <body name="link_5" pos="-0.031335380505560985 -0.0742166012333715 -0.07194812824844017">
+            <joint name="articulate_joint_5" type="hinge" axis="-0.31143727124422005 3.465755326456095e-05 -0.9502667124964487" />
+            <geom name="link_5_collision" pos="0.3640191822152833 0.5511949956470062 -0.11928234282768463" type="mesh" mesh="collision_original_18_2" class="collision" />
+            <geom pos="0.3640191822152833 0.5511949956470062 -0.11928234282768463" type="mesh" class="visual" name="link_5_visual_0" mesh="collision_original_18_0_1" material="original_13_material_1_0" />
+            <geom pos="0.3640191822152833 0.5511949956470062 -0.11928234282768463" type="mesh" class="visual" name="link_5_visual_1" mesh="collision_original_18_1_1" material="original_24_material_0_0" />
+          </body>
+        </body>
+        <body name="link_6" pos="-0.20441656699034383 -0.47568219538205264 -0.19857786432485616">
+          <joint name="articulate_joint_6" type="hinge" axis="0 1 0" />
+          <geom name="link_6_collision" pos="0.20441656699034383 0.47568219538205264 0.19857786432485616" type="mesh" mesh="collision_original_10_1" class="collision" />
+          <geom name="link_6_visual" pos="0.20441656699034383 0.47568219538205264 0.19857786432485616" type="mesh" mesh="link_6_original_10_1" material="original_24_material_0_0" class="visual" />
+          <body name="link_7" pos="0.031957461323152844 -0.07551599920636637 -0.03752802451002642">
+            <joint name="articulate_joint_7" type="hinge" axis="-0.8075151932136608 -5.378786135316403e-06 0.5898467705261876" />
+            <geom name="link_7_collision" pos="0.172459105667191 0.551198194588419 0.23610588883488257" type="mesh" mesh="collision_original_2_2" class="collision" />
+            <geom pos="0.172459105667191 0.551198194588419 0.23610588883488257" type="mesh" class="visual" name="link_7_visual_0" mesh="collision_original_2_0_1" material="original_13_material_1_0" />
+            <geom pos="0.172459105667191 0.551198194588419 0.23610588883488257" type="mesh" class="visual" name="link_7_visual_1" mesh="collision_original_2_1_1" material="original_24_material_0_0" />
+          </body>
+          <body name="link_8" pos="0.031957461323152844 -0.07551599920636637 -0.03752802451002642">
+            <joint name="articulate_joint_8" type="hinge" axis="-0.8075151932136608 -5.378786135316403e-06 0.5898467705261876" />
+            <geom name="link_8_collision" pos="0.172459105667191 0.551198194588419 0.23610588883488257" type="mesh" mesh="collision_original_14_2" class="collision" />
+            <geom pos="0.172459105667191 0.551198194588419 0.23610588883488257" type="mesh" class="visual" name="link_8_visual_0" mesh="collision_original_14_0_1" material="original_13_material_1_0" />
+            <geom pos="0.172459105667191 0.551198194588419 0.23610588883488257" type="mesh" class="visual" name="link_8_visual_1" mesh="collision_original_14_1_1" material="original_24_material_0_0" />
+          </body>
+        </body>
+        <body name="link_9" pos="0.2116575582532102 -0.5810999848522977 -0.19449399155848957">
+          <joint name="articulate_joint_9" type="hinge" axis="0 1 0" />
+          <geom name="link_9_collision" pos="-0.2116575582532102 0.5810999848522977 0.19449399155848957" type="mesh" mesh="collision_original_15_1" class="collision" />
+          <geom name="link_9_visual" pos="-0.2116575582532102 0.5810999848522977 0.19449399155848957" type="mesh" mesh="link_9_original_15_1" material="original_24_material_0_0" class="visual" />
+          <body name="link_10" pos="-0.03653149472363441 0.029901434852297723 -0.04791330551998389">
+            <joint name="articulate_joint_10" type="hinge" axis="-0.8105932913436219 0 -0.5856095252202734" />
+            <geom name="link_10_collision" pos="-0.1751260635295758 0.55119855 0.24240729707847347" type="mesh" mesh="collision_original_35_2" class="collision" />
+            <geom pos="-0.1751260635295758 0.55119855 0.24240729707847347" type="mesh" class="visual" name="link_10_visual_0" mesh="collision_original_35_0_1" material="original_13_material_1_0" />
+            <geom pos="-0.1751260635295758 0.55119855 0.24240729707847347" type="mesh" class="visual" name="link_10_visual_1" mesh="collision_original_35_1_1" material="original_24_material_0_0" />
+          </body>
+          <body name="link_11" pos="-0.03653149472363441 0.029901434852297723 -0.04791330551998389">
+            <joint name="articulate_joint_11" type="hinge" axis="-0.8105932913436219 0 -0.5856095252202734" />
+            <geom name="link_11_collision" pos="-0.1751260635295758 0.55119855 0.24240729707847347" type="mesh" mesh="collision_original_36_2" class="collision" />
+            <geom pos="-0.1751260635295758 0.55119855 0.24240729707847347" type="mesh" class="visual" name="link_11_visual_0" mesh="collision_original_36_0_1" material="original_13_material_1_0" />
+            <geom pos="-0.1751260635295758 0.55119855 0.24240729707847347" type="mesh" class="visual" name="link_11_visual_1" mesh="collision_original_36_1_1" material="original_24_material_0_0" />
+          </body>
+        </body>
+        <body name="link_12" pos="0.33580066597158137 -0.4797182371738505 0.18736184511280693">
+          <joint name="articulate_joint_12" type="hinge" axis="0 1 0" />
+          <geom name="link_12_collision" pos="-0.33580066597158137 0.4797182371738505 -0.18736184511280693" type="mesh" mesh="collision_original_11_1" class="collision" />
+          <geom name="link_12_visual" pos="-0.33580066597158137 0.4797182371738505 -0.18736184511280693" type="mesh" mesh="link_12_original_11_1" material="original_24_material_0_0" class="visual" />
+          <body name="link_13" pos="0.039079108571589714 -0.07148672819127237 -0.0665757872611002">
+            <joint name="articulate_joint_13" type="hinge" axis="0.3065887364620658 -6.41029691319091e-05 -0.951842078585205" />
+            <geom name="link_13_collision" pos="-0.3748797745431711 0.5512049653651229 -0.12078605785170672" type="mesh" mesh="collision_original_33_2" class="collision" />
+            <geom pos="-0.3748797745431711 0.5512049653651229 -0.12078605785170672" type="mesh" class="visual" name="link_13_visual_0" mesh="collision_original_33_0_1" material="original_13_material_1_0" />
+            <geom pos="-0.3748797745431711 0.5512049653651229 -0.12078605785170672" type="mesh" class="visual" name="link_13_visual_1" mesh="collision_original_33_1_1" material="original_24_material_0_0" />
+          </body>
+          <body name="link_14" pos="0.039079108571589714 -0.07148672819127237 -0.0665757872611002">
+            <joint name="articulate_joint_14" type="hinge" axis="0.3065887364620658 -6.41029691319091e-05 -0.951842078585205" />
+            <geom name="link_14_collision" pos="-0.3748797745431711 0.5512049653651229 -0.12078605785170672" type="mesh" mesh="collision_original_34_2" class="collision" />
+            <geom pos="-0.3748797745431711 0.5512049653651229 -0.12078605785170672" type="mesh" class="visual" name="link_14_visual_0" mesh="collision_original_34_0_1" material="original_13_material_1_0" />
+            <geom pos="-0.3748797745431711 0.5512049653651229 -0.12078605785170672" type="mesh" class="visual" name="link_14_visual_1" mesh="collision_original_34_1_1" material="original_24_material_0_0" />
+          </body>
+        </body>
+        <body name="link_15_helper" pos="0.0048648375974882085 0.0 0.0827330844932522">
+          <joint name="articulate_joint_17" type="slide" range="0.0 0.06999999999999999" axis="0 -1 0" />
+          <body name="link_15">
+            <joint name="articulate_joint_15" type="hinge" axis="0 1 0" />
+            <geom name="link_15_collision_0" pos="-0.0048648375974882085 0.0 -0.0827330844932522" type="mesh" mesh="collision_original_19_2" class="collision" />
+            <geom name="link_15_collision_1" pos="-0.0048648375974882085 0.0 -0.0827330844932522" type="mesh" mesh="collision_original_4_1" class="collision" />
+            <geom name="link_15_collision_2" pos="-0.0048648375974882085 0.0 -0.0827330844932522" type="mesh" mesh="collision_original_26_1" class="collision" />
+            <geom name="link_15_collision_3" pos="-0.0048648375974882085 0.0 -0.0827330844932522" type="mesh" mesh="collision_new_4_1" class="collision" />
+            <geom name="link_15_collision_4" pos="-0.0048648375974882085 0.0 -0.0827330844932522" type="mesh" mesh="collision_new_5_1" class="collision" />
+            <geom name="link_15_collision_5" pos="-0.0048648375974882085 0.0 -0.0827330844932522" type="mesh" mesh="collision_original_29_1" class="collision" />
+            <geom name="link_15_collision_6" pos="-0.0048648375974882085 0.0 -0.0827330844932522" type="mesh" mesh="collision_original_16_1" class="collision" />
+            <geom name="link_15_collision_7" pos="-0.0048648375974882085 0.0 -0.0827330844932522" type="mesh" mesh="collision_original_25_1" class="collision" />
+            <geom name="link_15_collision_8" pos="-0.0048648375974882085 0.0 -0.0827330844932522" type="mesh" mesh="collision_new_2_1" class="collision" />
+            <geom name="link_15_collision_9" pos="-0.0048648375974882085 0.0 -0.0827330844932522" type="mesh" mesh="collision_new_3_1" class="collision" />
+            <geom name="link_15_collision_10" pos="-0.0048648375974882085 0.0 -0.0827330844932522" type="mesh" mesh="collision_original_8_1" class="collision" />
+            <geom name="link_15_collision_11" pos="-0.0048648375974882085 0.0 -0.0827330844932522" type="mesh" mesh="collision_original_28_1" class="collision" />
+            <geom name="link_15_collision_12" pos="-0.0048648375974882085 0.0 -0.0827330844932522" type="mesh" mesh="collision_original_21_1" class="collision" />
+            <geom name="link_15_collision_13" pos="-0.0048648375974882085 0.0 -0.0827330844932522" type="mesh" mesh="collision_original_7_1" class="collision" />
+            <geom name="link_15_collision_14" pos="-0.0048648375974882085 0.0 -0.0827330844932522" type="mesh" mesh="collision_original_12_1" class="collision" />
+            <geom name="link_15_collision_15" pos="-0.0048648375974882085 0.0 -0.0827330844932522" type="mesh" mesh="collision_original_9_1" class="collision" />
+            <geom name="link_15_collision_16" pos="-0.0048648375974882085 0.0 -0.0827330844932522" type="mesh" mesh="collision_original_17_1" class="collision" />
+            <geom name="link_15_visual_1" pos="-0.0048648375974882085 0.0 -0.0827330844932522" type="mesh" mesh="link_15_original_4_1" material="original_4_material_0_0" class="visual" />
+            <geom name="link_15_visual_5" pos="0 0 0" type="mesh" mesh="link_15_merged_link_1_1" material="original_24_material_0_0" class="visual" />
+            <geom pos="0 0 0" type="mesh" class="visual" name="link_15_visual_0_0" mesh="link_15_merged_collision_1" material="original_13_material_1_0" />
+            <geom pos="-0.0048648375974882085 0.0 -0.0827330844932522" type="mesh" class="visual" name="link_15_visual_0_1" mesh="collision_original_19_1_1" material="original_19_material_0_0" />
+            <geom pos="0 0 0" type="mesh" class="visual" name="link_15_visual_3_1" mesh="link_15_merged_collision_1" material="original_31_material_0_0" />
+          </body>
+        </body>
+      </body>
+      <freejoint name="articulate_floating_base" />
+    </body>
+    <light pos="0 0 2." dir="0 0 -1" directional="true" />
+    <!-- <geom name="floor" class="floor" size="0 0 0.05" /> -->
+  </worldbody>
+
+  <asset>
+    <material name="original_24_material_0_0" rgba="0 0 0 1" />
+    <material name="original_31_material_0_0" rgba="0.4117647058823529 0.4117647058823529 0.4117647058823529 1" />
+    <material name="original_4_material_0_0" texture="texture_0" />
+    <material name="original_13_material_1_0" rgba="0.8823529411764706 0.8823529411764706 0.7843137254901961 1" />
+    <material name="original_19_material_0_0" rgba="1 1 1 1" />
+    <mesh name="link_0_original_1" file="meshes/textured_objs/original_1.obj" />
+    <mesh name="link_0_original_1_1" file="meshes/textured_objs/original_1.obj" scale="0.7 0.7 0.7" />
+    <mesh name="link_3_original_3" file="meshes/textured_objs/original_3.obj" />
+    <mesh name="link_3_original_3_1" file="meshes/textured_objs/original_3.obj" scale="0.7 0.7 0.7" />
+    <mesh name="link_6_original_10" file="meshes/textured_objs/original_10.obj" />
+    <mesh name="link_6_original_10_1" file="meshes/textured_objs/original_10.obj" scale="0.7 0.7 0.7" />
+    <mesh name="link_9_original_15" file="meshes/textured_objs/original_15.obj" />
+    <mesh name="link_9_original_15_1" file="meshes/textured_objs/original_15.obj" scale="0.7 0.7 0.7" />
+    <mesh name="link_12_original_11" file="meshes/textured_objs/original_11.obj" />
+    <mesh name="link_12_original_11_1" file="meshes/textured_objs/original_11.obj" scale="0.7 0.7 0.7" />
+    <mesh name="link_15_original_4" file="meshes/textured_objs/original_4.obj" />
+    <mesh name="link_15_original_4_1" file="meshes/textured_objs/original_4.obj" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_24.stl" file="meshes/textured_objs/original_24.stl" />
+    <mesh name="collision_original_24_1" file="meshes/textured_objs/original_24.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_5.stl" file="meshes/textured_objs/original_5.stl" />
+    <mesh name="collision_original_5_1" file="meshes/textured_objs/original_5.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_20.stl" file="meshes/textured_objs/original_20.stl" />
+    <mesh name="collision_original_20_1" file="meshes/textured_objs/original_20.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_6.stl" file="meshes/textured_objs/original_6.stl" />
+    <mesh name="collision_original_6_1" file="meshes/textured_objs/original_6.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_30.stl" file="meshes/textured_objs/original_30.stl" />
+    <mesh name="collision_original_30_1" file="meshes/textured_objs/original_30.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_31.stl" file="meshes/textured_objs/original_31.stl" />
+    <mesh name="collision_original_31_1" file="meshes/textured_objs/original_31.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_32.stl" file="meshes/textured_objs/original_32.stl" />
+    <mesh name="collision_original_32_1" file="meshes/textured_objs/original_32.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_1.stl" file="meshes/textured_objs/original_1.stl" />
+    <mesh name="collision_original_1_1" file="meshes/textured_objs/original_1.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_13.stl" file="meshes/textured_objs/original_13.stl" />
+    <mesh name="collision_original_13_2" file="meshes/textured_objs/original_13.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_22.stl" file="meshes/textured_objs/original_22.stl" />
+    <mesh name="collision_original_22_2" file="meshes/textured_objs/original_22.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_3.stl" file="meshes/textured_objs/original_3.stl" />
+    <mesh name="collision_original_3_1" file="meshes/textured_objs/original_3.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_23.stl" file="meshes/textured_objs/original_23.stl" />
+    <mesh name="collision_original_23_2" file="meshes/textured_objs/original_23.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_18.stl" file="meshes/textured_objs/original_18.stl" />
+    <mesh name="collision_original_18_2" file="meshes/textured_objs/original_18.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_10.stl" file="meshes/textured_objs/original_10.stl" />
+    <mesh name="collision_original_10_1" file="meshes/textured_objs/original_10.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_2.stl" file="meshes/textured_objs/original_2.stl" />
+    <mesh name="collision_original_2_2" file="meshes/textured_objs/original_2.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_14.stl" file="meshes/textured_objs/original_14.stl" />
+    <mesh name="collision_original_14_2" file="meshes/textured_objs/original_14.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_15.stl" file="meshes/textured_objs/original_15.stl" />
+    <mesh name="collision_original_15_1" file="meshes/textured_objs/original_15.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_35.stl" file="meshes/textured_objs/original_35.stl" />
+    <mesh name="collision_original_35_2" file="meshes/textured_objs/original_35.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_36.stl" file="meshes/textured_objs/original_36.stl" />
+    <mesh name="collision_original_36_2" file="meshes/textured_objs/original_36.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_11.stl" file="meshes/textured_objs/original_11.stl" />
+    <mesh name="collision_original_11_1" file="meshes/textured_objs/original_11.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_33.stl" file="meshes/textured_objs/original_33.stl" />
+    <mesh name="collision_original_33_2" file="meshes/textured_objs/original_33.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_34.stl" file="meshes/textured_objs/original_34.stl" />
+    <mesh name="collision_original_34_2" file="meshes/textured_objs/original_34.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_19.stl" file="meshes/textured_objs/original_19.stl" />
+    <mesh name="collision_original_19_2" file="meshes/textured_objs/original_19.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_4.stl" file="meshes/textured_objs/original_4.stl" />
+    <mesh name="collision_original_4_1" file="meshes/textured_objs/original_4.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_26.stl" file="meshes/textured_objs/original_26.stl" />
+    <mesh name="collision_original_26_1" file="meshes/textured_objs/original_26.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_new_4.stl" file="meshes/textured_objs/new_4.stl" />
+    <mesh name="collision_new_4_1" file="meshes/textured_objs/new_4.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_new_5.stl" file="meshes/textured_objs/new_5.stl" />
+    <mesh name="collision_new_5_1" file="meshes/textured_objs/new_5.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_29.stl" file="meshes/textured_objs/original_29.stl" />
+    <mesh name="collision_original_29_1" file="meshes/textured_objs/original_29.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_16.stl" file="meshes/textured_objs/original_16.stl" />
+    <mesh name="collision_original_16_1" file="meshes/textured_objs/original_16.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_25.stl" file="meshes/textured_objs/original_25.stl" />
+    <mesh name="collision_original_25_1" file="meshes/textured_objs/original_25.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_new_2.stl" file="meshes/textured_objs/new_2.stl" />
+    <mesh name="collision_new_2_1" file="meshes/textured_objs/new_2.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_new_3.stl" file="meshes/textured_objs/new_3.stl" />
+    <mesh name="collision_new_3_1" file="meshes/textured_objs/new_3.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_8.stl" file="meshes/textured_objs/original_8.stl" />
+    <mesh name="collision_original_8_1" file="meshes/textured_objs/original_8.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_28.stl" file="meshes/textured_objs/original_28.stl" />
+    <mesh name="collision_original_28_1" file="meshes/textured_objs/original_28.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_21.stl" file="meshes/textured_objs/original_21.stl" />
+    <mesh name="collision_original_21_1" file="meshes/textured_objs/original_21.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_7.stl" file="meshes/textured_objs/original_7.stl" />
+    <mesh name="collision_original_7_1" file="meshes/textured_objs/original_7.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_12.stl" file="meshes/textured_objs/original_12.stl" />
+    <mesh name="collision_original_12_1" file="meshes/textured_objs/original_12.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_9.stl" file="meshes/textured_objs/original_9.stl" />
+    <mesh name="collision_original_9_1" file="meshes/textured_objs/original_9.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_17.stl" file="meshes/textured_objs/original_17.stl" />
+    <mesh name="collision_original_17_1" file="meshes/textured_objs/original_17.stl" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_13_0" file="meshes/textured_objs/original_13/original_13_0.obj" />
+    <mesh name="collision_original_13_1" file="meshes/textured_objs/original_13/original_13_1.obj" />
+    <mesh name="collision_original_13_0_1" file="meshes/textured_objs/original_13/original_13_0.obj" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_13_1_1" file="meshes/textured_objs/original_13/original_13_1.obj" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_22_0" file="meshes/textured_objs/original_22/original_22_0.obj" />
+    <mesh name="collision_original_22_1" file="meshes/textured_objs/original_22/original_22_1.obj" />
+    <mesh name="collision_original_22_0_1" file="meshes/textured_objs/original_22/original_22_0.obj" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_22_1_1" file="meshes/textured_objs/original_22/original_22_1.obj" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_23_0" file="meshes/textured_objs/original_23/original_23_0.obj" />
+    <mesh name="collision_original_23_1" file="meshes/textured_objs/original_23/original_23_1.obj" />
+    <mesh name="collision_original_23_0_1" file="meshes/textured_objs/original_23/original_23_0.obj" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_23_1_1" file="meshes/textured_objs/original_23/original_23_1.obj" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_18_0" file="meshes/textured_objs/original_18/original_18_0.obj" />
+    <mesh name="collision_original_18_1" file="meshes/textured_objs/original_18/original_18_1.obj" />
+    <mesh name="collision_original_18_0_1" file="meshes/textured_objs/original_18/original_18_0.obj" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_18_1_1" file="meshes/textured_objs/original_18/original_18_1.obj" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_2_0" file="meshes/textured_objs/original_2/original_2_0.obj" />
+    <mesh name="collision_original_2_1" file="meshes/textured_objs/original_2/original_2_1.obj" />
+    <mesh name="collision_original_2_0_1" file="meshes/textured_objs/original_2/original_2_0.obj" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_2_1_1" file="meshes/textured_objs/original_2/original_2_1.obj" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_14_0" file="meshes/textured_objs/original_14/original_14_0.obj" />
+    <mesh name="collision_original_14_1" file="meshes/textured_objs/original_14/original_14_1.obj" />
+    <mesh name="collision_original_14_0_1" file="meshes/textured_objs/original_14/original_14_0.obj" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_14_1_1" file="meshes/textured_objs/original_14/original_14_1.obj" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_35_0" file="meshes/textured_objs/original_35/original_35_0.obj" />
+    <mesh name="collision_original_35_1" file="meshes/textured_objs/original_35/original_35_1.obj" />
+    <mesh name="collision_original_35_0_1" file="meshes/textured_objs/original_35/original_35_0.obj" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_35_1_1" file="meshes/textured_objs/original_35/original_35_1.obj" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_36_0" file="meshes/textured_objs/original_36/original_36_0.obj" />
+    <mesh name="collision_original_36_1" file="meshes/textured_objs/original_36/original_36_1.obj" />
+    <mesh name="collision_original_36_0_1" file="meshes/textured_objs/original_36/original_36_0.obj" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_36_1_1" file="meshes/textured_objs/original_36/original_36_1.obj" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_33_0" file="meshes/textured_objs/original_33/original_33_0.obj" />
+    <mesh name="collision_original_33_1" file="meshes/textured_objs/original_33/original_33_1.obj" />
+    <mesh name="collision_original_33_0_1" file="meshes/textured_objs/original_33/original_33_0.obj" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_33_1_1" file="meshes/textured_objs/original_33/original_33_1.obj" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_34_0" file="meshes/textured_objs/original_34/original_34_0.obj" />
+    <mesh name="collision_original_34_1" file="meshes/textured_objs/original_34/original_34_1.obj" />
+    <mesh name="collision_original_34_0_1" file="meshes/textured_objs/original_34/original_34_0.obj" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_34_1_1" file="meshes/textured_objs/original_34/original_34_1.obj" scale="0.7 0.7 0.7" />
+    <mesh name="collision_original_19_1" file="meshes/textured_objs/original_19/original_19_1.obj" />
+    <mesh name="collision_original_19_1_1" file="meshes/textured_objs/original_19/original_19_1.obj" scale="0.7 0.7 0.7" />
+    <texture type="2d" name="texture_0" file="../images/texture_0.png" />
+    <mesh name="link_16_merged_link_2" file="meshes/textured_objs/link_16_merged_link_2.obj" />
+    <mesh name="link_16_merged_link_2_1" file="meshes/textured_objs/link_16_merged_link_2.obj" scale="0.7 0.7 0.7" />
+    <mesh name="link_16_merged_link_3" file="meshes/textured_objs/link_16_merged_link_3.obj" />
+    <mesh name="link_16_merged_link_3_1" file="meshes/textured_objs/link_16_merged_link_3.obj" scale="0.7 0.7 0.7" />
+    <mesh name="link_15_merged_link_1" file="meshes/textured_objs/link_15_merged_link_1.obj" />
+    <mesh name="link_15_merged_link_1_1" file="meshes/textured_objs/link_15_merged_link_1.obj" scale="0.7 0.7 0.7" />
+    <mesh name="link_15_merged_collision" file="meshes/textured_objs/original_19/link_15_merged_collision.obj" />
+    <mesh name="link_15_merged_collision_1" file="meshes/textured_objs/new_4/link_15_merged_collision.obj" scale="0.7 0.7 0.7" />
+    <!-- <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3" markrgb="0.8 0.8 0.8" width="300" height="300" />
+    <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2" />
+    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="3072" /> -->
+  </asset>
+
+  
+  <visual>
+    <rgba haze="0.15 0.25 0.35 1" />
+  </visual>
+</mujoco>

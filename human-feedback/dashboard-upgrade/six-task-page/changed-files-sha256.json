@@ -1,0 +1,10 @@
+{
+  "human-feedback/tools/dashboard.py": "7220cf7f049b5e8d9aa34b09c7c28bd3a309a876c78c8f276ec401f63c55f9d3",
+  "human-feedback/tools/simple_six.py": "b37403c53e5f842a66c00389bc32eaa4e00bb0190e8de03eae4404916348582e",
+  "human-feedback/tools/server.py": "5e00f6ebcac26cd9c7067857505cf5e7ddb41cb7a1f75ff240a0cd1652dc3b79",
+  "human-feedback/tools/feedback_board.py": "7b2462a6f5aa70f486abee7022908a1d2e8d698784d22b210d17fb2f671162db",
+  "human-feedback/ui/app.js": "7d312d9d0bf72f7f97e185bb4c6bfb3649af8bcef053ee3f3065a535af3dbd0d",
+  "human-feedback/ui/simple-six.html": "5f8713818220c9bdf35515294c64f26b66ca96ae66eeac44288dd8be4cfb81bc",
+  "human-feedback/ui/simple-six.js": "11f185c634dd4975def7e2938ae5d702439bce8c5e1a82421fd48de924216b8e",
+  "human-feedback/ui/simple-six.css": "d58e73569efe0aa9e9633b6eda28707d7a4f0d101ab2ee46e412ed6354ed3557"
+}
