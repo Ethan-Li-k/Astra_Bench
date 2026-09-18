@@ -12,6 +12,36 @@ LEVELS=('L0','L1','L2')
 BASELINE_METHODS=('Psi0','GR00T N1.6','pi0.5','InternVLA','H-RDT','DreamZero','EgoVLA','DP','ACT')
 BASELINE_URL='https://psi-lab.ai/SIMPLE/index.html#results'
 
+# This is the reviewed v5 learning completion contract, not official benchmark
+# admission. Unknown IDs/threshold changes stay pending for explicit review.
+HANDOVER_LEARNING_CONTRACT={
+    'id':'handover-right-left-released-support-v1','scope':'simple/G1WholebodyHandoverTeleop-v0',
+    'native_reward_unchanged':True,'native_trigger_alone_terminates':False,'unmodified_native_benchmark':False,
+    'right_only_hold_s':0.5,'left_only_hold_s':0.5,'full_object_clearance_m':0.001,
+    'released_support_s':1.0,'unsupported_release_grace_s':0.3,'settled_translation_m':0.01,
+    'settled_rotation_rad':0.08726646259971647,'final_geometry_audit_required':True}
+
+def known_learning_completion(result,review,scene,native,rid):
+    contract=result.get('completion_contract');registration=result.get('protocol_registration')
+    profile=result.get('execution_profile');scene_profile=scene.get('execution_profile')
+    # Complete equality protects versioned meaning; arbitrary dicts are never
+    # converted to a string and treated as the old native termination contract.
+    expected=HANDOVER_LEARNING_CONTRACT
+    if not isinstance(contract,dict) or contract!=expected or scene.get('completion_contract')!=contract:return False
+    if any(type(contract.get(k)) is not bool for k,v in expected.items() if type(v) is bool):return False
+    if any(type(contract.get(k)) not in (int,float) for k,v in expected.items() if type(v) in (int,float)):return False
+    if not isinstance(registration,dict) or not isinstance(profile,dict) or not isinstance(scene_profile,dict):return False
+    reset=review.get('reset')
+    return (contract['scope']==native and review.get('task',review.get('native_env_id'))==native
+        and review.get('completion_contract')==contract['id'] and review.get('protocol_phase')=='learning'
+        and review.get('independent_reset_verified') is True and isinstance(reset,dict) and reset.get('reset_id')==rid
+        and registration.get('task_id')==native and registration.get('phase')=='learning' and registration.get('no_stability_credit') is True
+        and profile.get('phase')==scene_profile.get('phase')=='learning'
+        and profile.get('native_benchmark') is False and scene_profile.get('native_benchmark') is False
+        and type(result.get('raw_native_success_seen')) is bool
+        and type(result.get('raw_native_final_flag')) is bool
+        and not (result['raw_native_final_flag'] and not result['raw_native_success_seen']))
+
 def timestamp(value):
     try:return dt.datetime.fromisoformat(value.replace('Z','+00:00')).timestamp()
     except (ValueError,TypeError,AttributeError):return None
@@ -67,11 +97,15 @@ def scorecard(matches,native,effective,candidate=None):
         period='current' if when is not None and cutoff is not None and when>=cutoff else 'history' if when is not None and cutoff is not None else 'unknown'
         flags=[d['human_feedback_used'] for d in (result,scene,review) if type(d.get('human_feedback_used')) is bool]
         assisted='assisted' if flags and all(flags) else 'autonomous' if flags and not any(flags) else 'unknown'
+        raw_contract=result.get('completion_contract') or ledger.get('completion_contract')
+        extended=isinstance(raw_contract,dict)
+        known=extended and result.get('episode_id')==m['episode'] and known_learning_completion(result,review,scene,native,rid)
+        contract=raw_contract if isinstance(raw_contract,str) else HANDOVER_LEARNING_CONTRACT['id'] if known else None
         r={'episode':m['episode'],'campaign':m['key'],'reset_id':rid if isinstance(rid,str) else None,
            'period':period,'stage':'learning','assistance':assisted,'disposition':'pending','native':None,'semantic':None,
            'at':when,'variant':scene.get('variant') if isinstance(scene.get('variant'),str) else None,
            'control':scene.get('pd_profile') if isinstance(scene.get('pd_profile'),str) else None,
-           'contract':result.get('completion_contract') or ledger.get('completion_contract'),
+           'contract':contract,'protocol_kind':'extended_learning' if extended else 'native_termination',
            'skill_sha256':result.get('starting_skill_sha256'),'runtime_sha256':budget.get('runtime_sha256'),
            'reason':'封口、独立 reset、审计或配置身份尚未齐全'}
         kind='pending'
@@ -85,12 +119,13 @@ def scorecard(matches,native,effective,candidate=None):
             identity=(reset.get('method')=='fresh_environment_reset' and isinstance(rid,str) and rid
                 and (not review.get('reset') or review['reset'].get('reset_id')==rid)
                 and scene.get('env_id',scene.get('native_env_id'))==native
-                and r['variant'] and r['control'] and isinstance(r['contract'],str)
+                and r['variant'] and r['control'] and isinstance(r['contract'],str) and (not extended or known)
                 and sha(r['skill_sha256']) and budget.get('skill_sha256')==r['skill_sha256'] and sha(budget.get('runtime_sha256')))
             terminal=stop in ('native_success','budget_truncation','physical_budget_exhausted','runtime_safety_stop','safety_stop','native_failure','policy_early_stop')
+            if stop=='task_success':terminal=known and result.get('completion_outcome')==result.get('native_outcome')=='success' and result.get('success') is True
             if (identity and audit_closed and terminal and type(review.get('audited_task_success')) is bool
                 and result.get('native_outcome') in ('success','failure','in_progress') and (m.get('actions') or 0)>0):
-                kind='valid';r['native']=result['native_outcome']=='success';r['semantic']=review['audited_task_success']
+                kind='valid';r['native']=result['raw_native_success_seen'] if known else result['native_outcome']=='success';r['semantic']=review['audited_task_success']
                 r['reason']='完整物理预算结束，计未成功' if stop in ('budget_truncation','physical_budget_exhausted') else '安全停止，计未成功' if stop in ('runtime_safety_stop','safety_stop') else '独立完成且已审计'
         if rid and kind!='duplicate':seen.add(rid)
         r['disposition']=kind;counts[kind]+=1
@@ -115,12 +150,12 @@ def scorecard(matches,native,effective,candidate=None):
             byreset={r['reset_id']:r for r in records if r['disposition']!='duplicate'}
             def bound(r):
                 e=r['evaluation']
-                return (r['at'] is not None and r['at']>=registered and e.get('candidate_sha256')==digest
+                return (r['protocol_kind']!='extended_learning' and r['at'] is not None and r['at']>=registered and e.get('candidate_sha256')==digest
                     and e.get('config_sha256')==config and e.get('loaded') is True and e.get('config_unchanged') is True
                     and r['skill_sha256']==config['skill'] and r['runtime_sha256']==config['runtime']
                     and r['assistance']==('assisted' if manifest['human_feedback_used'] else 'autonomous'))
             for rid in ids:
-                if rid in byreset:byreset[rid]['stage']='stability'
+                if rid in byreset and byreset[rid]['protocol_kind']!='extended_learning':byreset[rid]['stage']='stability'
             sequence=0;uncertain=False
             for rid in ids:
                 r=byreset.get(rid)
@@ -137,12 +172,13 @@ def scorecard(matches,native,effective,candidate=None):
     groups={}
     for r in records:
         if r['disposition']!='valid' or r['stage']!='learning':continue
-        key=(r['period'],r['assistance'],r['variant'],r['control'],r['contract'])
+        key=(r['period'],r['assistance'],r['variant'],r['control'],r['contract'],r['protocol_kind'])
         groups.setdefault(key,[]).append(r)
     summaries=[]
     for key,rows in groups.items():
-        period,assistance,variant,control,contract=key
+        period,assistance,variant,control,contract,protocol_kind=key
         summaries.append({'period':period,'assistance':assistance,'variant':variant,'control':control,'contract':contract,
+            'protocol_kind':protocol_kind,'protocol_label':'完整学习合同（原生事件单列）' if protocol_kind=='extended_learning' else '原生终止合同（旧学习组）',
             'native':rate(rows,'native'),'semantic':rate(rows,'semantic'),'skill_versions':len({r['skill_sha256'] for r in rows}),
             'episodes':[r['episode'] for r in rows]})
     # Totals are inventory only. UI rates render separate condition/assistance groups.

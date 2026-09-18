@@ -97,7 +97,7 @@ def create_closed_door_backend(seed=0, *, settle_ticks=250, push_open=False, pd_
 
 
 def create_native_task_backend(env_id, seed=0, *, settle_ticks=250,
-                               door_frame_override=False):
+                               door_frame_override=False, saved_reset_options=None):
     """Preserve the native task's layout, object state and applied forces."""
     import random
     import numpy as np
@@ -106,7 +106,7 @@ def create_native_task_backend(env_id, seed=0, *, settle_ticks=250,
         raise ValueError('Native frame repair is scoped to CloseDoor')
     env = make_simple_env(env_id, door_frame_override=door_frame_override)
     try:
-        env.reset(seed=seed)
+        env.reset(seed=seed, options=saved_reset_options)
         runtime = env.unwrapped
         model, data = runtime.mjModel, runtime.mjData
         metadata = json.loads(METADATA.read_text())

@@ -68,6 +68,7 @@ class Dashboard:
         self.ikea_media=IKEAProgress(self.root/'ikea'); self.lock=threading.RLock(); self.cache=None; self.cached_at=0
         self.media={}; self.probes={}; self.records={}; self.json_cache={}
         self.simple_catalog=dict(CAMPAIGNS)
+        self.progress_clips=None
 
     def safe(self,p):
         p=Path(p); rel=p.relative_to(self.root); cur=self.root
@@ -168,6 +169,17 @@ class Dashboard:
                     rows[key]={'campaign':str(expected.relative_to(self.root)),'task':native,'episodes':[],
                                'discovery_source':oref}
                     break
+        # Current admission plus exact per-episode task/scene binding discovers
+        # independent environments without waiting for campaign aggregates.
+        from simple_breadth import admitted_campaigns
+        for folder, items in admitted_campaigns(self).items():
+            key=folder.removesuffix('-campaign')
+            if key in CAMPAIGNS:continue
+            native=items[-1]['env_id']
+            extra[key]=(TASK_NAMES.get(native,native),folder,1)
+            rows[key]={'campaign':str(items[-1]['path'].parent.relative_to(self.root)),
+                       'task':native,'episodes':[], 'bound_episodes':[i['path'].name for i in items],
+                       'discovery_source':items[-1]['sources'][0]}
         # Stable IDs derive from the validated basename; the original six IDs and order never move.
         self.simple_catalog.update(sorted(extra.items()))
         return rows,ref
@@ -295,6 +307,8 @@ class Dashboard:
             folder=self.root/'artifacts/R019'/campaign
             prog,pref=self.read(folder/'progress.json'); episodes=[p for p in self.files(folder,'episode-*') if EP.fullmatch(p.name)]
             campaign_doc=campaign_public.get(key,{})
+            if 'bound_episodes' in campaign_doc:
+                episodes=[e for e in episodes if e.name in campaign_doc['bound_episodes']]
             if key=='oven':
                 # One bounded extension, only after actual physical evidence. Preparation is not an attempt.
                 if prog.get('task') not in (None,OVEN_TASK):continue
@@ -467,6 +481,8 @@ class Dashboard:
                                     'scene':scene,'budget':budget,'ledger':ep,'evaluation':evaluation,
                                     'last_action_at':last_action,'actions':action,
                                     'order':last_action or (rref['at'] if rref else eref['at'] if eref else 0)})
+            scores=scorecard(matches,native,owner_ack.get('effective_utc','2026-09-16T12:28:40.091351+00:00'),candidate)
+            scored={(r['campaign'],r['episode']):r for r in scores['records'] if r['disposition']=='valid'}
             base={'id':'benchmark-'+str(index+1),'name':name,'native_env_id':native,'goal':1,'success':None,
                   'state':'unknown','state_label':'未开始 / 待适配（未见精确证据）','actions':None,'episode':None,
                   'source_at':mref['at'],'sources':refs,'last_action_at':None,'preview':None,'videos':[],
@@ -494,6 +510,10 @@ class Dashboard:
                 base['episode']=latest['episode'];base['sources']=original['sources']+refs
                 base['source_at']=max([v['at'] for v in base['sources']],default=None)
                 base['preview']=self.preview(latest['folder'],'simple-'+latest['key'])
+                from harness_view import episode_interface
+                base['episode_interface']=episode_interface(self,latest['folder'])
+                if self.progress_clips:
+                    base['progress_clip']=self.progress_clips.request(self,latest['folder'],'simple-'+latest['key'])
                 for match in reversed(matches):
                     video=self.completed_video(match['folder'],'simple-'+match['key'],match['result_ref'],
                                                'SIMPLE 连续物理录像；外部诊断视角与策略相机分开。')
@@ -528,6 +548,10 @@ class Dashboard:
                 base['recent_audit_note']=None
                 for prior in reversed(matches):
                     v=prior['review'];stages=v.get('independently_verified_stages',{})
+                    admitted=scored.get((prior['key'],prior['episode']))
+                    if name=='Handover' and admitted and admitted['semantic'] is True:
+                        base['recent_audit_note']=prior['episode']+'：完整学习成功已审计（交接、释放并稳定支持）；原生事件另列，不计正式180回合。'
+                        break
                     if (name=='Handover' and v.get('audited_task_success') is False and v.get('native_success') is True
                         and isinstance(stages,dict) and stages.get('release_and_supported_destination_placement') is False
                         and all(isinstance(stages.get(k),dict) and (number(stages[k].get('samples')) or 0)>0
@@ -536,7 +560,7 @@ class Dashboard:
                         break
                 base['summary']=f"{name} · {base['episode']} · 动作 {base['actions'] if base['actions'] is not None else '未知'} · {base['state_label']}。"+(base['recent_audit_note'] or '')
                 base['nav_label']=name+' · '+('历史已审计' if latest['audit'] else '已有物理记录')
-            base['scorecard']=scorecard(matches,native,owner_ack.get('effective_utc','2026-09-16T12:28:40.091351+00:00'),candidate)
+            base['scorecard']=scores
             targets.append(base)
         row['history_subtasks']=[dict(x,summary='历史 / 迁移记录：'+(x.get('summary') or f'{x["name"]}，历史审计成功 {x["success"] if x["success"] is not None else "未知"}；不计当前六项新测评。')) for x in historical]
         row.update(subtasks=targets,focus_acknowledged=acknowledged,focus_scope_registered=scope_registered,scope_notice=scope_note,
@@ -565,7 +589,15 @@ class Dashboard:
         note=('中央技能源码已发布；'+('运行入口已集成，下一自然边界加载。' if integrated else '运行入口集成待确认。')+
               ('首次物理加载待确认。' if pending else '首次物理加载证据未确认。') if published else '持续学习与中央技能发布状态待确认。')
         note+='旧 240 秒批次不回填新版五次准入；源码发布不代表物理加载或任务收益。'
-        return {'source_published':bool(published),'runtime_integrated':bool(integrated),'physical_load_confirmed':False if pending else None,
+        from harness_view import central_load
+        actual=central_load(self)
+        current=actual.get('current_publication')
+        if current:
+            return {'source_published':True,'runtime_integrated':current['runtime_integrated'],
+                'physical_load_confirmed':actual['current_load_confirmed'],'release_id':current['release_id'],
+                'at':actual['at'],'note':actual['note']+' 旧240秒批次不回填新版五次准入；发布不代表任务收益。'},actual['sources']
+        if actual['loaded'] is True:note=actual['note']+' 旧240秒批次不回填新版五次准入。'
+        return {'source_published':bool(published),'runtime_integrated':bool(integrated),'physical_load_confirmed':True if actual['loaded'] is True else False if pending else None,
                 'release_id':release if isinstance(release,str) and re.fullmatch('[a-zA-Z0-9_-]{1,80}',release) else None,
                 'at':pref['at'] if pref else None,'note':note},[r for r in (pref,iref,lref) if r]
 
@@ -969,4 +1001,6 @@ class Dashboard:
                 t['version']=hash_json(t)
             self.cache={'schema':1,'observed_at':time.time(),'poll_seconds':5,'tasks':tasks,
                 'notice':'来源超过 5 分钟未更新会标记陈旧；陈旧不等于执行停止。只有公开证据，未读取模型推理日志。'}
+            from psi0_goal import goal_snapshot
+            self.cache['psi0_goal']=goal_snapshot(self,tasks[0])
             self.cached_at=time.time();return self.cache

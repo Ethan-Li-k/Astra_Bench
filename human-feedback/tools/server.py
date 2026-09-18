@@ -12,6 +12,9 @@ from store import ROOT, Store, verify, now, digest
 from api_progress import APIProgress
 from dashboard import Dashboard
 from feedback_board import FeedbackBoard
+from harness_view import HarnessView
+from progress_clips import ProgressClips
+from simple_breadth import project as breadth_project
 
 MEDIA = {
     '/videos/simple-door-0008.mp4': ROOT.parent / 'artifacts/R019/door-campaign/episode-0008/video/episode.mp4',
@@ -63,6 +66,8 @@ def make_server(port, dashboard=None, feedback_root=None, fixture=False, deliver
     api = APIProgress()
     board = dashboard or Dashboard(api=api)
     feedback = FeedbackBoard(board, feedback_root, fixture, delivery)
+    harness = HarnessView(board)
+    board.progress_clips = ProgressClips(board.root/'human-feedback/dashboard-upgrade/harness-observability/media-cache')
     csrf = secrets.token_urlsafe(32)
     store = Store()
     verify()
@@ -76,6 +81,9 @@ def make_server(port, dashboard=None, feedback_root=None, fixture=False, deliver
     routes = {'/': ROOT / 'ui/index.html', '/app.js': ROOT / 'ui/app.js',
               '/simple-six': ROOT / 'ui/simple-six.html', '/simple-six/': ROOT / 'ui/simple-six.html',
               '/simple-six.js': ROOT / 'ui/simple-six.js', '/simple-six.css': ROOT / 'ui/simple-six.css',
+              '/psi0-goal.js': ROOT / 'ui/psi0-goal.js', '/psi0-goal.css': ROOT / 'ui/psi0-goal.css',
+              '/harness': ROOT / 'ui/harness.html', '/harness/': ROOT / 'ui/harness.html',
+              '/harness.js': ROOT / 'ui/harness.js', '/harness.css': ROOT / 'ui/harness.css',
               '/style.css': ROOT / 'ui/style.css', '/video-index.json': ROOT / 'ui/video-index.json'}
 
     class Handler(BaseHTTPRequestHandler):
@@ -135,9 +143,12 @@ def make_server(port, dashboard=None, feedback_root=None, fixture=False, deliver
                 if path == '/api/health':
                     self.reply(200, {'service': 'rsi-H001-human-feedback', 'pid': os.getpid(), 'evidence_valid': bool(verify()), 'mode': 'four_task_feedback', 'human_help_open': bool(feedback.cases()['cases']), 'fixture': fixture})
                 elif path == '/api/dashboard':
-                    snapshot = board.snapshot()
+                    snapshot = breadth_project(board, board.snapshot())
                     feedback.publish_packages(snapshot['tasks'])
                     self.reply(200, dict(snapshot, help=feedback.cases(), answers=feedback.receipts(), csrf=csrf, fixture=fixture))
+                elif path == '/api/harness':
+                    snapshot=board.snapshot();simple=snapshot['tasks'][0]
+                    self.reply(200,dict(harness.snapshot(simple),psi0_goal=snapshot['psi0_goal'],help=feedback.cases(),answers=feedback.receipts()))
                 elif path == '/api/feedback':
                     self.reply(200, {'answers': feedback.receipts(), 'fixture': fixture})
                 elif path == '/api/ikea-progress':
@@ -195,8 +206,10 @@ def make_server(port, dashboard=None, feedback_root=None, fixture=False, deliver
                     self.reply(413, {'error': '提交大小无效'}); return
                 payload = json.loads(self.rfile.read(size))
                 self.reply(200, feedback.submit(payload))
-            except (ValueError, OSError, KeyError, TypeError):
-                self.reply(409, {'error': '提交未被接受：检查任务、证据版本和回答内容；同一提交编号不可改写。'})
+            except (ValueError, OSError, KeyError, TypeError) as error:
+                reason=str(error) if isinstance(error,ValueError) else '本地保存暂不可用'
+                print(now(), 'feedback_rejected', type(error).__name__, reason, flush=True)
+                self.reply(409, {'error': '尚未保存：'+reason+'；原文保留，请按提示修正后提交。', 'saved':False})
 
         def log_message(self, fmt, *args):
             # Log routes/status only; submitted answers and CSRF token never logged.

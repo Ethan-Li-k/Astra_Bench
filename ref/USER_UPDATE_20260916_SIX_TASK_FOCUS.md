@@ -1,6 +1,6 @@
 # 用户新指令：暂停两支线，集中六类任务
 
-最新覆盖：先读 `ref/USER_UPDATE_20260916_ISAAC_CONTINUATION_API_AMO.md`。取消三行输出模板；API优先、辅助账号并行、禁止主账号新模型调用，共享预算60000 CNY；完整学习不因弱原生成功/累计上限提前结束；六入口全部并行推进，接实际Isaac策略RGB，新增下肢AMO＋上肢PD独立对照；IKEA只补渲染闪烁诊断。
+最新覆盖：先读 `ref/USER_UPDATE_20260916_ISAAC_CONTINUATION_API_AMO.md`。取消三行输出模板；API优先、明确API额度或共享授权预算耗尽后才辅助、禁止本地主账号 Codex Pro Lite 新模型调用，共享预算60000 CNY；完整学习不因弱原生成功/累计上限提前结束；六入口全部并行推进，接实际Isaac策略RGB，新增下肢AMO＋上肢PD独立对照；IKEA只补渲染闪烁诊断。
 
 最新榜单/网页要求优先读 `ref/USER_UPDATE_20260916_BENCHMARK_ALIGNMENT.md`：固定候选五次后每任务L0/L1/L2各10次，共180次正式测评；等级与代码参数须按真实环境配置核验，不能直接等同；网页5秒源事件更新并显示具体人工介入及处理回执。下文旧“冻结每项总计10次”由此覆盖，学习不中断及中央skill作者不变。
 
@@ -74,7 +74,7 @@
 
 SIMPLE supervisor `01a0a867-d7aa-71f2-8547-e264d6d09ede` 是唯一runner/共享core发布者：回复本协议ACK，在现有账本/页面增加门槛与冻结状态；最小实现冻结加载隔离及连续计数，并先用不同版本/不同入口/重复reset/新增测评经验等非法输入复现测试，再验证合法路径。不另建runner、watcher或大框架。实际启动下一轮后回传task_id、候选hash、reset_id与视频路径。
 
-架构辅助审查者 `01a0a94d-6143-74c0-80cd-03d0b61acaf0` 只提供候选审查与冻结泄漏检查；先修复其旧candidate里的Grasp待澄清、MobileCheezit替代及Handover漏放置文案，再验证入口总长。维护UI的既有owner只更新现有页面，不启动机器人。队列receipt和实际ACK分开记录；第二账号优先，不唤醒桌面主账号执行。
+架构辅助审查者 `01a0a94d-6143-74c0-80cd-03d0b61acaf0` 只提供候选审查与冻结泄漏检查；先修复其旧candidate里的Grasp待澄清、MobileCheezit替代及Handover漏放置文案，再验证入口总长。维护UI的既有owner只更新现有页面，不启动机器人。队列receipt和实际ACK分开记录；API优先，明确API额度或共享授权预算耗尽后才辅助，不唤醒本地主账号 Codex Pro Lite。
 
 依据：本地GPT-as-Policy的GPT-only/hybrid SKILL.md强调持久回合上下文、实际动作ACK、原生结束、保留完成阶段预算；RoboRSI的handover_block和verify_pick_complete强调技能阶段与验证门槛。借鉴结构，不引入其pi05示教策略、libero夹爪分类器或对象特权信息。
 
@@ -101,4 +101,4 @@ SIMPLE supervisor `01a0a867-d7aa-71f2-8547-e264d6d09ede` 是唯一runner/共享c
 SIMPLE supervisor 01a0a867-d7aa-71f2-8547-e264d6d09ede 负责六类调度、原skill复用与实际测评。
 架构辅助审查者 01a0a94d-6143-74c0-80cd-03d0b61acaf0 负责停工验证与六类skill/验收候选，不并发写共享core。
 UI原owner 01a0a980-7943-7963-9f36-b9c43c90c2da 只依据公开暂停/六类状态维护网页，不启动机器人。
-请各owner写SIX-TASK-FOCUS-20260916 ACK，列暂停边界/仍在途、六类映射、已有成绩与下一回合、加载skill版本和待确认入口。只走辅助队列/文件，不唤醒桌面主账号。
+请各owner写SIX-TASK-FOCUS-20260916 ACK，列暂停边界/仍在途、六类映射、已有成绩与下一回合、加载skill版本和待确认入口。使用本地文件交接；新模型任务按API优先顺序执行，不通过队列唤醒辅助或本地主账号。

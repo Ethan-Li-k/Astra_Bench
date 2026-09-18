@@ -1,3 +1,7 @@
+# 2026-09-16 预算上限覆盖
+
+共享累计上限已由10000提升为60000 CNY，每1500报告；原消费、未结算hold和报告记录保留。runtime与账本已迁移，发布/新进程加载证据见 `artifacts/R019/user-update-isaac-api-amo-20260916/budget-cap-60000/result.json`。以下旧10000上限与校准等待条款为历史，不能覆盖最新授权；此更新不恢复暂停的IKEA/ground任务。新入口可用 `python3 tools/coordination/shared_budget.py load-receipt` 查看实际本地加载版本，actor自己的启动回执仍需由owner记录。
+
 > 2026-09-16 门框修复登记更新：旧schema 1保留；新schema 2明确 `original_physics=false`，严格绑定唯一四box修复及证据。精确格式、未签发草稿和主控命令见 [新版格式](../../artifacts/R020/frame-override-receipt-format.md)。物理检查使用 `check --physical-only`，登记使用 `enroll --receipt ... --physical-only`；不涉及API或费用。0010/0011已完成主控审计与本次离线预检，仍待主控签发登记收据；0012未计入。本页下方“初始0”等为旧交付时点，当前登记数见 physical-gate-state.json。
 
 # R020：独立协调入口

@@ -28,6 +28,17 @@ def snapshot_memory(memory, destination):
     destination = Path(destination)
     destination.mkdir(parents=True, exist_ok=False)
     (destination/'SKILL.md').write_bytes(memory.skill.read_bytes())
+    context = memory.skill.parent/'CONTROL_CONTRACT.md'
+    if context.is_symlink():
+        raise ValueError('Policy context cannot be a symlink')
+    if context.is_file():
+        shutil.copyfile(context, destination/'CONTROL_CONTRACT.md')
+    for name in ('ROLE_CONTRACT.md','ambient-instructions.json'):
+        source = memory.skill.parent/name
+        if source.is_symlink():
+            raise ValueError('Ambient role input cannot be a symlink')
+        if source.is_file():
+            shutil.copyfile(source,destination/name)
     shutil.copytree(memory.root/'versions', destination/'memory/versions', symlinks=True)
     if memory.journal.exists():
         shutil.copyfile(memory.journal, destination/'memory/experience.jsonl')
@@ -39,6 +50,11 @@ def snapshot_memory(memory, destination):
     labels = {episode: {k: value.get(k) for k in
               ('task_audit_status', 'completion_contract_matches', 'audited_task_success')}
               for episode, value in labels.items()}
+    source_labels = memory.skill.parent/'retrieval-labels.json'
+    if source_labels.is_file():
+        selection = json.loads(source_labels.read_text()).get('selection')
+        if selection is not None:
+            labels['selection'] = selection
     (destination/'retrieval-labels.json').write_text(json.dumps(labels, sort_keys=True)+'\n')
     return file_hashes(destination)
 

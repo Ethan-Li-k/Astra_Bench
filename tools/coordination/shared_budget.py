@@ -22,6 +22,8 @@ OUT = ROOT/"artifacts/R020"
 POLICY = ROOT/"ref/tasks/api-budget.json"
 PRICING = OUT/"api-configuration.json"
 LEDGER = OUT/"shared-budget-ledger.json"
+RUNTIME_VERSION = "shared-budget-cap-60000-v1"
+LOADED_SOURCE_SHA256 = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
 
 
 class BudgetError(ValueError):
@@ -73,7 +75,15 @@ def policy_terms(document):
     require(document["currency"] == "CNY" and bool(document["authorization"]), "missing CNY authorization")
     cap = integer(document["total_cap_cny"], "cap", 1)*100
     interval = integer(document["report_interval_cny"], "report interval", 1)*100
-    require(cap == 1_000_000 and interval == 150_000, "unexpected authorized budget terms; review required")
+    require(cap in (1_000_000, 6_000_000) and interval == 150_000,
+            "unexpected authorized budget terms; review required")
+    if cap == 6_000_000:
+        override = document.get("latest_user_override", {})
+        require(document.get("previous_cap_cny") == 10000
+                and override.get("api_use_authorized_now") is True
+                and override.get("primary_account_model_calls_allowed") is False
+                and override.get("new_policy_file") == "ref/USER_UPDATE_20260916_ISAAC_CONTINUATION_API_AMO.md",
+                "60000 cap requires the recorded sixfold user authorization")
     require(document["renew_authorization_on_report"] is False, "reports cannot renew budget")
     thresholds = list(range(interval, cap, interval))
     require(document["report_thresholds_cny"] == [v//100 for v in thresholds], "inconsistent thresholds")
@@ -81,6 +91,54 @@ def policy_terms(document):
     return {"cap_fen": cap, "report_interval_fen": interval,
             "thresholds_fen": thresholds+[cap], "currency": "CNY",
             "scope": document["scope"]}
+
+
+
+def loaded_runtime(policy_path=None):
+    """Local load receipt only. No ledger mutation, provider/price/quota query."""
+    policy_path = POLICY if policy_path is None else policy_path
+    return {"runtime_version": RUNTIME_VERSION, "loaded_source_sha256": LOADED_SOURCE_SHA256,
+            "policy_sha256": sha(policy_path), "terms": policy_terms(load(policy_path)),
+            "paid_request_sent": False}
+
+
+def upgrade_terms(state, policy, policy_sha256):
+    """One authorized 10000 -> 60000 migration, called only under the ledger lock.
+
+    Request records, unknown holds, halts and existing report receipts are immutable
+    to this operation. Previously pending reports remain pending, including an old
+    final-cap event. A genuine old overcharge may require additional pending reports.
+    """
+    terms = policy_terms(policy)
+    if state["terms"] == terms:
+        return False
+    old = {**terms, "cap_fen": 1_000_000,
+           "thresholds_fen": list(range(150_000, 1_000_000, 150_000))+[1_000_000]}
+    require(terms["cap_fen"] == 6_000_000 and state["terms"] == old,
+            "only the authorized 10000-to-60000 transition is supported")
+    spent, held = totals(state)
+    require(spent+held <= old["cap_fen"] or state["halted"], "unexplained pre-migration overrun")
+    record = {"migration_id": "user-20260916-sixfold-60000", "at": now(),
+              "from_terms": state["terms"], "to_terms": terms, "policy_sha256": policy_sha256,
+              "requests_sha256": fingerprint(state["requests"]),
+              "existing_report_events_sha256": fingerprint(state["report_events"]),
+              "request_count": len(state["requests"]), "halt_preserved": state["halted"]}
+    require(not any(r.get("migration_id") == record["migration_id"]
+                    for r in state.get("policy_migrations", [])), "conflicting duplicate cap migration")
+    state.setdefault("policy_migrations", []).append(record)
+    state["terms"] = terms
+    for threshold in terms["thresholds_fen"]:
+        if threshold <= spent and threshold not in old["thresholds_fen"]:
+            key = str(threshold)
+            if key not in state["report_events"]:
+                state["report_events"][key] = {
+                    "threshold_fen": threshold, "status": "pending",
+                    "settled_fen_at_crossing": spent, "reserved_fen_at_crossing": held,
+                    "remaining_uncommitted_fen_at_crossing": terms["cap_fen"]-spent-held,
+                    "trigger_request": None, "trigger": record["migration_id"], "created_at": now(),
+                    "required_content": ["cumulative_and_remaining_cost", "task_progress",
+                                         "independent_success_counts", "failure_findings"]}
+    return True
 
 
 def evidence(ref):
@@ -318,7 +376,7 @@ class BudgetLedger:
         self.policy_path, self.pricing_path = Path(policy_path), Path(pricing_path)
 
     @contextmanager
-    def transaction(self, initialize=False):
+    def transaction(self, initialize=False, *, migrate_cap=False):
         # A stable sidecar inode: never lock the JSON inode that gets replaced.
         with self.path.with_suffix(".lock").open("a") as lock:
             fcntl.flock(lock, fcntl.LOCK_EX)
@@ -328,7 +386,13 @@ class BudgetLedger:
             terms = policy_terms(policy)
             if self.path.exists():
                 state = load(self.path)  # corruption is fatal, NEVER reset costs
-                require(state["schema"] == 1 and state["terms"] == terms, "ledger policy mismatch")
+                before = fingerprint(state)
+                require(state["schema"] == 1, "ledger schema mismatch")
+                require(state["data_kind"] == ("production" if self.path.resolve() == LEDGER.resolve()
+                        else "synthetic_offline_test"), "ledger data kind mismatch")
+                if migrate_cap:
+                    upgrade_terms(state, policy, sha(self.policy_path))
+                require(state["terms"] == terms, "ledger policy mismatch; explicit cap migration required")
                 spent, held = totals(state)
                 require(spent+held <= terms["cap_fen"] or state["halted"], "unexplained budget overrun")
             else:
@@ -336,14 +400,21 @@ class BudgetLedger:
                 state = {"schema": 1, "data_kind": "production" if self.path.resolve() == LEDGER.resolve()
                          else "synthetic_offline_test", "terms": terms, "requests": {},
                          "report_events": {}, "halted": None, "created_at": now()}
+                before = fingerprint(state)
             require(state["data_kind"] == ("production" if self.path.resolve() == LEDGER.resolve()
                     else "synthetic_offline_test"), "ledger data kind mismatch")
-            before = fingerprint(state)
             yield state, policy
             if fingerprint(state) != before or initialize and not self.path.exists():
                 state["updated_at"] = now()
                 state["policy_sha256"] = sha(self.policy_path)
                 atomic_write(self.path, state)
+
+    def migrate_authorized_cap(self):
+        with self.transaction(migrate_cap=True) as (state, _):
+            receipt = {"terms": state["terms"], "request_count": len(state["requests"]),
+                       "requests_sha256": fingerprint(state["requests"]),
+                       "policy_migrations": state.get("policy_migrations", [])}
+        return receipt
 
     def initialize(self):
         with self.transaction(initialize=True):
@@ -586,10 +657,12 @@ class BudgetLedger:
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     # Mutations of actual requests are library-only until a provider adapter is validated.
-    parser.add_argument("command", choices=("init", "status"))
+    parser.add_argument("command", choices=("init", "status", "migrate-cap", "load-receipt"))
     args = parser.parse_args()
     book = BudgetLedger()
-    print(json.dumps(book.initialize() if args.command == "init" else book.status(), ensure_ascii=False, indent=2))
+    result = {"init": book.initialize, "status": book.status,
+              "migrate-cap": book.migrate_authorized_cap, "load-receipt": loaded_runtime}[args.command]()
+    print(json.dumps(result, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

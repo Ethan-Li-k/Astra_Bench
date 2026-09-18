@@ -1,5 +1,8 @@
 'use strict';
 window.renderSimpleSix=(parent,snapshot,selected,choose)=>{
+ if(snapshot.simple_coverage?.active){document.getElementById('psi0-goal').hidden=true;document.getElementById('six-overview').hidden=true;return;}
+
+ window.renderPsi0Goal?.(snapshot.psi0_goal);
  const cards=document.getElementById('six-cards');
  const rate=r=>!r?.denominator?'未测评（0 个已完成样本）':`${r.numerator} / ${r.denominator} · ${r.percent.toFixed(1)}%`;
  const levelRate=r=>!r?.denominator?'未测评':`${r.numerator}/${r.denominator} · ${r.percent.toFixed(1)}%`;
@@ -25,7 +28,7 @@ window.renderSimpleSix=(parent,snapshot,selected,choose)=>{
   if(task.phase_report_at)line(card,'阶段上报：',stamp(task.phase_report_at)+' · '+age(task.phase_report_at),'fine');
   const current=s.groups.filter(g=>g.period==='current');
   if(!current.length)line(card,'当前学习：','未测评 / 无已完成审计样本','six-rate');
-  for(const g of current){line(card,'学习 · ',layer(g.assistance),'fine');line(card,'原生 ',rate(g.native),'six-rate');line(card,'完整审计 ',rate(g.semantic),'six-rate');if(current.length>1)line(card,'条件：',g.variant+' / '+g.control,'fine');}
+  for(const g of current){line(card,'学习 · ',layer(g.assistance),'fine');if(current.length>1||g.protocol_kind==='extended_learning')line(card,'合同：',g.protocol_label,'fine');line(card,g.protocol_kind==='extended_learning'?'原生事件 ':'原生 ',rate(g.native),'six-rate');line(card,'完整审计 ',rate(g.semantic),'six-rate');if(current.length>1)line(card,'条件：',g.variant+' / '+g.control,'fine');}
   for(const g of s.groups.filter(g=>g.period==='history'))line(card,`历史学习 · ${layer(g.assistance)}：`,`原生 ${rate(g.native)}；完整审计 ${rate(g.semantic)}`,'fine');
   line(card,'候选连续：',s.stability.registered?`${s.stability.consecutive??'待核验'} / 5`:'未登记 / 目标 5 次','fine');
   line(card,'正式测评：','每级计划 10 · 本项共 30 回合','fine');
@@ -46,7 +49,7 @@ window.renderSimpleSix=(parent,snapshot,selected,choose)=>{
   if(task.videos?.length)line(card,'录像：',task.videos[0].episode+' · '+age(task.videos[0].at)+'（不代表当前画面）','fine');
   const details=document.createElement('details');details.open=Boolean(open);details.append(text('summary','分层成绩、分母与历史记录'));
   line(details,'',s.definition,'fine');
-  for(const g of s.groups){line(details,'',`${scope(g.period)} · ${layer(g.assistance)} · ${g.variant} / ${g.control}`);line(details,'原生 ',rate(g.native));line(details,'完整语义审计 ',rate(g.semantic));line(details,'技能版本 ',`${g.skill_versions}；${g.episodes.join('、')}`,'fine');}
+  for(const g of s.groups){line(details,'',`${scope(g.period)} · ${layer(g.assistance)} · ${g.variant} / ${g.control} · ${g.protocol_label}`);line(details,g.protocol_kind==='extended_learning'?'原生事件 ':'原生 ',rate(g.native));line(details,'完整语义审计 ',rate(g.semantic));line(details,'技能版本 ',`${g.skill_versions}；${g.episodes.join('、')}`,'fine');}
   line(details,'固定候选：',s.stability.note);line(details,'正式测评：',s.frozen.note);
   if(s.legacy_frozen?.registered)line(details,'旧冻结批次（未对齐官方等级）：',`原生 ${rate(s.legacy_frozen.native)}；完整审计 ${rate(s.legacy_frozen.semantic)}，不计 L0/L1/L2。`);
   for(const r of s.records)line(details,'',`${r.episode} · ${scope(r.period)} / ${layer(r.assistance)} · ${r.reason}`,'fine');

@@ -1535,3 +1535,224 @@ SIX-TASK-FOCUS-20260916 ACK：已读最新六类范围及人工反馈全文，AG
 ### R019 六类精确映射更正 ACK 2026-09-16 12:43 UTC
 
 已重读最新范围第4条和原README六项表；此前暂定聚类ACK保留在supervisor-ack-before-exact-mapping.json。BendPick改为BendPickMP、Mobile P&P改为LocomotionPickBetweenTablesTeleop、Grasp确认为TabletopGraspMP，其余XMovePickTeleop/HandoverTeleop/XMoveBendPickTeleop。BendPickTeleop/Sim、MobileCheezit、R018木块仅相关变体/迁移来源，不算精确六项。BendPickSim2/MobileCheezit1完整收尾后不续开，XMoveBendPick3是精确入口的切换在途。未因错误映射新启动任何回合。MP先核查适配，不调用特权规划器/不换手型；不用近似变体补分。暂停两分支已由原owner核实。
+
+
+### R019 六类实测推进 2026-09-16 12:59 UTC
+
+XMovePick4独立seed4已真实动作/第二账号路由核验，复用v3/H001004，组合810/6158/5333；属于范围生效后新测评，非旧成绩复计。HandoverTeleop1按精确入口新reset，借用框架短共同入口并局部修正为右手抓持→左手承载保持→容器释放的完整语义，组合765/5650/4875；当时首动作尚待核验。V1候选其它映射过期，不整套发布，原候选/当前修复保留。ARCH长度、MEMORY-PRIORITY、相机合同既有真实验证保留，不重复旧补丁。
+
+MobileCheezit1完整65动作240.02秒预算结束，v1及连续视频已审；原027/029/065图像支持先抓起后在改变全身姿态时掉回源桌，完成搬运/放置未发生。相关变体收尾不续开，不算精确两桌入口、不算三次人工求助失败。18秒连续片段及原视频绑定保存。首审脚本因未设置PYTHONPATH导入失败，保留后以项目路径运行通过。
+
+MP原生初始化诊断两入口均存在完整命名关节，但旧Sonic runner不可直接复用：root名pelvis、地面z为负、14臂位置伺服/其余力矩执行器、2ms物理。首导出mj_saveLastXML不适合MjSpec生成模型，错误保留，v2改用spec.to_xml完成。最小坐标变换保持几何/相机刚体关系到2.3e-16m、质量惯量不变，像素光照差均值.44/max5，不冒称逐像素相同。BendMP全转力矩+checkpointPD在4.08s倾角25.14°停止；保留原生臂位置伺服+checkpoint腿PD8s不停止、最大8.63°，25mm腕探针实际约64.6/-14.5/26.2mm，仍有明显误差。只诊断，不计成功；下一限定对照补全模型/状态hash并检查TabletopGraspMP，未发布正式MP入口或改在途控制器。
+
+
+### R019 SIX-TASK-FIVE-STABLE-V1 ACK 2026-09-16 13:05 UTC
+
+已完整读取用户最新覆盖：各精确任务固定完整候选连续5次独立审计成功，随后预登记10回合冻结测评；旧各1次门槛过期，历史与当前四在途不倒签稳定性。AGENTS及five-stable-ack.json已持久化，当前稳定性全部0/5。冻结包含runtime/允许记忆与检索规则/反馈/资产/控制/相机/模型，并隔离终态skill_update建议；仅改文字不视为隔离完成。现有旧task_skill.py的3训练+5测评规则不适用本协议，不拿它当已实现。准备最小冻结读取与计数边界、非法输入复现测试；在途代码不变。
+
+MP限定对照：Bend两分支原XML SHA c8ddd66e...、完整qpos/qvel/ctrl/外力状态SHA daaf8a3a...一致，额外任务接触均0；native臂伺服保留的8秒站立对照优于全改motor4.08秒安全停止，仅此合同/初态可归因。Grasp默认训练臂姿初始腕桌穿透11.724mm、最大接触1831N；保留原生臂初姿后的相同native状态SHA cd96ca34...，8秒零任务接触、最大倾角3.862°，但25mm探针实际仍后移41.7mm，跟踪动态待核。原任务/桌位不改，无正式MP或新成功信用。
+
+
+冻结边界最小实现：rsi/frozen_skill.py新增固定公共memory快照读取、哈希完整性、候选隔离建议、不同task/version/reset拒绝、五连胜计数与独立10seed检查。基线真实复现原SkillMemory会改当前skill并读新增总结；首次red log仅模块尚不存在，明确不冒称行为复现。7冻结边界+3现有账本测试通过，非法建议先保存rejected再允许纠正，未破坏完整skill_update。当前尚未接入runner/全配置manifest/完整来源allowlist，任何回合都不标冻结或稳定性。
+
+
+### R019 13:52UTC：四旧队列收尾、首个低桌成功及冻结准入缺口
+
+XMoveBendPick3完整67动作236.58s，独立审计成功：最终盒底升高88.003mm，原点98.329mm，真实对向指承载且无非手支撑连续10.28s；065独立保持1.2s全部成立。原生8cm阈值、最终站立、原RGB与完整turn/v3均核验。583奖励数值及1采样成功标志差异保留，不冒称逐值重演。v3 SHA97513bfd...。旧队列学习成绩，不倒签五连胜。完整视频与连续末30s短片保存。
+
+Handover1完整47动作140.36s原生success，完整任务审计否决：右手019独立承载约1.48s、给予手清离后的左手043独立保持1.50s成立；047仍左闭合.38、触及容器后原生触发，最终未释放、无目的地独立支撑。末瞬时native_flag=false并不抹去此前记录的trigger；原始result未改。success_review=false和failure_review同时留证。下一reset2仅任务指导强调全盒/沿口余量与受控释放，原生判据/控制未修改；v1及短35s转交至未释放片段保留。
+
+BendPickSim2完整70动作240.76s预算、四次探针/保持无留握，相关变体收尾不续开。XMovePick4完整48动作240.12s预算，双手始终张开，低/向内可达姿态饱和，未包络/闭合/抓起；H001004保持，不把预算截断或不同失败混算同因。二者完整修订与失败审查已保存。
+
+冻结最小接入已加入原runner：公开memory/来源快照、引用改向、固定检索审计标签、终态建议隔离、版本/入口/reset/seed顺序检查、真实host审计绑定及动态账本计数。先前单独memory边界进一步接入；33项针对测试通过。实际XMoveBendPick4选择来源已指向封存副本，入口738/6022/5265；但真实thread/start额外自动加载RSI/AGENTS.md，候选0002未覆盖此源，准入审计明确否决稳定性计分，不倒填哈希、不截断物理。该回合仍完整turn/skill_update后保留物理结果与隔离建议；新源码变更会使旧候选末次完整性校验失败，属于已知配置资格缺口，不补造冻结收据。下一候选003已准备未封存，新增实际instructionSources逐项hash在turn前核验、运行环境包版本及CLI包依赖。候选001仅封存未发模型/无物理，因完善账本在启动前替代；保留所有原manifest。
+
+新独立XMovePick5学习(816/6175/5344，H001004)、精确MobileBetweenTables1学习(733/5638/4896)、Handover2学习(808/6043/5224)、XMoveBendPick4资格验证均已实际动作并核验第二账号Astra/xhigh及workspaceWrite/on-request+auto_review。没有重复旧reset或追加IKEA/地面任务。仍全部0/5稳定性、尚无冻结10回合。
+
+MP原生臂初姿下零/25mm同激活集对照：初态/模型hash匹配，5s前轨迹完全相同；腕x响应瞬态峰值26.1/45.7mm、末差仅1.54/5.60mm，不能仅终点判输入丢失，也不能认为已稳态跟踪。无任务接触/安全停止。追加目标/实测/原生执行器日志完整qpos逐样本与旧对照一致；原生1000/10位置臂伺服肩关节误差约.12–.17rad且快速摆动。raw actuator force超过joint cap不是关节实际超限证据，未记录钳位后qfrc不能混称。已登记最后一个明确对照：保持原生臂初姿，仅比较checkpoint力矩臂控制；原先motor诊断同时用了训练臂初姿，不能直接归因。MP尚未正式放行，诊断均不计成绩。
+
+MP最终匹配对照补充：原生臂初姿完全相同，只有臂位置伺服→checkpoint力矩PD；BendPickMP/TabletopGraspMP均完整8s站立/25mm参考，未停止且无任务接触，实际前移约12.23mm而非先前后移。允许选择这一配置进行最小MP适配，仍不计任务成功；保留余量误差。下一步是原生对象视图/奖励、根帧和录像绑定兼容测试，禁止继续参数漫扫。证据six-task-focus/mp-checkpoint-arm-native-init-review.json。
+
+### R019 / 2026-09-16 14:13 UTC — XMovePick5 audited; central v4 first live load, latest scope ACK
+
+- 已完整读取 SIX_TASK_FOCUS 的中央发布/学习不中断覆盖、BENCHMARK_ALIGNMENT、ISAAC_CONTINUATION_API_AMO 与最新 AGENTS。框架是唯一 skill 作者；本 supervisor 负责执行审计。180 正式回合只是计划，L0/L1/L2/Isaac实际输入尚未对齐；不把旧学习追认为榜单。已授权 API 上限现为60000，沿用负责人共享账本，本线程未查询余额/费率或发新付费调用。
+- XMovePick5完整35动作/156.52sim秒、终态推理及v5提案保存；独立审计成功，H001004语义辅助，learning非稳定性。原状态重建reset hash完全匹配，连续承载18.8s，独立保持032与034均4s，最终苹果全底面升高106.02mm。保存中间reward/flag采样差异，不声称逐值复现。证据 episode-0005/success_review.json、six-task-focus/xmovepick5-geometry/result.json，原连续录像156.56s。
+- XMovePick6新reset通过中央 v4 完整code/spec/feedback hash门禁后启动：release8bcedb699ddb702c08b751a9d8e134af6c8c938c2560b8fcc018cfefda475073。max_episode_steps=None、提案隔离；是否实际首动作单独验证。其他三在途保持旧已加载代码，无安全预算热调整接口；旧240s限制明确保留至自然边界，不能倒签新profile。
+- 两精确 MP backend实际站立/当前物体视图/摄像与原生手几何通过；forcePD保留native初始手臂姿势，世界统一平移不改相对几何。原生object velocity/外力保留，旧诊断清空速度差异已注明。接线/spec暂存 six-task-focus/mp-integration，不覆盖中央caller；中央release ready_for_load尚未放行。后续原生阈值和绑定核验单列。
+- 新ACK/MP文件协调已发既有框架辅助executor queue；主owner在第二账号无rollout，此次直接queue失败如实保存，不回退主账号；辅助receipt仅queued，不冒称ACK。未重发旧被拒CloseDoor/IKEA消息。
+
+### R019 / 2026-09-16 14:19 UTC — 180 existing configurations and target mismatch
+
+- 只读本机已有simple-eval精确六项每级10份meta/episodes.jsonl，180份均存在，无下载/无动作parquet读取。benchmark-existing-config-inventory.json保存来源hash、配置hash、因素变化计数；benchmark-180-plan.json只是待对齐计划，不是已执行或最终预注册。
+- 实际DR/layout目标：XMovePick=cracker_box0，但保存dr_cfgs仍写apple12；Grasp=chips_can10，默认入口学习为apple12。其余四项都是cracker_box0。不能根据旧声明字段或env_id把苹果学习追认为相同benchmark目标。MP草稿已注明这项依赖，中央发布辅助已queued通知，不冒称已ACK。
+- 三个level的材料、光照、空间字段都变化，目录整数不能单独证明官方等级协议；Task.reset原生options.state_dict路径已定位，原生TimeLimit来自评测wrapper/task metadata，50Hz tracker不能直接当该预算单位。Isaac真实策略RGB接入仍待框架，MuJoCo学习继续。
+- XMovePick6已实际执行5+动作，第二账号/model/effort/sandbox/auto_review及v4hash均验证；actual入口792/6028、预留794/6048/5239，max_episode_steps=None，不声称已跨旧240秒或终态提案成功。原子提案xmovepick5-public-atom-proposal.json等待中央发布；未改全局skill。
+- MP原生语义2tests+双入口subtests通过：29命名force执行器/限幅，单tick20ms与500Hz物理，原生9cm/1.8cm阈值，物体view重绑和named状态恢复。两场景0个actor/0任务成绩。暂存接线未覆盖共享caller。
+
+### R019 / 2026-09-16T14:25:45.889090+00:00 — XMoveBend4 complete; released learning5
+
+XMoveBend4现已完整：62动作240.06sim秒、完整turn、隔离skill_update fab36f283eb76a3139e5b58451f889f5dfbd40727610fcb3abccda2715e278d9，原campaign入口v3未覆盖。56到位超时/6target_reached，全程closure=0，末盒仍桌上；分类旧累计预算截断，未完成阶段为接近/低位可达/张手包络，不是闭合后掉物。final failure_review和原240.08s录像已保存。模型完成后固定依赖校验按预期拒绝代码漂移，result/proposal完整保留；初始ambient-source缺口已单独否决streak，不把该后验校验异常当额度/推理中断。
+
+完整审查后已启动同campaign新reset5（非旧轨迹续接），tmux simple-xmovebendpick-05-central-v4-0916，发布入口central-v4，phaselearning/no累计截止，不加载第4回合未发布提案。先确认首真实动作再报route实际生效。XMovePick6、Handover2、Mobile1仍在途；后三者中Handover2/Mobile1是旧12000步入口，无安全热调预算接口，完整等待不杀。
+
+管理自然交接前：XMoveBendPick5首2动作实际路由通过，reset c432441b-b63b-4151-bd81-39005082f800；入口750/6107，预留752/6127/5355；与XMovePick6同为中央v4/no累计预算。supervisor-state已原子写continue，旧state/handoff归档，当前四环境pid均存活，唯一watcher356018未改；全部完整等待，后续不重开已有环境。
+
+14:31更新/纠正：上条“当前四环境pid均存活”文字晚于实际快照，表述不准确；14:29真实快照已显示XMovePick6退出/result完整，现为三在途。XMovePick6新审计22动作107.48s，A20抬左踝参考无升足却tilt23.02，A21恢复18.26，A22重复tilt25.21越25deg安全线，非累计截止。failure_review与107.52s录像保存；proposal7cb2e1...隔离，中央v4入口hash未变。已queue中央修订，尚未开7；跨240秒仍未实际验证。state/handoff同步已纠正，旧快照保留。
+
+14:34中央v5自然边界交付已消费：SHA012ee9...，MP接线/正式readiness与Handover弱终止学习wrapper已发布，codehash核验通过。新BendPickMP1/GraspMP1以v5默认原生场景新reset启动，两个已loco_start，不计任务成功。使用只读发布task-spec，先审首实际动作；Handover2在途旧代码保持，待其完整终态后3才能验新wrapper。中央v5新增22成功源；XMovePick6安全反例晚于发布，已queued供后续审改，不无修改重开7。
+
+14:39真实MP接入回执：BendPickMP1 resetf4249998...和GraspMP1 resetcb771121...已实际action，account2Astra/xhigh/workspaceWrite/auto_review核验，预留入口752/5784/5023及744/5656/4903。只是正式学习首动作，0成功/非榜单。Handover2完整77动作240.36s、6010帧，公开0037/0077确认移交松手后盒回桌与末重抓未果，原预算截断；failure_review保存，与Handover1弱终止不是同因。Handover3新reset采用v5新完整完成wrapper/发布spec，首动作和跨native弱触发待验；不把两个接口加载称物理收益。
+
+2026-09-16T14:41:12.291233+00:00 自然管理边界：五个在途明确交接，最新state=continue/hand-off已更新，两个MP首动作已验证，Handover3已新reset用v5 wrapper、待首动作及跨native里程碑实测。没有杀模型、重放未知动作或重复主管；唯一watcher保留。全部原目标仍未完成，0/5稳定、0正式测评。
+
+
+### R019 / 2026-09-16T14:49:59.131057+00:00 — 六项继续 ACK 与 Mobile1完整失败审查
+
+已重读最新全局/六项/人工反馈至末尾/榜单及分工；60000共享预算由原owner维护，不查询。四个当前actor保留、唯一watcher未改。Mobile1完整57动作240.38s、48timeout/9到位；31抬盒、32转向失物，后续空手移动，240.4s/6010帧原录像已保存。完整v1提案8e17bc...，独立failure_review为旧预算截断，不混称无法继续的物理失败/三次同因求助。下一Mobile2使用中央v5新reset和maxNone，未发布提案不加载；不伪续旧回合。AMO独立候选工程交接已读，生产/真实物理仍待中央接线。
+
+
+### R019 / 2026-09-16T14:59:40.012055+00:00 — MP安全停止、Mobile2首动作与保存配置实测
+
+BendPickMP1完整15动作53.70s触25.215deg倾斜安全线，双手全open、未包络/抓持；failure_review保存，原生failure字段只是host配置终态，不能误称原任务终态失败。原0014/0015 RGB已审，53.72s/1343帧视频可读。提案4d2b51...隔离，published入口37675b...未变；首提案因引用agent/NOTES.md不在rollout证据域被拒，第二次自行纠正。此前中央消息误称超长，已生成更正。
+
+Mobile2真实3动作及第二账号Astra/xhigh路由核验，reset986a86e0...、实际入口749/5802/5044，预留751/5822/5062、中央v5、maxNone。Mobile1原连续28s摘录（视频108–136s）已保存，700帧/原速，无人工必答。原网页已发现Mobile1/BendMP1连续视频。
+
+限定配置核验：XMovePick level0首个保存状态实际编译cracker_box0，而cfg声明apple12；GraspMP实际chips_can10。dr_level=None保留完整spatial，原资产管理器按ID解析旧绝对路径到本地已有资产。两例零policy动作；native reset内部一个tick明确记录，不算attempt/成功。v1访问MP顶层mjModel及v2 numpy报告序列化错误全保留，v3修复报告后通过；不是环境故障，未改在线控制器。source配置不改，正式等级/控制初态/时间单位/Isaac尚待完整对齐。证据saved-config-reset-summary.json。
+
+
+2026-09-16T15:06:19.272358+00:00 GraspMP1完整27动作97.94s、2449帧97.96s，倾角25.803deg安全停止；全部open，无抓持。公开026/027已审、failure_review和ddcab637...隔离提案保留，原v5入口未改。两MP跨任务负迁移候选存mp-multistep-negative-transfer.json供中央审查，不当3次同因求助，不自行发core。XMovePick7改用现有正式v5新增episode5成功来源，首真实动作/新reset9f3e102c...及账号2路由验证，791/6020/5214；这不是v6安全修复或旧6续接。
+
+
+### R019 / 2026-09-16T15:12:50.341807+00:00 — XMoveBendPick5真实抓持审计通过，终态高度限制单列
+
+59动作234.44s，完整turn与e214417...隔离提案。原生8cm事件真实出现于059，原点峰值85.98mm，18.38s对向承载/无非手支持，055/057独立保持各2.5s。原0057/0059 RGB及5862帧234.48s视频已审，同seed完整qpos/qvel hash匹配的几何重建不是新attempt。最终仍握持，但原点降至74.35mm、盒底70.89mm，即时native_flag已false；本审计按现有task-spec高度达到+独立安全留握计学习成功，明确terminal_height_threshold_satisfied=false，不冒称8cm终态保持或五连胜。1030奖励及1标志重算采样差异保留。无人工反馈/示教；未跨旧240s。中央收到该限定边界后再决定经验晋升。本task审计学习成功共2，固定候选仍0/5。下一6用已发布v5新reset，episode5未发布提案不加载。
+
+
+### R019 / 2026-09-16T15:21:54.213529+00:00 — Handover3首个完整学习成功及弱事件连续性实测
+
+53动作185.24s，完整turn/proposal2963c3...；独立success_review通过，原手交接→目标容器释放全部完成。原生事件action50时完整结果仍in_progress，同reset继续51/52/53，额外9.22s真实物理后task_success。右独持026为1.5s、左独持038为3.5s，最终独立容器支持且无机器人接触2.18s/110样本，位移最大0.731mm/旋转0.002418rad。几何重建初态全hash一致，COM/底部顶点在basket足迹内且底部低于最高沿40.89mm，原0051/0053相机图支持下端入容器，最终几何仅basket接触。凸足迹非全体积证明的限制保留；不声称withdraw动作、Isaac或RTC。无人工反馈/示教，原生标准不改，扩展学习wrapper区别于原生榜单。4632帧185.28s完整视频和末40s短片保存。此为首个Handover完整审计成功，稳定性仍0/5；未跨旧240s。
+
+中央前工程turn.completed及无同thread进程已核验，依用户明确授权通过原account2 launcher接续同一01a0a94d，rsi-central-followup-1516；不新建作者/物理调度。优先两MP反例与新成功中央发布，AMO46项离线候选已ACK但还需独立recorder/场景/Isaac/实际动作验收。
+
+
+### R019 / 2026-09-16T15:33:53.439539+00:00 — 自然管理边界与新Isaac工程回执
+
+五个新增终态review已完成；三后继真实在途接管信息已原子写state=continue并归档旧快照，唯一watcher未改。中央原owner同线程续交正在v6证据审查，不并发resume。Isaac15:24工程回执已读：独立同reset一新动作/两完整APIturn实际Isaac附件+封口视频验证，0任务分；当前三个学习仍MuJoCo，已queued中央发布与原renderer新reset租约协调，queued不等于加载。AMO中央离线候选已ACK，实际物理/独立recorder仍待。账本生成器只纠正MP已接入/旧候选状态文案，不改controller/actor。
+
+
+### R019 / 2026-09-16T16:17:26.819109+00:00 — 新目标ACK、XMP7完成、MP分离实测与接续准入复核
+
+已读最新CURRENT_EFFECTIVE_CONTRACT及PSI0目标，ACK artifacts/psi0-goal-20260916/simple/ACK.json：完整180>=155是最终门槛，五稳只准入，formal0。XMP7完整独立留握抬升审计成功，辅助学习，视频169.36s及30s连续片段保留；Handover4新v6实际route/入口长度已验。Mobile2同reset跨240s，XMB6也继续过240s。MP A/B完成，Grasp关闭PI降低对臂耦合却加重主腕超调，不晋升；Bend局部小探针不代表完整低位接近。原生保存config下目标/settle两实测通过，首版capture目录故障保留，MP世界平移差已单独校正。native协议README双CLI来源/时间单位及180配置约束落盘。接续release f39ee950收到/hash核对，但四个合成协议红例仍eligible，已ACK不加载并交原owner；旧watch/三个actor继续，无重复模型。全部细节/证据与明确下一步见 ref/ACCOUNT2_LIVE_CONTINUE_20260916.md。
+
+Handover4新增实际连续性证据：45动作处finish_attempt返回rollout_finished=false，随后46–49四个物理动作完成；同reset7679836f...，非仅接口单测。见artifacts/psi0-goal-20260916/simple/handover4-stall-continuation.json。16:17:59最新在途：Mobile2 128动作386.46s、XMB6 74动作282.46s、H4 49动作159.74s，均无result，继续原进程，state=continue；不是complete。
+
+
+### R019 / 2026-09-16T16:42:32.115237+00:00 — 稀疏模式真实物理对照与现行合同续接
+
+已ACK现行六项/155-of-180合同和既有finish gate修复；未重改旧>=3规则。三个原actor继续，H4实测finish45后续行动并同reset跨240秒。状态writer新增written_ns、下一实际边界、actor PID/start_ticks/boot与终态路径；原watch未改，旧快照/源码备份保留。
+
+本轮新诊断3个独立reset同全qpos/qvel初态hash：UMI-4/Pelvis-1/Mobile-7均8秒站立通过；后两20cm参考实际仅前进43.994/37.141mm，未达10cm准入所以不叠加turn。实际ONNX29目标/命名PD、整脚几何50Hz审计和3段连续8.04/12.04/12.04秒录像齐。所有足底碰撞geom至少一处仍与地面重叠；P1双腕峰值17.46/13.11cm是持物负迁移候选。排除纯UMI mask即充分原因/此次静态前路碰撞，未排除其他动态参考/原生站姿；不声称模型不能行走。REVIEW和中央queue见psi0-goal/simple/sparse-mode-probe-01。下一不扫参，等待原中央AMO root修复后对照；不计任务/人工三次失败门槛。
+
+v7接收和9文件最小hunk写权ACK完成；检测中央已被原owner恢复，guard拒绝重复模型。v8短role metadata预检新通过但发布/物理未准入，不能报加载。API工程公开输入草案仅公共阶段投影，操作审批未绑定、不填虚假approved；四工具合同冲突与回执接口已queued原fallback。完整180正式仍未运行，非complete。
+
+
+### R019 / 2026-09-16T17:20:31.287979+00:00 — AMO真实离地但站立不准入；真实API操作接线与最新首发顺序
+
+本轮完成独立AMO真实物理诊断，原三回合继续。AMO source最小副本修正自由根检查、最后安全tick记录和约1e-21rad原生finger初值舍入；旧source/旧两次零动作拒绝保留，5项针对测试通过。diagnostic-0003为新独立reset，真实CUDA500ticks/10s，不是actor任务。零导航8s峰漂移1.687m、tilt23.914deg、minroot.619m；左右整脚最大clearance102.58/75.76mm且38/53个50Hz采样>1mm。证实该独立控制下确实离地，不证明UMI能行走或AMO可控搬运。脚本漏5cm/yaw站立准入导致后2s前进/停止执行，已明示protocol_deviation并修复未来准入（真实坏trace+3合成检查通过），未删改旧结果，不再扫参。连续视频10.04s/251frames25fps和geometry审计齐，REVIEW、candidate.patch、原版及测试在simple/amo-root-candidate。
+
+新版goal gate四个旧红例已拒且production拒synthetic，v2/v3接续源码与真实public刷新已核验。通过正常exec工具真实安装3个精确原reset终态核对操作，完整输入/返回chunk8e8548/0a4819/651b45保留，未自填approved；production supervisor-api-tools.json及api-binding-validation/result.json已落地，0付费/模型/物理。权限仅这3终态核对，不等于任意后续launch获准。
+
+中央v8/v8.1集成/发布已接收但API管理依赖又漂移，新actor0/reset0，未绕hash创建空episode。核实中央原完整turn结束/无进程后17:14:38沿原review-run.sh续交同一线程；随后完整读到API_FIRST_DAGGER最新要求，记录该一次辅助账号启动顺序偏差，完整等在途，不再新辅助turn。新合同API-first、同完整候选10审计成功+5连胜后才降学习频率，正式180不变；精确原文hash ACK见API-FIRST-DAGGER-ACK.json。原fallback已确认暂停旧错误首发路由，PAUSE不杀3actor；helper因PAUSE自然退出，故未写watcher_upgrade_boundary/未冒称新listener加载。原owner在实现新API-first顺序和唯一listener恢复，需准确本管理PID3249453/current log绑定，不能复用active-supervisor旧PID292946。
+
+17:18快照：Mobile2 217动作659.94s，XMoveBend6 132动作500.76s，Handover4 108动作329.08s，均原reset、无result、继续完整推理。H001004已按原文hash2aa49674 ACK，实际消费边界是XMP7新reset，不热注入当前。六项五稳0、正式未测；历史door10成功保持不重做。已有视频页公开阶段已刷新，当前MuJoCo并非Isaac/RTC。
+
+## SIMPLE主管自然边界 2026-09-16T17:55:33.816856+00:00
+
+XMoveBendPick6完整结束并通过独立学习审计：142动作、526.96模拟秒；末帧native原点抬升80.728mm，整盒底部比初始升73.364mm，带对向受力指的无桌面支撑连续19.62s，预阈值单独hold138/140分别2s/4s。完整turn与skill proposal齐；原始26,349轨迹样本和527s连续视频保留。保存状态重建仅作审计，非新attempt；数值reward重建1,602项小差异原样记录。不宣称终态额外dwell、持物行走、五稳或正式成绩。XMB学习审计累计3，Handover1；官方cracker目标XMP0，旧apple辅助成功单列。六任务当前冻结候选信用均0，正式未运行。
+
+中央v8.2真实40源码pin准入后启动唯一新BendMP2，初态reset4424f6d9-b615-47f4-bfc0-c9b572827cd8。实际normal exec审批3f9311通过，保留精确26公开输入/工具/指令binding。随后在任何API请求/动作前失败：same_reset_api.check_live把LiveSim.closed（Dex3闭合目标numpy数组）误当closed生命周期bool。原caller已自然cleanup，0API请求、0动作、无skill_update，分类基础设施不计能力失败。无旧reset伪续、无重发、无重复空episode。无物理红复现已保存；隔离候选5测试通过，公共源码未改，原中央已结束，后续queued消息不冒称ACK。中央须经API-first渠道接续发布后才允许独立新Bend3。
+
+训练分配小工具9测试通过，分别记录兼容目标/控制/反馈cohort累计训练成功和当前任务真实依赖候选成绩；基础设施/预算/未封口排除近期能力失败分母，所有原记录保留。当前各项均不具备降频条件，正式180计划不自适应。H001基线完整复现报告已消费，不占物理槽、不加成功或三次失败数；003/004已回答的抓法高度不再提问。
+
+管理API-first v4（08272509…）17源码hash全匹配、6项路由/输出边界独立复验通过；新唯一helper3665862等待本管理turn自然结束及原锁释放。三个原终态操作按v8.2源码实际重新审批（9881a5/e89a70/a23d84），公开动态刷新验证通过；配置只覆盖原终态核对/刷新，不授权任意工程shell/新任务。实际管理API尚未请求，物理API也未请求，不混报切换。Mobile2/Handover4仍原reset活着，后续完整等待，不设墙钟/动作/累计秒截断。
+
+证据：simple/xmovebendpick6-geometry/result.json、R019/xmovebendpick-campaign/episode-0006/success_review.json、simple/bendmp2-closed-red.log、simple/api-lifecycle-candidate/、simple/learning-allocation-current.json、simple/api-binding-validation-v82/result.json、simple/api-first-v4-independent-tests.log。
+
+## SIMPLE-BREADTH-20260917 管理接续 2026-09-17T04:52:01.118460+00:00
+
+本节覆盖以下历史六项/巩固/180调度文字。用户已改为 SIMPLE 简单相似任务一次完整审计成功覆盖；API 停用，仅隔离辅助20x Astra/xhigh，禁止主账号。13个精确任务/学习变体已有审计成功，全部退出新重试队列；不称13/60，当前91注册入口仍须按任务与变体映射。旧正式180/155目标暂缓，未完成。
+
+- 下一任务：`simple/G1WholebodyHandoverSimToRealTeleop-v0`，当前已ACK、预检中、未加载/未启动物理/未成功。复用Handover3右手抓持→接收手独立保持→释放稳放的条件经验；不用原坐标或live历史。
+- 原中央01a0a94d确认旧turn已结束且进程不存在后，已通过隔离账号恢复一个最小准入回合；原共享writer不变。现有独立预检助手正准备两个相似入口，主管不重复预检。此工程启动不是物理启动。
+- Handover4原reset仍保留，PID2804371/start_ticks2379479；已有用户停止文件由原UI协调方写入，等待原推理/执行边界消费，不重发请求或重置。最新公开状态以episode/public-progress.json为准。
+- Mobile2已经完整终止：615动作、2149.78模拟秒、失稳停止、skill_update完成，未成功；不再沿用历史“running”。该困难任务暂缓。
+- 推门历史完整审计10次保留；[最新完整连续视频](http://127.0.0.1:8765/media/simple-door-episode-0020-1789557962243404040.mp4)。[Handover3连续视频](handover-campaign/episode-0003/video/episode.mp4)为可复用成功来源，非新结果。
+- Psi/AMO用户所指成功配置待精确来源核实；旧失败候选不等同该方案。本主管不为控制研究延迟简单任务。
+- 当前唯一主管tmux `simple-breadth-supervisor-0917`沿用原watch.lock；不新建watcher、不改网页写域。细分状态见 `simple-breadth-20260917/supervisor-status.json`。
+
+
+Handover4状态更正 2026-09-17T04:52:58.509287+00:00: 外部协调方user_stop已确认，host进程不存在，视频2104.56s/52614帧可解析；无result/完整终态，不补造。证据 artifacts/R019/simple-breadth-20260917/handover4-boundary-recheck.json。
+
+## SIMPLE-BREADTH-20260917 实际新回合 2026-09-17T05:09:44.464754+00:00
+
+最新策略：简单相似任务一次完整审计成功即退出。13个精确任务或历史学习变体已有成功并退休；不是13/60正式成绩。困难任务暂缓，5～10次巩固与180正式测评暂停且未完成。API停用，禁止主账号。
+
+- **正在执行**：HandoverSimToReal `episode-0001`，tmux `simple-handover-sim-01-0917`。新reset `bb1bc3f1-c8db-4d85-b34b-c925cb437da9`；host PID4006012/start_ticks7174140；第二账号run.sh app-server实际返回Astra/xhigh、workspaceWrite、on-request/auto_review。
+- **实际物理**：已完成4个动作，累计16.20模拟秒。第1动作抬手到位，误差8.74mm；随后姿态跟踪超时、无安全停止，actor继续自主修正。动作级超时不是整回合失败；完整交接尚未证明，新增成功0。
+- **加载**：中央v8.8 SHA `562e7687b8e5734423e54ee77b0c1cfd8840587b5fffab8f22f7d16e8487c3e1`；完整组合719 words/5873 chars/5145非空白；技能SHA `3a0e2fbeb18f018b0a61a18d9afc8aec7e7274047d1a342b6d2205a0b723646a`。23项回归、两任务真实runner准入通过；构造器任务ID遗漏在启动前已修正。
+- **图像/视频**：MuJoCo当前RGB，物理在推理时暂停，非Isaac/非RTC。新连续录像 `handover-sim-campaign/episode-0001/video/episode.mp4` 正在记录，尚未封口，不冒称完整可播放。[历史Handover3连续视频](handover-campaign/episode-0003/video/episode.mp4)为复用成功来源。[推门最新完整连续视频](http://127.0.0.1:8765/media/simple-door-episode-0020-1789557962243404040.mp4)，历史审计成功10次。
+- **下一项就绪**：HandoverPlaceBackSimToReal，未启动。第一项是giver释放后左手独立持稳；第二项另需放回原桌并双手释放稳放。两者均无篮筐，不套用旧basket结束条件。
+- Handover4由外部协调方按新策略停止，本主管未杀进程或重发。PID已退出，连续视频2104.56秒可解析；无完整result/turn终态，单列用户停止/未完成，不补造skill_update/成功。Mobile2已完整结束：615动作2149.78秒，失稳停止，未成功并暂缓。
+- Psi/AMO所指成功配置待精确来源核实，未使用旧失败候选冒充，不阻塞SIMPLE新任务。本主管不修改网页写域。
+
+
+
+## R019 2026-09-17 原主管新管理回合：HandoverSim独立审计与并行接管
+
+- 原watch.lock由当前一次性wrapper PID123794持有，原主管01a0a867持续执行；无新watcher。最新版简单相似一次成功覆盖及辅助账号双环境并行已ACK，API/main禁止。
+- HandoverSimToReal ep1独立审计通过：28动作、79.24模拟秒、唯一reset bb1bc3f1-c8db-4d85-b34b-c925cb437da9；完整Codex终态和skill proposal；原视频1982帧/79.28秒全解码。3963保存状态仅mj_forward重建、mj_step禁用，无新增reset。右手独立持物28.36秒，末段右手完全脱离、左手独立承载3.92秒，终态盒底高于桌面78.9mm。success_review及哈希已保存，该精确任务退休。当前14个任务/学习变体、27个历史审计成功，不是14/60正式成绩。
+- 控制归因发现原轨迹已有腕PI非零项，最大7.5Nm；按完整原发布/实际轨迹记录，不声称纯PD，不安装/应用旧待批准PI包。
+- 本地v8.8 PlaceBack启动在任何intent/reset前被源码哈希漂移拒绝，证据placeback-preflight-hash-failure.json。随后原root发布v8.9.1并启动PlaceBack ep1，原主管接管：PID167547/start_ticks7564572/reset de0d11dd-3820-4370-9d99-ce84922e47f9，实际account2 Astra/xhigh和首动作已记录。未重复启动。
+- 中央v8.10 BendHandover准入已消费并精确hash ACK；root启动实际输出bendhandover-campaign（不是中央建议但未使用的bend-handover-campaign），PID208077/start_ticks7600813/reset a9188813-eb8c-4dd0-82b3-9655425a46e7。完整组合746 words/6108 chars/5354非空白，首动作已核验。两路当前均未封口、未加成功，等待完整推理与复盘再审计。
+- 成功条件化原子单次queue给原中央，回执成功排队，尚不等于ACK或发布；public提案没有host对象/接触真值或世界坐标。
+- 抱容器候选源码另含跨桌抱持行走，不作为简单静止交接任务贸然准入。候选只读筛选，无模型/reset/任务分母。
+- 原始结果/录像不改，公共campaign_audit和task-evaluation-status按原始来源重建，PROGRESS及本轮supervisor-status更新；未修改human-feedback网页写域。
+
+证据：artifacts/R019/simple-breadth-status-20260917/；artifacts/R019/handover-sim-campaign/episode-0001/success_review.json；artifacts/R019/simple-parallel-coverage-20260917/SUPERVISOR-CENTRAL-CONSUMPTION.json。
+
+
+### BendHandover1 完整终态审计（本管理回合内）
+
+26动作/115.72模拟秒后，原25°躯干倾斜安全线在25.092283°触发 diagnostic_stability_stop，终态高度0.759m；完整turn/completed、skill_update和2894帧/115.76s视频已封口。独立重建5787状态无物理步进：右/左独立抓持跨度均0，盒子仍支撑于原桌、未接触目标容器。非额度/时限/3动作提前退出；8次finish_attempt均返回继续，实际同reset到26动作。失败归档canonical failure_review/success_review(false)，不放宽安全线。无已验证低成本修正，按简单覆盖先暂缓第二次；候选skill SHA73a41b72d597c282c5db68dfc71d48684d670278397858729c5886e759d882f0仍未发布。新失败和暂缓提案已单次queue中央，ROOT文件交接已保存。PlaceBack1仍在途，主管继续本管理回合等待封口并审计。
+
+
+## 2026-09-17 2026-09-17T07:25:58.512959+00:00 — BendHandover2 v8.11完成审查
+
+6动作/22.86模拟秒后progress_actor_stall；完整turn/skill_update与572帧录像封口。1144保存状态独立几何复核未见右手独立抓持、左手承载或容器释放。最大倾角11.774°、最低高度.7851m；属于未完成主动停滞，不能记物理失败。HandoverSim1成功原子及空手调姿反例确已选用；新版simulator_supervised_progress_learning单列，不与旧回合合并作因果结论。唯一授权修正复试已消费，暂缓第三次。证据：artifacts/R019/bendhandover-campaign/episode-0002/failure_review.json。PlaceBack1仍原reset持续执行，不热改。
+
+
+## 2026-09-17 — Variant1原生AMO准入与真实模型接通
+
+原中央01a0a94d两轮工程均通过完整turn/exit0后接续。首次原生预检0控制tick因录像初帧目标字段缺失终止；7项局部红绿后修复，原证据保留。唯一preflight02在独立reset9427f12e-c095-486b-81a7-77bbba586ab1完成10s/500tick，8s站立最大漂移17.04mm、上抬10mm实测7.466mm；没有完整抓取或新成功。独立保存状态几何审查501唯一状态，原502行首态重复不加时长，苹果仍桌面支持。
+
+v8.12发布sha6a65dbfcb98f75b5c6acdb4068f40d337f7639587191604e75e188b9cb4547cc，69源码/311公开/61原生依赖hash匹配。17实际输入文件，组合714words/5723chars/5001非空白。首个Variant1MP学习回合独立新启动，真实thread/start ACK 01a0ae7d-6d22-7ad3-9e06-e0a97efb129f，account2 Astra/xhigh/workspaceWrite/auto_review；API与主账号停用。尚未以启动计成功，继续等首动作及完整终态。PlaceBack原回合保持活跃，不热改。证据：simple-breadth-status-20260917/v8.12-consumption-ACK.json。
+
+
+### 2026-09-17 Native Variant1 v8.12 实际首轮封口审计
+隔离辅助20x Astra/xhigh实际执行8动作、12.52模拟秒（初始化9秒另计）。前7步到位，第8步25mm上抬超时，苹果落地并整体退离桌边。1077独立保存状态+21.56秒/539帧完整视频审计，无对向单手离支撑保持。完整turn及隔离skill proposal已保存；分类incomplete_voluntary_stall、动作级抓取失败，非成功/跌倒/预算截断。调用与RGB绑定已验，原生AMO15+手臂IK实际运行，不代表全成功Psi/AMO方案。证据`artifacts/R019/tabletop-grasp-variant1-native-amo-campaign/episode-0001/failure_review.json`；中央候选回执`artifacts/R019/simple-breadth-status-20260917/variant1-central-outcome-handoff.json`。PlaceBack原reset继续，不热改。
+
+
+### 2026-09-17 v8.13最后一次Variant1修正尝试实际加载
+原中央完整turn/exit0后，审核并消费`central-variant1-outcome/HANDOFF.md`。69源码/315公开文件/61原生资产hash匹配，运行代码及其他任务条目不变；修正闭合后拇指对向及整手支持面不确定度判据，不声称缩短lift已解决退移。一次性launcher启动episode0002，reset `7cba9457-ca6e-4880-adc6-9fd150978b91`，PID1079184/start_ticks8625589，初态qpos/qvel hash与ep1一致但独立reset。实际隔离20x Astra/xhigh应答及757 words/6076 chars/5311非空白已验，组合hash `69c0694bbac358d7f6e5f0c11dc44a3fb376bfa78a9d875ec537df71e4d0fd4e`；此处只记加载，物理/成功另审。PlaceBack原回合继续。
+
+
+### 2026-09-17 Variant1 episode0002完整封口与暂缓
+3动作、7.60任务模拟秒，完整turn/skill_update。v8.13从首次接近启用腕姿保持，前2段2.14/2.90mm残差；25mm下降只实现6.17mm，20.28mm残差、IK未收敛，未建立包络，actor主动延期。831独立保存状态与416帧/16.64秒全视频审查：苹果一直桌面支撑，无手接触、闭合、抓持或抬升。原reset独立且初态hash与ep1相同；不把主动未完成写安全/物理失败或成功。两次机会耗尽，暂缓，不开第三次/换同机制变体。审计`artifacts/R019/tabletop-grasp-variant1-native-amo-campaign/episode-0002/failure_review.json`；原中央公开回执`artifacts/R019/simple-breadth-status-20260917/variant1-episode2-central-outcome.json`。PlaceBack1继续原冻结回合。
+
+
+### 2026-09-17 PlaceBack在途前缀独立审查，不是终态
+仅复制原reset至action183的不可变保存状态前缀，38134状态；make_simple_env只编译保存布局，mj_step被禁止，无新reset/策略调用/成绩。右/左独立持物区间均0，183末仍桌面支撑且手已脱离；不能将局部可见底边抬高或未持物的table_release几何布尔当作完整任务。审计`artifacts/R019/simple-breadth-status-20260917/placeback-action183-prefix-review.json`。原actor随后继续至191动作，新一次闭合中；不截断、不热改、不喂host真值，后续仍需完整终态审查。
+
+
+### 2026-09-17 PlaceBack1用户停止的完整证据审查与归因更正
+192个唯一闭环动作、791.42任务模拟秒；195次动作工具调用中的3次在执行前被校验拒绝，全部回执可核，没有未知物理重发。39,572保存状态独立几何审查无右/左独立持物跨度，最终仍桌面支持；原视频19,786帧/791.44s完整解码。没有turn/completed或skill_update，原始result/log/video保持。初见EOF曾暂归基础设施中断；随后消费root的user_stop.json、停止进程证据与最新COVERAGE_CORRECTION，现正确分类为user_requested_stagnation_stop / user_stopped_incomplete，不计物理失败或成功，旧判断版本保存在before。原主管未发终止，但root明确按用户要求结束该长链。
+最高优先级Mobile原盒子抓起前不能转身搬运的网页反馈已精确hash ACK，未追认旧回合使用。当前原中央正在完成候选，root准备Variant3MP/近容器PickNPlaceVariant1MP两路；预检不是物理actor成功，不重复启动中央/actor。证据：simple-breadth-status-20260917/coverage-correction-ACK.json、handover-place-back-sim-campaign/episode-0001/user_stop_review.json。

@@ -6,6 +6,9 @@ import time
 from pathlib import Path
 
 from rsi.policy_harness import tool_specs
+from rsi.actor_inputs import verify_actor_inputs
+from rsi.episode_continuation import ClosedNetworkNoProgress
+from rsi.actor_quota_boundary import CodexQuotaBoundary, quota_terminal
 
 
 def _brief_receipt(record):
@@ -59,7 +62,7 @@ class CodexPolicyAdapter:
 
     def __init__(self, transport, host, workspace, *, developer_instructions,
                  model='gpt-6-astra', effort='xhigh', model_provider='openai', timeout=900,
-                 normal_tools=False, terminal_callback=None, expected_instruction_sources=None):
+                 normal_tools=False, terminal_callback=None, expected_instruction_sources=None, input_manifest=None):
         if model != 'gpt-6-astra' or effort != 'xhigh':
             raise ValueError('Global constraint: always gpt-6-astra/xhigh')
         if not isinstance(developer_instructions, str) or not developer_instructions.strip():
@@ -76,7 +79,8 @@ class CodexPolicyAdapter:
         self.model_provider = model_provider
         self.timeout = timeout
         self.normal_tools = normal_tools
-        self.expected_instruction_sources = expected_instruction_sources
+        self.expected_instruction_sources = {} if expected_instruction_sources is None else expected_instruction_sources
+        self.input_manifest = input_manifest
         self.thread_id = self.turn_id = None
         self.call_index = 0
         self.turns_started = 0
@@ -91,6 +95,8 @@ class CodexPolicyAdapter:
     def connect(self):
         if self.thread_id is not None:
             raise RuntimeError('Codex policy thread is already connected')
+        if self.input_manifest is not None:
+            verify_actor_inputs(self.input_manifest, self.developer_instructions)
         self.transport.request('initialize', {
             'clientInfo': {'name': 'loco-manip-four-point-policy', 'version': '1'},
             'capabilities': {'experimentalApi': True}}, self.timeout)
@@ -99,6 +105,7 @@ class CodexPolicyAdapter:
             'cwd': str(self.workspace), 'model': self.model,
             'modelProvider': self.model_provider,
             'config': {'model_reasoning_effort': self.effort,
+                       'project_doc_max_bytes': 0, 'project_doc_fallback_filenames': [],
                        'features.shell_tool': self.normal_tools, 'features.unified_exec': self.normal_tools,
                        'features.view_image': True,
                        'features.multi_agent': False,
@@ -110,7 +117,7 @@ class CodexPolicyAdapter:
             'sandbox': 'workspace-write',
             'approvalsReviewer': 'auto_review',
             'runtimeWorkspaceRoots': [str(self.workspace)]}
-        response = self.transport.request('thread/start', params, self.timeout)
+        response = self.transport.request('thread/start', params, None)
         if (response.get('model') != self.model
                 or response.get('reasoningEffort') != self.effort):
             raise RuntimeError('Codex app-server returned a different model or effort')
@@ -131,6 +138,8 @@ class CodexPolicyAdapter:
         return response
 
     def start_turn(self, text):
+        if self.input_manifest is not None:
+            verify_actor_inputs(self.input_manifest, self.developer_instructions)
         if self.thread_id is None:
             raise RuntimeError('Call connect before start_turn')
         if self._start_uncertain:
@@ -159,6 +168,8 @@ class CodexPolicyAdapter:
         path.write_text(json.dumps(value, indent=2))
 
     def handle_tool_call(self, event):
+        if self.input_manifest is not None:
+            verify_actor_inputs(self.input_manifest, self.developer_instructions)
         if event.get('method') != 'item/tool/call' or 'id' not in event:
             raise RuntimeError('Expected one app-server dynamic tool request')
         params = event.get('params', {})
@@ -175,7 +186,9 @@ class CodexPolicyAdapter:
                          if isinstance(raw_arguments, str) else raw_arguments)
             if not isinstance(arguments, dict):
                 raise ValueError('Tool arguments must be a JSON object')
-            packet = self.host.dispatch(params.get('tool'), arguments)
+            from rsi.main_boundary_stop import stop_at_tool_boundary
+            packet = stop_at_tool_boundary(self.host, params.get('tool'))
+            if packet is None:packet = self.host.dispatch(params.get('tool'), arguments)
         except ValueError as error:
             packet = {'error_type': type(error).__name__, 'error': str(error),
                       'no_execution': True, 'retryable': True}
@@ -246,6 +259,10 @@ class CodexPolicyAdapter:
                 if turn.get('status') == 'completed':
                     return turn
                 if reason != 'confirmed_closed_network_turn':
+                    if quota_terminal(turn):
+                        raise CodexQuotaBoundary(thread_id=self.thread_id,turn_id=turn_id,reset_id=self._reset_id())
+                    if reason == 'no_new_physical_progress':
+                        raise ClosedNetworkNoProgress('Closed network turn without new physical progress')
                     raise RuntimeError(f'Codex turn failed ({reason}): {turn.get("error")}')
                 self._recovery_actions = self.host.actions
                 turn_id = self.start_turn(NETWORK_CONTINUATION + json.dumps(self.host.next_call()))

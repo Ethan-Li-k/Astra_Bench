@@ -22,7 +22,8 @@ def pricing_fixture(proof):
 def policy_fixture():
     document = b.load(b.POLICY)
     document.update(api_source_status="verified", synthetic_test_fixture=True,
-                    authorization="SYNTHETIC UNIT TEST; NOT A NEW USER AUTHORIZATION")
+                    authorization="SYNTHETIC UNIT TEST; NOT A NEW USER AUTHORIZATION",
+                    total_cap_cny=10000, report_thresholds_cny=list(range(1500,10000,1500)))
     return document
 
 

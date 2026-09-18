@@ -59,12 +59,12 @@ class BoardTests(unittest.TestCase):
         q=dict(p,text='changed')
         with self.assertRaises(ValueError):self.b.submit(q)
         q=self.payload();q['source_version']='f'*64
-        with self.assertRaises(ValueError):self.b.submit(q)
+        self.assertEqual(self.b.submit(q)['evidence_binding']['state'],'unverified')
         q=self.payload();q['task_id']='ground'
-        with self.assertRaises(ValueError):self.b.submit(q)
-        q=self.payload();q['correction_of']=r['feedback_id'];self.b.submit(q);self.assertEqual(len(self.b.all_answers()),2)
+        self.assertEqual(self.b.submit(q)['evidence_binding']['state'],'unverified')
+        q=self.payload();q['correction_of']=r['feedback_id'];self.b.submit(q);self.assertEqual(len(self.b.all_answers()),4)
         path=self.b.root/'answers'/(r['feedback_id']+'.json');self.assertEqual(path.stat().st_mode&0o222,0);self.assertEqual(json.loads(path.read_text())['submission'],p)
-        b=FeedbackBoard(self.d,self.b.root,fixture=True);self.assertEqual(len(b.receipts()),2)
+        b=FeedbackBoard(self.d,self.b.root,fixture=True);self.assertEqual(len(b.receipts()),4)
     def test_queue_failure_saved_and_exact_bound_message_no_user_execution(self):
         captured=[]
         def fail(msg,owner):captured.append((msg,owner));return {'state':'failed'}
@@ -73,24 +73,41 @@ class BoardTests(unittest.TestCase):
             if (b.root/'delivery'/(r['feedback_id']+'-result.json')).exists():break
             time.sleep(.01)
         self.assertEqual(len(captured),1);self.assertNotIn('never_execute',captured[0][0]);self.assertNotIn('host_hidden_sentinel',captured[0][0]);self.assertIn(p['source_version'],captured[0][0]);self.assertIn(r['feedback_id'],captured[0][0]);self.assertFalse(b.receipts()[0]['status']['queued']);self.assertTrue(b.receipts()[0]['status']['saved']);b.submit(p);self.assertEqual(len(captured),1)
-    def test_queue_argv_and_ack_stages_are_bound(self):
-        import subprocess
+    def test_priority_file_handoff_makes_no_account_call_and_ack_is_bound(self):
         b=FeedbackBoard(self.d,self.b.root,fixture=False)
-        with patch('feedback_board.subprocess.run',return_value=subprocess.CompletedProcess([],0,b'Queued message fixture')) as call:
-            r=b.submit(self.payload())
-            for _ in range(100):
-                if (b.root/'delivery'/(r['feedback_id']+'-result.json')).exists():break
-                time.sleep(.01)
-            args=call.call_args.args[0];self.assertEqual(args[0],str(RSI/'codex-account-2/run.sh'));self.assertIn('queue',args);self.assertNotIn('resume',args);self.assertNotIn('shell',call.call_args.kwargs)
-        st=b.receipts()[0]['status'];self.assertTrue(st['queued']);self.assertIsNone(st['owner_ack']);self.assertIsNone(st['physical_verified'])
+        with patch('feedback_board.subprocess.run') as call:
+            r=b.submit(self.payload());call.assert_not_called()
+        st=b.receipts()[0]['status'];self.assertFalse(st['queued']);self.assertFalse(st['delivery_uncertain']);self.assertEqual(st['priority'],'highest');self.assertTrue(st['consumption_pending']);self.assertIsNone(st['physical_verified'])
         aid=r['feedback_id'];sha=digest((b.root/'answers'/(aid+'.json')).read_bytes())
+        self.assertIn(json.loads((b.root/'delivery'/(aid+'-result.json')).read_text())['state'],('file_handoff','main_account_inbox'))
+        self.assertTrue((b.root/'delivery'/(aid+'-message.json')).exists())
         immutable(b.root/'acks'/(aid+'-wrong.json'),{'feedback_id':aid,'owner':OWNERS['ground'],'answer_sha256':sha,'stage':'owner_ack'})
         self.assertIsNone(b.receipts()[0]['status']['owner_ack'])
         immutable(b.root/'acks'/(aid+'-right.json'),{'feedback_id':aid,'owner':OWNERS['simple'],'answer_sha256':sha,'stage':'owner_ack','at':'2026-09-16T00:00:00Z','note':'isolated fixture'})
-        self.assertIsNotNone(b.receipts()[0]['status']['owner_ack']);self.assertIsNone(b.receipts()[0]['status']['physical_verified'])
-    def test_package_tampering_rejected(self):
+        self.assertIsNotNone(b.receipts()[0]['status']['owner_ack']);self.assertIsNone(b.receipts()[0]['status']['actual_loaded']);self.assertIsNone(b.receipts()[0]['status']['physical_verified'])
+        evidence=self.write('artifacts/fixture/feedback-load.json',{'feedback_id':aid,'answer_sha256':sha,'human_feedback_used':True})
+        immutable(b.root/'acks'/(aid+'-loaded.json'),{'feedback_id':aid,'owner':OWNERS['simple'],'answer_sha256':sha,'stage':'loaded','evidence':str(evidence.relative_to(self.root)),'evidence_sha256':digest(evidence.read_bytes())})
+        self.assertIsNotNone(b.receipts()[0]['status']['actual_loaded']);self.assertIsNone(b.receipts()[0]['status']['physical_verified'])
+    def test_unverified_package_preserves_proactive_words_without_claiming_binding(self):
         p=self.b.root/'packages'/(self.task['version']+'.json');p.chmod(0o644);d=json.loads(p.read_text());d['summary']='tampered';p.write_text(json.dumps(d))
-        with self.assertRaises(ValueError):self.b.submit(self.payload())
+        r=self.b.submit(self.payload());self.assertEqual(r['evidence_binding']['state'],'unverified');self.assertFalse(r['human_feedback_used'])
+        q=self.payload();q['case_id']='HC-test'
+        with self.assertRaises(ValueError):self.b.submit(q)
+    def test_coordinator_receipt_does_not_claim_actor_or_physical_use(self):
+        rec=self.b.submit(self.payload());aid=rec['feedback_id']
+        sha=digest((self.b.root/'answers'/(aid+'.json')).read_bytes())
+        review={'feedback_id':aid,'answer_sha256':sha,'reviewer':'01a0a949-dc8e-70c3-b8a6-53131882e19d',
+                'stage':'accepted_for_implementation','priority':'highest','note':'先抓起再搬运'}
+        self.write('feedback/reviews/'+aid+'.json',review)
+        st=self.b.status(rec)
+        self.assertEqual(st['coordination']['priority'],'highest')
+        self.assertIsNone(st['owner_ack']);self.assertIsNone(st['physical_verified'])
+        review['answer_sha256']='0'*64;self.write('feedback/reviews/'+aid+'.json',review)
+        self.assertIsNone(self.b.status(rec)['coordination'])
+    def test_unconsumed_feedback_is_visible_without_three_failure_gate(self):
+        rec=self.b.submit(self.payload());rec['saved_at']='2026-09-16T00:00:00+00:00'
+        self.assertEqual(self.b.cases()['eligible_count'],0)
+        self.assertTrue(self.b.status(rec)['attention_required'])
     def test_old_questions_and_insufficient_failures_rejected(self):
         self.assertEqual(self.b.cases()['eligible_count'],0)
         for c in ({'case_id':'H001'},{'case_id':'F001'}, {'case_id':'HC-test','task_id':'simple','unresolved':True,'attempts':[]}):

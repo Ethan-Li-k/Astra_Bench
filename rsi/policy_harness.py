@@ -7,6 +7,7 @@ import numpy as np
 from scipy.spatial.transform import Rotation
 
 from rsi.four_point import FOUR_POINT_NAMES, FourPointPose
+from rsi.public_clock import capture_binding
 
 
 class FourPointBackend(Protocol):
@@ -333,7 +334,12 @@ class LocalFourPointHarness:
             observation['episode_id'] = str(self.output_dir.resolve())
         directory = self.output_dir/'observations'/f'{self.index:04d}'
         directory.mkdir(parents=True, exist_ok=True)
-        observation['images'] = self.image_capture(directory) if self.image_capture else []
+        images = self.image_capture(directory) if self.image_capture else []
+        reset_id = getattr(self.backend,'scene_setup',{}).get('reset_provenance',{}).get('reset_id')
+        observation['episode_id'] = str(self.output_dir.resolve())
+        observation['reset_id'] = reset_id
+        observation['images'] = capture_binding(images, episode_id=observation['episode_id'],
+            reset_id=reset_id, observation_id=observation['observation_id'], sim_s=observation.get('sim_s'))
         path = directory/'observation.json'
         self._write_json(path, observation)
         self.latest_path = path.resolve()
@@ -465,6 +471,11 @@ class LocalFourPointHarness:
             limit = int((duration + 2.1) / .02)
             for _ in range(limit):
                 self.backend.tick()
+                progress = getattr(self, 'progress_supervisor', None)
+                if progress:
+                    progress.update(self.backend)
+                    if progress.guard.cancel_chunk:
+                        self.backend.cancel()
                 if capture_motion: capture_robot()
                 if self.evaluator:
                     self.evaluator.update(self.backend)

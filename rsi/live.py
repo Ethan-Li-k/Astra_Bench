@@ -511,6 +511,14 @@ class LiveSim:
             record['actual_rotation_error_rad_by_link'] = {
                 name: float(value) for name, value in zip(FOUR_POINT_NAMES, rotation_error)
             }
+            record['tracking_tolerance'] = {
+                'position_m': POSITION_TOLERANCE_M, 'rotation_rad': ROTATION_TOLERANCE_RAD,
+                'comparison': 'strict_less_than', 'required_consecutive_tracker_ticks': 5,
+                'tracker_dt_s': .02}
+            record['within_tolerance_by_link'] = {name: {
+                'position': bool(position_error[i] < POSITION_TOLERANCE_M) if i in position_indices else None,
+                'orientation': bool(rotation_error[i] < ROTATION_TOLERANCE_RAD) if i in orientation_indices else None}
+                for i,name in enumerate(FOUR_POINT_NAMES)}
             elapsed = self.data.time - self.t0
             record['reference_finished'] = bool(elapsed >= self.duration)
             reached = error < POSITION_TOLERANCE_M and angular_error < ROTATION_TOLERANCE_RAD

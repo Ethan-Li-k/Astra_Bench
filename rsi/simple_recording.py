@@ -99,6 +99,7 @@ def simple_video(backend, output, *, door_audit=False,
                'rsi/policy_harness.py','rsi/camera_calibration.py',
                'rsi/simple_hand_geometry.py','rsi/simulation_provenance.py',
                'rsi/evaluator.py','rsi/simple_door_setup.py','rsi/simple_door_collision.py',
+               'rsi/simple_mp.py',
                'tools/learn_grasp_skill.py','tools/learn_door_skill.py',
                'tools/learn_simple_task.py','rsi/simple_placement.py')
     (output/'render_manifest.json').write_text(json.dumps({
@@ -106,7 +107,8 @@ def simple_video(backend, output, *, door_audit=False,
         'camera_names': camera_names, 'actor_cameras': head,
         'state_format': 'qpos_by_joint including articulated joints; no action replay',
         'environment_config': backend.env.task.state_dict(),
-        'sonic_config': backend.env.sonic_config,
+        'sonic_config': getattr(backend.env, 'sonic_config', None),
+        'control_configuration': getattr(backend, 'control_configuration', None),
         'control_chain_joint_names': backend.adapter.metadata['joint_names'],
         'runtime_source_sha256': {n:hashlib.sha256((root/n).read_bytes()).hexdigest() for n in sources},
         'initial_render_state': named_render_state(backend)}, indent=2, cls=NumpyArrayEncoder))

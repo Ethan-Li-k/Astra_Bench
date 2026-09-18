@@ -11,6 +11,8 @@ from api_progress import APIProgress, ROOT, number, signature
 
 IKEA = ROOT / 'ikea'
 PHASES = {
+    'inference_waiting': '等待完整推理',
+    'physical_action_completed': '最近物理动作已完成；不代表任务成功',
     'source_physics_confirmed_scene_alignment': '源资产物理核对完成；派生场景对齐准备',
     'door_physics_validation': '派生门编译成功；物理校验待完成',
     'asset_inventory': '资产与可动部件核对',
@@ -25,6 +27,7 @@ PHASES = {
     'placement': '放入冰箱探索',
 }
 STATES = {
+    'physical_action_completed': '最近物理动作已完成；当前阶段待后续证据',
     'engineering': '工程准备', 'continue': '工程等待继续',
     'inference_waiting': '等待完整推理', 'inference_waiting_no_deadline': '等待完整推理',
     'action_executing': '动作执行', 'system_interrupted': '系统中断',
@@ -43,6 +46,7 @@ CATEGORIES = {'diagnostic': '诊断', 'learning': '学习',
               'audited_success': '审计成功', 'human_assisted': '人工辅助'}
 TASKS = {'bedroom_door': '卧室门', 'apple': '苹果', 'fridge': '冰箱', 'placement': '放入'}
 VARIANTS = {'fbx-derived-no-latch-v1': 'FBX-derived no-latch v1',
+            'usd-aligned-door-west-no-latch-v3': 'USD 对齐派生无锁舌 v3；不等同原始 USD 场景完整物理验证',
             'fbx-door-west-no-latch-v1': 'FBX-derived no-latch v1'}
 ID = re.compile(r'[a-zA-Z0-9][a-zA-Z0-9_-]{0,79}')
 
@@ -120,7 +124,7 @@ class IKEAProgress(APIProgress):
         progress = timestamp(source.get('last_progress_at', source.get('last_actual_progress_at'))) if fresh_schema else timestamp(source.get('updated_at'))
         phase = source.get('phase')
         phase = phase if isinstance(phase, str) and phase in PHASES else 'unknown'
-        state = source.get('state')
+        state = source.get('state', source.get('policy_state'))
         if state is None and source.get('execution_kind') == 'engineering':
             state = 'engineering'
         state = state if isinstance(state, str) and state in STATES else 'unknown'
@@ -138,6 +142,8 @@ class IKEAProgress(APIProgress):
         backend = source.get('backend')
         if backend == 'MuJoCo FBX-derived no-latch variant v1':
             backend, variant = 'MuJoCo', 'FBX-derived no-latch v1'
+        elif backend == 'MuJoCo USD-aligned derived no-latch v3':
+            backend, variant = 'MuJoCo', VARIANTS['usd-aligned-door-west-no-latch-v3']
         else:
             backend = backend if backend in ('MuJoCo', 'Isaac') else '未知'
             variant = VARIANTS.get(source.get('variant'), '未知 / 未提供') if isinstance(source.get('variant'), str) else '未知 / 未提供'

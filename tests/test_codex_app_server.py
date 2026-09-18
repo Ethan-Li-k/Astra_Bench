@@ -1,4 +1,5 @@
 import json
+import hashlib
 import tempfile
 import unittest
 from pathlib import Path
@@ -19,7 +20,7 @@ class FakeTransport:
             return {}
         if method == 'thread/start':
             return {'thread': {'id': 'thread-1'}, 'model': 'gpt-6-astra',
-                    'reasoningEffort': 'xhigh',
+                    'reasoningEffort': 'xhigh', 'instructionSources': [],
                     'sandbox': {'type': 'workspaceWrite', 'networkAccess': False},
                     'approvalsReviewer': 'auto_review', 'approvalPolicy': 'on-request',
                     'runtimeWorkspaceRoots': [params['cwd']]}
@@ -46,6 +47,25 @@ class FakeHost:
 
 
 class CodexPolicyAdapterTests(unittest.TestCase):
+    def test_frozen_ambient_sources_and_contents_checked_before_turn(self):
+        with tempfile.TemporaryDirectory() as root:
+            path=Path(root)/'AGENTS.md';path.write_text('fixed project instructions')
+            expected={str(path):hashlib.sha256(path.read_bytes()).hexdigest()}
+            for mode in ('match','extra','changed'):
+                with self.subTest(mode=mode):
+                    path.write_text('different' if mode=='changed' else 'fixed project instructions')
+                    transport=FakeTransport();original=transport.request
+                    def request(method,params,timeout):
+                        reply=original(method,params,timeout)
+                        if method=='thread/start':reply['instructionSources']=[str(path)]+(['other.md'] if mode=='extra' else [])
+                        return reply
+                    transport.request=request
+                    adapter=CodexPolicyAdapter(transport,FakeHost(),root,developer_instructions='policy',expected_instruction_sources=expected)
+                    if mode=='match':adapter.connect()
+                    else:
+                        with self.assertRaisesRegex(RuntimeError,'ambient'):adapter.connect()
+                    self.assertFalse(any(m=='turn/start' for m,_,_ in transport.requests))
+
     def test_turn_start_wait_is_unbounded_and_unknown_ack_is_not_reissued(self):
         with tempfile.TemporaryDirectory() as root:
             transport, host = FakeTransport(), FakeHost()

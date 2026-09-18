@@ -2,16 +2,25 @@
 import argparse
 import datetime
 import json
+import sys
 from collections import Counter
 from pathlib import Path
+
+# Keep the long-standing direct script invocation usable without PYTHONPATH.
+if str(Path(__file__).resolve().parents[1]) not in sys.path:
+    sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 
 
 def termination_class(result):
     if result is None:return 'running'
     if result.get('error'):return 'infrastructure_interruption'
+    if result.get('goal_scope')=='curriculum_stage':
+        return 'curriculum_success' if result.get('curriculum_success') else 'curriculum_learning_stop'
     if result.get('success') and result.get('native_outcome')=='success':return 'native_success'
     if result.get('backend_stop_reason'):return 'runtime_safety_stop'
     reason=result.get('stop_reason')
+    if reason in ('progress_stall','progress_order_violation','progress_actor_stall'):
+        return 'progress_supervised_learning_stop'
     if reason=='policy_declared_stall':return 'policy_early_stop'
     if reason=='episode_step_budget':return 'budget_truncation'
     if reason=='policy_safety_stop':return 'policy_safety_stop_requires_review'
@@ -40,6 +49,14 @@ def turn_completeness(episode, result):
             else:
                 last = records[sorted(records)[-1]] if records else {}
             return bool(last.get('status') == 'completed'), 'legacy_no_identity_proof'
+        if contract == 'api-terminal-sequence-v1':
+            if (records or type(numbered) is not int or numbered != 0
+                    or result.get('codex_thread_id') is not None
+                    or result.get('codex_turn_ids') != []):
+                raise ValueError('API-first cannot invent Codex terminal identities')
+            from rsi.actor_terminal_audit import complete_api_chain
+            complete_api_chain(result,None)
+            return True, 'complete_api_terminal_sequence'
         if contract != 'codex-terminal-sequence-v1':
             raise ValueError('unsupported terminal contract')
         identities = result.get('codex_turn_ids')
@@ -51,6 +68,8 @@ def turn_completeness(episode, result):
             raise ValueError('invalid ACK identity sequence')
         if set(records) != {f'turn_{i:03d}.json' for i in range(1, numbered+1)}:
             raise ValueError('missing or extra terminal number')
+        if result.get('api_continuation') and records[f'turn_{numbered:03d}.json'].get('status')!='failed':
+            raise ValueError('API handoff requires a preserved failed Codex terminal')
         recovered_reset = None
         for i, identity in enumerate(identities, 1):
             row = records[f'turn_{i:03d}.json']
@@ -65,6 +84,13 @@ def turn_completeness(episode, result):
             if row.get('status') == 'completed':
                 if row.get('error') or meta.get('recovery_reason') is not None:
                     raise ValueError('completed terminal has error/recovery label')
+            elif (i == numbered and result.get('api_continuation')):
+                from rsi.actor_terminal_audit import complete_api_chain
+                complete_api_chain(result,row)
+            elif (row.get('status') == 'failed' and i < numbered and row.get('error')
+                    and meta.get('recovery_reason') == 'no_new_physical_progress'):
+                from rsi.actor_terminal_audit import diagnostic_resume
+                diagnostic_resume(episode,i,row); recovered_reset=reset_id
             elif (row.get('status') == 'failed' and i < numbered and row.get('error')
                     and meta.get('recovery_reason') == 'confirmed_closed_network_turn'
                     and isinstance(reset_id, str) and reset_id):
@@ -90,6 +116,9 @@ def episode_status(episode):
     revision=bool(result and result.get('skill_updated'))
     host_success=bool(result and result.get('success') and result.get('native_outcome')=='success'
                         and actions>0 and full_turn and revision and not result.get('error'))
+    curriculum_only=(result or {}).get('goal_scope')=='curriculum_stage'
+    curriculum_success=bool(result and result.get('curriculum_success') and actions>0 and full_turn and revision and not result.get('error'))
+    host_success=host_success and not curriculum_only
     review_path=episode/'success_review.json'
     review=json.loads(review_path.read_text()) if review_path.exists() else {}
     exposure_path=episode/'human_feedback_review.json'
@@ -109,6 +138,9 @@ def episode_status(episode):
         'turn_record_integrity':turn_integrity,
         'skill_updated':revision,'host_success_complete':host_success,
         'completion_contract':contract,
+        'goal_scope':(result or {}).get('goal_scope','full_task'),
+        'curriculum_level':(result or {}).get('curriculum_level'),
+        'curriculum_host_success':curriculum_success,
         'task_audit_status':('passed' if review.get('audited_task_success') is True
             else 'rejected' if review.get('audited_task_success') is False else 'unknown'),
         'audited_task_success':host_success and review.get('audited_task_success') is True,
@@ -209,12 +241,15 @@ def frozen_protocol_progress(root, focus):
                         if r['phase']=='evaluation' and r['registration_id'] in outcomes]
             count=stability_count(manifest['task_id'],manifest['candidate_sha256'],stable)
             unresolved=[r['episode'] for r in registrations if r['registration_id'] not in outcomes]
+            admission_path=directory/'admission-audit.json'
+            admission=json.loads(admission_path.read_text()) if admission_path.exists() else {}
             candidates.append({'candidate_sha256':manifest['candidate_sha256'],
                 'path':str(directory),'phase':'evaluation' if any(r['phase']=='evaluation' for r in registrations) else 'stability',
+                'admission_audit':admission,
                 **count,'pending_registered_episodes':unresolved,
                 'evaluation_successes':sum(r['audited_task_success'] for r in evaluation),
                 'evaluation_completed':len(evaluation),'evaluation_planned':10,
-                'eligible_for_evaluation':count['eligible_for_evaluation'] and not unresolved})
+                'eligible_for_evaluation':count['eligible_for_evaluation'] and not unresolved and admission.get('stability_credit_allowed',True)})
         result[family]={'task_id':focus.get('mapping',{}).get(family),
                         'candidates':candidates,'current':candidates[-1] if candidates else None}
     return result
@@ -223,18 +258,23 @@ def frozen_protocol_progress(root, focus):
 def write_progress(root, report):
     """Refresh the existing stable supervisor entry from the same audited ledger."""
     focus=report.get('current_focus')
-    goal=('当前仅原README六项精确入口：XMovePickTeleop、BendPickMP、HandoverTeleop、LocomotionPickBetweenTablesTeleop、TabletopGraspMP、XMoveBendPickTeleop。MP待控制适配；IKEA/地面搬运暂停。旧91库存保留但不扩张。'
+    goal=('当前仅原README六项精确入口：XMovePickTeleop、BendPickMP、HandoverTeleop、LocomotionPickBetweenTablesTeleop、TabletopGraspMP、XMoveBendPickTeleop。MP已真实接入，连续控制可靠性待修复；IKEA/地面搬运暂停。旧91库存保留但不扩张。'
           if focus else '目标：推门10次独立审计成功；全部可用操作任务各至少1次。已完成桌面抓块10次不重做。')
     lines=['# SIMPLE 进展', '', '更新时间：'+report['updated_utc'],goal,
         '后端：MuJoCo，推理期间物理暂停，非 RTC；推门是明确门框碰撞修复的 push-open 变体。', '']
     if focus:
         if focus.get('protocol'):
-            lines += ['最新验收：每项固定完整候选连续5次独立审计成功，然后预登记10回合冻结测评。当前在途属于旧队列，不倒签稳定性；历史累计不等于固定候选五连胜。',
+            lines += ['最新验收：每项固定完整候选连续5次独立审计成功，再冻结同一策略做L0/L1/L2各10回合，共180回合。等级、目标布局、实际Isaac输入及原生预算对齐前不计榜单；未运行不显示0%。旧在途不倒签稳定性，历史累计不等于固定候选五连胜。',
+                      '全目标：完整、对齐并独立审计的180回合至少155次成功，严格超过Ψ0基准154/180；五稳只是准入，不是总目标完成。各候选不得择优拼接。唯一goal_guard验收入口由原接续负责人维护。',
                       '冻结状态：'+focus['protocol']['freeze_loading_status']]
             for family,row in focus.get('protocol_progress',{}).items():
                 current=row['current']
                 if current:
-                    lines.append(f"{family} 固定候选 {current['candidate_sha256'][:12]}：阶段{current['phase']}；连续成功{current['consecutive_successes']}/5；评测{current['evaluation_successes']}/{current['evaluation_completed']}已完成（预登记10）；待完整审计{len(current['pending_registered_episodes'])}回合。")
+                    eval_text=(f"{current['evaluation_successes']}/{current['evaluation_completed']}已完成"
+                               if current['evaluation_completed'] else '未运行')
+                    lines.append(f"{family} 固定候选 {current['candidate_sha256'][:12]}：阶段{current['phase']}；连续成功{current['consecutive_successes']}/5；旧候选评测{eval_text}（历史登记10，不能代替最新三级协议）；登记未入冻结计分{len(current['pending_registered_episodes'])}回合。")
+                    if current['admission_audit'].get('stability_credit_allowed') is False:
+                        lines.append('  本候选准入审计否决（保留原审计原文）：'+current['admission_audit']['reason']+'；该候选稳定性不给分，回合实际状态见下方账本。')
                 else:lines.append(f'{family}：适配/学习，尚未登记固定候选成功（0/5）；冻结评测未启动。')
         lines += ['六类生效：'+focus['effective_utc']+'。以下总审计数含历史；新测评、切换时在途和历史基线分别计数，变体不合并。']
         for family,entries in focus['families'].items():
@@ -274,7 +314,7 @@ def write_progress(root, report):
         '框架：ARCH长度与MEMORY-PRIORITY、相机render-frustum-v1已在门16和水龙头8完成真实调用链及受限skill_update验证，证据instruction-cap-integration/status.json。NT逐turn记录/审计兼容候选已发布，63项针对检查通过，门19完整单turn及修订真实验证；尚未发生真实网络恢复。证据nt-audit-integration-20260916/status.json；共同变更不能作单因收益归因。',
         '下一步：完整等待各活动回合，逐轮审查；后续仅按最新授权六类安排，不扩张旧库存，不重复凑推门数。推门历史10次门槛凭door-campaign/ten-success-milestone.json核验。苹果H001004先张手包络后闭合。权限修复首次生效门18/垃圾桶1/办公椅1，实际workspaceWrite/on-request+auto_review已随真实动作核验；旧在途不热改，证据recovery-20260916/permission-physical-route-verification.json。',
         '失败分层：预算截断、系统中断、提前终止均不凑三次自主物理失败求助。入口/标定/检索并变不能作单变量因果结论。',
-        '来源：各任务memory/versions、公开rollout、独立host审计；共享core未晋升。91入口库存保留，预检和未尝试不计成功。',
+        '来源：各任务memory/versions、公开rollout、独立host审计；中央统一发布skill，实际加载版本和回执分开核验。91入口库存保留但本阶段只调度六项，预检和未尝试不计成功。',
         '范围：本主管仅SIMPLE；IKEA/地面搬运按用户暂停，由原owner保留收尾证据。视频页 http://127.0.0.1:8765/ 读取既有证据。', '']
     stability = root/'robot-stability-integration-20260916/status.json'
     if stability.exists():
@@ -331,7 +371,7 @@ def main():
         'diagnostics_and_replays_counted':False,'campaigns':campaigns}
     report['current_focus']=focused_cohorts(args.root,campaigns)
     if report['current_focus']:
-        report['unresolved_scope']='Exact six README benchmark entries only; MP control adaptation and handover/load-carry gates pending validation. Related variants are transfer evidence only. Old91-entry inventory retained, expansion paused by user.'
+        report['unresolved_scope']='Exact six README benchmark entries only. MP adapter has executed real actor actions; reliable multi-step control and loaded travel remain unresolved. Handover3 passed complete learning audit; fixed-candidate stability and aligned formal evaluation remain pending. Related variants are transfer evidence only. Old91-entry inventory retained, expansion paused by user.'
     (args.root/'campaign_audit.json').write_text(json.dumps(report,indent=2))
     inventory_path=args.root/'task-evaluation-status.json'
     if inventory_path.exists():

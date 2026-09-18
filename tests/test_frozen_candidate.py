@@ -6,7 +6,7 @@ import unittest
 from unittest.mock import patch
 from rsi.skill_learning import SkillMemory
 from rsi.frozen_skill import (snapshot_sources, seal_candidate, verify_candidate,
-    claim_episode, file_hashes, record_episode_audit)
+    claim_episode, file_hashes, record_episode_audit, environment_versions)
 
 ROOT=Path(__file__).resolve().parents[1]
 SKILL='---\nname: loco-manip-direct\ndescription: fixture\n---\nRead current RGB.\n'
@@ -27,7 +27,8 @@ class CandidateTests(unittest.TestCase):
         return seal_candidate(self.candidate,task_id='exact',task_specification={'env_id':'exact'},
             task_text='fixture task',options=self.options,dependencies=deps,
             stability_seeds=list(range(5)),evaluation_seeds=list(range(20,30)),
-            audit_contract={'native':'native criterion','independent':'retained grasp','terminal_hold':'no invented post-stop dwell'})
+            audit_contract={'native':'native criterion','independent':'retained grasp','terminal_hold':'no invented post-stop dwell'},
+            runtime_environment=environment_versions())
     def claim(self,**kwargs):
         args=dict(task_id='exact',options=self.options,phase='stability',seed=0,episode=self.root/'episode-0001')
         return claim_episode(self.candidate,**(args|kwargs))
@@ -96,5 +97,11 @@ class CandidateTests(unittest.TestCase):
         self.seal();row=self.claim();self.complete_fixture(row,'reset1')
         (Path(row['episode'])/'result.json').write_text('{}')
         with self.assertRaisesRegex(ValueError,'evidence changed'):self.claim(seed=1,episode=self.root/'episode-0002')
+    def test_runtime_environment_drift_and_rejected_admission_block(self):
+        self.seal();verify_candidate(self.candidate,check_environment=True)
+        with patch('rsi.frozen_skill.environment_versions',return_value={'different':'runtime'}):
+            with self.assertRaisesRegex(ValueError,'runtime environment'):verify_candidate(self.candidate,check_environment=True)
+        (self.candidate/'admission-audit.json').write_text(json.dumps({'stability_credit_allowed':False}))
+        with self.assertRaisesRegex(ValueError,'admission was rejected'):self.claim()
 
 if __name__=='__main__':unittest.main()

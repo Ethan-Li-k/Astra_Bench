@@ -9,6 +9,7 @@ import shutil
 
 from rsi.frozen_skill import FrozenSkillMemory, file_hashes
 from rsi.skill_learning import validate_policy_instructions
+from rsi.actor_inputs import context_text, ambient_contract
 
 AUTHOR = '01a0a949-dc8e-70c3-b8a6-53131882e19d'
 
@@ -73,7 +74,7 @@ def execution_profile(phase, evaluation_steps=None):
             'native_benchmark': 'depends_on_pinned_assets_and_native_contract'}
 
 
-def select_sources(index, env_id, phases, control, feedback_allowed, limit=3):
+def select_sources(index, env_id, phases, control, feedback_allowed, limit=3, labels=None):
     """Small conditional selection: exact success, compatible success, counterexample."""
     if type(limit) is not int or not 1 <= limit <= 4:
         raise ValueError('Select at most four public entries')
@@ -82,7 +83,12 @@ def select_sources(index, env_id, phases, control, feedback_allowed, limit=3):
         if (row['control_contract'] != control or not set(phases).intersection(row['phases'])
                 or (row.get('human_feedback_used') and not feedback_allowed)):
             continue
-        success = row['status'] == 'audited_source'
+        if labels is not None and any(
+                not (set(wanted) & set(row.get('selection',{}).get(key,[])))
+                and 'any' not in row.get('selection',{}).get(key,[])
+                for key,wanted in labels.items()):
+            continue
+        success = row['status'] in ('audited_source','conditional_atom')
         if not success and row['status'] != 'counterexample':
             continue
         rank = (0 if row['env_id'] == env_id else 1) if success else (2 if row['env_id'] == env_id else 3)
@@ -117,7 +123,8 @@ def publish_release(draft, releases, release_id, *, author, expected_previous, r
         for path in (draft/'public').rglob('*.json'):
             validate_public_payload(json.loads(path.read_text()))
         for task in manifest['tasks'].values():
-            validate_policy_instructions((task_snapshot(draft/'public', task)/'SKILL.md').read_text(), runtime)
+            validate_policy_instructions((task_snapshot(draft/'public', task)/'SKILL.md').read_text(),
+                runtime + context_text(task_snapshot(draft/'public', task)/'SKILL.md') + ambient_contract(task_snapshot(draft/'public', task)/'SKILL.md')[1])
         # Copy to a new path only; an interrupted publication remains unapproved,
         # with all partial evidence intact and CURRENT unchanged.
         destination = releases/release_id
@@ -148,7 +155,8 @@ def verify_release(release, expected_sha256, env_id, runtime):
     if manifest['runtime_sha256'] != hashlib.sha256(runtime.encode()).hexdigest():
         raise ValueError('Runtime differs from published candidate')
     validate_policy_instructions(
-        (task_snapshot(release/'public', manifest['tasks'][env_id])/'SKILL.md').read_text(), runtime)
+        (task_snapshot(release/'public', manifest['tasks'][env_id])/'SKILL.md').read_text(),
+        runtime + context_text(task_snapshot(release/'public', manifest['tasks'][env_id])/'SKILL.md') + ambient_contract(task_snapshot(release/'public', manifest['tasks'][env_id])/'SKILL.md')[1])
     return manifest
 
 
