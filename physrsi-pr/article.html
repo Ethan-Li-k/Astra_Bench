@@ -3,285 +3,198 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>PhysRSI-Eval 中文宣传稿</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap">
 <style>
-/* Layout: 单栏长文，正文约 38em；图版统一放在白色底板上，Q1–Q3 用论文自己的问题编号做分节 */
+/* Layout: 文字窄栏约 720px；大图、动图与视频突破文字栏，占视口宽度 90%；论文出处统一用小号等宽标签 */
 :root {
-  --bg: #f6f8fa;
-  --surface: #ffffff;
-  --fg: #16212b;
-  --muted: #5a6875;
-  --rule: #d9e1e8;
-  --teal: #13738f;
-  --coral: #e2533f;
-  --tint: #e7f1f5;
-  --plate: #ffffff;
+  --bg: #f6f8fa; --surface: #ffffff; --fg: #16212b; --muted: #5a6875; --rule: #d9e1e8;
+  --teal: #13738f; --coral: #e2533f; --tint: #e7f1f5; --plate: #ffffff;
   --display: "Noto Serif SC", "Songti SC", "STSong", serif;
   --body: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0f161c; --surface: #16202a; --fg: #e3eaf0; --muted: #96a5b2;
-    --rule: #2a3946; --teal: #4fb3cf; --coral: #ff7a66; --tint: #172b36; --plate: #ffffff;
-    color-scheme: dark;
-  }
+  :root:not([data-theme="light"]) { --bg: #0f161c; --surface: #16202a; --fg: #e3eaf0; --muted: #96a5b2; --rule: #2a3946; --teal: #4fb3cf; --coral: #ff7a66; --tint: #172b36; color-scheme: dark; }
 }
-:root[data-theme="dark"] {
-  --bg: #0f161c; --surface: #16202a; --fg: #e3eaf0; --muted: #96a5b2;
-  --rule: #2a3946; --teal: #4fb3cf; --coral: #ff7a66; --tint: #172b36; --plate: #ffffff;
-  color-scheme: dark;
-}
+:root[data-theme="dark"] { --bg: #0f161c; --surface: #16202a; --fg: #e3eaf0; --muted: #96a5b2; --rule: #2a3946; --teal: #4fb3cf; --coral: #ff7a66; --tint: #172b36; color-scheme: dark; }
 * { box-sizing: border-box; }
-body {
-  background: var(--bg); color: var(--fg);
-  font-family: var(--body); font-size: 17px; line-height: 1.85;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 40px 72px;
-}
-.wrap { max-width: 760px; margin: 0 auto; display: grid; gap: 28px; }
-.toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between;
-  font-size: 13px; color: var(--muted); }
-button.copy {
-  font: 500 13px var(--body); color: var(--teal); background: var(--surface);
-  border: 1px solid var(--rule); border-radius: 6px; padding: 6px 14px; cursor: pointer;
-}
-button.copy:hover { border-color: var(--teal); }
-button.copy:focus-visible, a:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
-
-article { display: grid; gap: 22px; min-width: 0; }
+html { overflow-x: hidden; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 17px; line-height: 1.85;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 40px 72px; }
+.col { max-width: 720px; margin: 0 auto; display: grid; gap: 22px; }
+.wide { width: 90vw; max-width: 90vw; margin-left: calc(50% - 45vw); display: grid; gap: 8px; }
+@media (max-width: 640px) { .wide { width: 100%; max-width: 100%; margin-left: 0; } }
 .eyebrow { font: 500 13px var(--mono); letter-spacing: .08em; color: var(--teal); text-transform: uppercase; }
-h1 { font-family: var(--display); font-weight: 900; font-size: clamp(28px, 5.4vw, 40px); line-height: 1.3; margin: 6px 0 0; text-wrap: balance; }
+h1 { font-family: var(--display); font-weight: 900; font-size: clamp(26px, 4.6vw, 38px); line-height: 1.35; margin: 6px 0 0; text-wrap: balance; }
 h1 em { font-style: normal; color: var(--coral); }
 .deck { font-size: 18px; color: var(--muted); margin: 0; }
 .byline { font-size: 14px; color: var(--muted); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding-block: 12px; margin: 0; }
 .byline b { color: var(--fg); font-weight: 500; }
-.links { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 14px; }
+.links { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14px; }
 a { color: var(--teal); text-underline-offset: 3px; overflow-wrap: anywhere; }
-
-h2 { font-family: var(--display); font-weight: 900; font-size: 26px; line-height: 1.4; margin: 30px 0 0; text-wrap: balance; display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; }
-h2 .q { font: 500 15px var(--mono); color: var(--surface); background: var(--teal); padding: 2px 9px; border-radius: 4px; letter-spacing: .04em; }
-h3 { font-size: 18px; font-weight: 700; margin: 8px 0 -6px; }
+h2 { font-family: var(--display); font-weight: 900; font-size: 25px; line-height: 1.4; margin: 36px 0 0; text-wrap: balance; display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+h2 .q { font: 500 14px var(--mono); color: #fff; background: var(--teal); padding: 2px 9px; border-radius: 4px; }
 p { margin: 0; }
-strong { font-weight: 700; }
 .hl { color: var(--coral); font-weight: 700; }
-
-figure { margin: 4px 0; display: grid; gap: 8px; }
-.plate { background: var(--plate); border: 1px solid var(--rule); border-radius: 8px; padding: 12px; }
-.plate img { display: block; width: 100%; height: auto; max-width: 100%; }
-figcaption, .figcap { font-size: 13.5px; line-height: 1.7; color: var(--muted); }
-
-.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; }
-.stats div { background: var(--surface); padding: 14px 12px; display: grid; gap: 2px; }
-.stats b { font: 600 26px var(--display); color: var(--teal); font-variant-numeric: tabular-nums; }
-.stats span { font-size: 13px; color: var(--muted); line-height: 1.5; }
-@media (max-width: 560px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-
-.axes { display: grid; gap: 0; border-top: 1px solid var(--rule); margin: 0; }
-.axes div { display: grid; grid-template-columns: 3.2em 7.5em 1fr; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--rule); font-size: 15.5px; line-height: 1.65; }
-.axes dt { font: 500 14px var(--mono); color: var(--teal); padding-top: 2px; }
-.axes .n { font-weight: 700; }
-.axes dd { margin: 0; color: var(--muted); min-width: 0; }
-@media (max-width: 480px) { .axes div { grid-template-columns: 3em 1fr; } .axes dd { grid-column: 2; } }
-
-.callout { background: var(--tint); border-radius: 8px; padding: 16px 18px; display: grid; gap: 6px; }
-.callout .t { font-family: var(--display); font-weight: 900; font-size: 19px; }
-
-.tbl { overflow-x: auto; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); }
-table { border-collapse: collapse; width: 100%; font-size: 14px; font-variant-numeric: tabular-nums; min-width: 560px; }
-th, td { padding: 8px 10px; text-align: right; border-bottom: 1px solid var(--rule); white-space: nowrap; }
-th:first-child, td:first-child { text-align: left; }
-thead th { font-weight: 500; color: var(--muted); font-size: 12.5px; }
-tbody tr:last-child td { border-bottom: 0; }
-td.top { color: var(--coral); font-weight: 700; }
-
-ul.findings { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; }
-
-.kit { border: 1px dashed var(--rule); border-radius: 10px; padding: 20px; display: grid; gap: 14px; background: var(--surface); }
+.src { font: 500 12px var(--mono); color: var(--teal); background: var(--tint); padding: 1px 7px; border-radius: 4px; white-space: nowrap; }
+figure { margin: 0; }
+.plate { background: var(--plate); border: 1px solid var(--rule); border-radius: 8px; padding: 10px; }
+.plate.bare { padding: 0; border: 0; background: none; }
+.plate img, .plate video { display: block; width: 100%; height: auto; max-width: 100%; }
+figcaption { font-size: 13.5px; line-height: 1.7; color: var(--muted); max-width: 960px; }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 560px) { .cards { grid-template-columns: 1fr; } }
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px; display: grid; gap: 4px; align-content: start; }
+.card b { font: 600 26px var(--display); color: var(--coral); font-variant-numeric: tabular-nums; }
+.card p { font-size: 15px; line-height: 1.7; }
+.vids { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.vids.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 900px) { .vids { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.vids figure { display: grid; gap: 6px; }
+.vids video { display: block; width: 100%; height: auto; border-radius: 6px; background: #000; }
+.vids figcaption { font-size: 13px; }
+.vids .ok { color: #1f8a4c; font-weight: 700; }
+.vids .bad { color: var(--coral); font-weight: 700; }
+blockquote { margin: 0; padding: 10px 16px; border-left: 3px solid var(--teal); background: var(--surface); border-radius: 0 8px 8px 0; display: grid; gap: 4px; }
+blockquote .en { font-family: Georgia, "Times New Roman", serif; font-style: italic; font-size: 15.5px; line-height: 1.7; }
+blockquote .zh { font-size: 15px; color: var(--muted); }
+ul.pts { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; }
+.kit { border: 1px dashed var(--rule); border-radius: 10px; padding: 20px; display: grid; gap: 12px; background: var(--surface); margin-top: 20px; }
 .kit h2 { margin: 0; font-size: 20px; }
 .kit ol { margin: 0; padding-left: 1.4em; display: grid; gap: 6px; }
-.kit .blurb { border-left: 3px solid var(--teal); padding-left: 12px; color: var(--fg); }
 .label { font: 500 12px var(--mono); letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
 pre.cite { margin: 0; font: 12.5px/1.6 var(--mono); background: var(--bg); border: 1px solid var(--rule); border-radius: 8px; padding: 12px; overflow-x: auto; }
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+button.copy { justify-self: end; font: 500 13px var(--body); color: var(--teal); background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 6px 14px; cursor: pointer; }
+button.copy:focus-visible, a:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
 </style>
 
-<div class="wrap">
-  <div class="toolbar">
-    <span>中文宣传稿 · 图片取自论文与项目主页</span>
-    <button class="copy" id="copy-btn" type="button">复制正文</button>
+<article class="col" id="pr">
+  <button class="copy" id="copy-btn" type="button">复制正文</button>
+  <div>
+    <div class="eyebrow">论文速递 · arXiv 2610.26848</div>
+    <h1>PhysRSI-Eval 揭示 VLM-as-Policy 自我改进的<em>“桶板效应”</em>：Coding 能力并非最重要</h1>
+  </div>
+  <p class="deck">让大模型直接控制机器人，并在 17 轮试错中自己改代码、写工具、记笔记。能开好局靠空间推理，能从失败中爬起来靠感知；编程能力与五个评价维度的相关反而最弱。</p>
+  <p class="byline"><b>Where is Physical RSI capability from? An Observational Scaling Law of LLM-as-policy</b><br>
+    Zekai Li*, Jiayi Yu*, Jinlu Zhang*, Luyang Niu*, Zekun Qi*, Jun Zheng, Xuchuan Chen, Dairu Liu, Yintianrun Zhang, He Wang†, Li Yi† · Galbot Team　（* 共同第一作者　† 通讯作者）</p>
+  <div class="links">
+    <span>论文 <a href="https://arxiv.org/abs/2610.26848">arxiv.org/abs/2610.26848</a></span>
+    <span>主页 <a href="https://physrsi-eval.github.io/">physrsi-eval.github.io</a></span>
+    <span>代码 <a href="https://github.com/PhysRSI-Eval/PhysRSI-Eval-code">github.com/PhysRSI-Eval/PhysRSI-Eval-code</a></span>
   </div>
 
-  <article id="pr">
-    <div>
-      <div class="eyebrow">论文速递 · arXiv 2610.26848</div>
-      <h1>大模型直接当机器人策略，<em>自我进化</em>的能力从哪来？</h1>
-    </div>
-    <p class="deck">银河通用团队发布 PhysRSI-Eval：用五个维度刻画“物理递归自我改进”，并给出一条 LLM-as-policy 的观测型 Scaling Law。</p>
-    <p class="byline">
-      <b>Where is Physical RSI capability from? An Observational Scaling Law of LLM-as-policy</b><br>
-      Zekai Li*, Jiayi Yu*, Jinlu Zhang*, Luyang Niu*, Zekun Qi*, Jun Zheng, Xuchuan Chen, Dairu Liu, Yintianrun Zhang, He Wang†, Li Yi† · Galbot Team<br>
-      * 共同第一作者　† 通讯作者
-    </p>
-    <div class="links">
-      <span>论文：<a href="https://arxiv.org/abs/2610.26848">arxiv.org/abs/2610.26848</a></span>
-      <span>主页：<a href="https://physrsi-eval.github.io/">physrsi-eval.github.io</a></span>
-      <span>代码：<a href="https://github.com/PhysRSI-Eval/PhysRSI-Eval-code">github.com/PhysRSI-Eval/PhysRSI-Eval-code</a></span>
-    </div>
+  <figure class="wide">
+    <div class="plate bare"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@897e7e02403c3d9b1e5dd089812497c9328108c1/physrsi-pr/anim/climb.webp" alt="六个系统 K1 到 K17 逐轮最好均分的爬升动画" width="1805" height="1058"></div>
+    <figcaption>17 轮自我改进，逐轮回放。实线为到第 k 轮为止的最好均分，圆圈为半程增益轮次 T<sub>50</sub>。<span class="src">论文 图 7</span></figcaption>
+  </figure>
+  <figure class="wide">
+    <div class="plate bare"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@897e7e02403c3d9b1e5dd089812497c9328108c1/physrsi-pr/anim/radar.webp" alt="七个系统五维画像的动画：逐个绘制单系统雷达图，再叠加对比" width="1805" height="896"></div>
+    <figcaption>七个系统的五维画像：先逐个绘制，再叠加对比。<span class="src">论文 图 5 · 表 1</span></figcaption>
+  </figure>
 
-    <figure>
-      <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@1e220339de58bec65f0f907e802a38a1d7cf6bc4/physrsi-pr/img/teaser.jpg" alt="PhysRSI-Eval 总览图：Q1 能力来源与桶板假说，Q2 五维量化与观测型 Scaling，Q3 跨任务与跨场景泛化" width="1536" height="1024"></div>
-      <figcaption>PhysRSI-Eval 总览。Q1：物理 RSI 能力从哪来，以及“物理桶板假说”；Q2：五维量化与观测型 Scaling，T<sub>50</sub> 为半程增益轮次；Q3：改进是过拟合还是泛化。</figcaption>
-    </figure>
+  <h2>四个发现</h2>
+  <div class="cards">
+    <div class="card"><b>ρ = 0.94</b><p>空间推理决定开局，感知决定能否从失败中恢复；Coding 与五个维度的相关都最弱（ρ ≤ 0.37）。</p><span><span class="src">§4.1 · 图 4</span></span></div>
+    <div class="card"><b>24 → 59.5</b><p>四个 GPT 系统的公开榜单均分只差 24 分，物理五维均分却差 59.5 分。</p><span><span class="src">§5.1 · 图 6</span></span></div>
+    <div class="card"><b>MAE 0.019</b><p>公开能力可以预测谁涨得高、涨得早；只看前 5 轮，就能预测之后 12 轮的走势。</p><span><span class="src">§5.2–5.3 · 图 7–8</span></span></div>
+    <div class="card"><b>K9 → K1</b><p>经验可以迁移：借用其他任务沉淀的工作区，首次成功从第 9 轮提前到第 1 轮。</p><span><span class="src">§6.3 · 图 9</span></span></div>
+  </div>
 
-    <p>前沿大模型已经可以直接为机器人生成动作。更进一步，它们还能在一次次试错中改写技能、编写代码、制作工具，让自己的操作水平越来越高。模型权重不变，进步全部来自与物理世界的交互和自我修订。我们把这个过程称为<strong>物理递归自我改进（Physical Recursive Self-Improvement，物理 RSI）</strong>。</p>
-    <p>这篇工作不再只是展示“大模型能做到什么”，而是追问三个更基础的问题：</p>
-    <ul class="findings">
-      <li><strong>Q1</strong>　物理 RSI 的能力来自哪里？</li>
-      <li><strong>Q2</strong>　如何量化物理 RSI？它遵循怎样的 Scaling Law？</li>
-      <li><strong>Q3</strong>　模型的进步是对练习场景的过拟合，还是可迁移的泛化？</li>
-    </ul>
+  <figure class="wide">
+    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@897e7e02403c3d9b1e5dd089812497c9328108c1/physrsi-pr/img/teaser.jpg" alt="PhysRSI-Eval 总览图" width="1536" height="1024"></div>
+    <figcaption>PhysRSI-Eval 总览：Q1 能力从哪来；Q2 如何量化与预测；Q3 是过拟合还是泛化。<span class="src">论文 图 1</span></figcaption>
+  </figure>
 
-    <h2>基准：一个受控的物理试错闭环</h2>
-    <div class="stats">
-      <div><b>18</b><span>个 RoboDojo 机器人操作任务</span></div>
-      <div><b>K0+17</b><span>首次尝试 + 17 轮自我改进</span></div>
-      <div><b>5</b><span>个物理 RSI 评价维度</span></div>
-      <div><b>6+1</b><span>个被测系统（Gemini 4 单独测 10 个任务）</span></div>
-    </div>
-    <p>PhysRSI-Eval 把每个任务拆成两个阶段，共用同一套接口。<strong>评估阶段（K0）</strong>：模型在没有任何积累的情况下，通过共享工具完成一次上下文内尝试。<strong>优化阶段（K1–K17）</strong>：模型拥有一个持久化的工作区，里面存放它自己写的技能、工具、策略和记忆。每一轮先执行并由任务原生判定打分，再在机器人动作关闭的情况下修订工作区，然后提交进入下一轮，直到首次成功或用完轮次预算。</p>
+  <h2>什么是物理 RSI</h2>
+  <p>模型权重冻结，智能体在每轮真实交互后，自己修改持久化工作区里的技能、工具、策略和记忆，直到首次成功或用完 17 轮预算。18 个 RoboDojo 任务，从五个维度打分：首次尝试、效率、成功、预算、改进。<span class="src">§3 · 图 2–3</span></p>
+  <div class="wide vids">
+    <figure><video src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@897e7e02403c3d9b1e5dd089812497c9328108c1/physrsi-pr/media/stack_blocks_K1_astra_success.mp4" autoplay muted loop playsinline></video><figcaption>Stack Blocks · GPT-6 Astra · K1 <span class="ok">成功</span></figcaption></figure>
+    <figure><video src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@897e7e02403c3d9b1e5dd089812497c9328108c1/physrsi-pr/media/cover_blocks_K1_transfer_success.mp4" autoplay muted loop playsinline></video><figcaption>Cover Blocks · Sonnet 5.5 · K1（迁移）<span class="ok">成功</span></figcaption></figure>
+    <figure><video src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@897e7e02403c3d9b1e5dd089812497c9328108c1/physrsi-pr/media/plug_in_charger_K7_success.mp4" autoplay muted loop playsinline></video><figcaption>Plug In Charger · Sonnet 5.5 · K7 <span class="ok">成功</span></figcaption></figure>
+    <figure><video src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@897e7e02403c3d9b1e5dd089812497c9328108c1/physrsi-pr/media/insert_key_K1_partial.mp4" autoplay muted loop playsinline></video><figcaption>Insert Key · Sonnet 5.5 · K1 得分 0.15（所有系统到 K17 都未解出）</figcaption></figure>
+  </div>
+  <figure>
+    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@897e7e02403c3d9b1e5dd089812497c9328108c1/physrsi-pr/img/workflow.jpg" alt="两阶段流程：K0 评估与 K1–KH 优化" width="2250" height="2017"></div>
+    <figcaption>两阶段、同一接口：K0 无工作区单次尝试；K1 起每轮从持久化工作区出发，执行、判分、离线修订、提交。<span class="src">论文 图 2</span></figcaption>
+  </figure>
 
-    <figure>
-      <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@1e220339de58bec65f0f907e802a38a1d7cf6bc4/physrsi-pr/img/workflow.jpg" alt="PhysRSI-Eval 两阶段流程：K0 评估与 K1–KH 优化" width="2250" height="2017"></div>
-      <figcaption>两阶段、同一接口。左：评估（K0），无工作区的单次尝试；右：优化（K1–K<sub>H</sub>），每轮从持久化工作区出发，原生判分、离线修订、提交。</figcaption>
-    </figure>
+  <h2><span class="q">Q1</span>桶板效应：Coding 并非最重要</h2>
+  <blockquote>
+    <span class="en">“GPT-5.6 Sol exceeds GPT-6 Astra on LiveBench code generation and completion, yet solves one of the 18 tasks, whereas Astra solves 15.”</span>
+    <span class="zh">编程分数更高的 GPT-5.6 Sol 只解出 1 个任务，GPT-6 Astra 解出 15 个。<span class="src">§4.1</span></span>
+  </blockquote>
+  <figure class="wide">
+    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@897e7e02403c3d9b1e5dd089812497c9328108c1/physrsi-pr/img/barrel_matrix.jpg" alt="四组公开能力与五个维度的秩相关矩阵，以及桶板假说示意" width="1609" height="977"></div>
+    <figcaption>空间推理与首次尝试（A1）ρ = 0.94；感知与成功（A3）、改进（A5）ρ = 0.94；Coding 与所有维度 ρ ≤ 0.37。<span class="src">论文 图 4</span></figcaption>
+  </figure>
+  <blockquote>
+    <span class="en">“Its weak associations do not imply that coding is unnecessary; all systems use code here.”</span>
+    <span class="zh">Coding 相关弱，不代表不需要它：所有系统都在写代码，只是短板不在这里。<span class="src">§4.2</span></span>
+  </blockquote>
 
-    <p>任务按 RoboDojo 官方成功率分为 D1（最容易）到 D6（最难）六个难度层，每层选 3 个，覆盖 RoboDojo 全部五个官方任务类别。被测系统包括 GPT-6 Astra、GPT-6.1 Sol、GPT-6 Sol、GPT-5.6 Sol、Claude Opus 5.5、Claude Sonnet 5.5，另有 Gemini 4 在 10 个任务上单独评测。</p>
+  <h2><span class="q">Q2</span>高分、早涨、省交互，三者可以分离</h2>
+  <figure class="wide">
+    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@897e7e02403c3d9b1e5dd089812497c9328108c1/physrsi-pr/img/radar_panels_7models.svg" alt="七个系统的五维画像" width="1000" height="612"></div>
+    <figcaption>七个系统的五维画像。Opus 5.5 的成功分高于 GPT-6.1 Sol（<span class="hl">0.744</span> vs 0.703），效率（0.609 vs <span class="hl">0.822</span>）和预算（0.579 vs <span class="hl">0.808</span>）却落后。<span class="src">§5.1 · 图 5 · 表 1</span></figcaption>
+  </figure>
+  <figure class="wide">
+    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@897e7e02403c3d9b1e5dd089812497c9328108c1/physrsi-pr/img/figure4_success_benchmark_area.svg" alt="累计成功曲线与公开基准均分对比" width="1000" height="360"></div>
+    <figcaption>公开榜单均分 54.1–78.1（差 24 分），物理五维均分 13.9–73.4（差 59.5 分）；GPT-5.6 Sol 连续 16 轮累计成功接近零。<span class="src">§5.1 · 图 6</span></figcaption>
+  </figure>
+  <figure class="wide">
+    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@897e7e02403c3d9b1e5dd089812497c9328108c1/physrsi-pr/img/half_gain_round_prediction.svg" alt="由公开能力画像预测增益时机与最终排名" width="1000" height="512"></div>
+    <figcaption>用其余四个系统拟合、预测留出的两个系统：K17 最好得分与 T<sub>50</sub> 的排序全部预测正确。<span class="src">§5.2 · 图 7</span></figcaption>
+  </figure>
+  <figure class="wide">
+    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@897e7e02403c3d9b1e5dd089812497c9328108c1/physrsi-pr/img/astra_shape_transfer.svg" alt="用 Astra 的改进曲线形状预测 GPT-6.1 Sol" width="1000" height="390"></div>
+    <figcaption>借用 Astra 的曲线形状，只用 GPT-6.1 Sol 的 K1–K5 校准，预测 K6–K17 的平均绝对误差为 <span class="hl">0.019</span>，直接沿用最后观测值为 0.112。<span class="src">§5.3 · 图 8</span></figcaption>
+  </figure>
 
-    <figure>
-      <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@1e220339de58bec65f0f907e802a38a1d7cf6bc4/physrsi-pr/img/task_table.jpg" alt="按难度分层采样的 18 个任务" width="1831" height="859"></div>
-      <figcaption>难度均衡的任务采样：每个难度层 3 个任务，从 D1 到 D6。</figcaption>
-    </figure>
+  <h2><span class="q">Q3</span>不只是过拟合：经验可以带走</h2>
+  <div class="wide vids two">
+    <figure><video src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@897e7e02403c3d9b1e5dd089812497c9328108c1/physrsi-pr/media/cover_blocks_K1_scratch_fail.mp4" autoplay muted loop playsinline></video><figcaption>Cover Blocks · K1 · 空工作区：<span class="bad">失败</span>（800/800 步）</figcaption></figure>
+    <figure><video src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@897e7e02403c3d9b1e5dd089812497c9328108c1/physrsi-pr/media/cover_blocks_K1_transfer_success.mp4" autoplay muted loop playsinline></video><figcaption>Cover Blocks · K1 · 借用 Stack Blocks 的抓取-搬运例程：<span class="ok">成功</span>（501 步）</figcaption></figure>
+  </div>
+  <ul class="pts">
+    <li>去掉历史，后期成功率从 41.7% 降到 <span class="hl">8.3%</span>。<span class="src">§6.1 · 表 8</span></li>
+    <li>停止修订后，冻结的工作区在 5 个未见布局上仍成功 <span class="hl">25/60</span>。<span class="src">§6.2 · 表 9</span></li>
+    <li>跨任务迁移让首次成功提前：K9→K1、K14→K7、K15→K8。<span class="src">§6.3 · 图 9</span></li>
+  </ul>
+  <figure class="wide">
+    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@897e7e02403c3d9b1e5dd089812497c9328108c1/physrsi-pr/img/cross_task_transfer.jpg" alt="跨任务工作区迁移前后的轨迹对比" width="2400" height="1505"></div>
+    <figcaption>上：原始自我改进轨迹；下：用其他任务汇总的工作区初始化后的轨迹。<span class="src">论文 图 9</span></figcaption>
+  </figure>
+  <figure class="wide">
+    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@897e7e02403c3d9b1e5dd089812497c9328108c1/physrsi-pr/img/tools_reuse.svg" alt="各模型工具库规模与复用情况" width="1000" height="322"></div>
+    <figcaption>Sonnet 5.5 与 Opus 5.5 后期超过 96% 的动作由自己写的工具生成；Opus 的工具复用面最广（谱系复用率 0.347）。<span class="src">§6.3 · 图 10</span></figcaption>
+  </figure>
 
-    <p>只看最终得分无法刻画自我改进：它说不清进步发生在什么时候、花了多少交互，也分不清是真的学会了还是多试几次碰上了。为此论文提出<strong>五维指标</strong>：</p>
-    <dl class="axes">
-      <div><dt>A1</dt><span class="n">首次尝试表现</span><dd>不经任何改进时的起点有多高</dd></div>
-      <div><dt>A2</dt><span class="n">效率</span><dd>增益来得有多早</dd></div>
-      <div><dt>A3</dt><span class="n">成功</span><dd>最终能达到多高的得分</dd></div>
-      <div><dt>A4</dt><span class="n">预算</span><dd>节省了多少物理交互</dd></div>
-      <div><dt>A5</dt><span class="n">改进</span><dd>能否从失败中恢复过来</dd></div>
-    </dl>
+  <h2>一句话</h2>
+  <p>能开好局的能力，不等于能持续进步的能力。理解物理 RSI，既要看智能体如何进步，也要看它在进步中留下了什么。<span class="src">§8</span></p>
+  <p style="font-size:14px;color:var(--muted)">局限：主实验为六个系统、每任务一条改进链；能力瓶颈与预测仍是待检验的假设；消融与冻结测试只覆盖 Astra 的 6 个任务，跨任务结果来自 3 个案例。<span class="src">§7</span></p>
+  <div class="links">
+    <span>论文 <a href="https://arxiv.org/abs/2610.26848">https://arxiv.org/abs/2610.26848</a></span>
+    <span>主页 <a href="https://physrsi-eval.github.io/">https://physrsi-eval.github.io/</a></span>
+    <span>代码 <a href="https://github.com/PhysRSI-Eval/PhysRSI-Eval-code">https://github.com/PhysRSI-Eval/PhysRSI-Eval-code</a></span>
+  </div>
+</article>
 
-    <h2><span class="q">Q1</span>物理 RSI 的能力从哪来？</h2>
-    <p>论文把 17 个公开基准归为四组能力：空间推理（Spatial）、智能体框架使用（Harness）、感知（Perception）和编程（Coding），再计算它们与五个维度在六个系统上的秩相关。</p>
-    <ul class="findings">
-      <li><strong>空间推理</strong>与首次尝试表现（A1）的相关最强，ρ = <span class="hl">0.94</span>；与效率（A2）、预算（A4）也达到 0.83。</li>
-      <li><strong>感知</strong>与成功（A3）、改进（A5）的相关最强，ρ = <span class="hl">0.94</span>。</li>
-      <li><strong>编程</strong>与每个维度的相关都最弱，ρ ≤ 0.37。</li>
-    </ul>
-
-    <figure>
-      <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@1e220339de58bec65f0f907e802a38a1d7cf6bc4/physrsi-pr/img/barrel_matrix.jpg" alt="公开能力与五个维度的关联矩阵，以及物理桶板假说示意" width="1609" height="977"></div>
-      <figcaption>能力关联与桶板假说。矩阵为六个系统在 18 个任务上的探索性秩相关；每只木桶代表一个 RSI 维度，桶板高度示意该维度的潜在能力瓶颈。</figcaption>
-    </figure>
-
-    <div class="callout">
-      <div class="t">物理桶板假说（Physical Barrel Hypothesis）</div>
-      <p>自我改进的不同方面，可能受不同能力的制约：开局好靠空间推理，读懂失败、从失败中恢复靠感知。编程能力再强，也不一定能补上别处的短板。</p>
-    </div>
-    <p>作者强调，这些关联提示的是候选瓶颈，并不构成因果结论。</p>
-
-    <h2><span class="q">Q2</span>如何量化物理 RSI 与它的 Scaling Law？</h2>
-    <h3>得分高、涨得快、花得少，三者可以分离</h3>
-    <p>五维画像把这些差异摆到了台面上。例如 Claude Opus 5.5 的最终成功分高于 GPT-6.1 Sol（0.744 对 0.703），但效率（0.609 对 0.822）和预算（0.579 对 0.808）明显落后。最终得分更高，并不代表进步更早，也不代表交互更省。</p>
-
-    <div class="tbl">
-      <table>
-        <thead><tr><th>系统</th><th>任务数</th><th>A1 首次尝试</th><th>A2 效率</th><th>A3 成功</th><th>A4 预算</th><th>A5 改进</th></tr></thead>
-        <tbody>
-          <tr><td>GPT-6 Astra</td><td>18</td><td class="top">0.368</td><td class="top">0.859</td><td class="top">0.851</td><td class="top">0.843</td><td class="top">0.750</td></tr>
-          <tr><td>GPT-6.1 Sol</td><td>18</td><td>0.284</td><td>0.822</td><td>0.703</td><td>0.808</td><td>0.571</td></tr>
-          <tr><td>GPT-6 Sol</td><td>18</td><td>0.031</td><td>0.466</td><td>0.472</td><td>0.372</td><td>0.389</td></tr>
-          <tr><td>GPT-5.6 Sol</td><td>18</td><td>0.012</td><td>0.225</td><td>0.104</td><td>0.301</td><td>0.056</td></tr>
-          <tr><td>Claude Opus 5.5</td><td>18</td><td>0.177</td><td>0.609</td><td>0.744</td><td>0.579</td><td>0.688</td></tr>
-          <tr><td>Claude Sonnet 5.5</td><td>18</td><td>0.124</td><td>0.695</td><td>0.701</td><td>0.698</td><td>0.563</td></tr>
-          <tr><td>Gemini 4*</td><td>10</td><td>0.050</td><td>0.783</td><td>0.635</td><td>0.624</td><td>0.600</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="figcap">五维画像（K0 分数为每任务三次运行的均值）。*Gemini 4 仅在 10 个任务上评测，每任务一次 K0 运行。</p>
-
-    <figure>
-      <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@1e220339de58bec65f0f907e802a38a1d7cf6bc4/physrsi-pr/img/radar_panels_7models.svg" alt="七个系统的五维雷达图" width="1000" height="612"></div>
-      <figcaption>七个系统的五维画像，按论文原图绘制。</figcaption>
-    </figure>
-
-    <h3>公开榜单上的差距，在物理世界里会被放大</h3>
-    <p>四个 GPT 系统在公开基准上的平均分只相差 24 分，五维物理画像的均值却相差 <span class="hl">59.5</span> 分。GPT-5.6 Sol 在整整 16 轮里累计成功几乎为零。</p>
-    <figure>
-      <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@1e220339de58bec65f0f907e802a38a1d7cf6bc4/physrsi-pr/img/figure4_success_benchmark_area.svg" alt="左：18 个任务上的累计成功曲线；右：公开基准均分与物理 RSI 画像均值" width="1000" height="360"></div>
-      <figcaption>左：改进过程中的累计成功，阴影为 GPT-6.1 Sol 与 GPT-6 Sol 之间的差距；右：17 个公开基准的平均分与 100×(A1+…+A5)/5 的对比。</figcaption>
-    </figure>
-
-    <h3>观测型 Scaling：能涨多高，多早能涨？</h3>
-    <p>沿用 observational scaling 的思路，论文用 17 个公开基准构建每个系统的四维能力画像，每次留出一对系统，用其余四个预测它们的排名。结果显示，公开能力画像复现了两项观测排序：K17 时达到的最好得分，以及半程增益轮次 T<sub>50</sub>（最好均分首次达到其 K1–K17 总增益一半的轮次）。</p>
-    <figure>
-      <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@1e220339de58bec65f0f907e802a38a1d7cf6bc4/physrsi-pr/img/half_gain_round_prediction.svg" alt="由公开能力画像预测增益时机与最终排名" width="1000" height="512"></div>
-      <figcaption>左：各系统由 17 个公开基准得到的四维能力画像；右：18 个任务上逐轮最好均分。标注为“预测排名 / 观测排名”，圆圈处为 T<sub>50</sub>。</figcaption>
-    </figure>
-
-    <h3>前几轮的物理反馈，能预测后面多少？</h3>
-    <p>以 GPT-6 Astra 的改进曲线拟合一个 Weibull 模板，只用 GPT-6.1 Sol 的 K1–K5 做校准，就能预测它 K6–K17 的走势，平均绝对误差 <span class="hl">0.019</span>；作为对照，直接沿用最后一个观测值的误差是 0.112。</p>
-    <figure>
-      <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@1e220339de58bec65f0f907e802a38a1d7cf6bc4/physrsi-pr/img/astra_shape_transfer.svg" alt="用 Astra 的改进形状预测 GPT-6.1 Sol 的后续轮次" width="1000" height="390"></div>
-      <figcaption>左：Astra 的均分与拟合的 Weibull 模板；右：仅给定 K1–K5 时对 GPT-6.1 Sol 后续轮次的预测，阴影为 90% 配对任务 bootstrap 区间。</figcaption>
-    </figure>
-
-    <h2><span class="q">Q3</span>是过拟合，还是泛化？</h2>
-    <p>分数上升本身回答不了这个问题。论文设计了三组干预：去掉历史、在没见过的布局上冻结工作区测试、把工作区迁移到别的任务。</p>
-    <ul class="findings">
-      <li><strong>积累的经验确实有用。</strong>在 Astra 的 6 任务消融中（每轮更换布局），后期轮次成功率在完整闭环下为 41.7%，去掉历史后降到 <span class="hl">8.3%</span>。</li>
-      <li><strong>冻结的工作区在新布局上依然管用。</strong>K6 之后停止修订、也不给反馈，只用工作区文件在 5 个未见布局上测试，60 次中成功 25 次（41.7%）。在固定布局上练出来的工作区，换到新布局成功率为 45.0%，在原布局上则是 88%，说明场景特化同样存在。</li>
-      <li><strong>经验可以跨任务复用。</strong>用其他任务汇总的工作区初始化后，三个案例的首次成功都大幅提前：Sonnet 5.5 的 Cover Blocks 从 K9 提前到 <span class="hl">K1</span>，Opus 5.5 的 Organize Table 从 K14 到 K7，Deposit Coin 从 K15 到 K8。</li>
-    </ul>
-    <figure>
-      <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@1e220339de58bec65f0f907e802a38a1d7cf6bc4/physrsi-pr/img/cross_task_transfer.jpg" alt="跨任务工作区迁移：原始轨迹与用其他任务工作区初始化后的轨迹" width="2400" height="1505"></div>
-      <figcaption>跨任务工作区迁移。上：在 K6 或更晚才首次成功的原始轨迹；下：用其他任务汇总的工作区初始化后的轨迹。</figcaption>
-    </figure>
-    <p>经验沉淀在哪里？Sonnet 5.5 和 Opus 5.5 会把控制逻辑写进自己编写的工具，后期轮次中超过 <span class="hl">96%</span> 的动作由这些工具生成。其中 Opus 复用的工具箱最广，工具谱系复用率为 0.347，Sonnet 为 0.167，GPT-6 Sol 为 0.086。</p>
-    <figure>
-      <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@1e220339de58bec65f0f907e802a38a1d7cf6bc4/physrsi-pr/img/tools_reuse.svg" alt="各模型的工具库构成与复用情况" width="1000" height="322"></div>
-      <figcaption>工具库与复用。(a) 工具总数及感知/几何类与动作类工具占比；(b) 在后续轮次被复用的工具谱系比例；(c) 复用广度。</figcaption>
-    </figure>
-    <p>这些结果表明，场景特化的适应与可复用的经验可以同时存在。</p>
-
-    <h2>结语</h2>
-    <p>PhysRSI-Eval 在固定交互预算下，系统研究了物理 RSI 的来源、度量、Scaling 与泛化。能开好局的能力，未必是能持续进步的能力；高分、早涨、省交互也未必同时出现。理解物理 RSI，既要量化智能体如何进步，也要看清它在进步中留下了什么。</p>
-    <p>作者也说明了当前工作的边界：主实验覆盖六个系统、每任务一条改进链；能力瓶颈与增益时机的预测仍是待检验的假设；消融与冻结测试只覆盖 Astra 和 6 个任务，跨任务结果来自 3 个案例。</p>
-    <p>欢迎阅读论文、访问项目主页和代码仓库：<br>
-      论文 <a href="https://arxiv.org/abs/2610.26848">https://arxiv.org/abs/2610.26848</a><br>
-      主页 <a href="https://physrsi-eval.github.io/">https://physrsi-eval.github.io/</a><br>
-      代码 <a href="https://github.com/PhysRSI-Eval/PhysRSI-Eval-code">https://github.com/PhysRSI-Eval/PhysRSI-Eval-code</a>
-    </p>
-  </article>
-
-  <section class="kit" aria-label="发稿素材">
-    <div class="label">发稿素材 · 不属于正文</div>
-    <h2>备选标题</h2>
-    <ol>
-      <li>大模型直接当机器人策略，自我进化的能力从哪来？</li>
-      <li>编程强不等于学得快：PhysRSI-Eval 揭示机器人自我改进的“桶板效应”</li>
-      <li>公开榜单差 24 分，物理世界差 59.5 分：大模型机器人自我进化的观测型 Scaling Law</li>
-      <li>银河通用发布 PhysRSI-Eval：用五个维度量化机器人“自我进化”</li>
-    </ol>
-    <div class="label">短文案（朋友圈 / 微博 / 小红书）</div>
-    <p class="blurb">大模型直接控制机器人，还能边试边改、越做越好，这种“物理自我进化”的能力从哪来？我们提出 PhysRSI-Eval，在 18 个操作任务上用五个维度刻画 7 个前沿模型：开局靠空间推理，恢复靠感知，编程强不一定学得快。公开能力还能预测谁涨得更早、更高。论文 arxiv.org/abs/2610.26848　主页 physrsi-eval.github.io</p>
-    <div class="label">引用</div>
-    <pre class="cite">@misc{li2026physicalrsicapabilityfrom,
+<section class="col kit" aria-label="发稿素材">
+  <div class="label">发稿素材 · 不属于正文</div>
+  <h2>备选标题</h2>
+  <ol>
+    <li>PhysRSI-Eval 揭示 VLM-as-Policy 自我改进的“桶板效应”：Coding 能力并非最重要</li>
+    <li>编程分数更高，却只解出 1 个任务：大模型机器人自我进化的短板在哪里？</li>
+    <li>公开榜单差 24 分，物理世界差 59.5 分：VLM-as-Policy 的观测型 Scaling Law</li>
+  </ol>
+  <div class="label">短文案（朋友圈 / 微博 / 小红书）</div>
+  <p>大模型直接控制机器人、边试边改，谁进步得最快？PhysRSI-Eval 在 18 个操作任务、17 轮自我改进中测了 7 个前沿模型：开局靠空间推理，恢复靠感知，Coding 与各项指标的相关反而最弱。arxiv.org/abs/2610.26848 ｜ physrsi-eval.github.io</p>
+  <div class="label">配套素材</div>
+  <p>开头两段动图另有 GIF 版（anim/climb.gif、anim/radar.gif），可直接上传公众号；任务视频原文件在 media/。</p>
+  <div class="label">引用</div>
+  <pre class="cite">@misc{li2026physicalrsicapabilityfrom,
   title={Where is Physical RSI capability from? An Observational Scaling Law of LLM-as-policy},
   author={Zekai Li and Jiayi Yu and Jinlu Zhang and Luyang Niu and Zekun Qi and Jun Zheng and Xuchuan Chen and Dairu Liu and Yintianrun Zhang and He Wang and Li Yi},
   year={2026},
@@ -290,29 +203,22 @@ pre.cite { margin: 0; font: 12.5px/1.6 var(--mono); background: var(--bg); borde
   primaryClass={cs.RO},
   url={https://arxiv.org/abs/2610.26848}
 }</pre>
-  </section>
-</div>
+</section>
 
 <script>
 (function () {
   var btn = document.getElementById('copy-btn');
   var article = document.getElementById('pr');
   btn.addEventListener('click', function () {
-    var text = article.innerText;
     function done(msg) { btn.textContent = msg; setTimeout(function () { btn.textContent = '复制正文'; }, 2000); }
     function fallback() {
-      var range = document.createRange();
-      range.selectNodeContents(article);
-      var sel = window.getSelection();
-      sel.removeAllRanges();
-      sel.addRange(range);
+      var range = document.createRange(); range.selectNodeContents(article);
+      var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
       done('已选中正文，请按 Ctrl/⌘+C');
     }
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(function () { done('已复制'); }, fallback);
-    } else {
-      fallback();
-    }
+      navigator.clipboard.writeText(article.innerText).then(function () { done('已复制'); }, fallback);
+    } else { fallback(); }
   });
 })();
 </script>
