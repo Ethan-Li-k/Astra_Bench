@@ -48,7 +48,6 @@ iframe { border: 0; width: 100%; height: 100%; display: block; background: var(-
   <div class="view" id="view-src" hidden><div id="src-wrap"><pre id="src"></pre></div></div>
   <div class="view" id="view-art" hidden><iframe title="排版稿" data-src="article.html"></iframe></div>
 </main>
-<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
 <script>
 (function () {
   var mdText = '';
@@ -78,8 +77,14 @@ iframe { border: 0; width: 100%; height: 100%; display: block; background: var(-
     mdText = t;
     document.getElementById('src').textContent = t;
     var md = document.getElementById('md');
-    if (window.marked) { md.innerHTML = marked.parse(t); }
-    else { md.innerHTML = '<p>Markdown 渲染库未加载，请查看“Markdown 源码”。</p>'; }
+    // 渲染库由脚本按需加载，不依赖 <script> 顺序（htmlpreview 等预览服务会打乱脚本执行顺序）
+    function render() { md.innerHTML = marked.parse(t); }
+    if (window.marked) { render(); return; }
+    var s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js';
+    s.onload = render;
+    s.onerror = function () { md.innerHTML = '<p>Markdown 渲染库未加载，请查看“Markdown 源码”。</p>'; };
+    document.head.appendChild(s);
   }).catch(function (e) {
     document.getElementById('md').textContent = '读取 PR.md 失败：' + e;
   });
