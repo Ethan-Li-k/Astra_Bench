@@ -1,6 +1,6 @@
 # PhysRSI-Eval 揭示 VLM-as-Policy 自我改进的“桶板效应”：Coding 能力并非最重要
 
-> 让大模型直接控制机器人，并在 17 轮试错中自己改代码、写工具、记笔记。能开好局靠空间推理，能从失败中爬起来靠感知；编程能力与五个评价维度的相关反而最弱。
+> 让大模型直接控制机器人，并在 17 轮试错中自己改代码、写工具、记笔记。能开好局靠空间推理，能从失败中爬起来靠感知；编程能力与开局、效率、预算三个维度的相关最弱。
 
 **Where is Physical RSI capability from? An Observational Scaling Law of LLM-as-policy**
 Zekai Li\*, Jiayi Yu\*, Jinlu Zhang\*, Luyang Niu\*, Zekun Qi\*, Jun Zheng, Xuchuan Chen, Dairu Liu, Yintianrun Zhang, He Wang†, Li Yi† · Galbot Team（\* 共同第一作者　† 通讯作者）
@@ -19,7 +19,7 @@ Zekai Li\*, Jiayi Yu\*, Jinlu Zhang\*, Luyang Niu\*, Zekun Qi\*, Jun Zheng, Xuch
 
 | | 发现 | 出处 |
 |:-:|---|---|
-| **ρ = 0.94** | 空间推理决定开局，感知决定能否从失败中恢复；Coding 与五个维度的相关都最弱（ρ ≤ 0.37） | §4.1 · 图 4 |
+| **ρ = 0.94** | 空间推理决定开局，感知决定能否从失败中恢复；Coding 与首次尝试、效率、预算的相关最弱（ρ ≤ 0.14） | §4.1 · 图 4 |
 | **24 → 59.5** | 四个 GPT 系统的公开榜单均分只差 24 分，物理五维均分却差 59.5 分 | §5.1 · 图 6 |
 | **MAE 0.019** | 公开能力可以预测谁涨得高、涨得早；只看前 5 轮，就能预测之后 12 轮的走势 | §5.2–5.3 · 图 7–8 |
 | **K9 → K1** | 经验可以迁移：借用其他任务沉淀的工作区，首次成功从第 9 轮提前到第 1 轮 | §6.3 · 图 9 |
@@ -48,7 +48,7 @@ Zekai Li\*, Jiayi Yu\*, Jinlu Zhang\*, Luyang Niu\*, Zekun Qi\*, Jun Zheng, Xuch
 
 <p align="center"><img src="img/barrel_matrix.jpg" width="100%" alt="能力关联矩阵与桶板假说"></p>
 
-*空间推理与首次尝试（A1）ρ = 0.94；感知与成功（A3）、改进（A5）ρ = 0.94；Coding 与所有维度 ρ ≤ 0.37。`论文 图 4`*
+*空间推理与首次尝试（A1）ρ = 0.94；感知与成功（A3）、改进（A5）ρ = 0.71、0.89；Coding 与首次尝试、效率、预算 ρ ≤ 0.14。`论文 图 4`*
 
 > *“Its weak associations do not imply that coding is unnecessary; all systems use code here.”* — 论文 §4.2
 >
@@ -112,7 +112,7 @@ Zekai Li\*, Jiayi Yu\*, Jinlu Zhang\*, Luyang Niu\*, Zekun Qi\*, Jun Zheng, Xuch
 
 **短文案（朋友圈 / 微博 / 小红书）**
 
-> 大模型直接控制机器人、边试边改，谁进步得最快？PhysRSI-Eval 在 18 个操作任务、17 轮自我改进中测了 7 个前沿模型：开局靠空间推理，恢复靠感知，Coding 与各项指标的相关反而最弱。arxiv.org/abs/2610.26848 ｜ physrsi-eval.github.io
+> 大模型直接控制机器人、边试边改，谁进步得最快？PhysRSI-Eval 在 18 个操作任务、17 轮自我改进中测了 7 个前沿模型：开局靠空间推理，恢复靠感知，Coding 与开局、效率、预算的相关反而最弱。arxiv.org/abs/2610.26848 ｜ physrsi-eval.github.io
 
 **配套素材**：开头两段动图为 GIF（`anim/climb.gif`、`anim/radar.gif`），可直接上传公众号；网页版用同内容的 WebP。任务视频原文件在 `media/`。
 
