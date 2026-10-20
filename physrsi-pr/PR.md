@@ -7,11 +7,11 @@ Zekai Li\*, Jiayi Yu\*, Jinlu Zhang\*, Luyang Niu\*, Zekun Qi\*, Jun Zheng, Xuch
 
 论文 https://arxiv.org/abs/2610.26848 ｜ 主页 https://physrsi-eval.github.io/ ｜ 代码 https://github.com/PhysRSI-Eval/PhysRSI-Eval-code
 
-<p align="center"><img src="anim/climb.gif" width="90%" alt="六个系统 K1 到 K17 逐轮最好均分的爬升动画"></p>
+<p align="center"><img src="anim/climb.gif" width="100%" alt="六个系统 K1 到 K17 逐轮最好均分的爬升动画"></p>
 
 *17 轮自我改进，逐轮回放。实线为到第 k 轮为止的最好均分，圆圈为半程增益轮次 T50。`论文 图 7`*
 
-<p align="center"><img src="anim/radar.gif" width="90%" alt="七个系统五维画像的动画"></p>
+<p align="center"><img src="anim/radar.gif" width="100%" alt="七个系统五维画像的动画"></p>
 
 *七个系统的五维画像：先逐个绘制，再叠加对比。`论文 图 5 · 表 1`*
 
@@ -24,7 +24,7 @@ Zekai Li\*, Jiayi Yu\*, Jinlu Zhang\*, Luyang Niu\*, Zekun Qi\*, Jun Zheng, Xuch
 | **MAE 0.019** | 公开能力可以预测谁涨得高、涨得早；只看前 5 轮，就能预测之后 12 轮的走势 | §5.2–5.3 · 图 7–8 |
 | **K9 → K1** | 经验可以迁移：借用其他任务沉淀的工作区，首次成功从第 9 轮提前到第 1 轮 | §6.3 · 图 9 |
 
-<p align="center"><img src="img/teaser.jpg" width="90%" alt="PhysRSI-Eval 总览图"></p>
+<p align="center"><img src="img/teaser.jpg" width="100%" alt="PhysRSI-Eval 总览图"></p>
 
 *PhysRSI-Eval 总览：Q1 能力从哪来；Q2 如何量化与预测；Q3 是过拟合还是泛化。`论文 图 1`*
 
@@ -36,7 +36,7 @@ Zekai Li\*, Jiayi Yu\*, Jinlu Zhang\*, Luyang Niu\*, Zekun Qi\*, Jun Zheng, Xuch
 |:-:|:-:|:-:|:-:|
 | [![stack](media/stack_blocks_K1_astra_success.webp)](media/stack_blocks_K1_astra_success.mp4) | [![cover](media/cover_blocks_K1_transfer_success.webp)](media/cover_blocks_K1_transfer_success.mp4) | [![plug](media/plug_in_charger_K7_success.webp)](media/plug_in_charger_K7_success.mp4) | [![insert](media/insert_key_K1_partial.webp)](media/insert_key_K1_partial.mp4) |
 
-<p align="center"><img src="img/workflow.jpg" width="60%" alt="两阶段流程"></p>
+<p align="center"><img src="img/workflow.jpg" width="100%" alt="两阶段流程"></p>
 
 *两阶段、同一接口：K0 无工作区单次尝试；K1 起每轮从持久化工作区出发，执行、判分、离线修订、提交。`论文 图 2`*
 
@@ -46,7 +46,7 @@ Zekai Li\*, Jiayi Yu\*, Jinlu Zhang\*, Luyang Niu\*, Zekun Qi\*, Jun Zheng, Xuch
 >
 > 编程分数更高的 GPT-5.6 Sol 只解出 1 个任务，GPT-6 Astra 解出 15 个。
 
-<p align="center"><img src="img/barrel_matrix.jpg" width="90%" alt="能力关联矩阵与桶板假说"></p>
+<p align="center"><img src="img/barrel_matrix.jpg" width="100%" alt="能力关联矩阵与桶板假说"></p>
 
 *空间推理与首次尝试（A1）ρ = 0.94；感知与成功（A3）、改进（A5）ρ = 0.94；Coding 与所有维度 ρ ≤ 0.37。`论文 图 4`*
 
@@ -58,19 +58,19 @@ Zekai Li\*, Jiayi Yu\*, Jinlu Zhang\*, Luyang Niu\*, Zekun Qi\*, Jun Zheng, Xuch
 
 闭源模型不公开参数量和训练算力，经典 Scaling Law 无从下手。论文改用公开基准分数，聚合成空间推理、感知、编程、工具使用四个能力因子，作为可观测的替代。`§1`
 
-<p align="center"><img src="img/radar_panels_7models.svg" width="90%" alt="七个系统的五维画像"></p>
+<p align="center"><img src="img/radar_panels_7models.svg" width="100%" alt="七个系统的五维画像"></p>
 
 *七个系统的五维画像。Opus 5.5 的成功分高于 GPT-6.1 Sol（**0.744** vs 0.703），效率（0.609 vs **0.822**）和预算（0.579 vs **0.808**）却落后。`§5.1 · 图 5 · 表 1`*
 
-<p align="center"><img src="img/figure4_success_benchmark_area.svg" width="90%" alt="累计成功曲线与公开基准均分对比"></p>
+<p align="center"><img src="img/figure4_success_benchmark_area.svg" width="100%" alt="累计成功曲线与公开基准均分对比"></p>
 
 *公开榜单均分 54.1–78.1（差 24 分），物理五维均分 13.9–73.4（差 59.5 分）；GPT-5.6 Sol 连续 16 轮累计成功接近零。`§5.1 · 图 6`*
 
-<p align="center"><img src="img/half_gain_round_prediction.svg" width="90%" alt="由公开能力预测增益时机与排名"></p>
+<p align="center"><img src="img/half_gain_round_prediction.svg" width="100%" alt="由公开能力预测增益时机与排名"></p>
 
 *用其余四个系统拟合、预测留出的两个系统：K17 最好得分与 T50 的排序全部预测正确。`§5.2 · 图 7`*
 
-<p align="center"><img src="img/astra_shape_transfer.svg" width="90%" alt="用 Astra 的曲线形状预测 GPT-6.1 Sol"></p>
+<p align="center"><img src="img/astra_shape_transfer.svg" width="100%" alt="用 Astra 的曲线形状预测 GPT-6.1 Sol"></p>
 
 *借用 Astra 的曲线形状，只用 GPT-6.1 Sol 的 K1–K5 校准，预测 K6–K17 的平均绝对误差为 **0.019**，直接沿用最后观测值为 0.112。`§5.3 · 图 8`*
 
@@ -84,11 +84,11 @@ Zekai Li\*, Jiayi Yu\*, Jinlu Zhang\*, Luyang Niu\*, Zekun Qi\*, Jun Zheng, Xuch
 - 停止修订后，冻结的工作区在 5 个未见布局上仍成功 **25/60**。`§6.2 · 表 9`
 - 跨任务迁移让首次成功提前：K9→K1、K14→K7、K15→K8。`§6.3 · 图 9`
 
-<p align="center"><img src="img/cross_task_transfer.jpg" width="90%" alt="跨任务工作区迁移"></p>
+<p align="center"><img src="img/cross_task_transfer.jpg" width="100%" alt="跨任务工作区迁移"></p>
 
 *上：原始自我改进轨迹；下：用其他任务汇总的工作区初始化后的轨迹。`论文 图 9`*
 
-<p align="center"><img src="img/tools_reuse.svg" width="90%" alt="工具库与复用"></p>
+<p align="center"><img src="img/tools_reuse.svg" width="100%" alt="工具库与复用"></p>
 
 *Sonnet 5.5 与 Opus 5.5 后期超过 96% 的动作由自己写的工具生成；Opus 的工具复用面最广（谱系复用率 0.347）。`§6.3 · 图 10`*
 

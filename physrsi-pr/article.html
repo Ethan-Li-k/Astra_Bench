@@ -24,7 +24,7 @@ html { overflow-x: hidden; }
 body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 17px; line-height: 1.85;
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 40px 72px; }
 .col { max-width: 720px; margin: 0 auto; display: grid; gap: 22px; }
-.wide { width: 90vw; max-width: 90vw; margin-left: calc(50% - 45vw); display: grid; gap: 8px; }
+.wide { width: 100%; max-width: 100%; margin-left: 0; display: grid; gap: 8px; }  /* same width as the text column */
 @media (max-width: 640px) { .wide { width: 100%; max-width: 100%; margin-left: 0; } }
 .eyebrow { font: 500 13px var(--mono); letter-spacing: .08em; color: var(--teal); text-transform: uppercase; }
 h1 { font-family: var(--display); font-weight: 900; font-size: clamp(26px, 4.6vw, 38px); line-height: 1.35; margin: 6px 0 0; text-wrap: balance; }
