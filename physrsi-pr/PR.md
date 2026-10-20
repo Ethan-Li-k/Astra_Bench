@@ -1,151 +1,102 @@
-# 大模型直接当机器人策略，自我进化的能力从哪来？
+# PhysRSI-Eval 揭示 VLM-as-Policy 自我改进的“桶板效应”：Coding 能力并非最重要
 
-> 银河通用团队发布 PhysRSI-Eval：用五个维度刻画“物理递归自我改进”，并给出一条 LLM-as-policy 的观测型 Scaling Law。
+> 让大模型直接控制机器人，并在 17 轮试错中自己改代码、写工具、记笔记。能开好局靠空间推理，能从失败中爬起来靠感知；编程能力与五个评价维度的相关反而最弱。
 
 **Where is Physical RSI capability from? An Observational Scaling Law of LLM-as-policy**
+Zekai Li\*, Jiayi Yu\*, Jinlu Zhang\*, Luyang Niu\*, Zekun Qi\*, Jun Zheng, Xuchuan Chen, Dairu Liu, Yintianrun Zhang, He Wang†, Li Yi† · Galbot Team（\* 共同第一作者　† 通讯作者）
 
-Zekai Li\*, Jiayi Yu\*, Jinlu Zhang\*, Luyang Niu\*, Zekun Qi\*, Jun Zheng, Xuchuan Chen, Dairu Liu, Yintianrun Zhang, He Wang†, Li Yi† · Galbot Team
+论文 https://arxiv.org/abs/2610.26848 ｜ 主页 https://physrsi-eval.github.io/ ｜ 代码 https://github.com/PhysRSI-Eval/PhysRSI-Eval-code
 
-\* 共同第一作者　† 通讯作者
+<p align="center"><img src="anim/climb.gif" width="90%" alt="六个系统 K1 到 K17 逐轮最好均分的爬升动画"></p>
 
-- 论文：https://arxiv.org/abs/2610.26848
-- 主页：https://physrsi-eval.github.io/
-- 代码：https://github.com/PhysRSI-Eval/PhysRSI-Eval-code
+*17 轮自我改进，逐轮回放。实线为到第 k 轮为止的最好均分，圆圈为半程增益轮次 T50。`论文 图 7`*
 
-![PhysRSI-Eval 总览](img/teaser.jpg)
+<p align="center"><img src="anim/radar.gif" width="90%" alt="七个系统五维画像的动画"></p>
 
-*PhysRSI-Eval 总览。Q1：物理 RSI 能力从哪来，以及“物理桶板假说”；Q2：五维量化与观测型 Scaling，T50 为半程增益轮次；Q3：改进是过拟合还是泛化。*
+*七个系统的五维画像：先逐个绘制，再叠加对比。`论文 图 5 · 表 1`*
 
-前沿大模型已经可以直接为机器人生成动作。更进一步，它们还能在一次次试错中改写技能、编写代码、制作工具，让自己的操作水平越来越高。模型权重不变，进步全部来自与物理世界的交互和自我修订。我们把这个过程称为**物理递归自我改进（Physical Recursive Self-Improvement，物理 RSI）**。
+## 四个发现
 
-这篇工作不再只是展示“大模型能做到什么”，而是追问三个更基础的问题：
+| | 发现 | 出处 |
+|:-:|---|---|
+| **ρ = 0.94** | 空间推理决定开局，感知决定能否从失败中恢复；Coding 与五个维度的相关都最弱（ρ ≤ 0.37） | §4.1 · 图 4 |
+| **24 → 59.5** | 四个 GPT 系统的公开榜单均分只差 24 分，物理五维均分却差 59.5 分 | §5.1 · 图 6 |
+| **MAE 0.019** | 公开能力可以预测谁涨得高、涨得早；只看前 5 轮，就能预测之后 12 轮的走势 | §5.2–5.3 · 图 7–8 |
+| **K9 → K1** | 经验可以迁移：借用其他任务沉淀的工作区，首次成功从第 9 轮提前到第 1 轮 | §6.3 · 图 9 |
 
-- **Q1**　物理 RSI 的能力来自哪里？
-- **Q2**　如何量化物理 RSI？它遵循怎样的 Scaling Law？
-- **Q3**　模型的进步是对练习场景的过拟合，还是可迁移的泛化？
+<p align="center"><img src="img/teaser.jpg" width="90%" alt="PhysRSI-Eval 总览图"></p>
 
-## 基准：一个受控的物理试错闭环
+*PhysRSI-Eval 总览：Q1 能力从哪来；Q2 如何量化与预测；Q3 是过拟合还是泛化。`论文 图 1`*
 
-| 18 | K0+17 | 5 | 6+1 |
+## 什么是物理 RSI
+
+模型权重冻结，智能体在每轮真实交互后，自己修改持久化工作区里的技能、工具、策略和记忆，直到首次成功或用完 17 轮预算。18 个 RoboDojo 任务，从五个维度打分：首次尝试、效率、成功、预算、改进。`§3 · 图 2–3`
+
+| Stack Blocks · GPT-6 Astra · K1 成功 | Cover Blocks · Sonnet 5.5 · K1（迁移）成功 | Plug In Charger · Sonnet 5.5 · K7 成功 | Insert Key · Sonnet 5.5 · K1 得分 0.15 |
 |:-:|:-:|:-:|:-:|
-| 个 RoboDojo 机器人操作任务 | 首次尝试 + 17 轮自我改进 | 个物理 RSI 评价维度 | 个被测系统（Gemini 4 单独测 10 个任务） |
+| [![stack](media/stack_blocks_K1_astra_success.webp)](media/stack_blocks_K1_astra_success.mp4) | [![cover](media/cover_blocks_K1_transfer_success.webp)](media/cover_blocks_K1_transfer_success.mp4) | [![plug](media/plug_in_charger_K7_success.webp)](media/plug_in_charger_K7_success.mp4) | [![insert](media/insert_key_K1_partial.webp)](media/insert_key_K1_partial.mp4) |
 
-PhysRSI-Eval 把每个任务拆成两个阶段，共用同一套接口。**评估阶段（K0）**：模型在没有任何积累的情况下，通过共享工具完成一次上下文内尝试。**优化阶段（K1–K17）**：模型拥有一个持久化的工作区，里面存放它自己写的技能、工具、策略和记忆。每一轮先执行并由任务原生判定打分，再在机器人动作关闭的情况下修订工作区，然后提交进入下一轮，直到首次成功或用完轮次预算。
+<p align="center"><img src="img/workflow.jpg" width="60%" alt="两阶段流程"></p>
 
-![两阶段流程](img/workflow.jpg)
+*两阶段、同一接口：K0 无工作区单次尝试；K1 起每轮从持久化工作区出发，执行、判分、离线修订、提交。`论文 图 2`*
 
-*两阶段、同一接口。左：评估（K0），无工作区的单次尝试；右：优化（K1–KH），每轮从持久化工作区出发，原生判分、离线修订、提交。*
+## Q1　桶板效应：Coding 并非最重要
 
-任务按 RoboDojo 官方成功率分为 D1（最容易）到 D6（最难）六个难度层，每层选 3 个，覆盖 RoboDojo 全部五个官方任务类别。被测系统包括 GPT-6 Astra、GPT-6.1 Sol、GPT-6 Sol、GPT-5.6 Sol、Claude Opus 5.5、Claude Sonnet 5.5，另有 Gemini 4 在 10 个任务上单独评测。
+> *“GPT-5.6 Sol exceeds GPT-6 Astra on LiveBench code generation and completion, yet solves one of the 18 tasks, whereas Astra solves 15.”* — 论文 §4.1
+>
+> 编程分数更高的 GPT-5.6 Sol 只解出 1 个任务，GPT-6 Astra 解出 15 个。
 
-![任务采样](img/task_table.jpg)
+<p align="center"><img src="img/barrel_matrix.jpg" width="90%" alt="能力关联矩阵与桶板假说"></p>
 
-*难度均衡的任务采样：每个难度层 3 个任务，从 D1 到 D6。*
+*空间推理与首次尝试（A1）ρ = 0.94；感知与成功（A3）、改进（A5）ρ = 0.94；Coding 与所有维度 ρ ≤ 0.37。`论文 图 4`*
 
-只看最终得分无法刻画自我改进：它说不清进步发生在什么时候、花了多少交互，也分不清是真的学会了还是多试几次碰上了。为此论文提出**五维指标**：
+> *“Its weak associations do not imply that coding is unnecessary; all systems use code here.”* — 论文 §4.2
+>
+> Coding 相关弱，不代表不需要它：所有系统都在写代码，只是短板不在这里。
 
-| 维度 | 名称 | 衡量什么 |
-|---|---|---|
-| A1 | 首次尝试表现 | 不经任何改进时的起点有多高 |
-| A2 | 效率 | 增益来得有多早 |
-| A3 | 成功 | 最终能达到多高的得分 |
-| A4 | 预算 | 节省了多少物理交互 |
-| A5 | 改进 | 能否从失败中恢复过来 |
+## Q2　高分、早涨、省交互，三者可以分离
 
-## Q1　物理 RSI 的能力从哪来？
+<p align="center"><img src="img/radar_panels_7models.svg" width="90%" alt="七个系统的五维画像"></p>
 
-论文把 17 个公开基准归为四组能力：空间推理（Spatial）、智能体框架使用（Harness）、感知（Perception）和编程（Coding），再计算它们与五个维度在六个系统上的秩相关。
+*七个系统的五维画像。Opus 5.5 的成功分高于 GPT-6.1 Sol（**0.744** vs 0.703），效率（0.609 vs **0.822**）和预算（0.579 vs **0.808**）却落后。`§5.1 · 图 5 · 表 1`*
 
-- **空间推理**与首次尝试表现（A1）的相关最强，ρ = **0.94**；与效率（A2）、预算（A4）也达到 0.83。
-- **感知**与成功（A3）、改进（A5）的相关最强，ρ = **0.94**。
-- **编程**与每个维度的相关都最弱，ρ ≤ 0.37。
+<p align="center"><img src="img/figure4_success_benchmark_area.svg" width="90%" alt="累计成功曲线与公开基准均分对比"></p>
 
-![能力关联与桶板假说](img/barrel_matrix.jpg)
+*公开榜单均分 54.1–78.1（差 24 分），物理五维均分 13.9–73.4（差 59.5 分）；GPT-5.6 Sol 连续 16 轮累计成功接近零。`§5.1 · 图 6`*
 
-*能力关联与桶板假说。矩阵为六个系统在 18 个任务上的探索性秩相关；每只木桶代表一个 RSI 维度，桶板高度示意该维度的潜在能力瓶颈。*
+<p align="center"><img src="img/half_gain_round_prediction.svg" width="90%" alt="由公开能力预测增益时机与排名"></p>
 
-> **物理桶板假说（Physical Barrel Hypothesis）**
-> 自我改进的不同方面，可能受不同能力的制约：开局好靠空间推理，读懂失败、从失败中恢复靠感知。编程能力再强，也不一定能补上别处的短板。
+*用其余四个系统拟合、预测留出的两个系统：K17 最好得分与 T50 的排序全部预测正确。`§5.2 · 图 7`*
 
-作者强调，这些关联提示的是候选瓶颈，并不构成因果结论。
+<p align="center"><img src="img/astra_shape_transfer.svg" width="90%" alt="用 Astra 的曲线形状预测 GPT-6.1 Sol"></p>
 
-## Q2　如何量化物理 RSI 与它的 Scaling Law？
+*借用 Astra 的曲线形状，只用 GPT-6.1 Sol 的 K1–K5 校准，预测 K6–K17 的平均绝对误差为 **0.019**，直接沿用最后观测值为 0.112。`§5.3 · 图 8`*
 
-### 得分高、涨得快、花得少，三者可以分离
+## Q3　不只是过拟合：经验可以带走
 
-五维画像把这些差异摆到了台面上。例如 Claude Opus 5.5 的最终成功分高于 GPT-6.1 Sol（0.744 对 0.703），但效率（0.609 对 0.822）和预算（0.579 对 0.808）明显落后。最终得分更高，并不代表进步更早，也不代表交互更省。
+| Cover Blocks · K1 · 空工作区：失败（800/800 步） | Cover Blocks · K1 · 借用 Stack Blocks 的例程：成功（501 步） |
+|:-:|:-:|
+| [![scratch](media/cover_blocks_K1_scratch_fail.webp)](media/cover_blocks_K1_scratch_fail.mp4) | [![transfer](media/cover_blocks_K1_transfer_success.webp)](media/cover_blocks_K1_transfer_success.mp4) |
 
-| 系统 | 任务数 | A1 首次尝试 | A2 效率 | A3 成功 | A4 预算 | A5 改进 |
-|---|--:|--:|--:|--:|--:|--:|
-| GPT-6 Astra | 18 | **0.368** | **0.859** | **0.851** | **0.843** | **0.750** |
-| GPT-6.1 Sol | 18 | 0.284 | 0.822 | 0.703 | 0.808 | 0.571 |
-| GPT-6 Sol | 18 | 0.031 | 0.466 | 0.472 | 0.372 | 0.389 |
-| GPT-5.6 Sol | 18 | 0.012 | 0.225 | 0.104 | 0.301 | 0.056 |
-| Claude Opus 5.5 | 18 | 0.177 | 0.609 | 0.744 | 0.579 | 0.688 |
-| Claude Sonnet 5.5 | 18 | 0.124 | 0.695 | 0.701 | 0.698 | 0.563 |
-| Gemini 4\* | 10 | 0.050 | 0.783 | 0.635 | 0.624 | 0.600 |
+- 去掉历史，后期成功率从 41.7% 降到 **8.3%**。`§6.1 · 表 8`
+- 停止修订后，冻结的工作区在 5 个未见布局上仍成功 **25/60**。`§6.2 · 表 9`
+- 跨任务迁移让首次成功提前：K9→K1、K14→K7、K15→K8。`§6.3 · 图 9`
 
-*五维画像（K0 分数为每任务三次运行的均值）。\*Gemini 4 仅在 10 个任务上评测，每任务一次 K0 运行。*
+<p align="center"><img src="img/cross_task_transfer.jpg" width="90%" alt="跨任务工作区迁移"></p>
 
-![五维雷达图](img/radar_panels_7models.svg)
+*上：原始自我改进轨迹；下：用其他任务汇总的工作区初始化后的轨迹。`论文 图 9`*
 
-*七个系统的五维画像，按论文原图绘制。*
+<p align="center"><img src="img/tools_reuse.svg" width="90%" alt="工具库与复用"></p>
 
-### 公开榜单上的差距，在物理世界里会被放大
+*Sonnet 5.5 与 Opus 5.5 后期超过 96% 的动作由自己写的工具生成；Opus 的工具复用面最广（谱系复用率 0.347）。`§6.3 · 图 10`*
 
-四个 GPT 系统在公开基准上的平均分只相差 24 分，五维物理画像的均值却相差 **59.5** 分。GPT-5.6 Sol 在整整 16 轮里累计成功几乎为零。
+## 一句话
 
-![累计成功与公开基准对比](img/figure4_success_benchmark_area.svg)
+能开好局的能力，不等于能持续进步的能力。理解物理 RSI，既要看智能体如何进步，也要看它在进步中留下了什么。`§8`
 
-*左：改进过程中的累计成功，阴影为 GPT-6.1 Sol 与 GPT-6 Sol 之间的差距；右：17 个公开基准的平均分与 100×(A1+…+A5)/5 的对比。*
+局限：主实验为六个系统、每任务一条改进链；能力瓶颈与预测仍是待检验的假设；消融与冻结测试只覆盖 Astra 的 6 个任务，跨任务结果来自 3 个案例。`§7`
 
-### 观测型 Scaling：能涨多高，多早能涨？
-
-沿用 observational scaling 的思路，论文用 17 个公开基准构建每个系统的四维能力画像，每次留出一对系统，用其余四个预测它们的排名。结果显示，公开能力画像复现了两项观测排序：K17 时达到的最好得分，以及半程增益轮次 T50（最好均分首次达到其 K1–K17 总增益一半的轮次）。
-
-![由公开能力预测增益时机](img/half_gain_round_prediction.svg)
-
-*左：各系统由 17 个公开基准得到的四维能力画像；右：18 个任务上逐轮最好均分。标注为“预测排名 / 观测排名”，圆圈处为 T50。*
-
-### 前几轮的物理反馈，能预测后面多少？
-
-以 GPT-6 Astra 的改进曲线拟合一个 Weibull 模板，只用 GPT-6.1 Sol 的 K1–K5 做校准，就能预测它 K6–K17 的走势，平均绝对误差 **0.019**；作为对照，直接沿用最后一个观测值的误差是 0.112。
-
-![用 Astra 的改进形状预测 GPT-6.1 Sol](img/astra_shape_transfer.svg)
-
-*左：Astra 的均分与拟合的 Weibull 模板；右：仅给定 K1–K5 时对 GPT-6.1 Sol 后续轮次的预测，阴影为 90% 配对任务 bootstrap 区间。*
-
-## Q3　是过拟合，还是泛化？
-
-分数上升本身回答不了这个问题。论文设计了三组干预：去掉历史、在没见过的布局上冻结工作区测试、把工作区迁移到别的任务。
-
-- **积累的经验确实有用。**在 Astra 的 6 任务消融中（每轮更换布局），后期轮次成功率在完整闭环下为 41.7%，去掉历史后降到 **8.3%**。
-- **冻结的工作区在新布局上依然管用。**K6 之后停止修订、也不给反馈，只用工作区文件在 5 个未见布局上测试，60 次中成功 25 次（41.7%）。在固定布局上练出来的工作区，换到新布局成功率为 45.0%，在原布局上则是 88%，说明场景特化同样存在。
-- **经验可以跨任务复用。**用其他任务汇总的工作区初始化后，三个案例的首次成功都大幅提前：Sonnet 5.5 的 Cover Blocks 从 K9 提前到 **K1**，Opus 5.5 的 Organize Table 从 K14 到 K7，Deposit Coin 从 K15 到 K8。
-
-![跨任务工作区迁移](img/cross_task_transfer.jpg)
-
-*跨任务工作区迁移。上：在 K6 或更晚才首次成功的原始轨迹；下：用其他任务汇总的工作区初始化后的轨迹。*
-
-经验沉淀在哪里？Sonnet 5.5 和 Opus 5.5 会把控制逻辑写进自己编写的工具，后期轮次中超过 **96%** 的动作由这些工具生成。其中 Opus 复用的工具箱最广，工具谱系复用率为 0.347，Sonnet 为 0.167，GPT-6 Sol 为 0.086。
-
-![工具库与复用](img/tools_reuse.svg)
-
-*工具库与复用。(a) 工具总数及感知/几何类与动作类工具占比；(b) 在后续轮次被复用的工具谱系比例；(c) 复用广度。*
-
-这些结果表明，场景特化的适应与可复用的经验可以同时存在。
-
-## 结语
-
-PhysRSI-Eval 在固定交互预算下，系统研究了物理 RSI 的来源、度量、Scaling 与泛化。能开好局的能力，未必是能持续进步的能力；高分、早涨、省交互也未必同时出现。理解物理 RSI，既要量化智能体如何进步，也要看清它在进步中留下了什么。
-
-作者也说明了当前工作的边界：主实验覆盖六个系统、每任务一条改进链；能力瓶颈与增益时机的预测仍是待检验的假设；消融与冻结测试只覆盖 Astra 和 6 个任务，跨任务结果来自 3 个案例。
-
-欢迎阅读论文、访问项目主页和代码仓库：
-
-- 论文：https://arxiv.org/abs/2610.26848
-- 主页：https://physrsi-eval.github.io/
-- 代码：https://github.com/PhysRSI-Eval/PhysRSI-Eval-code
+论文 https://arxiv.org/abs/2610.26848 ｜ 主页 https://physrsi-eval.github.io/ ｜ 代码 https://github.com/PhysRSI-Eval/PhysRSI-Eval-code
 
 ---
 
@@ -153,14 +104,15 @@ PhysRSI-Eval 在固定交互预算下，系统研究了物理 RSI 的来源、�
 
 **备选标题**
 
-1. 大模型直接当机器人策略，自我进化的能力从哪来？
-2. 编程强不等于学得快：PhysRSI-Eval 揭示机器人自我改进的“桶板效应”
-3. 公开榜单差 24 分，物理世界差 59.5 分：大模型机器人自我进化的观测型 Scaling Law
-4. 银河通用发布 PhysRSI-Eval：用五个维度量化机器人“自我进化”
+1. PhysRSI-Eval 揭示 VLM-as-Policy 自我改进的“桶板效应”：Coding 能力并非最重要
+2. 编程分数更高，却只解出 1 个任务：大模型机器人自我进化的短板在哪里？
+3. 公开榜单差 24 分，物理世界差 59.5 分：VLM-as-Policy 的观测型 Scaling Law
 
 **短文案（朋友圈 / 微博 / 小红书）**
 
-> 大模型直接控制机器人，还能边试边改、越做越好，这种“物理自我进化”的能力从哪来？我们提出 PhysRSI-Eval，在 18 个操作任务上用五个维度刻画 7 个前沿模型：开局靠空间推理，恢复靠感知，编程强不一定学得快。公开能力还能预测谁涨得更早、更高。论文 arxiv.org/abs/2610.26848　主页 physrsi-eval.github.io
+> 大模型直接控制机器人、边试边改，谁进步得最快？PhysRSI-Eval 在 18 个操作任务、17 轮自我改进中测了 7 个前沿模型：开局靠空间推理，恢复靠感知，Coding 与各项指标的相关反而最弱。arxiv.org/abs/2610.26848 ｜ physrsi-eval.github.io
+
+**配套素材**：开头两段动图为 GIF（`anim/climb.gif`、`anim/radar.gif`），可直接上传公众号；网页版用同内容的 WebP。任务视频原文件在 `media/`。
 
 **引用**
 
