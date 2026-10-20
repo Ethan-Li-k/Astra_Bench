@@ -86,11 +86,11 @@ button.copy:focus-visible, a:focus-visible { outline: 2px solid var(--teal); out
   </div>
 
   <figure class="wide">
-    <div class="plate bare"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5475566d40330890ef8ca322d63715440b0a280e/physrsi-pr/anim/climb.webp" alt="六个系统 K1 到 K17 逐轮最好均分的爬升动画" width="1805" height="1058"></div>
+    <div class="plate bare"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5bfd1264d0dd86c6bea58c5ce18728460006e48a/physrsi-pr/anim/climb.webp" alt="六个系统 K1 到 K17 逐轮最好均分的爬升动画" width="1805" height="1058"></div>
     <figcaption>17 轮自我改进，逐轮回放。实线为到第 k 轮为止的最好均分，圆圈为半程增益轮次 T<sub>50</sub>。<span class="src">论文 图 7</span></figcaption>
   </figure>
   <figure class="wide">
-    <div class="plate bare"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5475566d40330890ef8ca322d63715440b0a280e/physrsi-pr/anim/radar.webp" alt="七个系统五维画像的动画：逐个绘制单系统雷达图，再叠加对比" width="1805" height="896"></div>
+    <div class="plate bare"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5bfd1264d0dd86c6bea58c5ce18728460006e48a/physrsi-pr/anim/radar.webp" alt="七个系统五维画像的动画：逐个绘制单系统雷达图，再叠加对比" width="1805" height="896"></div>
     <figcaption>七个系统的五维画像：先逐个绘制，再叠加对比。<span class="src">论文 图 5 · 表 1</span></figcaption>
   </figure>
 
@@ -103,20 +103,20 @@ button.copy:focus-visible, a:focus-visible { outline: 2px solid var(--teal); out
   </div>
 
   <figure class="wide">
-    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5475566d40330890ef8ca322d63715440b0a280e/physrsi-pr/img/teaser.jpg" alt="PhysRSI-Eval 总览图" width="1536" height="1024"></div>
+    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5bfd1264d0dd86c6bea58c5ce18728460006e48a/physrsi-pr/img/teaser.jpg" alt="PhysRSI-Eval 总览图" width="1536" height="1024"></div>
     <figcaption>PhysRSI-Eval 总览：Q1 能力从哪来；Q2 如何量化与预测；Q3 是过拟合还是泛化。<span class="src">论文 图 1</span></figcaption>
   </figure>
 
   <h2>什么是物理 RSI</h2>
   <p>模型权重冻结，智能体在每轮真实交互后，自己修改持久化工作区里的技能、工具、策略和记忆，直到首次成功或用完 17 轮预算。18 个 RoboDojo 任务，五个维度分别衡量：首次尝试得分（A1）、增益出现得多早（A2）、达到的最好得分（A3）、首次成功前省下的物理预算（A4）、首轮失败后来被解决的比例（A5）。<span class="src">§3 · 图 1–3</span></p>
   <div class="wide vids">
-    <figure><video src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5475566d40330890ef8ca322d63715440b0a280e/physrsi-pr/media/stack_blocks_K1_astra_success.mp4" autoplay muted loop playsinline></video><figcaption>Stack Blocks · GPT-6 Astra · K1 <span class="ok">成功</span></figcaption></figure>
-    <figure><video src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5475566d40330890ef8ca322d63715440b0a280e/physrsi-pr/media/cover_blocks_K1_transfer_success.mp4" autoplay muted loop playsinline></video><figcaption>Cover Blocks · Sonnet 5.5 · K1（迁移）<span class="ok">成功</span></figcaption></figure>
-    <figure><video src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5475566d40330890ef8ca322d63715440b0a280e/physrsi-pr/media/plug_in_charger_K7_success.mp4" autoplay muted loop playsinline></video><figcaption>Plug In Charger · Sonnet 5.5 · K7 <span class="ok">成功</span></figcaption></figure>
-    <figure><video src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5475566d40330890ef8ca322d63715440b0a280e/physrsi-pr/media/insert_key_K1_partial.mp4" autoplay muted loop playsinline></video><figcaption>Insert Key · Sonnet 5.5 · K1 得分 0.15（所有系统到 K17 都未解出）</figcaption></figure>
+    <figure><video src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5bfd1264d0dd86c6bea58c5ce18728460006e48a/physrsi-pr/media/stack_blocks_K1_astra_success.mp4" autoplay muted loop playsinline></video><figcaption>Stack Blocks · GPT-6 Astra · K1 <span class="ok">成功</span></figcaption></figure>
+    <figure><video src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5bfd1264d0dd86c6bea58c5ce18728460006e48a/physrsi-pr/media/cover_blocks_K1_transfer_success.mp4" autoplay muted loop playsinline></video><figcaption>Cover Blocks · Sonnet 5.5 · K1（迁移）<span class="ok">成功</span></figcaption></figure>
+    <figure><video src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5bfd1264d0dd86c6bea58c5ce18728460006e48a/physrsi-pr/media/plug_in_charger_K7_success.mp4" autoplay muted loop playsinline></video><figcaption>Plug In Charger · Sonnet 5.5 · K7 <span class="ok">成功</span></figcaption></figure>
+    <figure><video src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5bfd1264d0dd86c6bea58c5ce18728460006e48a/physrsi-pr/media/insert_key_K1_partial.mp4" autoplay muted loop playsinline></video><figcaption>Insert Key · Sonnet 5.5 · K1 得分 0.15（所有系统到 K17 都未解出）</figcaption></figure>
   </div>
   <figure>
-    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5475566d40330890ef8ca322d63715440b0a280e/physrsi-pr/img/workflow.jpg" alt="两阶段流程：K0 评估与 K1–KH 优化" width="2250" height="2017"></div>
+    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5bfd1264d0dd86c6bea58c5ce18728460006e48a/physrsi-pr/img/workflow.jpg" alt="两阶段流程：K0 评估与 K1–KH 优化" width="2250" height="2017"></div>
     <figcaption>两阶段、同一接口：K0 无工作区单次尝试；K1 起每轮从持久化工作区出发，执行、判分、离线修订、提交。<span class="src">论文 图 2</span></figcaption>
   </figure>
 
@@ -126,7 +126,7 @@ button.copy:focus-visible, a:focus-visible { outline: 2px solid var(--teal); out
     <span class="zh">编程分数更高的 GPT-5.6 Sol 只解出 1 个任务，GPT-6 Astra 解出 15 个。<span class="src">§4.1</span></span>
   </blockquote>
   <figure class="wide">
-    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5475566d40330890ef8ca322d63715440b0a280e/physrsi-pr/img/barrel_matrix.jpg" alt="四组公开能力与五个维度的秩相关矩阵，以及桶板假说示意" width="1609" height="977"></div>
+    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5bfd1264d0dd86c6bea58c5ce18728460006e48a/physrsi-pr/img/barrel_matrix.jpg" alt="四组公开能力与五个维度的秩相关矩阵，以及桶板假说示意" width="1609" height="977"></div>
     <figcaption>空间推理与首次尝试（A1）ρ = 0.94；感知与成功（A3）、改进（A5）ρ = 0.94；Coding 与所有维度 ρ ≤ 0.37。<span class="src">论文 图 4</span></figcaption>
   </figure>
   <blockquote>
@@ -137,26 +137,26 @@ button.copy:focus-visible, a:focus-visible { outline: 2px solid var(--teal); out
   <h2><span class="q">Q2</span>高分、早涨、省交互，三者可以分离</h2>
   <p>闭源模型不公开参数量和训练算力，经典 Scaling Law 无从下手。论文改用公开基准分数，聚合成空间推理、感知、编程、工具使用四个能力因子，作为可观测的替代。<span class="src">§1</span></p>
   <figure class="wide">
-    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5475566d40330890ef8ca322d63715440b0a280e/physrsi-pr/img/radar_panels_7models.svg" alt="七个系统的五维画像" width="1000" height="612"></div>
+    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5bfd1264d0dd86c6bea58c5ce18728460006e48a/physrsi-pr/img/radar_panels_7models.svg" alt="七个系统的五维画像" width="1000" height="612"></div>
     <figcaption>七个系统的五维画像。Opus 5.5 的成功分高于 GPT-6.1 Sol（<span class="hl">0.744</span> vs 0.703），效率（0.609 vs <span class="hl">0.822</span>）和预算（0.579 vs <span class="hl">0.808</span>）却落后。<span class="src">§5.1 · 图 5 · 表 1</span></figcaption>
   </figure>
   <figure class="wide">
-    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5475566d40330890ef8ca322d63715440b0a280e/physrsi-pr/img/figure4_success_benchmark_area.svg" alt="累计成功曲线与公开基准均分对比" width="1000" height="360"></div>
+    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5bfd1264d0dd86c6bea58c5ce18728460006e48a/physrsi-pr/img/figure4_success_benchmark_area.svg" alt="累计成功曲线与公开基准均分对比" width="1000" height="360"></div>
     <figcaption>公开榜单均分 54.1–78.1（差 24 分），物理五维均分 13.9–73.4（差 59.5 分）；GPT-5.6 Sol 连续 16 轮累计成功接近零。<span class="src">§5.1 · 图 6</span></figcaption>
   </figure>
   <figure class="wide">
-    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5475566d40330890ef8ca322d63715440b0a280e/physrsi-pr/img/half_gain_round_prediction.svg" alt="由公开能力画像预测增益时机与最终排名" width="1000" height="512"></div>
+    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5bfd1264d0dd86c6bea58c5ce18728460006e48a/physrsi-pr/img/half_gain_round_prediction.svg" alt="由公开能力画像预测增益时机与最终排名" width="1000" height="512"></div>
     <figcaption>用其余四个系统拟合、预测留出的两个系统：K17 最好得分与 T<sub>50</sub> 的排序全部预测正确。<span class="src">§5.2 · 图 7</span></figcaption>
   </figure>
   <figure class="wide">
-    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5475566d40330890ef8ca322d63715440b0a280e/physrsi-pr/img/astra_shape_transfer.svg" alt="用 Astra 的改进曲线形状预测 GPT-6.1 Sol" width="1000" height="390"></div>
+    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5bfd1264d0dd86c6bea58c5ce18728460006e48a/physrsi-pr/img/astra_shape_transfer.svg" alt="用 Astra 的改进曲线形状预测 GPT-6.1 Sol" width="1000" height="390"></div>
     <figcaption>借用 Astra 的曲线形状，只用 GPT-6.1 Sol 的 K1–K5 校准，预测 K6–K17 的平均绝对误差为 <span class="hl">0.019</span>，直接沿用最后观测值为 0.112。<span class="src">§5.3 · 图 8</span></figcaption>
   </figure>
 
   <h2><span class="q">Q3</span>不只是过拟合：经验可以带走</h2>
   <div class="wide vids two">
-    <figure><video src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5475566d40330890ef8ca322d63715440b0a280e/physrsi-pr/media/cover_blocks_K1_scratch_fail.mp4" autoplay muted loop playsinline></video><figcaption>Cover Blocks · K1 · 空工作区：<span class="bad">失败</span>（800/800 步）</figcaption></figure>
-    <figure><video src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5475566d40330890ef8ca322d63715440b0a280e/physrsi-pr/media/cover_blocks_K1_transfer_success.mp4" autoplay muted loop playsinline></video><figcaption>Cover Blocks · K1 · 借用 Stack Blocks 的抓取-搬运例程：<span class="ok">成功</span>（501 步）</figcaption></figure>
+    <figure><video src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5bfd1264d0dd86c6bea58c5ce18728460006e48a/physrsi-pr/media/cover_blocks_K1_scratch_fail.mp4" autoplay muted loop playsinline></video><figcaption>Cover Blocks · K1 · 空工作区：<span class="bad">失败</span>（800/800 步）</figcaption></figure>
+    <figure><video src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5bfd1264d0dd86c6bea58c5ce18728460006e48a/physrsi-pr/media/cover_blocks_K1_transfer_success.mp4" autoplay muted loop playsinline></video><figcaption>Cover Blocks · K1 · 借用 Stack Blocks 的抓取-搬运例程：<span class="ok">成功</span>（501 步）</figcaption></figure>
   </div>
   <ul class="pts">
     <li>去掉历史，后期成功率从 41.7% 降到 <span class="hl">8.3%</span>。<span class="src">§6.1 · 表 8</span></li>
@@ -164,11 +164,11 @@ button.copy:focus-visible, a:focus-visible { outline: 2px solid var(--teal); out
     <li>跨任务迁移让首次成功提前：K9→K1、K14→K7、K15→K8。<span class="src">§6.3 · 图 9</span></li>
   </ul>
   <figure class="wide">
-    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5475566d40330890ef8ca322d63715440b0a280e/physrsi-pr/img/cross_task_transfer.jpg" alt="跨任务工作区迁移前后的轨迹对比" width="2400" height="1505"></div>
+    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5bfd1264d0dd86c6bea58c5ce18728460006e48a/physrsi-pr/img/cross_task_transfer.jpg" alt="跨任务工作区迁移前后的轨迹对比" width="2400" height="1505"></div>
     <figcaption>上：原始自我改进轨迹；下：用其他任务汇总的工作区初始化后的轨迹。<span class="src">论文 图 9</span></figcaption>
   </figure>
   <figure class="wide">
-    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5475566d40330890ef8ca322d63715440b0a280e/physrsi-pr/img/tools_reuse.svg" alt="各模型工具库规模与复用情况" width="1000" height="322"></div>
+    <div class="plate"><img src="https://cdn.jsdelivr.net/gh/Ethan-Li-k/Astra_Bench@5bfd1264d0dd86c6bea58c5ce18728460006e48a/physrsi-pr/img/tools_reuse.svg" alt="各模型工具库规模与复用情况" width="1000" height="322"></div>
     <figcaption>Sonnet 5.5 与 Opus 5.5 后期超过 96% 的动作由自己写的工具生成；Opus 的工具复用面最广（谱系复用率 0.347）。<span class="src">§6.3 · 图 10</span></figcaption>
   </figure>
 
