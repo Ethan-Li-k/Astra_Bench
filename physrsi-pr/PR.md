@@ -30,7 +30,7 @@ Zekai Li\*, Jiayi Yu\*, Jinlu Zhang\*, Luyang Niu\*, Zekun Qi\*, Jun Zheng, Xuch
 
 ## 什么是物理 RSI
 
-模型权重冻结，智能体在每轮真实交互后，自己修改持久化工作区里的技能、工具、策略和记忆，直到首次成功或用完 17 轮预算。18 个 RoboDojo 任务，从五个维度打分：首次尝试、效率、成功、预算、改进。`§3 · 图 2–3`
+模型权重冻结，智能体在每轮真实交互后，自己修改持久化工作区里的技能、工具、策略和记忆，直到首次成功或用完 17 轮预算。18 个 RoboDojo 任务，五个维度分别衡量：首次尝试得分（A1）、增益出现得多早（A2）、达到的最好得分（A3）、首次成功前省下的物理预算（A4）、首轮失败后来被解决的比例（A5）。`§3 · 图 1–3`
 
 | Stack Blocks · GPT-6 Astra · K1 成功 | Cover Blocks · Sonnet 5.5 · K1（迁移）成功 | Plug In Charger · Sonnet 5.5 · K7 成功 | Insert Key · Sonnet 5.5 · K1 得分 0.15 |
 |:-:|:-:|:-:|:-:|
@@ -55,6 +55,8 @@ Zekai Li\*, Jiayi Yu\*, Jinlu Zhang\*, Luyang Niu\*, Zekun Qi\*, Jun Zheng, Xuch
 > Coding 相关弱，不代表不需要它：所有系统都在写代码，只是短板不在这里。
 
 ## Q2　高分、早涨、省交互，三者可以分离
+
+闭源模型不公开参数量和训练算力，经典 Scaling Law 无从下手。论文改用公开基准分数，聚合成空间推理、感知、编程、工具使用四个能力因子，作为可观测的替代。`§1`
 
 <p align="center"><img src="img/radar_panels_7models.svg" width="90%" alt="七个系统的五维画像"></p>
 
