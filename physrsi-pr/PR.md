@@ -99,33 +99,3 @@ Zekai Li\*, Jiayi Yu\*, Jinlu Zhang\*, Luyang Niu\*, Zekun Qi\*, Jun Zheng, Xuch
 局限：主实验为六个系统、每任务一条改进链；能力瓶颈与预测仍是待检验的假设；消融与冻结测试只覆盖 Astra 的 6 个任务，跨任务结果来自 3 个案例。`§7`
 
 论文 https://arxiv.org/abs/2610.26848 ｜ 主页 https://physrsi-eval.github.io/ ｜ 代码 https://github.com/PhysRSI-Eval/PhysRSI-Eval-code
-
----
-
-## 发稿素材（不属于正文）
-
-**备选标题**
-
-1. PhysRSI-Eval 揭示 VLM-as-Policy 自我改进的“桶板效应”：Coding 能力并非最重要
-2. 编程分数更高，却只解出 1 个任务：大模型机器人自我进化的短板在哪里？
-3. 公开榜单差 24 分，物理世界差 59.5 分：VLM-as-Policy 的观测型 Scaling Law
-
-**短文案（朋友圈 / 微博 / 小红书）**
-
-> 大模型直接控制机器人、边试边改，谁进步得最快？PhysRSI-Eval 在 18 个操作任务、17 轮自我改进中测了 7 个前沿模型：开局靠空间推理，恢复靠感知，Coding 与开局、效率、预算的相关反而最弱。arxiv.org/abs/2610.26848 ｜ physrsi-eval.github.io
-
-**配套素材**：开头两段动图为 GIF（`anim/climb.gif`、`anim/radar.gif`），可直接上传公众号；网页版用同内容的 WebP。任务视频原文件在 `media/`。
-
-**引用**
-
-```bibtex
-@misc{li2026physicalrsicapabilityfrom,
-  title={Where is Physical RSI capability from? An Observational Scaling Law of LLM-as-policy},
-  author={Zekai Li and Jiayi Yu and Jinlu Zhang and Luyang Niu and Zekun Qi and Jun Zheng and Xuchuan Chen and Dairu Liu and Yintianrun Zhang and He Wang and Li Yi},
-  year={2026},
-  eprint={2610.26848},
-  archivePrefix={arXiv},
-  primaryClass={cs.RO},
-  url={https://arxiv.org/abs/2610.26848}
-}
-```
