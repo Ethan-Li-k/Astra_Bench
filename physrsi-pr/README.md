@@ -10,7 +10,7 @@
 文件：
 
 - [PR.md](PR.md)：Markdown 稿（GitHub 上直接渲染）
-- [article.html](article.html)、[index.html](index.html)：网页版。素材经 jsDelivr 按固定提交加载，Markdown 原文与渲染库内嵌，可直接用 htmlpreview 打开
+- [article.html](article.html)、[index.html](index.html)：网页版。素材按固定提交从 raw.githubusercontent.com 加载（仓库超过 jsDelivr 的 50 MB 上限，新提交无法经 jsDelivr 访问），Markdown 原文与渲染库内嵌，可直接用 htmlpreview 打开
 - `anim/`：项目主页开头两段动画的逐帧录制，GIF 可直接上传公众号，WebP 供网页使用
 - `media/`：任务视频（mp4）及其 WebP 预览，来自 PhysRSI-Eval-code
 - `img/`：论文与项目主页的图表
